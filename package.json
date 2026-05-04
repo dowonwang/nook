@@ -8,6 +8,7 @@
     "commit": "git-cz",
     "format": "prettier . --write",
     "format:check": "prettier . --check",
+    "clean:modules": "pnpm -r exec rm -rf node_modules && rm -rf node_modules",
     "server/api:dev": "pnpm -F @server/api dev"
   },
   "keywords": [],
