@@ -9,10 +9,12 @@
     "start": "next start"
   },
   "dependencies": {
+    "@packages/ui": "workspace:*",
+    "dayjs": "^1.11.20",
+    "lucide-react": "^1.14.0",
     "next": "catalog:next16",
     "react": "catalog:next16",
-    "react-dom": "catalog:next16",
-    "@packages/ui": "workspace:*"
+    "react-dom": "catalog:next16"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.2.4",

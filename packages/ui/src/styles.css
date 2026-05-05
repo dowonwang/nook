@@ -1,1 +1,10 @@
 /* ui css */
+:root {
+  --ui-primary: #66bb6a;
+  --ui-primary-foreground: #fff;
+  --ui-primary-hover: #4caf50;
+
+  --ui-secondary: #faf9f6;
+  --ui-secondary-foreground: #6b7280;
+  --ui-secondary-hover: #f5f4f0;
+}
