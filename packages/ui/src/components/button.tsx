@@ -17,7 +17,7 @@ const variants: Record<ButtonVariant, string> = {
 };
 
 const sizeVariants: Record<ButtonSize, string> = {
-  default: tw`h-10 rounded-md px-4`,
+  default: tw`h-10 rounded-xl px-4`,
   icon: tw`h-10 w-10 rounded-xl px-2.5`,
 };
 

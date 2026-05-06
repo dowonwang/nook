@@ -20,12 +20,16 @@
   /* 레이아웃 색상 */
   --color-header: #fff;
   --color-sidebar: #fff;
+  --color-card: #fff;
   --color-primary-text: #1f2937;
   --color-secondary-text: #9ca3af;
 
   /* 색상 변수 */
   --color-background: #fafbf9;
   --color-border: #f5f4f0;
+
+  /* shadow */
+  --shadow-soft: 0 2px 12px rgba(0, 0, 0, 0.05);
 
   /* ui package 색상값 */
   --color-primary: var(--ui-primary);
