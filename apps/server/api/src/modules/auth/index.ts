@@ -1,6 +1,5 @@
-import 'dotenv/config';
-
 import { prismaApiClient } from '@packages/api-db';
+import 'dotenv/config';
 
 import { PrismaUserCommandRepository } from '$modules/user/infrastructure/repositories/prisma-user-command.repository';
 import { PrismaUserQueryRepository } from '$modules/user/infrastructure/repositories/prisma-user-query.repository';

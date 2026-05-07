@@ -1,5 +1,4 @@
 import 'dotenv/config';
-
 import { Elysia } from 'elysia';
 
 import authModule from './modules/auth';

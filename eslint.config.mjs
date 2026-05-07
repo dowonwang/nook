@@ -61,13 +61,38 @@ export default defineConfig(
             'type',
           ],
 
-          pathGroupsExcludedImportTypes: ['builtin'],
+          pathGroups: [
+            {
+              pattern: '**/*.css',
+              group: 'builtin',
+              position: 'before',
+            },
+            {
+              pattern: '*.css',
+              group: 'builtin',
+              position: 'before',
+            },
+            {
+              pattern: './*.css',
+              group: 'builtin',
+              position: 'before',
+            },
+            {
+              pattern: '../*.css',
+              group: 'builtin',
+              position: 'before',
+            },
+          ],
+
+          pathGroupsExcludedImportTypes: [],
+
           'newlines-between': 'always',
           alphabetize: {
             order: 'asc',
             caseInsensitive: true,
           },
           sortTypesGroup: false,
+          warnOnUnassignedImports: true,
         },
       ],
     },
