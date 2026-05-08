@@ -11,6 +11,8 @@ const config = {
   jsxSingleQuote: true,
   tabWidth: 2,
   useTabs: false,
+  plugins: ['prettier-plugin-tailwindcss'],
+  tailwindFunctions: ['cn', 'tw'],
 };
 
 export default config;

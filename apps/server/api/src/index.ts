@@ -1,6 +1,5 @@
-import 'dotenv/config';
-
 import { openapi } from '@elysia/openapi';
+import 'dotenv/config';
 import { Elysia } from 'elysia';
 
 import organizationModule from '$modules/organization';

@@ -1,0 +1,26 @@
+{
+  "name": "@web/cient",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@packages/ui": "workspace:*",
+    "dayjs": "^1.11.20",
+    "lucide-react": "^1.14.0",
+    "next": "catalog:next16",
+    "react": "catalog:next16",
+    "react-dom": "catalog:next16"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.2.4",
+    "@types/react": "catalog:next16",
+    "@types/react-dom": "catalog:next16",
+    "tailwindcss": "^4.2.4",
+    "typescript": "catalog:"
+  }
+}

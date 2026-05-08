@@ -1,7 +1,8 @@
 import eslint from '@eslint/js';
+import eslintNextPlugin from '@next/eslint-plugin-next';
 import { createTypeScriptImportResolver } from 'eslint-import-resolver-typescript';
 import { importX } from 'eslint-plugin-import-x';
-import { defineConfig } from 'eslint/config';
+import { defineConfig, globalIgnores } from 'eslint/config';
 import tseslint from 'typescript-eslint';
 
 export default defineConfig(
@@ -9,6 +10,7 @@ export default defineConfig(
   tseslint.configs.strictTypeChecked,
   importX.flatConfigs.recommended,
   importX.flatConfigs.typescript,
+
   {
     languageOptions: {
       parserOptions: {
@@ -19,7 +21,8 @@ export default defineConfig(
       'import-x/resolver-next': [
         createTypeScriptImportResolver({
           bun: true,
-          project: ['apps/**/*/tsconfig.json'],
+          project: ['apps/**/*/tsconfig.json', 'packages/**/*/tsconfig.json'],
+          noWarnOnMultipleProjects: true,
         }),
       ],
     },
@@ -58,18 +61,79 @@ export default defineConfig(
             'type',
           ],
 
-          pathGroupsExcludedImportTypes: ['builtin'],
+          pathGroups: [
+            {
+              pattern: '**/*.css',
+              group: 'builtin',
+              position: 'before',
+            },
+            {
+              pattern: '*.css',
+              group: 'builtin',
+              position: 'before',
+            },
+            {
+              pattern: './*.css',
+              group: 'builtin',
+              position: 'before',
+            },
+            {
+              pattern: '../*.css',
+              group: 'builtin',
+              position: 'before',
+            },
+          ],
+
+          pathGroupsExcludedImportTypes: [],
+
           'newlines-between': 'always',
           alphabetize: {
             order: 'asc',
             caseInsensitive: true,
           },
           sortTypesGroup: false,
+          warnOnUnassignedImports: true,
         },
       ],
     },
   },
+  // 공통 jsx, tsx
   {
-    ignores: ['*.config.mjs'],
+    files: ['**/*.{jsx,tsx}'],
+    plugins: {},
+    settings: {},
+    rules: {},
   },
+  // nextjs 앱
+  {
+    files: ['apps/web/client/**/*.{js,jsx,ts,tsx}'],
+    plugins: {
+      '@next/next': eslintNextPlugin,
+    },
+    settings: {
+      next: {
+        rootDir: 'web/client/',
+      },
+    },
+    rules: {
+      ...eslintNextPlugin.configs.recommended.rules,
+      ...eslintNextPlugin.configs['core-web-vitals'].rules,
+      '@next/next/no-html-link-for-pages': 'off',
+    },
+  },
+  {
+    files: ['packages/**/*.{js,jsx,ts,tsx}'],
+    rules: {
+      '@typescript-eslint/no-restricted-imports': 'off',
+    },
+  },
+
+  globalIgnores([
+    '**/.next/**',
+    '**/out/**',
+    '**/build/**',
+    '**/dist/**',
+    '**/next-env.d.ts',
+    '**/*.config.mjs',
+  ]),
 );

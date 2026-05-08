@@ -3,5 +3,6 @@
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "always",
     "source.removeUnusedImports": "always"
-  }
+  },
+  "tailwindCSS.classFunctions": ["cva", "cx"]
 }

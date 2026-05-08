@@ -1,0 +1,70 @@
+import { cn } from '../lib/cn';
+
+const tw = String.raw;
+
+export function Card({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
+  return (
+    <section
+      className={cn(
+        'bg-card border-border shadow-soft rounded-xl border',
+        className,
+      )}
+    >
+      {children}
+    </section>
+  );
+}
+
+export function CardHeader({
+  children,
+  action,
+}: {
+  children?: React.ReactNode;
+  action?: React.ReactNode;
+}) {
+  const style = tw`border-border border-b px-5 py-4`;
+
+  if (action) {
+    return (
+      <div className={cn(style, 'flex items-center')}>
+        <div className='flex-1'>{children}</div>
+        {action}
+      </div>
+    );
+  }
+  return <div className={cn(style)}>{children}</div>;
+}
+
+export function CardBody({ children }: { children: React.ReactNode }) {
+  return <div className='p-5'>{children}</div>;
+}
+
+export function CardTitle({
+  children,
+  level: Component = 'h2',
+  srOnly = false,
+}: {
+  children: React.ReactNode;
+  level?: 'h1' | 'h2' | 'h3' | 'h4';
+  srOnly?: boolean;
+}) {
+  return (
+    <Component
+      className={cn('font-semibold', {
+        'sr-only': srOnly,
+      })}
+    >
+      {children}
+    </Component>
+  );
+}
+
+export function CardDescription({ children }: { children: string }) {
+  return <p className='text-secondary-text mt-1 text-sm'>{children}</p>;
+}
