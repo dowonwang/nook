@@ -1,4 +1,4 @@
-import { Entity } from '$shared/ddd/entity.abstract';
+import { Entity } from '$shared/ddd/entity/entity.abstract';
 
 import type { UserEmail } from '$modules/user/domain/value-objects/email.vo';
 import type { UserName } from '$modules/user/domain/value-objects/name.vo';

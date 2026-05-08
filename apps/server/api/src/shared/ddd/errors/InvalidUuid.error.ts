@@ -2,7 +2,7 @@ import { InternalServerError } from '$shared/errors/common.erorr';
 import { LOG_EVENT } from '$shared/logger/constant/log-event';
 import { LOG_MESSAGE } from '$shared/logger/constant/log-message';
 
-export class InvaildUuid extends InternalServerError {
+export class InvalidUuid extends InternalServerError {
   constructor(scope: string, detail?: unknown) {
     super({
       scope,

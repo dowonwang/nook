@@ -28,24 +28,19 @@ const tokenVerifier = new JwtTokenVerifier(process.env.JWT_SECRET);
 // guard
 export const authGuard = createAuthGuard(tokenVerifier);
 
-export default function authModule() {
-  // handler
-  const signUpHandler = new SignUpHandler(
-    userCommandRepository,
-    passwordHasher,
-  );
+// handler
+const signUpHandler = new SignUpHandler(userCommandRepository, passwordHasher);
+const signInHandler = new SignInHandler(
+  userCommandRepository,
+  passwordHasher,
+  tokenIssuer,
+);
+const meHandler = new MeHandler(userQueryRepository);
 
-  const signInHandler = new SignInHandler(
-    userCommandRepository,
-    passwordHasher,
-    tokenIssuer,
-  );
+const authModule = createAuthController({
+  signUpHandler,
+  signInHandler,
+  meHandler,
+});
 
-  const meHandler = new MeHandler(userQueryRepository);
-
-  return createAuthController({
-    signUpHandler,
-    signInHandler,
-    meHandler,
-  });
-}
+export default authModule;

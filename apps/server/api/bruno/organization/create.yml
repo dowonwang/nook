@@ -1,0 +1,31 @@
+info:
+  name: create
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: "{{process.env.BASE_URL}}/organization"
+  body:
+    type: json
+    data: |-
+      {
+        "title": "test"
+      }
+  auth:
+    type: bearer
+    token: "{{ACCESS_TOKEN}}"
+
+runtime:
+  scripts:
+    - type: after-response
+      code: |-
+        const accessToken = bru.getEnvVar("ACCESS_TOKEN");
+
+        if(!accessToken) throw new Error("Access token missing.\nRun the 'sign-in' request to automatically save a new one.");
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

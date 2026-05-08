@@ -1,3 +1,8 @@
 {
-  "js/ts.tsdk.path": "node_modules/typescript/lib"
+  "js/ts.preferences.importModuleSpecifier": "non-relative",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "always",
+    "source.removeUnusedImports": "always"
+  },
+  "tailwindCSS.classFunctions": ["cva", "cx"]
 }

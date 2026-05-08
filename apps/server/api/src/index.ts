@@ -1,12 +1,19 @@
+import { openapi } from '@elysia/openapi';
 import 'dotenv/config';
 import { Elysia } from 'elysia';
+
+import organizationModule from '$modules/organization';
 
 import authModule from './modules/auth';
 import { LOG_EVENT } from './shared/logger/constant/log-event';
 import { LOG_MESSAGE } from './shared/logger/constant/log-message';
 import { logger } from './shared/logger/logger';
 
-const app = new Elysia().use(authModule).listen(process.env.APP_PORT ?? 3000);
+const app = new Elysia()
+  .use(openapi())
+  .use(authModule)
+  .use(organizationModule)
+  .listen(process.env.APP_PORT ?? 3000);
 
 if (app.server?.hostname && app.server.port) {
   logger.info(

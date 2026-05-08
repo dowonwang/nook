@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { InvaildUuid } from '$shared/ddd/errors/InvalidUuid.error';
+import { InvalidUuid } from '$shared/ddd/errors/InvalidUuid.error';
 import { PrimitiveValueObject } from '$shared/ddd/value-object/primitive-vo.abstract';
 
 const schema = z.uuidv7();
@@ -14,15 +14,10 @@ export abstract class Uuid<T extends Uuid<T>> extends PrimitiveValueObject<
   }
 
   protected validation(input: string) {
-    const trimInput = input.trim();
-
-    if (trimInput === '') {
-      throw new InvaildUuid(Uuid.name, { input });
-    }
-    const vaildation = schema.safeParse(trimInput);
+    const vaildation = schema.safeParse(input);
 
     if (!vaildation.success) {
-      throw new InvaildUuid(Uuid.name, { input });
+      throw new InvalidUuid(Uuid.name, { input });
     }
   }
 }

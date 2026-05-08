@@ -5,7 +5,7 @@ export abstract class Entity<Id> {
     this._id = id;
   }
 
-  get id() {
+  get id(): Id {
     return this._id;
   }
 }

@@ -19,6 +19,7 @@ interface AuthControllerDependencies {
 export function createAuthController(deps: AuthControllerDependencies) {
   return (
     new Elysia({
+      name: 'auth',
       prefix: '/auth',
       detail: {
         tags: ['Auth'],

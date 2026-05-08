@@ -11,6 +11,7 @@
     "db:push": "pnpm -C ../../../packages/api-db run db:push"
   },
   "dependencies": {
+    "@elysia/openapi": "^1.4.15",
     "@packages/api-db": "workspace:*",
     "bcrypt": "^6.0.0",
     "dotenv": "^17.3.1",
