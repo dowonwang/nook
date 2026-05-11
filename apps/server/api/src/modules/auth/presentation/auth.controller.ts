@@ -1,7 +1,9 @@
 import { Elysia } from 'elysia';
 
 import { authGuard } from '$modules/auth';
+import { AuthResponse } from '$modules/auth/presentation/auth.response';
 import { errorPlugin } from '$shared/http/plugin/error.plugin';
+import { createApiSuccessResponseSchema } from '$shared/responses/api-response';
 import { ApiResponseBuilder } from '$shared/responses/api-response-builder';
 
 import { AuthHttpModel } from './auth.http-model';
@@ -26,7 +28,6 @@ export function createAuthController(deps: AuthControllerDependencies) {
       },
     })
       .use(errorPlugin)
-      .model(AuthHttpModel)
       // POST /auth/sign-up
       .post(
         '/sign-up',
@@ -37,9 +38,10 @@ export function createAuthController(deps: AuthControllerDependencies) {
           return ApiResponseBuilder.success(result);
         },
         {
-          body: 'signUpBody',
+          body: AuthHttpModel.signUpBody,
           detail: {
             summary: 'Sign Up User',
+            security: [],
           },
         },
       )
@@ -52,9 +54,10 @@ export function createAuthController(deps: AuthControllerDependencies) {
           return ApiResponseBuilder.success(result);
         },
         {
-          body: 'signInBody',
+          body: AuthHttpModel.signInBody,
           detail: {
             summary: 'Sign In User',
+            security: [],
           },
         },
       )
@@ -66,11 +69,16 @@ export function createAuthController(deps: AuthControllerDependencies) {
         async ({ authUser }) => {
           const result = await deps.meHandler.excute(authUser);
 
+          console.log(result);
+
           return ApiResponseBuilder.success(result);
         },
         {
           detail: {
             summary: 'Get Current User',
+          },
+          response: {
+            200: createApiSuccessResponseSchema(AuthResponse.me),
           },
         },
       )

@@ -24,7 +24,6 @@ export function createOrganizationController(deps: OrganizationDependencies) {
     })
       .use(errorPlugin)
       .use(authGuard)
-      .model(OrganizationHttpModel)
       // POST /organization
       .post(
         '/',
@@ -40,7 +39,8 @@ export function createOrganizationController(deps: OrganizationDependencies) {
           });
         },
         {
-          body: 'create',
+          body: OrganizationHttpModel.create,
+          response: {},
           detail: {
             summary: 'Create Organization',
           },
@@ -61,7 +61,7 @@ export function createOrganizationController(deps: OrganizationDependencies) {
           });
         },
         {
-          body: 'addMember',
+          body: OrganizationHttpModel.addMember,
           detail: {
             summary: 'Add Members',
           },
