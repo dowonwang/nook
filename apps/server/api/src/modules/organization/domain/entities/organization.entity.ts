@@ -126,7 +126,7 @@ export class Organization extends AggregateRoot<OrganizationUuid> {
     );
 
     if (!executor) {
-      throw new Error('조직에 속한 멤버만 추가 가능');
+      throw new OrganizationAccessDenied(Organization.name);
     }
 
     if (!executor.organizationId.equals(super.id)) {

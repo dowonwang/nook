@@ -1,9 +1,9 @@
 import { openapi } from '@elysia/openapi';
 import 'dotenv/config';
 import { Elysia } from 'elysia';
-import { z } from 'zod';
 
 import organizationModule from '$modules/organization';
+import { zodToOpenApiSchema } from '$shared/responses/api-openapi';
 
 import authModule from './modules/auth';
 import { LOG_EVENT } from './shared/logger/constant/log-event';
@@ -16,7 +16,7 @@ const app = new Elysia()
       path: '/openapi',
       specPath: '/openapi/json',
       mapJsonSchema: {
-        zod: z.toJSONSchema,
+        zod: zodToOpenApiSchema,
       },
       documentation: {
         security: [

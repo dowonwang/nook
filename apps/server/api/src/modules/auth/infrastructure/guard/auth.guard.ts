@@ -12,11 +12,10 @@ export interface AuthUser {
 export function createAuthGuard(tokenVerifier: JwtTokenVerifier) {
   const authGuard = new Elysia({ name: 'auth.guard' })
     .guard({
-      detail: {
-        description: 'Login required',
-      },
       response: {
-        401: ApiErrorResponseSchema,
+        401: ApiErrorResponseSchema.meta({
+          description: 'Access token verification failed.',
+        }),
       },
     })
     .derive(async ({ headers }) => {

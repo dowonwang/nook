@@ -1,9 +1,12 @@
 import { Elysia } from 'elysia';
 
 import { authGuard } from '$modules/auth';
-import { AuthResponse } from '$modules/auth/presentation/auth.response';
+import { AuthResponseSchemas } from '$modules/auth/presentation/auth.response';
 import { errorPlugin } from '$shared/http/plugin/error.plugin';
-import { createApiSuccessResponseSchema } from '$shared/responses/api-response';
+import {
+  ApiErrorResponseSchema,
+  createApiSuccessResponseSchema,
+} from '$shared/responses/api-response';
 import { ApiResponseBuilder } from '$shared/responses/api-response-builder';
 
 import { AuthHttpModel } from './auth.http-model';
@@ -43,6 +46,15 @@ export function createAuthController(deps: AuthControllerDependencies) {
             summary: 'Sign Up User',
             security: [],
           },
+          response: {
+            201: createApiSuccessResponseSchema(AuthResponseSchemas.signUp),
+            400: ApiErrorResponseSchema.meta({
+              description: 'Invalid input or missing required fields',
+            }),
+            409: ApiErrorResponseSchema.meta({
+              description: 'User already exists',
+            }),
+          },
         },
       )
       // POST /auth/sign-in
@@ -59,6 +71,15 @@ export function createAuthController(deps: AuthControllerDependencies) {
             summary: 'Sign In User',
             security: [],
           },
+          response: {
+            200: createApiSuccessResponseSchema(AuthResponseSchemas.signIn),
+            400: ApiErrorResponseSchema.meta({
+              description: 'Invalid input or missing required fields',
+            }),
+            401: ApiErrorResponseSchema.meta({
+              description: 'Invalid username or password',
+            }),
+          },
         },
       )
       // 액세스 토큰 검증 필요 라우터
@@ -69,16 +90,19 @@ export function createAuthController(deps: AuthControllerDependencies) {
         async ({ authUser }) => {
           const result = await deps.meHandler.excute(authUser);
 
-          console.log(result);
-
           return ApiResponseBuilder.success(result);
         },
         {
           detail: {
             summary: 'Get Current User',
+            description:
+              'Retrieves the profile information of the currently authenticated user.',
           },
           response: {
-            200: createApiSuccessResponseSchema(AuthResponse.me),
+            200: createApiSuccessResponseSchema(AuthResponseSchemas.me),
+            404: ApiErrorResponseSchema.meta({
+              description: 'User not found',
+            }),
           },
         },
       )

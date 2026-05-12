@@ -1,10 +1,19 @@
 import { z } from 'zod';
 
-export const AuthResponse = {
-  signUp: z.object({}),
-  signIn: z.object({}),
+export const AuthResponseSchemas = {
+  signUp: z.object({
+    id: z.uuidv7(),
+  }),
+  signIn: z.object({
+    accessToken: z.jwt(),
+    user: z.object({
+      id: z.uuidv7(),
+      email: z.email(),
+      name: z.string(),
+    }),
+  }),
   me: z.object({
-    id: z.string(),
+    id: z.uuidv7(),
     email: z.email(),
     name: z.string(),
   }),

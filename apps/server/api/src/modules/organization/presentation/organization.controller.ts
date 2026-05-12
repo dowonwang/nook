@@ -2,7 +2,12 @@ import { Elysia } from 'elysia';
 
 import { authGuard } from '$modules/auth';
 import { OrganizationHttpModel } from '$modules/organization/presentation/organization.http-model';
+import { OrganizationResponseSchemas } from '$modules/organization/presentation/organization.response';
 import { errorPlugin } from '$shared/http/plugin/error.plugin';
+import {
+  ApiErrorResponseSchema,
+  createApiSuccessResponseSchema,
+} from '$shared/responses/api-response';
 import { ApiResponseBuilder } from '$shared/responses/api-response-builder';
 
 import type { AddMemberHandler } from '$modules/organization/application/commands/add-member/add-member.handler';
@@ -40,9 +45,19 @@ export function createOrganizationController(deps: OrganizationDependencies) {
         },
         {
           body: OrganizationHttpModel.create,
-          response: {},
           detail: {
             summary: 'Create Organization',
+          },
+          response: {
+            201: createApiSuccessResponseSchema(
+              OrganizationResponseSchemas.create,
+            ),
+            404: ApiErrorResponseSchema.meta({
+              description: 'Invalid data or missing required fields',
+            }),
+            409: ApiErrorResponseSchema.meta({
+              description: 'Organization name already exists',
+            }),
           },
         },
       )
@@ -64,6 +79,23 @@ export function createOrganizationController(deps: OrganizationDependencies) {
           body: OrganizationHttpModel.addMember,
           detail: {
             summary: 'Add Members',
+          },
+          response: {
+            201: createApiSuccessResponseSchema(
+              OrganizationResponseSchemas.addMembers,
+            ),
+            400: ApiErrorResponseSchema.meta({
+              description: 'Invalid data or missing required fields',
+            }),
+            403: ApiErrorResponseSchema.meta({
+              description: 'Member cannot be added to this organization',
+            }),
+            404: ApiErrorResponseSchema.meta({
+              description: 'Organization not found',
+            }),
+            409: ApiErrorResponseSchema.meta({
+              description: 'Member already exists in the organization',
+            }),
           },
         },
       )
