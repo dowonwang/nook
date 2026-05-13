@@ -1,6 +1,6 @@
 import { getImageProps } from 'next/image';
 
-import { getBackgroundImage } from '$/utils/image';
+import { getBackgroundImage } from '$shared/lib/image';
 
 interface Props {
   height?: number;

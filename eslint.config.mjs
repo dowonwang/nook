@@ -63,6 +63,16 @@ export default defineConfig(
 
           pathGroups: [
             {
+              pattern: '@*/**/*.css',
+              group: 'builtin',
+              position: 'before',
+            },
+            {
+              pattern: '$*/**/*.css',
+              group: 'builtin',
+              position: 'before',
+            },
+            {
               pattern: '**/*.css',
               group: 'builtin',
               position: 'before',

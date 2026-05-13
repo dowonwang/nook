@@ -8,7 +8,7 @@ import { Button } from '@packages/ui/components/button';
 import dayjs from 'dayjs';
 import { Bell } from 'lucide-react';
 
-export default function AppHeader() {
+export function PrivateHeader() {
   const today = dayjs().format('dddd, MMM D');
 
   return (
@@ -22,7 +22,7 @@ export default function AppHeader() {
           <Bell />
         </Button>
 
-        <Avatar className=''>
+        <Avatar>
           <AvatarImage alt='profile' src='/' />
           <AvatarFallBack>Avatar</AvatarFallBack>
           <AvatarBody>

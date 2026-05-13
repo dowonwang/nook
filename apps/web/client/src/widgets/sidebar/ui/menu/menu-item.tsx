@@ -4,9 +4,12 @@ import { cn } from '@packages/ui/lib/cn';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-import type { MenuData } from '$components/menu/menu';
+export interface MenuData {
+  href: string;
+  title: string;
+}
 
-export default function MenuItem({ href, title }: MenuData) {
+export function MenuItem({ href, title }: MenuData) {
   const pathname = usePathname();
 
   return (
