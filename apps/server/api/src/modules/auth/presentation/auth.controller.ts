@@ -1,7 +1,12 @@
 import { Elysia } from 'elysia';
 
 import { authGuard } from '$modules/auth';
+import { AuthResponseSchemas } from '$modules/auth/presentation/auth.response';
 import { errorPlugin } from '$shared/http/plugin/error.plugin';
+import {
+  ApiErrorResponseSchema,
+  createApiSuccessResponseSchema,
+} from '$shared/responses/api-response';
 import { ApiResponseBuilder } from '$shared/responses/api-response-builder';
 
 import { AuthHttpModel } from './auth.http-model';
@@ -26,7 +31,6 @@ export function createAuthController(deps: AuthControllerDependencies) {
       },
     })
       .use(errorPlugin)
-      .model(AuthHttpModel)
       // POST /auth/sign-up
       .post(
         '/sign-up',
@@ -37,9 +41,19 @@ export function createAuthController(deps: AuthControllerDependencies) {
           return ApiResponseBuilder.success(result);
         },
         {
-          body: 'signUpBody',
+          body: AuthHttpModel.signUpBody,
           detail: {
             summary: 'Sign Up User',
+            security: [],
+          },
+          response: {
+            201: createApiSuccessResponseSchema(AuthResponseSchemas.signUp),
+            400: ApiErrorResponseSchema.meta({
+              description: 'Invalid input or missing required fields',
+            }),
+            409: ApiErrorResponseSchema.meta({
+              description: 'User already exists',
+            }),
           },
         },
       )
@@ -52,9 +66,19 @@ export function createAuthController(deps: AuthControllerDependencies) {
           return ApiResponseBuilder.success(result);
         },
         {
-          body: 'signInBody',
+          body: AuthHttpModel.signInBody,
           detail: {
             summary: 'Sign In User',
+            security: [],
+          },
+          response: {
+            200: createApiSuccessResponseSchema(AuthResponseSchemas.signIn),
+            400: ApiErrorResponseSchema.meta({
+              description: 'Invalid input or missing required fields',
+            }),
+            401: ApiErrorResponseSchema.meta({
+              description: 'Invalid username or password',
+            }),
           },
         },
       )
@@ -71,6 +95,14 @@ export function createAuthController(deps: AuthControllerDependencies) {
         {
           detail: {
             summary: 'Get Current User',
+            description:
+              'Retrieves the profile information of the currently authenticated user.',
+          },
+          response: {
+            200: createApiSuccessResponseSchema(AuthResponseSchemas.me),
+            404: ApiErrorResponseSchema.meta({
+              description: 'User not found',
+            }),
           },
         },
       )

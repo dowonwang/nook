@@ -129,6 +129,7 @@ export default defineConfig(
   },
 
   globalIgnores([
+    'packages/api-client/src/generated/**',
     '**/.next/**',
     '**/out/**',
     '**/build/**',

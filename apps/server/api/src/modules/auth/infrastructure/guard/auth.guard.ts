@@ -1,6 +1,7 @@
 import { Elysia } from 'elysia';
 
 import { UnauthorizedError } from '$shared/errors/common.erorr';
+import { ApiErrorResponseSchema } from '$shared/responses/api-response';
 
 import type { JwtTokenVerifier } from '$modules/auth/infrastructure/services/jwt-token-verifier';
 
@@ -10,6 +11,13 @@ export interface AuthUser {
 
 export function createAuthGuard(tokenVerifier: JwtTokenVerifier) {
   const authGuard = new Elysia({ name: 'auth.guard' })
+    .guard({
+      response: {
+        401: ApiErrorResponseSchema.meta({
+          description: 'Access token verification failed.',
+        }),
+      },
+    })
     .derive(async ({ headers }) => {
       const authorization = headers.authorization;
 

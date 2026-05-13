@@ -29,7 +29,6 @@ export const ApiResponseBuilder = {
     details,
   }: ApiErrorDetail & {
     requestId: ApiResponseMeta['requestId'];
-    userMessage?: string;
   }): ApiErrorResponse {
     return {
       success: false,

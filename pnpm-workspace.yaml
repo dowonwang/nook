@@ -8,6 +8,7 @@ catalog:
   elysia: ^1.4
   prisma: ^7.4.2
   typescript: ^5.9.3
+  zod: ^4.3.6
 
 catalogs:
   next16:

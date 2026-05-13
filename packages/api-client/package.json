@@ -1,0 +1,22 @@
+{
+  "name": "@packages/api-client",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "generate": "orval --config ./orval.config.ts",
+    "clean": "rm -rf ./src/generated"
+  },
+  "dependencies": {
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@types/node": "^25.3.5",
+    "orval": "^8.9.1",
+    "typescript": "catalog:"
+  },
+  "packageManager": "pnpm@10.30.3"
+}
