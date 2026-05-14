@@ -1,4 +1,4 @@
-import { PrivateLayout } from '$widgets/layouts/private-layout';
+import { PrivateLayout } from '$app/layouts';
 
 interface Props {
   children: React.ReactNode;

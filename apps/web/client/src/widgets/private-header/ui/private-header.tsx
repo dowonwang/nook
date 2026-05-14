@@ -2,7 +2,6 @@ import {
   Avatar,
   AvatarBody,
   AvatarFallBack,
-  AvatarImage,
 } from '@packages/ui/components/avatar';
 import { Button } from '@packages/ui/components/button';
 import dayjs from 'dayjs';
@@ -23,7 +22,6 @@ export function PrivateHeader() {
         </Button>
 
         <Avatar>
-          <AvatarImage alt='profile' src='/' />
           <AvatarFallBack>Avatar</AvatarFallBack>
           <AvatarBody>
             <span className='font-semibold'>User name</span>

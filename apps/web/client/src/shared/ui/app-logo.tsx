@@ -7,7 +7,7 @@ interface Props {
   width?: number;
 }
 
-export default function AppLogo({ height = 60, width = 60 }: Props) {
+export function AppLogo({ height = 60, width = 60 }: Props) {
   const appName = process.env.NEXT_PUBLIC_APP_NAME ?? 'App';
   const {
     props: { srcSet },

@@ -1,5 +1,5 @@
 import { PrivateHeader } from '$widgets/private-header';
-import { Sidebar } from '$widgets/sidebar/ui/sidebar';
+import { Sidebar } from '$widgets/sidebar';
 
 interface Props {
   children: React.ReactNode;

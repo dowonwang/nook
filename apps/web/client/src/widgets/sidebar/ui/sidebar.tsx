@@ -1,4 +1,4 @@
-import AppLogo from '$shared/ui/app-logo';
+import { AppLogo } from '$shared/ui';
 import { MENU_DATA } from '$widgets/sidebar/config/menu-data';
 import { Menu } from '$widgets/sidebar/ui/menu';
 
