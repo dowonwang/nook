@@ -26,5 +26,5 @@ export function HeroSectionTitle({ children }: { children: string }) {
 }
 
 export function HeroSectionDescription({ children }: { children: string }) {
-  return <p className='text-secondary-text mt-1 text-sm'>{children}</p>;
+  return <p className='text-secondary-foreground mt-1 text-sm'>{children}</p>;
 }

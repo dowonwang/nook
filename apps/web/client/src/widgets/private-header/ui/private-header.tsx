@@ -13,7 +13,7 @@ export function PrivateHeader() {
   return (
     <header className='bg-header border-border h-header flex items-center justify-between gap-4 border-b px-6'>
       <div>
-        <span className='text-secondary-text'>{today}</span>
+        <span className='text-secondary-foreground'>{today}</span>
       </div>
 
       <div className='flex items-center gap-4'>

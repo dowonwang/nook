@@ -1,3 +1,4 @@
+import { Footer } from '$widgets/footer';
 import { PrivateHeader } from '$widgets/private-header';
 import { Sidebar } from '$widgets/sidebar';
 
@@ -11,7 +12,8 @@ export function PrivateLayout({ children }: Props) {
       <Sidebar />
       <div className='flex min-w-0 flex-1 flex-col'>
         <PrivateHeader />
-        <main className='p-4 md:p-6 lg:p-8'>{children}</main>
+        <main className='flex-1 p-4 md:p-6 lg:p-8'>{children}</main>
+        <Footer />
       </div>
     </div>
   );

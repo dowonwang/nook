@@ -1,15 +1,9 @@
-import '@packages/ui/styles.css';
-
-import '$app/styles/global.css';
+import { AppLayout } from '$app/layouts';
 
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return (
-    <html lang='en'>
-      <body className='bg-background'>{children}</body>
-    </html>
-  );
+  return <AppLayout>{children}</AppLayout>;
 }
