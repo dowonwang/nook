@@ -1,5 +1,6 @@
 import { getImageProps } from 'next/image';
 
+import { ENV_CONFIG } from '$shared/config';
 import { getBackgroundImage } from '$shared/lib/image';
 
 interface Props {
@@ -8,7 +9,6 @@ interface Props {
 }
 
 export function AppLogo({ height = 60, width = 60 }: Props) {
-  const appName = process.env.NEXT_PUBLIC_APP_NAME ?? 'App';
   const {
     props: { srcSet },
   } = getImageProps({
@@ -29,7 +29,7 @@ export function AppLogo({ height = 60, width = 60 }: Props) {
 
   return (
     <div
-      aria-label={`${appName} Logo`}
+      aria-label={`${ENV_CONFIG.appName} Logo`}
       role='img'
       className='rounded-xl'
       style={style}

@@ -1,4 +1,4 @@
-import type { MenuData } from '$widgets/sidebar/ui/menu';
+import type { MenuData } from '$widgets/sidebar';
 
 export const MENU_DATA: MenuData[] = [
   { href: '/dashboard', title: 'Dashboard' },

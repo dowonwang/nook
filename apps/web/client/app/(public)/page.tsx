@@ -1,5 +1,5 @@
-import { Home } from '$pages/home';
+import { HomePage } from '$pages/home/ui/home';
 
 export default function Page() {
-  return <Home />;
+  return <HomePage />;
 }

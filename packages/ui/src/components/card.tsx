@@ -24,21 +24,24 @@ export function Card({
 export function CardHeader({
   children,
   action,
+  className,
+  ...rest
 }: {
   children?: React.ReactNode;
   action?: React.ReactNode;
-}) {
+} & React.HTMLAttributes<HTMLDivElement>) {
   const style = tw`border-border border-b px-5 py-4`;
 
   if (action) {
     return (
-      <div className={cn(style, 'flex items-center')}>
+      <div {...rest} className={cn(style, 'flex items-center', className)}>
+        {cn(style, 'flex items-center', className)}
         <div className='flex-1'>{children}</div>
         {action}
       </div>
     );
   }
-  return <div className={cn(style)}>{children}</div>;
+  return <div className={cn(style, className)}>{children}</div>;
 }
 
 export function CardBody({ children }: { children: React.ReactNode }) {

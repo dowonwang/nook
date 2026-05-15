@@ -1,18 +1,18 @@
 import { Button } from '@packages/ui/components/button';
 import { Moon } from 'lucide-react';
+import Link from 'next/link';
 
+import { ENV_CONFIG } from '$shared/config';
 import { AppLogo } from '$shared/ui';
 
 export function PublicHeader() {
-  const appName = process.env.NEXT_PUBLIC_APP_NAME ?? 'App';
-
   return (
     <header className='bg-header/80 h-header border-border sticky top-0 flex items-center overflow-hidden border-b backdrop-blur-md'>
       <div className='container mx-auto flex items-center justify-between'>
         <a href='/' className='flex items-center gap-3'>
           <AppLogo width={36} height={36} />
           <span className='text-lg font-semibold whitespace-nowrap'>
-            {appName}
+            {ENV_CONFIG.appName}
           </span>
         </a>
 
@@ -20,7 +20,9 @@ export function PublicHeader() {
           <Button variant='secondary' size='icon'>
             <Moon />
           </Button>
-          <Button variant='secondary'>Log in</Button>
+          <Button variant='secondary' asChild>
+            <Link href={'/login'}>Log in</Link>
+          </Button>
           <Button>Get Started</Button>
         </div>
       </div>

@@ -5,13 +5,13 @@ import {
   CardTitle,
 } from '@packages/ui/components/card';
 
-export function Home() {
-  const appName = process.env.NEXT_PUBLIC_APP_NAME ?? 'App';
+import { ENV_CONFIG } from '$shared/config';
 
+export function HomePage() {
   return (
     <div className='space-y-12'>
       <div className='space-y-4 text-center'>
-        <h1 className='text-3xl font-bold'>Welcome, {appName}</h1>
+        <h1 className='text-3xl font-bold'>Welcome, {ENV_CONFIG.appName}</h1>
         <p className='text-secondary-foreground text-lg'>description</p>
       </div>
 

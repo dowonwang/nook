@@ -1,3 +1,5 @@
+import { SignInPage } from '$pages/sign-in';
+
 export default function Page() {
-  return <div>login</div>;
+  return <SignInPage />;
 }
