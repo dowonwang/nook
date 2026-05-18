@@ -9,9 +9,9 @@ export type PostAuthSignUpBodyOne = {
   /** @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$ */
   email: string;
   /**
-     * @minLength 5
-     * @maxLength 20
-     */
+   * @minLength 5
+   * @maxLength 20
+   */
   name: string;
   password: string;
 };
@@ -20,9 +20,9 @@ export type PostAuthSignUpBodyTwo = {
   /** @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$ */
   email: string;
   /**
-     * @minLength 5
-     * @maxLength 20
-     */
+   * @minLength 5
+   * @maxLength 20
+   */
   name: string;
   password: string;
 };
@@ -31,9 +31,9 @@ export type PostAuthSignUpBodyThree = {
   /** @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$ */
   email: string;
   /**
-     * @minLength 5
-     * @maxLength 20
-     */
+   * @minLength 5
+   * @maxLength 20
+   */
   name: string;
   password: string;
 };
@@ -335,8 +335,8 @@ export type PostOrganization409 = {
   meta: PostOrganization409Meta;
 };
 
-export type PostOrganizationAddMembersBodyOneMembersItemRole = typeof PostOrganizationAddMembersBodyOneMembersItemRole[keyof typeof PostOrganizationAddMembersBodyOneMembersItemRole];
-
+export type PostOrganizationAddMembersBodyOneMembersItemRole =
+  (typeof PostOrganizationAddMembersBodyOneMembersItemRole)[keyof typeof PostOrganizationAddMembersBodyOneMembersItemRole];
 
 export const PostOrganizationAddMembersBodyOneMembersItemRole = {
   ADMIN: 'ADMIN',
@@ -356,8 +356,8 @@ export type PostOrganizationAddMembersBodyOne = {
   members: PostOrganizationAddMembersBodyOneMembersItem[];
 };
 
-export type PostOrganizationAddMembersBodyTwoMembersItemRole = typeof PostOrganizationAddMembersBodyTwoMembersItemRole[keyof typeof PostOrganizationAddMembersBodyTwoMembersItemRole];
-
+export type PostOrganizationAddMembersBodyTwoMembersItemRole =
+  (typeof PostOrganizationAddMembersBodyTwoMembersItemRole)[keyof typeof PostOrganizationAddMembersBodyTwoMembersItemRole];
 
 export const PostOrganizationAddMembersBodyTwoMembersItemRole = {
   ADMIN: 'ADMIN',
@@ -377,8 +377,8 @@ export type PostOrganizationAddMembersBodyTwo = {
   members: PostOrganizationAddMembersBodyTwoMembersItem[];
 };
 
-export type PostOrganizationAddMembersBodyThreeMembersItemRole = typeof PostOrganizationAddMembersBodyThreeMembersItemRole[keyof typeof PostOrganizationAddMembersBodyThreeMembersItemRole];
-
+export type PostOrganizationAddMembersBodyThreeMembersItemRole =
+  (typeof PostOrganizationAddMembersBodyThreeMembersItemRole)[keyof typeof PostOrganizationAddMembersBodyThreeMembersItemRole];
 
 export const PostOrganizationAddMembersBodyThreeMembersItemRole = {
   ADMIN: 'ADMIN',
@@ -518,4 +518,3 @@ export type PostOrganizationAddMembers409 = {
   error: PostOrganizationAddMembers409Error;
   meta: PostOrganizationAddMembers409Meta;
 };
-

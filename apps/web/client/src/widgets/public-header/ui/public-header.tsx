@@ -7,7 +7,7 @@ import { AppLogo } from '$shared/ui';
 
 export function PublicHeader() {
   return (
-    <header className='bg-header/80 h-header border-border sticky top-0 flex items-center overflow-hidden border-b backdrop-blur-md'>
+    <header className='bg-header/80 h-header border-border sticky top-0 flex items-center overflow-hidden border-b px-4 backdrop-blur-md'>
       <div className='container mx-auto flex items-center justify-between'>
         <a href='/' className='flex items-center gap-3'>
           <AppLogo width={36} height={36} />

@@ -28,6 +28,7 @@
   /* 색상 변수 */
   --color-background: #fafbf9;
   --color-border: #f5f4f0;
+  --color-focus: #388e3c;
 
   /* shadow */
   --shadow-soft: 0 2px 12px rgba(0, 0, 0, 0.05);
@@ -49,5 +50,13 @@
 
   button {
     @apply cursor-pointer;
+  }
+
+  *:focus {
+    @apply outline-focus;
+  }
+
+  *:focus-visible {
+    @apply outline-focus;
   }
 }

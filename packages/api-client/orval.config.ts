@@ -3,12 +3,15 @@ import { defineConfig } from 'orval';
 export default defineConfig({
   api: {
     input: {
-      target: 'http://localhost:3000/openapi/json',
+      target: 'http://localhost:4000/openapi/json',
     },
     output: {
       mode: 'tags-split',
       target: './src/generated/api.ts',
-      client: 'fetch',
+      client: 'react-query',
+      httpClient: 'fetch',
+      clean: true,
+      formatter: 'prettier',
     },
   },
 });
