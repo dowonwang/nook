@@ -154,6 +154,9 @@ importers:
       react-dom:
         specifier: catalog:next16
         version: 19.2.4(react@19.2.4)
+      zod:
+        specifier: 'catalog:'
+        version: 4.3.6
     devDependencies:
       '@tailwindcss/postcss':
         specifier: ^4.2.4
@@ -173,9 +176,6 @@ importers:
 
   packages/api-client:
     dependencies:
-      '@tanstack/react-query':
-        specifier: ^5
-        version: 5.100.10(react@19.2.4)
       zod:
         specifier: 'catalog:'
         version: 4.3.6

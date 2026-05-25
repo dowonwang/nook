@@ -1,3 +1,5 @@
+'use client';
+
 import { Button } from '@packages/ui/components/button';
 import {
   Field,
@@ -10,8 +12,10 @@ import { Separator } from '@packages/ui/components/separator';
 import Link from 'next/link';
 
 export function SignInForm() {
+  // const handleSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {};
+
   return (
-    <form action=''>
+    <form method='POST'>
       <FieldGroup>
         <Field>
           <FieldLabel htmlFor='email'>Email</FieldLabel>
