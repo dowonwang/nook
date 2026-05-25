@@ -139,7 +139,7 @@ export default defineConfig(
   },
 
   globalIgnores([
-    'packages/api-client/src/generated/**',
+    'packages/api-client/src/**',
     '**/.next/**',
     '**/out/**',
     '**/build/**',

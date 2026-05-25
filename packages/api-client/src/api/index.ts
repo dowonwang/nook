@@ -5,29 +5,7 @@
  * Development documentation
  * OpenAPI spec version: 0.0.0
  */
-export type PostAuthSignUpBodyOne = {
-  /** @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$ */
-  email: string;
-  /**
-   * @minLength 5
-   * @maxLength 20
-   */
-  name: string;
-  password: string;
-};
-
-export type PostAuthSignUpBodyTwo = {
-  /** @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$ */
-  email: string;
-  /**
-   * @minLength 5
-   * @maxLength 20
-   */
-  name: string;
-  password: string;
-};
-
-export type PostAuthSignUpBodyThree = {
+export type PostAuthSignUpBody = {
   /** @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$ */
   email: string;
   /**
@@ -97,19 +75,7 @@ export type PostAuthSignUp409 = {
   meta: PostAuthSignUp409Meta;
 };
 
-export type PostAuthSignInBodyOne = {
-  /** @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$ */
-  email: string;
-  password: string;
-};
-
-export type PostAuthSignInBodyTwo = {
-  /** @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$ */
-  email: string;
-  password: string;
-};
-
-export type PostAuthSignInBodyThree = {
+export type PostAuthSignInBody = {
   /** @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$ */
   email: string;
   password: string;
@@ -244,15 +210,7 @@ export type GetAuthMe404 = {
   meta: GetAuthMe404Meta;
 };
 
-export type PostOrganizationBodyOne = {
-  title: string;
-};
-
-export type PostOrganizationBodyTwo = {
-  title: string;
-};
-
-export type PostOrganizationBodyThree = {
+export type PostOrganizationBody = {
   title: string;
 };
 
@@ -335,67 +293,25 @@ export type PostOrganization409 = {
   meta: PostOrganization409Meta;
 };
 
-export type PostOrganizationAddMembersBodyOneMembersItemRole =
-  (typeof PostOrganizationAddMembersBodyOneMembersItemRole)[keyof typeof PostOrganizationAddMembersBodyOneMembersItemRole];
+export type PostOrganizationAddMembersBodyMembersItemRole =
+  (typeof PostOrganizationAddMembersBodyMembersItemRole)[keyof typeof PostOrganizationAddMembersBodyMembersItemRole];
 
-export const PostOrganizationAddMembersBodyOneMembersItemRole = {
+export const PostOrganizationAddMembersBodyMembersItemRole = {
   ADMIN: 'ADMIN',
   MAINTAINER: 'MAINTAINER',
   MEMBER: 'MEMBER',
 } as const;
 
-export type PostOrganizationAddMembersBodyOneMembersItem = {
+export type PostOrganizationAddMembersBodyMembersItem = {
   /** @pattern ^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-7[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12})$ */
   userId: string;
-  role: PostOrganizationAddMembersBodyOneMembersItemRole;
+  role: PostOrganizationAddMembersBodyMembersItemRole;
 };
 
-export type PostOrganizationAddMembersBodyOne = {
+export type PostOrganizationAddMembersBody = {
   /** @pattern ^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-7[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12})$ */
   organizationId: string;
-  members: PostOrganizationAddMembersBodyOneMembersItem[];
-};
-
-export type PostOrganizationAddMembersBodyTwoMembersItemRole =
-  (typeof PostOrganizationAddMembersBodyTwoMembersItemRole)[keyof typeof PostOrganizationAddMembersBodyTwoMembersItemRole];
-
-export const PostOrganizationAddMembersBodyTwoMembersItemRole = {
-  ADMIN: 'ADMIN',
-  MAINTAINER: 'MAINTAINER',
-  MEMBER: 'MEMBER',
-} as const;
-
-export type PostOrganizationAddMembersBodyTwoMembersItem = {
-  /** @pattern ^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-7[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12})$ */
-  userId: string;
-  role: PostOrganizationAddMembersBodyTwoMembersItemRole;
-};
-
-export type PostOrganizationAddMembersBodyTwo = {
-  /** @pattern ^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-7[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12})$ */
-  organizationId: string;
-  members: PostOrganizationAddMembersBodyTwoMembersItem[];
-};
-
-export type PostOrganizationAddMembersBodyThreeMembersItemRole =
-  (typeof PostOrganizationAddMembersBodyThreeMembersItemRole)[keyof typeof PostOrganizationAddMembersBodyThreeMembersItemRole];
-
-export const PostOrganizationAddMembersBodyThreeMembersItemRole = {
-  ADMIN: 'ADMIN',
-  MAINTAINER: 'MAINTAINER',
-  MEMBER: 'MEMBER',
-} as const;
-
-export type PostOrganizationAddMembersBodyThreeMembersItem = {
-  /** @pattern ^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-7[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12})$ */
-  userId: string;
-  role: PostOrganizationAddMembersBodyThreeMembersItemRole;
-};
-
-export type PostOrganizationAddMembersBodyThree = {
-  /** @pattern ^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-7[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12})$ */
-  organizationId: string;
-  members: PostOrganizationAddMembersBodyThreeMembersItem[];
+  members: PostOrganizationAddMembersBodyMembersItem[];
 };
 
 export type PostOrganizationAddMembers201Data = {
@@ -517,4 +433,314 @@ export type PostOrganizationAddMembers409 = {
   data: unknown | null;
   error: PostOrganizationAddMembers409Error;
   meta: PostOrganizationAddMembers409Meta;
+};
+
+export type postAuthSignUpResponse201 = {
+  data: PostAuthSignUp201;
+  status: 201;
+};
+
+export type postAuthSignUpResponse400 = {
+  data: PostAuthSignUp400;
+  status: 400;
+};
+
+export type postAuthSignUpResponse409 = {
+  data: PostAuthSignUp409;
+  status: 409;
+};
+
+export type postAuthSignUpResponseSuccess = postAuthSignUpResponse201 & {
+  headers: Headers;
+};
+export type postAuthSignUpResponseError = (
+  | postAuthSignUpResponse400
+  | postAuthSignUpResponse409
+) & {
+  headers: Headers;
+};
+
+export type postAuthSignUpResponse =
+  | postAuthSignUpResponseSuccess
+  | postAuthSignUpResponseError;
+
+export const getPostAuthSignUpUrl = () => {
+  return `/auth/sign-up`;
+};
+
+/**
+ * @summary Sign Up User
+ */
+export const postAuthSignUp = async (
+  postAuthSignUpBody: PostAuthSignUpBody,
+  options?: RequestInit,
+): Promise<postAuthSignUpResponse> => {
+  const res = await fetch(getPostAuthSignUpUrl(), {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(postAuthSignUpBody),
+  });
+
+  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
+
+  const data: postAuthSignUpResponse['data'] = body ? JSON.parse(body) : {};
+  return {
+    data,
+    status: res.status,
+    headers: res.headers,
+  } as postAuthSignUpResponse;
+};
+
+export type postAuthSignInResponse200 = {
+  data: PostAuthSignIn200;
+  status: 200;
+};
+
+export type postAuthSignInResponse400 = {
+  data: PostAuthSignIn400;
+  status: 400;
+};
+
+export type postAuthSignInResponse401 = {
+  data: PostAuthSignIn401;
+  status: 401;
+};
+
+export type postAuthSignInResponseSuccess = postAuthSignInResponse200 & {
+  headers: Headers;
+};
+export type postAuthSignInResponseError = (
+  | postAuthSignInResponse400
+  | postAuthSignInResponse401
+) & {
+  headers: Headers;
+};
+
+export type postAuthSignInResponse =
+  | postAuthSignInResponseSuccess
+  | postAuthSignInResponseError;
+
+export const getPostAuthSignInUrl = () => {
+  return `/auth/sign-in`;
+};
+
+/**
+ * @summary Sign In User
+ */
+export const postAuthSignIn = async (
+  postAuthSignInBody: PostAuthSignInBody,
+  options?: RequestInit,
+): Promise<postAuthSignInResponse> => {
+  const res = await fetch(getPostAuthSignInUrl(), {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(postAuthSignInBody),
+  });
+
+  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
+
+  const data: postAuthSignInResponse['data'] = body ? JSON.parse(body) : {};
+  return {
+    data,
+    status: res.status,
+    headers: res.headers,
+  } as postAuthSignInResponse;
+};
+
+export type getAuthMeResponse200 = {
+  data: GetAuthMe200;
+  status: 200;
+};
+
+export type getAuthMeResponse401 = {
+  data: GetAuthMe401;
+  status: 401;
+};
+
+export type getAuthMeResponse404 = {
+  data: GetAuthMe404;
+  status: 404;
+};
+
+export type getAuthMeResponseSuccess = getAuthMeResponse200 & {
+  headers: Headers;
+};
+export type getAuthMeResponseError = (
+  | getAuthMeResponse401
+  | getAuthMeResponse404
+) & {
+  headers: Headers;
+};
+
+export type getAuthMeResponse =
+  | getAuthMeResponseSuccess
+  | getAuthMeResponseError;
+
+export const getGetAuthMeUrl = () => {
+  return `/auth/me`;
+};
+
+/**
+ * Retrieves the profile information of the currently authenticated user.
+ * @summary Get Current User
+ */
+export const getAuthMe = async (
+  options?: RequestInit,
+): Promise<getAuthMeResponse> => {
+  const res = await fetch(getGetAuthMeUrl(), {
+    ...options,
+    method: 'GET',
+  });
+
+  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
+
+  const data: getAuthMeResponse['data'] = body ? JSON.parse(body) : {};
+  return {
+    data,
+    status: res.status,
+    headers: res.headers,
+  } as getAuthMeResponse;
+};
+
+export type postOrganizationResponse201 = {
+  data: PostOrganization201;
+  status: 201;
+};
+
+export type postOrganizationResponse401 = {
+  data: PostOrganization401;
+  status: 401;
+};
+
+export type postOrganizationResponse404 = {
+  data: PostOrganization404;
+  status: 404;
+};
+
+export type postOrganizationResponse409 = {
+  data: PostOrganization409;
+  status: 409;
+};
+
+export type postOrganizationResponseSuccess = postOrganizationResponse201 & {
+  headers: Headers;
+};
+export type postOrganizationResponseError = (
+  | postOrganizationResponse401
+  | postOrganizationResponse404
+  | postOrganizationResponse409
+) & {
+  headers: Headers;
+};
+
+export type postOrganizationResponse =
+  | postOrganizationResponseSuccess
+  | postOrganizationResponseError;
+
+export const getPostOrganizationUrl = () => {
+  return `/organization/`;
+};
+
+/**
+ * @summary Create Organization
+ */
+export const postOrganization = async (
+  postOrganizationBody: PostOrganizationBody,
+  options?: RequestInit,
+): Promise<postOrganizationResponse> => {
+  const res = await fetch(getPostOrganizationUrl(), {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(postOrganizationBody),
+  });
+
+  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
+
+  const data: postOrganizationResponse['data'] = body ? JSON.parse(body) : {};
+  return {
+    data,
+    status: res.status,
+    headers: res.headers,
+  } as postOrganizationResponse;
+};
+
+export type postOrganizationAddMembersResponse201 = {
+  data: PostOrganizationAddMembers201;
+  status: 201;
+};
+
+export type postOrganizationAddMembersResponse400 = {
+  data: PostOrganizationAddMembers400;
+  status: 400;
+};
+
+export type postOrganizationAddMembersResponse401 = {
+  data: PostOrganizationAddMembers401;
+  status: 401;
+};
+
+export type postOrganizationAddMembersResponse403 = {
+  data: PostOrganizationAddMembers403;
+  status: 403;
+};
+
+export type postOrganizationAddMembersResponse404 = {
+  data: PostOrganizationAddMembers404;
+  status: 404;
+};
+
+export type postOrganizationAddMembersResponse409 = {
+  data: PostOrganizationAddMembers409;
+  status: 409;
+};
+
+export type postOrganizationAddMembersResponseSuccess =
+  postOrganizationAddMembersResponse201 & {
+    headers: Headers;
+  };
+export type postOrganizationAddMembersResponseError = (
+  | postOrganizationAddMembersResponse400
+  | postOrganizationAddMembersResponse401
+  | postOrganizationAddMembersResponse403
+  | postOrganizationAddMembersResponse404
+  | postOrganizationAddMembersResponse409
+) & {
+  headers: Headers;
+};
+
+export type postOrganizationAddMembersResponse =
+  | postOrganizationAddMembersResponseSuccess
+  | postOrganizationAddMembersResponseError;
+
+export const getPostOrganizationAddMembersUrl = () => {
+  return `/organization/add-members`;
+};
+
+/**
+ * @summary Add Members
+ */
+export const postOrganizationAddMembers = async (
+  postOrganizationAddMembersBody: PostOrganizationAddMembersBody,
+  options?: RequestInit,
+): Promise<postOrganizationAddMembersResponse> => {
+  const res = await fetch(getPostOrganizationAddMembersUrl(), {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(postOrganizationAddMembersBody),
+  });
+
+  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
+
+  const data: postOrganizationAddMembersResponse['data'] = body
+    ? JSON.parse(body)
+    : {};
+  return {
+    data,
+    status: res.status,
+    headers: res.headers,
+  } as postOrganizationAddMembersResponse;
 };
