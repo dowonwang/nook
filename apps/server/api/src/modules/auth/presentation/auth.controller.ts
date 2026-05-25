@@ -41,6 +41,7 @@ export function createAuthController(deps: AuthControllerDependencies) {
           return ApiResponseBuilder.success(result);
         },
         {
+          parse: 'application/json',
           body: AuthHttpModel.signUpBody,
           detail: {
             summary: 'Sign Up User',
@@ -66,6 +67,7 @@ export function createAuthController(deps: AuthControllerDependencies) {
           return ApiResponseBuilder.success(result);
         },
         {
+          parse: 'application/json',
           body: AuthHttpModel.signInBody,
           detail: {
             summary: 'Sign In User',
@@ -93,6 +95,7 @@ export function createAuthController(deps: AuthControllerDependencies) {
           return ApiResponseBuilder.success(result);
         },
         {
+          parse: 'application/json',
           detail: {
             summary: 'Get Current User',
             description:

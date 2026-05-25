@@ -44,6 +44,7 @@ export function createOrganizationController(deps: OrganizationDependencies) {
           });
         },
         {
+          parse: 'application/json',
           body: OrganizationHttpModel.create,
           detail: {
             summary: 'Create Organization',
@@ -76,6 +77,7 @@ export function createOrganizationController(deps: OrganizationDependencies) {
           });
         },
         {
+          parse: 'application/json',
           body: OrganizationHttpModel.addMember,
           detail: {
             summary: 'Add Members',
