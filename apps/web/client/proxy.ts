@@ -1,13 +1,11 @@
-import { NextResponse } from 'next/server';
+import { handleRequest } from '$app/proxy';
 
 import type { NextRequest, ProxyConfig } from 'next/server';
 
 export function proxy(request: NextRequest) {
-  console.log('proxy:', request.nextUrl.pathname);
-
-  return NextResponse.next();
+  return handleRequest(request);
 }
 
 export const config: ProxyConfig = {
-  matcher: '/',
+  matcher: ['/api/:path*'],
 };

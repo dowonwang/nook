@@ -5,13 +5,15 @@ import {
   CardTitle,
 } from '@packages/ui/components/card';
 
-import { ENV_CONFIG } from '$shared/config';
+import { CLIENT_ENV_CONFIG } from '$shared/config';
 
 export function HomePage() {
   return (
     <div className='space-y-12'>
       <div className='space-y-4 text-center'>
-        <h1 className='text-3xl font-bold'>Welcome, {ENV_CONFIG.appName}</h1>
+        <h1 className='text-3xl font-bold'>
+          Welcome, {CLIENT_ENV_CONFIG.APP_NAME}
+        </h1>
         <p className='text-secondary-foreground text-lg'>description</p>
       </div>
 

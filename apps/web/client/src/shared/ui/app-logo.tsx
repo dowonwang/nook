@@ -1,6 +1,6 @@
 import { getImageProps } from 'next/image';
 
-import { ENV_CONFIG } from '$shared/config';
+import { CLIENT_ENV_CONFIG } from '$shared/config';
 import { getBackgroundImage } from '$shared/lib/image';
 
 interface Props {
@@ -29,7 +29,7 @@ export function AppLogo({ height = 60, width = 60 }: Props) {
 
   return (
     <div
-      aria-label={`${ENV_CONFIG.appName} Logo`}
+      aria-label={`${CLIENT_ENV_CONFIG.APP_NAME} Logo`}
       role='img'
       className='rounded-xl'
       style={style}

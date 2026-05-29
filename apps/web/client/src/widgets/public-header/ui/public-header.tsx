@@ -2,7 +2,7 @@ import { Button } from '@packages/ui/components/button';
 import { Moon } from 'lucide-react';
 import Link from 'next/link';
 
-import { ENV_CONFIG } from '$shared/config';
+import { CLIENT_ENV_CONFIG } from '$shared/config';
 import { AppLogo } from '$shared/ui';
 
 export function PublicHeader() {
@@ -12,7 +12,7 @@ export function PublicHeader() {
         <a href='/' className='flex items-center gap-3'>
           <AppLogo width={36} height={36} />
           <span className='text-lg font-semibold whitespace-nowrap'>
-            {ENV_CONFIG.appName}
+            {CLIENT_ENV_CONFIG.APP_NAME}
           </span>
         </a>
 
