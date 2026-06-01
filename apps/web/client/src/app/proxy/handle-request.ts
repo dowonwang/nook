@@ -6,8 +6,6 @@ import {
   isAllowedOrigin,
   isSupportedProxyMethod,
   resolveRequestContentType,
-  shouldValidateCsrf,
-  vaildateCsrfToken,
 } from '$shared/api/proxy';
 
 import type { NextRequest } from 'next/server';
@@ -43,20 +41,20 @@ export function handleRequest(request: NextRequest) {
     );
   }
 
-  if (
-    shouldValidateCsrf(request.method) &&
-    !vaildateCsrfToken(request.headers)
-  ) {
-    return NextResponse.json(
-      {
-        message: 'Invalid CSRF token',
-      },
-      {
-        status: 403,
-        headers: corsHeaders,
-      },
-    );
-  }
+  // if (
+  //   shouldValidateCsrf(request.method) &&
+  //   !vaildateCsrfToken(request.headers)
+  // ) {
+  //   return NextResponse.json(
+  //     {
+  //       message: 'Invalid CSRF token',
+  //     },
+  //     {
+  //       status: 403,
+  //       headers: corsHeaders,
+  //     },
+  //   );
+  // }
 
   if (canHaveRequestBody(request.method)) {
     const contentType = resolveRequestContentType(request.headers);

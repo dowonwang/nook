@@ -10,16 +10,30 @@ import {
 import { Input } from '@packages/ui/components/input';
 import { Separator } from '@packages/ui/components/separator';
 import Link from 'next/link';
+import { useActionState } from 'react';
+
+import { signInAction } from '$features/auth/sign-in/api';
 
 export function SignInForm() {
-  // const handleSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {};
+  const [actionState, formAction] = useActionState(signInAction, {
+    success: false,
+    error: null,
+    state: { email: '' },
+  });
+
+  console.log(actionState);
 
   return (
-    <form method='POST'>
+    <form action={formAction}>
       <FieldGroup>
         <Field>
           <FieldLabel htmlFor='email'>Email</FieldLabel>
-          <Input id='email' type='email' name='email' />
+          <Input
+            id='email'
+            type='email'
+            name='email'
+            defaultValue={actionState.state.email}
+          />
           <FieldDescription></FieldDescription>
         </Field>
 
