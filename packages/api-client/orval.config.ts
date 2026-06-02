@@ -26,6 +26,16 @@ export default defineConfig({
       clean: true,
       formatter: 'prettier',
       indexFiles: true,
+      override: {
+        zod: {
+          preprocess: {
+            body: {
+              path: './src/zod/preprocess.ts',
+              name: 'zodPreprocess',
+            },
+          },
+        },
+      },
     },
   },
 });

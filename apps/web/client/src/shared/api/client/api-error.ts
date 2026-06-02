@@ -10,11 +10,12 @@ export interface ApiValidationErrorResponse {
   };
 }
 
+export const ValidationErrorCode = 'VALIDATION_ERROR';
+
 export class ApiValidationError extends Error {
-  readonly code = 'VALIDATION_ERROR';
+  readonly code = ValidationErrorCode;
   readonly status: number;
   readonly details: ValidationFieldError[];
-
   constructor(input: {
     status: number;
     details: ValidationFieldError[];

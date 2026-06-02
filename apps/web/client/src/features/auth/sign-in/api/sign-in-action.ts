@@ -1,6 +1,10 @@
 import { ApiValidationError, clientFetcher } from '$shared/api/client';
+import { createActionStateBuilder } from '$shared/lib/action-state';
 
-import type { SignInActionState } from '$features/auth/sign-in/model/sign-in';
+import type {
+  SignInActionState,
+  SignInResponse,
+} from '$features/auth/sign-in/model';
 
 export async function signInAction(
   _previousState: SignInActionState,
@@ -14,7 +18,7 @@ export async function signInAction(
     typeof passwordValue === 'string' ? passwordValue.trim() : '';
 
   try {
-    await clientFetcher({
+    await clientFetcher<SignInResponse>({
       path: '/api/auth',
       method: 'POST',
       body: {
@@ -23,24 +27,22 @@ export async function signInAction(
       },
     });
 
-    return {
-      success: true,
-      state: { email: '' },
-      error: null,
-    };
+    return createActionStateBuilder.success({ email });
   } catch (error) {
     if (error instanceof ApiValidationError) {
-      return {
-        success: false,
-        state: { email },
-        error: error.details,
-      };
+      return createActionStateBuilder.error(
+        {
+          email,
+        },
+        {
+          code: error.code,
+          details: error.details,
+        },
+      );
     }
 
-    return {
-      state: { email },
-      success: false,
-      error: null,
-    };
+    return createActionStateBuilder.error({
+      email,
+    });
   }
 }
