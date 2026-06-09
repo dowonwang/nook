@@ -28,13 +28,18 @@ export default defineConfig({
       indexFiles: true,
       override: {
         zod: {
-          preprocess: {
-            body: {
-              path: './src/zod/preprocess.ts',
-              name: 'zodPreprocess',
-            },
+          params: {
+            path: './src/lib/zod-params.ts',
+            name: 'zodParams',
           },
         },
+      },
+    },
+    hooks: {
+      afterAllFilesWrite: {
+        command:
+          'pnpm tsx --tsconfig ./tsconfig.json ./src/lib/generate-validation-i18n.ts',
+        injectGeneratedDirsAndFiles: false,
       },
     },
   },

@@ -1,10 +1,13 @@
-import { ApiValidationError, clientFetcher } from '$shared/api/client';
-import { createActionStateBuilder } from '$shared/lib/action-state';
+import { ZodError } from 'zod';
 
-import type {
-  SignInActionState,
-  SignInResponse,
+import {
+  signInSchema,
+  type SignInActionState,
+  type SignInResponse,
 } from '$features/auth/sign-in/model';
+import { ApiValidationError, clientFetcher } from '$shared/api/client';
+import { ValidationErrorCode } from '$shared/api/client/api-error';
+import { createActionStateBuilder } from '$shared/lib/action-state';
 
 export async function signInAction(
   _previousState: SignInActionState,
@@ -18,13 +21,15 @@ export async function signInAction(
     typeof passwordValue === 'string' ? passwordValue.trim() : '';
 
   try {
+    const parsed = signInSchema.parse({
+      email,
+      password,
+    });
+
     await clientFetcher<SignInResponse>({
       path: '/api/auth',
       method: 'POST',
-      body: {
-        email,
-        password,
-      },
+      body: parsed,
     });
 
     return createActionStateBuilder.success({ email });
@@ -37,6 +42,18 @@ export async function signInAction(
         {
           code: error.code,
           details: error.details,
+        },
+      );
+    }
+
+    if (error instanceof ZodError) {
+      return createActionStateBuilder.error(
+        {
+          email,
+        },
+        {
+          code: ValidationErrorCode,
+          details: error.issues,
         },
       );
     }
