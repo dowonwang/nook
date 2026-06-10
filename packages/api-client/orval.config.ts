@@ -20,8 +20,8 @@ export default defineConfig({
       target: 'http://localhost:4000/openapi/json',
     },
     output: {
-      mode: 'single',
-      target: './src/schema/index.ts',
+      mode: 'tags',
+      target: './src/schema',
       client: 'zod',
       clean: true,
       formatter: 'prettier',
@@ -33,13 +33,6 @@ export default defineConfig({
             name: 'zodParams',
           },
         },
-      },
-    },
-    hooks: {
-      afterAllFilesWrite: {
-        command:
-          'pnpm tsx --tsconfig ./tsconfig.json ./src/lib/generate-validation-i18n.ts',
-        injectGeneratedDirsAndFiles: false,
       },
     },
   },

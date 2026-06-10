@@ -5,10 +5,12 @@
   "type": "module",
   "exports": {
     "./schema": "./src/schema/index.ts",
-    "./api": "./src/api/index.ts"
+    "./api": "./src/api/index.ts",
+    "./i18n": "./src/i18n/index.ts"
   },
   "scripts": {
-    "generate": "orval --config ./orval.config.ts"
+    "generate": "orval --config ./orval.config.ts && pnpm run generate:i18n",
+    "generate:i18n": "tsx --tsconfig ./tsconfig.json ./src/lib/generate-validation-i18n.ts"
   },
   "dependencies": {
     "zod": "catalog:"
