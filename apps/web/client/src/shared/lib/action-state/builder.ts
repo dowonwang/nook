@@ -10,7 +10,7 @@ interface ActionError<T, E> {
   error: ErrorValue<E>;
 }
 
-interface ErrorValue<E> {
+export interface ErrorValue<E> {
   code: string;
   details: E | null;
 }

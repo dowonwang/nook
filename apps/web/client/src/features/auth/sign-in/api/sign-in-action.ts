@@ -47,13 +47,23 @@ export async function signInAction(
     }
 
     if (error instanceof ZodError) {
+      const errorField: Record<string, string> = {};
+
+      error.issues.forEach((issue) => {
+        const fieldName = issue.path.pop();
+
+        if (fieldName) {
+          errorField[fieldName.toString()] = issue.message;
+        }
+      });
+
       return createActionStateBuilder.error(
         {
           email,
         },
         {
           code: ValidationErrorCode,
-          details: error.issues,
+          details: errorField,
         },
       );
     }

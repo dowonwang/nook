@@ -20,8 +20,11 @@ export function SignInForm() {
     error: null,
     state: { email: '' },
   });
-
-  console.log(actionState);
+  // const errorField = useMemo(() => {
+  //   if (typeof actionState.error === 'object' && actionState.error?.details) {
+  //   }
+  //   return '';
+  // }, [actionState.error]);
 
   return (
     <form action={formAction}>
@@ -40,7 +43,6 @@ export function SignInForm() {
         <Field>
           <FieldLabel htmlFor='password'>Password</FieldLabel>
           <Input id='password' type='password' name='password' />
-          <FieldDescription></FieldDescription>
         </Field>
 
         <Button type='submit' className='w-full'>

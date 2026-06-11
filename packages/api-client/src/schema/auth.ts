@@ -20,13 +20,13 @@ export const postAuthSignUpBodyNameMax = 20;
 
 export const PostAuthSignUpBody = zod.object({
   email: zod
-    .email(
+    .string(
       zodParams({
         operationId: 'postAuthSign-up',
         location: 'body',
         schemaName: 'PostAuthSignUpBody',
         fieldPath: ['email'],
-        validator: 'email',
+        validator: 'string',
       }),
     )
     .regex(
@@ -151,13 +151,13 @@ export const postAuthSignInBodyEmailRegExp = new RegExp(
 
 export const PostAuthSignInBody = zod.object({
   email: zod
-    .email(
+    .string(
       zodParams({
         operationId: 'postAuthSign-in',
         location: 'body',
         schemaName: 'PostAuthSignInBody',
         fieldPath: ['email'],
-        validator: 'email',
+        validator: 'string',
       }),
     )
     .regex(
@@ -231,13 +231,13 @@ export const PostAuthSignInResponse = zod.object({
           }),
         ),
       email: zod
-        .email(
+        .string(
           zodParams({
             operationId: 'postAuthSign-in',
             location: 'response',
             schemaName: 'PostAuthSignInResponse',
             fieldPath: ['data', 'user', 'email'],
-            validator: 'email',
+            validator: 'string',
           }),
         )
         .regex(
@@ -330,13 +330,13 @@ export const GetAuthMeResponse = zod.object({
         }),
       ),
     email: zod
-      .email(
+      .string(
         zodParams({
           operationId: 'getAuthMe',
           location: 'response',
           schemaName: 'GetAuthMeResponse',
           fieldPath: ['data', 'email'],
-          validator: 'email',
+          validator: 'string',
         }),
       )
       .regex(

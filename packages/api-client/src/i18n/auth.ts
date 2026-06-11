@@ -2,11 +2,11 @@
 // Do not edit manually.
 
 export const authI18n = {
-  'validation.PostAuthSignInBody.email.email': '',
   'validation.PostAuthSignInBody.email.regex': '',
+  'validation.PostAuthSignInBody.email.string': '',
   'validation.PostAuthSignInBody.password.string': '',
-  'validation.PostAuthSignUpBody.email.email': '',
   'validation.PostAuthSignUpBody.email.regex': '',
+  'validation.PostAuthSignUpBody.email.string': '',
   'validation.PostAuthSignUpBody.name.max': '',
   'validation.PostAuthSignUpBody.name.min': '',
   'validation.PostAuthSignUpBody.name.string': '',

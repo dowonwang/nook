@@ -7,8 +7,8 @@ export type I18nKey = I18nKoKey;
 
 const i18nContexts = {
   ko: i18nKo,
-} satisfies Record<I18nLocale, object>;
+} satisfies Record<I18nLocale, Record<string, string>>;
 
-export function translateI18n(key: I18nKoKey, locale: I18nLocale) {
+export function translateI18n(key: I18nKey, locale: I18nLocale) {
   return i18nContexts[locale][key];
 }
