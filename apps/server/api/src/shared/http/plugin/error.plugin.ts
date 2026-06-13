@@ -14,9 +14,9 @@ import {
 import { getRouteLogScope } from '$shared/http/constants/route-log-scope';
 import { PrismaErrorMapper } from '$shared/http/mapper/prisma-error-mapper';
 import { VaildationErrorMapper } from '$shared/http/mapper/vaildation-error.mapper';
+import { logger } from '$shared/logger';
 import { LOG_EVENT } from '$shared/logger/constant/log-event';
 import { LOG_MESSAGE } from '$shared/logger/constant/log-message';
-import { logger } from '$shared/logger/logger';
 import { ApiResponseBuilder } from '$shared/responses/api-response-builder';
 
 export const errorPlugin = new Elysia().onError(

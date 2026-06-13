@@ -1,7 +1,7 @@
 import { OrganizationUuid } from '$modules/organization/domain/value-objects/organization-uuid.vo';
 import { OrganizationNotFound } from '$modules/organization/errors/organization-not-found.error';
 import { UserUuid } from '$modules/user/domain/value-objects/uuid.vo';
-import { createLogger } from '$shared/logger/logger';
+import { createLogger } from '$shared/logger';
 
 import type { OrganizationCommandRepository } from '$modules/organization/domain/repositories/organization-command.repository';
 import type { AddMemberCommand } from './add-member.command';

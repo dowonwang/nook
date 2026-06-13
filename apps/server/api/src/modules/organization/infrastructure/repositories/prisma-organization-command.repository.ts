@@ -1,7 +1,7 @@
 import { OrganizationCreatededEvent } from '$modules/organization/domain/events/organization-createded.event';
 import { OrganizationMembersAddedEvent } from '$modules/organization/domain/events/organization-members-added.event';
 import { OrganizationPrismaMapper } from '$modules/organization/infrastructure/mappers/organization-prisma.mapper';
-import { logger } from '$shared/logger/logger';
+import { logger } from '$shared/logger';
 
 import type { Organization } from '$modules/organization/domain/entities/organization.entity';
 import type { OrganizationCommandRepository } from '$modules/organization/domain/repositories/organization-command.repository';

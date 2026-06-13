@@ -6,9 +6,9 @@ import organizationModule from '$modules/organization';
 import { zodToOpenApiSchema } from '$shared/responses/api-openapi';
 
 import authModule from './modules/auth';
+import { logger } from './shared/logger';
 import { LOG_EVENT } from './shared/logger/constant/log-event';
 import { LOG_MESSAGE } from './shared/logger/constant/log-message';
-import { logger } from './shared/logger/logger';
 
 const app = new Elysia()
   .use(
