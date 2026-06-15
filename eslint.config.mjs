@@ -107,13 +107,6 @@ export default defineConfig(
       ],
     },
   },
-  // 공통 jsx, tsx
-  {
-    files: ['**/*.{jsx,tsx}'],
-    plugins: {},
-    settings: {},
-    rules: {},
-  },
   // nextjs 앱
   {
     files: ['apps/web/client/**/*.{js,jsx,ts,tsx}'],

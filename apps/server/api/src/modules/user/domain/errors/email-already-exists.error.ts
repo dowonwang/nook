@@ -10,7 +10,6 @@ export class EmailAlreadyExists extends ConflictError {
     super({
       event: USER_LOG_EVENT.USER_EMAIL_ALREADY_EXIST,
       message: USER_LOG_MESSAGE.USER_EMAIL_ALREADY_EXIST,
-      userMessage: undefined,
       scope,
       detail: { userId },
     });

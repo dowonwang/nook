@@ -4,6 +4,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "types": ["bun-types"],
+    "moduleResolution": "bundler",
     "paths": {
       "$modules/*": ["src/modules/*"],
       "$shared/*": ["src/shared/*"],

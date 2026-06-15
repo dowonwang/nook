@@ -1,4 +1,5 @@
 import { Prisma } from '@packages/api-db';
+import { FALLBACK_ERROR_KEY } from '@packages/i18n/response';
 import { randomUUIDv7 } from 'bun';
 import {
   Elysia,
@@ -46,8 +47,8 @@ export const errorPlugin = new Elysia().onError(
       );
 
       return ApiResponseBuilder.error({
-        message: appError.userMessage,
         requestId: uuid,
+        code: appError.code,
         details: appError.details,
       });
     }
@@ -71,14 +72,14 @@ export const errorPlugin = new Elysia().onError(
 
       if (error instanceof UnprocessableContent) {
         return ApiResponseBuilder.error({
-          message: error.userMessage,
-          details: error.details,
           requestId: uuid,
+          code: error.code,
+          details: error.details,
         });
       }
 
       return ApiResponseBuilder.error({
-        message: error.userMessage,
+        code: error.code,
         requestId: uuid,
       });
     }
@@ -106,8 +107,8 @@ export const errorPlugin = new Elysia().onError(
       );
 
       return ApiResponseBuilder.error({
-        message: appError.userMessage,
         requestId: uuid,
+        code: appError.code,
         details: appError.details,
       });
     }
@@ -152,8 +153,8 @@ export const errorPlugin = new Elysia().onError(
       }
 
       return ApiResponseBuilder.error({
-        message: prismaError.userMessage,
         requestId: uuid,
+        code: prismaError.code,
       });
     }
 
@@ -174,7 +175,7 @@ export const errorPlugin = new Elysia().onError(
     );
 
     return ApiResponseBuilder.error({
-      message: '일시적인 오류가 발생했습니다.',
+      code: FALLBACK_ERROR_KEY,
       requestId: uuid,
     });
   },

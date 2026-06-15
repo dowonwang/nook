@@ -1,0 +1,19 @@
+{
+  "name": "@packages/i18n",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./response": "./src/response/index.ts"
+  },
+  "scripts": {
+    "generate:validation": "tsx --tsconfig ./tsconfig.json ./src/script/generate-validation.ts"
+  },
+  "devDependencies": {
+    "typescript": "catalog:"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.30.3"
+}

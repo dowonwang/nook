@@ -96,6 +96,9 @@ importers:
       '@packages/api-db':
         specifier: workspace:*
         version: link:../../../packages/api-db
+      '@packages/i18n':
+        specifier: workspace:*
+        version: link:../../../packages/i18n
       bcrypt:
         specifier: ^6.0.0
         version: 6.0.0
@@ -220,6 +223,12 @@ importers:
       tsx:
         specifier: ^4.21.0
         version: 4.21.0
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
+
+  packages/i18n:
+    devDependencies:
       typescript:
         specifier: 'catalog:'
         version: 5.9.3

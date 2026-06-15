@@ -13,6 +13,7 @@
   "dependencies": {
     "@elysia/openapi": "^1.4.15",
     "@packages/api-db": "workspace:*",
+    "@packages/i18n": "workspace:*",
     "bcrypt": "^6.0.0",
     "dotenv": "^17.3.1",
     "elysia": "catalog:",

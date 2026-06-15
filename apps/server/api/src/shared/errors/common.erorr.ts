@@ -3,10 +3,12 @@ import { LOG_MESSAGE } from '$shared/logger/constant/log-message';
 
 import { AppError } from './app.error';
 
+import type { I18N_RESPONSE_KEY } from '@packages/i18n/response';
+
 interface CommonErrorOptions {
   event?: string;
   message?: string;
-  userMessage?: string;
+  code?: I18N_RESPONSE_KEY;
   scope?: string;
   detail?: unknown;
   cause?: unknown;
@@ -18,7 +20,7 @@ export class BadRequestError extends AppError {
       status: 400,
       event: options.event ?? LOG_EVENT.HTTP_BAD_REQUEST,
       message: options.message ?? LOG_MESSAGE.HTTP_BAD_REQUEST,
-      userMessage: options.userMessage ?? '잘못된 요청입니다.',
+      code: options.code ?? 'common.error.BadRequestError',
       details: options.detail,
       scope: options.scope,
       cause: options.cause,
@@ -32,7 +34,7 @@ export class UnauthorizedError extends AppError {
       status: 401,
       event: options.event ?? LOG_EVENT.HTTP_UNAUTHORIZED,
       message: options.message ?? LOG_MESSAGE.HTTP_UNAUTHORIZED,
-      userMessage: options.userMessage ?? '인증이 필요합니다.',
+      code: options.code ?? 'common.error.UnauthorizedError',
       details: options.detail,
       scope: options.scope,
       cause: options.cause,
@@ -46,7 +48,7 @@ export class ForbiddenError extends AppError {
       status: 403,
       event: options.event ?? LOG_EVENT.HTTP_FORBIDDEN,
       message: options.message ?? LOG_MESSAGE.HTTP_FORBIDDEN,
-      userMessage: options.userMessage ?? '접근 권한이 없습니다.',
+      code: options.code ?? 'common.error.ForbiddenError',
       details: options.detail,
       scope: options.scope,
       cause: options.cause,
@@ -60,7 +62,7 @@ export class NotFoundError extends AppError {
       status: 404,
       event: options.event ?? LOG_EVENT.HTTP_NOT_FOUND,
       message: options.message ?? LOG_MESSAGE.HTTP_NOT_FOUND,
-      userMessage: '요청한 리소스를 찾을 수 없습니다.',
+      code: options.code ?? 'common.error.NotFoundError',
       details: options.detail,
       scope: options.scope,
       cause: options.cause,
@@ -74,7 +76,7 @@ export class ConflictError extends AppError {
       status: 409,
       event: options.event ?? LOG_EVENT.HTTP_CONFLICT,
       message: options.message ?? LOG_MESSAGE.HTTP_CONFLICT,
-      userMessage: '이미 존재하는 데이터입니다.',
+      code: options.code ?? 'common.error.ConflictError',
       details: options.detail,
       scope: options.scope,
       cause: options.cause,
@@ -88,7 +90,7 @@ export class UnprocessableContent extends AppError {
       status: 422,
       event: options.event ?? LOG_EVENT.HTTP_UNPROCESSABLE_CONTENT,
       message: options.message ?? LOG_MESSAGE.HTTP_UNPROCESSABLE_CONTENT,
-      userMessage: options.userMessage ?? '유효성 검사 실패',
+      code: options.code ?? 'common.error.UnprocessableContent',
       details: options.detail,
       scope: options.scope,
       cause: options.cause,
@@ -102,7 +104,7 @@ export class InternalServerError extends AppError {
       status: 500,
       event: options.event ?? LOG_EVENT.HTTP_INTERNAL_SERVER_ERROR,
       message: options.message ?? LOG_MESSAGE.HTTP_INTERNAL_SERVER_ERROR,
-      userMessage: options.userMessage ?? '일시적인 오류가 발생했습니다.',
+      code: options.code ?? 'common.error.InternalServerError',
       details: options.detail,
       cause: options.cause,
       scope: options.scope,

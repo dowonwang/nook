@@ -1,8 +1,10 @@
+import type { I18N_RESPONSE_KEY } from '@packages/i18n/response';
+
 export interface AppErrorOptions {
   event: string;
   status: number;
   message: string;
-  userMessage: string;
+  code: I18N_RESPONSE_KEY;
   details?: unknown;
   cause?: unknown;
   scope?: string;
@@ -10,7 +12,7 @@ export interface AppErrorOptions {
 
 export class AppError extends Error {
   public readonly status: number;
-  public readonly userMessage: string;
+  public readonly code: I18N_RESPONSE_KEY;
   public readonly details?: unknown;
   public readonly event?: string;
   public readonly scope?: string;
@@ -21,7 +23,7 @@ export class AppError extends Error {
 
     this.name = this.constructor.name;
     this.status = options.status;
-    this.userMessage = options.userMessage;
+    this.code = options.code;
     this.details = options.details;
     this.event = options.event;
     this.scope = options.scope;
