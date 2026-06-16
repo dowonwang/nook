@@ -189,9 +189,6 @@ importers:
       orval:
         specifier: ^8.16.0
         version: 8.16.0(prettier@3.8.1)(typescript@5.9.3)
-      tsx:
-        specifier: ^4.21.0
-        version: 4.21.0
       typescript:
         specifier: 'catalog:'
         version: 5.9.3
@@ -229,6 +226,12 @@ importers:
 
   packages/i18n:
     devDependencies:
+      '@types/node':
+        specifier: ^25.3.5
+        version: 25.3.5
+      tsx:
+        specifier: ^4.21.0
+        version: 4.21.0
       typescript:
         specifier: 'catalog:'
         version: 5.9.3

@@ -34,8 +34,7 @@ export type PostAuthSignUp201 = {
 };
 
 export type PostAuthSignUp400Error = {
-  message: string;
-  userMessage?: string;
+  code: string;
   details?: unknown;
 };
 
@@ -55,8 +54,7 @@ export type PostAuthSignUp400 = {
 };
 
 export type PostAuthSignUp409Error = {
-  message: string;
-  userMessage?: string;
+  code: string;
   details?: unknown;
 };
 
@@ -107,8 +105,7 @@ export type PostAuthSignIn200 = {
 };
 
 export type PostAuthSignIn400Error = {
-  message: string;
-  userMessage?: string;
+  code: string;
   details?: unknown;
 };
 
@@ -128,8 +125,7 @@ export type PostAuthSignIn400 = {
 };
 
 export type PostAuthSignIn401Error = {
-  message: string;
-  userMessage?: string;
+  code: string;
   details?: unknown;
 };
 
@@ -169,8 +165,7 @@ export type GetAuthMe200 = {
 };
 
 export type GetAuthMe401Error = {
-  message: string;
-  userMessage?: string;
+  code: string;
   details?: unknown;
 };
 
@@ -190,8 +185,7 @@ export type GetAuthMe401 = {
 };
 
 export type GetAuthMe404Error = {
-  message: string;
-  userMessage?: string;
+  code: string;
   details?: unknown;
 };
 
@@ -231,8 +225,7 @@ export type PostOrganization201 = {
 };
 
 export type PostOrganization401Error = {
-  message: string;
-  userMessage?: string;
+  code: string;
   details?: unknown;
 };
 
@@ -252,8 +245,7 @@ export type PostOrganization401 = {
 };
 
 export type PostOrganization404Error = {
-  message: string;
-  userMessage?: string;
+  code: string;
   details?: unknown;
 };
 
@@ -273,8 +265,7 @@ export type PostOrganization404 = {
 };
 
 export type PostOrganization409Error = {
-  message: string;
-  userMessage?: string;
+  code: string;
   details?: unknown;
 };
 
@@ -331,8 +322,7 @@ export type PostOrganizationAddMembers201 = {
 };
 
 export type PostOrganizationAddMembers400Error = {
-  message: string;
-  userMessage?: string;
+  code: string;
   details?: unknown;
 };
 
@@ -352,8 +342,7 @@ export type PostOrganizationAddMembers400 = {
 };
 
 export type PostOrganizationAddMembers401Error = {
-  message: string;
-  userMessage?: string;
+  code: string;
   details?: unknown;
 };
 
@@ -373,8 +362,7 @@ export type PostOrganizationAddMembers401 = {
 };
 
 export type PostOrganizationAddMembers403Error = {
-  message: string;
-  userMessage?: string;
+  code: string;
   details?: unknown;
 };
 
@@ -394,8 +382,7 @@ export type PostOrganizationAddMembers403 = {
 };
 
 export type PostOrganizationAddMembers404Error = {
-  message: string;
-  userMessage?: string;
+  code: string;
   details?: unknown;
 };
 
@@ -415,8 +402,7 @@ export type PostOrganizationAddMembers404 = {
 };
 
 export type PostOrganizationAddMembers409Error = {
-  message: string;
-  userMessage?: string;
+  code: string;
   details?: unknown;
 };
 

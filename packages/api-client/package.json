@@ -4,13 +4,12 @@
   "private": true,
   "type": "module",
   "exports": {
-    "./schema": "./src/schema/index.ts",
+    "./schema/*": "./src/schema/*.ts",
     "./api": "./src/api/index.ts",
     "./i18n": "./src/i18n/index.ts"
   },
   "scripts": {
-    "generate": "orval --config ./orval.config.ts && pnpm run generate:i18n",
-    "generate:i18n": "tsx --tsconfig ./tsconfig.json ./src/lib/generate-validation-i18n.ts"
+    "generate": "orval --config ./orval.config.ts"
   },
   "dependencies": {
     "zod": "catalog:"
@@ -18,7 +17,6 @@
   "devDependencies": {
     "@types/node": "^25.3.5",
     "orval": "^8.16.0",
-    "tsx": "^4.21.0",
     "typescript": "catalog:"
   },
   "packageManager": "pnpm@10.30.3"
