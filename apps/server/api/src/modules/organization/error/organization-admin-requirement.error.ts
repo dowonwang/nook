@@ -1,5 +1,5 @@
-import { ORGANIZATION_LOG_EVENT } from '$modules/organization/errors/constant/organization-log-event';
-import { ORGANIZATION_LOG_MESSAGE } from '$modules/organization/errors/constant/organization-log-message';
+import { ORGANIZATION_LOG_EVENT } from '$modules/organization/error/constant/organization-log-event';
+import { ORGANIZATION_LOG_MESSAGE } from '$modules/organization/error/constant/organization-log-message';
 import { UnprocessableContent } from '$shared/errors/common.erorr';
 
 export class OrganizationAdminRequirement extends UnprocessableContent {

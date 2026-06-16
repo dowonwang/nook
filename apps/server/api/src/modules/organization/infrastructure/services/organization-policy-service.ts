@@ -1,4 +1,4 @@
-import { DuplicateOrganizationTitle } from '$modules/organization/errors/duplicate-organization-title.error';
+import { DuplicateOrganizationTitle } from '$modules/organization/error/duplicate-organization-title.error';
 
 import type { OrganizationQueryRepository } from '$modules/organization/domain/repositories/organization-query.repository';
 import type { OrganizationPolicy } from '$modules/organization/domain/services/organization-policy';

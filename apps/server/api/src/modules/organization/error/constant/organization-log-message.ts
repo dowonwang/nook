@@ -1,4 +1,4 @@
-import type { OrganizationLogEventMessage } from '$modules/organization/errors/constant/organization-log-event';
+import type { OrganizationLogEventMessage } from '$modules/organization/error/constant/organization-log-event';
 
 export const ORGANIZATION_LOG_MESSAGE: OrganizationLogEventMessage = {
   ORG_DUPLICATE_TITLE: 'Duplicate organization title detected',
