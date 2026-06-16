@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { InvalidAccessTokenClaims } from '$modules/auth/domain/errors/invalid-access-token-claims.error';
+import { InvalidAccessTokenClaims } from '$modules/auth/error/invalid-access-token-claims.error';
 
 const payloadSchema = z.object({
   sub: z.uuidv7(),

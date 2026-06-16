@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { InvalidPasswordHash } from '$modules/user/domain/errors/invalid-password-hash.error';
+import { InvalidPasswordHash } from '$modules/user/error/invalid-password-hash.error';
 
 const passewordHashSchema = z
   .string()

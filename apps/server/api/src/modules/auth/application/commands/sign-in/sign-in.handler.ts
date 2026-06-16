@@ -1,7 +1,7 @@
 import { AccessTokenClaims } from '$modules/auth/domain/value-objects/access-token-claims.vo';
 import { UserDtoMapper } from '$modules/user/application/mapper/user-dto.mapper';
-import { InvaildCredentials } from '$modules/user/domain/errors/invaild-credentials.error';
 import { UserEmail } from '$modules/user/domain/value-objects/email.vo';
+import { InvaildCredentials } from '$modules/user/error/invaild-credentials.error';
 
 import type { PasswordHaser } from '$modules/auth/domain/services/password-hasher';
 import type { TokenIssuer } from '$modules/auth/domain/services/token-issuer';

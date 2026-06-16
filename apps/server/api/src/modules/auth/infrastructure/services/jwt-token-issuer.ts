@@ -1,7 +1,7 @@
 import { SignJWT } from 'jose';
 
-import { MissingJwtExpires } from '$modules/auth/infrastructure/errors/missing-jwt-expires.error';
-import { MissingJwtSecret } from '$modules/auth/infrastructure/errors/missing-jwt-secret.error';
+import { MissingJwtExpires } from '$modules/auth/error/missing-jwt-expires.error';
+import { MissingJwtSecret } from '$modules/auth/error/missing-jwt-secret.error';
 
 import type { TokenIssuer } from '$modules/auth/domain/services/token-issuer';
 import type { AccessTokenClaims } from '$modules/auth/domain/value-objects/access-token-claims.vo';

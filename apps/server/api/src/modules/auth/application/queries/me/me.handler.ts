@@ -1,6 +1,6 @@
-import { UserNotFound } from '$modules/user/application/errors/user-not-found.error';
 import { UserDtoMapper } from '$modules/user/application/mapper/user-dto.mapper';
 import { UserUuid } from '$modules/user/domain/value-objects/uuid.vo';
+import { UserNotFound } from '$modules/user/error/user-not-found.error';
 
 import type { UserDetailDto } from '$modules/user/application/dto/user-detail.dto';
 import type { UserQueryRepository } from '$modules/user/domain/repositories/user-query.repository';

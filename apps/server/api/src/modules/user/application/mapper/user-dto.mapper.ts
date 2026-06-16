@@ -1,4 +1,4 @@
-import { UserTimeStampsRequired } from '$modules/user/domain/errors/user-timestamps-required.error';
+import { UserTimeStampsRequired } from '$modules/user/error/user-timestamps-required.error';
 
 import type { UserDetailDto } from '$modules/user/application/dto/user-detail.dto';
 import type { User } from '$modules/user/domain/entities/user.entity';

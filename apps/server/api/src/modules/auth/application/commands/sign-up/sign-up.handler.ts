@@ -1,9 +1,9 @@
 import { User } from '$modules/user/domain/entities/user.entity';
-import { EmailAlreadyExists } from '$modules/user/domain/errors/email-already-exists.error';
 import { UserEmail } from '$modules/user/domain/value-objects/email.vo';
 import { UserName } from '$modules/user/domain/value-objects/name.vo';
 import { UserPassword } from '$modules/user/domain/value-objects/password.vo';
 import { UserUuid } from '$modules/user/domain/value-objects/uuid.vo';
+import { EmailAlreadyExists } from '$modules/user/error/email-already-exists.error';
 
 import type { PasswordHaser } from '$modules/auth/domain/services/password-hasher';
 import type { UserCommandRepository } from '$modules/user/domain/repositories/user-command.repository';
