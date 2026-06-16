@@ -1,6 +1,6 @@
 import { ORGANIZATION_LOG_EVENT } from '$modules/organization/error/constant/organization-log-event';
 import { ORGANIZATION_LOG_MESSAGE } from '$modules/organization/error/constant/organization-log-message';
-import { NotFoundError } from '$shared/errors/common.erorr';
+import { NotFoundError } from '$shared/error/common.error';
 
 export class OrganizationNotFound extends NotFoundError {
   constructor(scope: string) {

@@ -1,6 +1,6 @@
 import { Elysia } from 'elysia';
 
-import { UnauthorizedError } from '$shared/errors/common.erorr';
+import { UnauthorizedError } from '$shared/error/common.error';
 import { ApiErrorResponseSchema } from '$shared/responses/api-response';
 
 import type { JwtTokenVerifier } from '$modules/auth/infrastructure/services/jwt-token-verifier';

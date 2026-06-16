@@ -1,6 +1,6 @@
 import { ORGANIZATION_LOG_EVENT } from '$modules/organization/error/constant/organization-log-event';
 import { ORGANIZATION_LOG_MESSAGE } from '$modules/organization/error/constant/organization-log-message';
-import { UnprocessableContent } from '$shared/errors/common.erorr';
+import { UnprocessableContent } from '$shared/error/common.error';
 
 export class OrganizationTitleEmpty extends UnprocessableContent {
   constructor(scope: string) {

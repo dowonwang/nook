@@ -1,4 +1,4 @@
-import { NotFoundError } from '$shared/errors/common.erorr';
+import { NotFoundError } from '$shared/error/common.error';
 
 import { USER_LOG_EVENT } from './constant/user-log-event';
 import { USER_LOG_MESSAGE } from './constant/user-log-message';

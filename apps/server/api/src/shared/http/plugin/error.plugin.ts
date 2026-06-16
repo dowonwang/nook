@@ -7,11 +7,11 @@ import {
   ValidationError,
 } from 'elysia';
 
-import { AppError } from '$shared/errors/app.error';
+import { AppError } from '$shared/error/app.error';
 import {
   NotFoundError,
   UnprocessableContent,
-} from '$shared/errors/common.erorr';
+} from '$shared/error/common.error';
 import { getRouteLogScope } from '$shared/http/constants/route-log-scope';
 import { PrismaErrorMapper } from '$shared/http/mapper/prisma-error-mapper';
 import { VaildationErrorMapper } from '$shared/http/mapper/vaildation-error.mapper';

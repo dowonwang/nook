@@ -1,4 +1,4 @@
-import { UnprocessableContent } from '$shared/errors/common.erorr';
+import { UnprocessableContent } from '$shared/error/common.error';
 
 import type { ZodError } from 'zod';
 
