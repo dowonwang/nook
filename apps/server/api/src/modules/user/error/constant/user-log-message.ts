@@ -8,4 +8,6 @@ export const USER_LOG_MESSAGE: UserLogEventMessage = {
   USER_TIMESTAMPS_REQUIRED:
     'UserDetailDto.fromEntity requires createdAt and updatedAt.',
   USER_INVAILD_CREDENTIALS: 'Invaild user credentials',
+  USER_INVALID_EMAIL: 'Invalid email address format',
+  USER_INVALID_NAME: 'User name must be between 2 and 20 characters',
 } as const;

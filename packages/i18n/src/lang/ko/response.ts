@@ -17,6 +17,8 @@ export const i18nResponseKo = {
   'user.error.EmailAlreadyExists':
     '이미 가입된 계정이거나 사용할 수 없는 이메일입니다.',
   'user.error.InvaildCredentials': '로그인 정보가 올바르지 않습니다.',
+  'user.error.InvalidUserEmail': '잘못된 이메일 형식입니다.',
+  'user.error.InvalidUserName': '이름은 2글자 이상 20글자 이하로 입력해주세요.',
 
   // organization error
   'organization.error.OrganizationAccessDenied':

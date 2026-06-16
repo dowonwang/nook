@@ -1,22 +1,20 @@
 import { z } from 'zod';
 
-import { ZodErrorMapper } from '$shared/http/mapper/zod-error.mapper';
+import { InvalidUserName } from '$modules/user/error/invalid-user-name.error';
 
-const nameSchema = z.object({
-  name: z.string().min(5).max(20),
-});
+const schema = z.string().min(2).max(20);
 
 export class UserName {
   private constructor(private readonly value: string) {}
 
   static create(input: string): UserName {
-    const vaildation = nameSchema.safeParse({ name: input });
+    const validation = schema.safeParse({ name: input });
 
-    if (!vaildation.success) {
-      throw ZodErrorMapper(vaildation.error, UserName.name);
+    if (!validation.success) {
+      throw new InvalidUserName(UserName.name);
     }
 
-    return new UserName(vaildation.data.name);
+    return new UserName(validation.data);
   }
 
   equals(other: UserName): boolean {
