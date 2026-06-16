@@ -1,6 +1,6 @@
-import { PostAuthSignInBody } from '@packages/api-client/schema';
+import { PostAuthSignInBody } from '@packages/api-client/schema/auth';
 
-import type { PostAuthSignInResponse } from '@packages/api-client/schema';
+import type { PostAuthSignInResponse } from '@packages/api-client/schema/auth';
 import type { z } from 'zod';
 
 export const signInSchema = PostAuthSignInBody;
