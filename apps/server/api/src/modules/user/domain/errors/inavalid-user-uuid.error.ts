@@ -8,7 +8,6 @@ export class InvalidUserUUID extends InternalServerError {
     super({
       event: USER_LOG_EVENT.USER_UUID_INVALID,
       message: USER_LOG_MESSAGE.USER_UUID_INVALID,
-      code: 'auth.error.InvalidUserUUID',
       scope,
       detail,
     });
