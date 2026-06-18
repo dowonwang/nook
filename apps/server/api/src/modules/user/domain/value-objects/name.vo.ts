@@ -8,7 +8,7 @@ export class UserName {
   private constructor(private readonly value: string) {}
 
   static create(input: string): UserName {
-    const validation = schema.safeParse({ name: input });
+    const validation = schema.safeParse(input);
 
     if (!validation.success) {
       throw new InvalidUserName(UserName.name);

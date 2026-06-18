@@ -20,11 +20,8 @@ export function SignInForm() {
     error: null,
     state: { email: '' },
   });
-  // const errorField = useMemo(() => {
-  //   if (typeof actionState.error === 'object' && actionState.error?.details) {
-  //   }
-  //   return '';
-  // }, [actionState.error]);
+
+  console.log(actionState);
 
   return (
     <form action={formAction}>

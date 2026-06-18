@@ -451,7 +451,7 @@ export type postAuthSignUpResponse =
   | postAuthSignUpResponseError;
 
 export const getPostAuthSignUpUrl = () => {
-  return `/auth/sign-up`;
+  return `http://localhost:4000/auth/sign-up`;
 };
 
 /**
@@ -508,7 +508,7 @@ export type postAuthSignInResponse =
   | postAuthSignInResponseError;
 
 export const getPostAuthSignInUrl = () => {
-  return `/auth/sign-in`;
+  return `http://localhost:4000/auth/sign-in`;
 };
 
 /**
@@ -565,7 +565,7 @@ export type getAuthMeResponse =
   | getAuthMeResponseError;
 
 export const getGetAuthMeUrl = () => {
-  return `/auth/me`;
+  return `http://localhost:4000/auth/me`;
 };
 
 /**
@@ -626,7 +626,7 @@ export type postOrganizationResponse =
   | postOrganizationResponseError;
 
 export const getPostOrganizationUrl = () => {
-  return `/organization/`;
+  return `http://localhost:4000/organization/`;
 };
 
 /**
@@ -702,7 +702,7 @@ export type postOrganizationAddMembersResponse =
   | postOrganizationAddMembersResponseError;
 
 export const getPostOrganizationAddMembersUrl = () => {
-  return `/organization/add-members`;
+  return `http://localhost:4000/organization/add-members`;
 };
 
 /**

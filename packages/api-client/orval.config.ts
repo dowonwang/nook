@@ -12,6 +12,7 @@ export default defineConfig({
       clean: true,
       formatter: 'prettier',
       indexFiles: true,
+      baseUrl: 'http://localhost:4000',
     },
   },
 
