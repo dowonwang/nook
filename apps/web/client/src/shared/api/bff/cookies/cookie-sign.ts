@@ -21,17 +21,35 @@ export function verifySignedCookie(
 ): string | null {
   const dotIndex = cookieValue.lastIndexOf('.');
 
-  if (dotIndex === -1) return null;
+  if (dotIndex === -1) {
+    return null;
+  }
 
   const encodedValue = cookieValue.slice(0, dotIndex);
   const receivedSignature = cookieValue.slice(dotIndex + 1);
   const expectedSignature = sign(encodedValue, secret);
 
-  const a = Buffer.from(receivedSignature, 'base64url');
-  const b = Buffer.from(expectedSignature, 'base64url');
+  let receivedBuffer: Buffer;
+  let expectedBuffer: Buffer;
 
-  if (a.length !== b.length) return null;
-  if (!timingSafeEqual(a, b)) return null;
+  try {
+    receivedBuffer = Buffer.from(receivedSignature, 'base64url');
+    expectedBuffer = Buffer.from(expectedSignature, 'base64url');
+  } catch {
+    return null;
+  }
 
-  return Buffer.from(encodedValue, 'base64url').toString('utf8');
+  if (receivedBuffer.length !== expectedBuffer.length) {
+    return null;
+  }
+
+  if (!timingSafeEqual(receivedBuffer, expectedBuffer)) {
+    return null;
+  }
+
+  try {
+    return Buffer.from(encodedValue, 'base64url').toString('utf8');
+  } catch {
+    return null;
+  }
 }

@@ -1,6 +1,8 @@
 import { postAuthSignIn } from '@packages/api-client/api';
 import { NextResponse } from 'next/server';
 
+import { setAuthCookie } from '$shared/api/bff';
+
 import type { PostAuthSignInBody } from '@packages/api-client/api';
 
 export async function handleSignInRequest(
@@ -8,10 +10,24 @@ export async function handleSignInRequest(
 ): Promise<NextResponse> {
   const requestBody = (await request.json()) as PostAuthSignInBody;
 
-  const { data, headers, status } = await postAuthSignIn(requestBody);
+  const { data, status } = await postAuthSignIn(requestBody);
+
+  if (data.success) {
+    const { accessToken, ...rest } = data.data;
+
+    const response = NextResponse.json(
+      { ...data, data: { ...rest } },
+      {
+        status,
+      },
+    );
+
+    setAuthCookie(response, accessToken);
+
+    return response;
+  }
 
   return NextResponse.json(data, {
     status,
-    headers,
   });
 }

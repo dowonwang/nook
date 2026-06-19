@@ -1,5 +1,7 @@
 import { type SignInActionState } from '$features/auth/sign-in/model';
 
+import type { postAuthSignInResponseError } from '@packages/api-client/api';
+
 export async function signInAction(
   _previousState: SignInActionState,
   formData: FormData,
@@ -11,7 +13,7 @@ export async function signInAction(
   const password =
     typeof passwordValue === 'string' ? passwordValue.trim() : '';
 
-  await fetch('/api/auth/sign-in', {
+  const response = await fetch('/api/auth/sign-in', {
     method: 'POST',
     headers: {
       'content-type': 'application/json',
@@ -22,9 +24,18 @@ export async function signInAction(
     }),
   });
 
+  if (response.ok) {
+    return {
+      success: true,
+      state: { email: '' },
+      error: null,
+    };
+  }
+
   return {
     state: { email },
-    error: null,
-    success: true,
+    error:
+      (await response.json()) as postAuthSignInResponseError['data']['error'],
+    success: false,
   };
 }
