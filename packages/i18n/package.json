@@ -4,10 +4,11 @@
   "private": true,
   "type": "module",
   "exports": {
-    "./response": "./src/response/index.ts"
+    "./response": "./src/response/index.ts",
+    "./lang/*": "./src/lang/*/index.ts"
   },
   "scripts": {
-    "generate:validation": "tsx --tsconfig ./tsconfig.json ./src/script/generate-validation.ts"
+    "generate:validation": "tsx --tsconfig ./tsconfig.json ./src/script/generate-validation-i18n.ts"
   },
   "devDependencies": {
     "@types/node": "^25.3.5",

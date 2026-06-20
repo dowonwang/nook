@@ -6,7 +6,7 @@ export interface ValidationKeyContext {
 
 export function createValidationKey(context: ValidationKeyContext): string {
   const field =
-    context.fieldPath.length > 0 ? context.fieldPath.join('.') : 'root';
+    context.fieldPath.length > 0 ? context.fieldPath.join('_') : 'root';
 
-  return ['validation', context.schemaName, field, context.validator].join('.');
+  return [context.schemaName, field, context.validator].join('_');
 }

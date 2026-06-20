@@ -23,7 +23,7 @@ const propertyPattern = {
 function parseFieldPath(rawFieldPath: string): string {
   return [...rawFieldPath.matchAll(/['"]([^'"]+)['"]/g)]
     .map((match) => match[1])
-    .join('.');
+    .join('_');
 }
 
 function createValidationKey(input: {
@@ -31,12 +31,9 @@ function createValidationKey(input: {
   fieldPath: string;
   validator: string;
 }) {
-  return [
-    'validation',
-    input.schemaName,
-    input.fieldPath || 'root',
-    input.validator,
-  ].join('.');
+  return [input.schemaName, input.fieldPath || 'root', input.validator].join(
+    '_',
+  );
 }
 
 function createExportName(tagName: string) {

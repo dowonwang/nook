@@ -10,11 +10,15 @@ import {
 import { Input } from '@packages/ui/components/input';
 import { Separator } from '@packages/ui/components/separator';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import { useActionState } from 'react';
 
 import { signInAction } from '$features/auth/sign-in/api';
 
+import type { ActionStateZodError } from '$shared/api/action';
+
 export function SignInForm() {
+  const t = useTranslations('validation');
   const [actionState, formAction] = useActionState(signInAction, {
     success: false,
     error: null,
@@ -24,7 +28,7 @@ export function SignInForm() {
   console.log(actionState);
 
   return (
-    <form action={formAction}>
+    <form action={formAction} noValidate>
       <FieldGroup>
         <Field>
           <FieldLabel htmlFor='email'>Email</FieldLabel>
@@ -34,12 +38,22 @@ export function SignInForm() {
             name='email'
             defaultValue={actionState.state.email}
           />
-          <FieldDescription></FieldDescription>
+
+          {actionState.error && (
+            <FieldDescription>
+              {t((actionState.error as ActionStateZodError)[0].message)}
+            </FieldDescription>
+          )}
         </Field>
 
         <Field>
           <FieldLabel htmlFor='password'>Password</FieldLabel>
           <Input id='password' type='password' name='password' />
+          {actionState.error && (
+            <FieldDescription>
+              {t((actionState.error as ActionStateZodError)[1].message)}
+            </FieldDescription>
+          )}
         </Field>
 
         <Button type='submit' className='w-full'>

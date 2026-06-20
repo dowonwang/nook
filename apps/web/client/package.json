@@ -9,12 +9,14 @@
     "start": "next start"
   },
   "dependencies": {
-    "@packages/ui": "workspace:*",
     "@packages/api-client": "workspace:*",
+    "@packages/ui": "workspace:*",
+    "@packages/i18n": "workspace:*",
     "@tanstack/react-query": "^5.100.10",
     "dayjs": "^1.11.20",
     "lucide-react": "^1.14.0",
     "next": "catalog:next16",
+    "next-intl": "^4.13.0",
     "react": "catalog:next16",
     "react-dom": "catalog:next16",
     "zod": "catalog:"

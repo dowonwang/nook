@@ -1,6 +1,11 @@
-import { type SignInActionState } from '$features/auth/sign-in/model';
+import { signInSchema } from '$features/auth/sign-in/model';
+import { actionStateBuilder, createActionStateError } from '$shared/api/action';
 
-import type { postAuthSignInResponseError } from '@packages/api-client/api';
+import type {
+  SignInActionState,
+  SignInResponseError,
+  SignInState,
+} from '$features/auth/sign-in/model';
 
 export async function signInAction(
   _previousState: SignInActionState,
@@ -12,6 +17,17 @@ export async function signInAction(
   const email = typeof emailValue === 'string' ? emailValue.trim() : '';
   const password =
     typeof passwordValue === 'string' ? passwordValue.trim() : '';
+
+  const body = signInSchema.safeParse({ email, password: 1234 });
+
+  if (!body.success) {
+    return actionStateBuilder.error<SignInState, SignInResponseError>(
+      {
+        email,
+      },
+      createActionStateError(body.error),
+    );
+  }
 
   const response = await fetch('/api/auth/sign-in', {
     method: 'POST',
@@ -25,17 +41,11 @@ export async function signInAction(
   });
 
   if (response.ok) {
-    return {
-      success: true,
-      state: { email: '' },
-      error: null,
-    };
+    return actionStateBuilder.success({ email: '' });
   }
 
-  return {
-    state: { email },
-    error:
-      (await response.json()) as postAuthSignInResponseError['data']['error'],
-    success: false,
-  };
+  return actionStateBuilder.error(
+    { email },
+    (await response.json()) as SignInResponseError,
+  );
 }
