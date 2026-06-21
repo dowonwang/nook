@@ -44,7 +44,7 @@
 
   --color-warning: var(--ui-warning);
   --color-warning-foreground: var(--ui-warning-foreground);
-  --color-warnign-hover: var(--ui-warning-hover);
+  --color-warning-hover: var(--ui-warning-hover);
 }
 
 @layer base {

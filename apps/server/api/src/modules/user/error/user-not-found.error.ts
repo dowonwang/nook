@@ -8,7 +8,7 @@ export class UserNotFound extends NotFoundError {
     super({
       event: USER_LOG_EVENT.USER_NOT_FOUND,
       message: USER_LOG_MESSAGE.USER_NOT_FOUND,
-      code: 'user.error.UserNotFound',
+      code: 'user_error_UserNotFound',
       scope,
     });
   }

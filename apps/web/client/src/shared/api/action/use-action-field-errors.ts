@@ -8,7 +8,9 @@ export function useActionFieldErrors(error: ActionStateZodError | null) {
   const fieldRefs = useRef<Record<string, HTMLElement | null>>({});
 
   const fieldErrors = useMemo(() => {
-    if (!error) return {};
+    if (!error || !Array.isArray(error)) {
+      return {};
+    }
 
     return error.reduce<Record<string, string>>((acc, item) => {
       const fieldName = item.field[0] as string;
@@ -22,7 +24,7 @@ export function useActionFieldErrors(error: ActionStateZodError | null) {
   }, [error]);
 
   useEffect(() => {
-    if (!error || error.length === 0) return;
+    if (!error || error.length === 0 || !Array.isArray(error)) return;
 
     const firstErrorField = error[0].field[0] as string;
 

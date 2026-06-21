@@ -6,6 +6,7 @@ import type {
   SignInResponseError,
   SignInState,
 } from '$features/auth/sign-in/model';
+import type { postAuthSignInResponseError } from '@packages/api-client/api';
 
 export async function signInAction(
   _previousState: SignInActionState,
@@ -46,6 +47,6 @@ export async function signInAction(
 
   return actionStateBuilder.error(
     { email },
-    (await response.json()) as SignInResponseError,
+    ((await response.json()) as postAuthSignInResponseError['data']).error,
   );
 }

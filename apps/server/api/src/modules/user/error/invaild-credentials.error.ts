@@ -8,7 +8,7 @@ export class InvaildCredentials extends UnauthorizedError {
     super({
       event: USER_LOG_EVENT.USER_INVAILD_CREDENTIALS,
       message: USER_LOG_MESSAGE.USER_INVAILD_CREDENTIALS,
-      code: 'user.error.InvaildCredentials',
+      code: 'user_error_InvaildCredentials',
       scope,
     });
   }

@@ -2,7 +2,7 @@ import { Button } from '@packages/ui/components/button';
 import { Moon } from 'lucide-react';
 import Link from 'next/link';
 
-import { CLIENT_ENV_CONFIG } from '$shared/config';
+import { CLIENT_ENV_CONFIG } from '$shared/config/client-env';
 import { AppLogo } from '$shared/ui';
 
 export function PublicHeader() {

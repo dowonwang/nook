@@ -18,9 +18,11 @@ import {
   useActionFieldErrors,
   type ActionStateZodError,
 } from '$shared/api/action';
+import { useRedirectOnCondition } from '$shared/lib/navigate';
 
 export function SignInForm() {
   const t = useTranslations('validation');
+  // const tR = useTranslations('response');
   const [actionState, formAction] = useActionState(signInAction, {
     success: false,
     error: null,
@@ -33,6 +35,13 @@ export function SignInForm() {
 
   const emailError = getFieldError('email');
   const passwordError = getFieldError('password');
+
+  useRedirectOnCondition({
+    condition: actionState.success,
+    replace: true,
+  });
+
+  console.log(actionState);
 
   return (
     <form action={formAction} noValidate>
@@ -72,6 +81,10 @@ export function SignInForm() {
             </FieldDescription>
           )}
         </Field>
+
+        {/* {actionState.error?.code && (
+          <WarningMessage>{tR(actionState.error.code)}</WarningMessage>
+        )} */}
 
         <Button type='submit' className='w-full'>
           Log In

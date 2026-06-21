@@ -1,4 +1,4 @@
-import { CLIENT_ENV_CONFIG } from '$shared/config';
+import { CLIENT_ENV_CONFIG } from '$shared/config/client-env';
 import { AppLogo } from '$shared/ui';
 import { Menu, MENU_DATA } from '$widgets/sidebar';
 

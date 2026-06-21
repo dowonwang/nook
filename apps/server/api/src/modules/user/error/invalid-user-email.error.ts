@@ -7,7 +7,7 @@ export class InvalidUserEmail extends UnprocessableContent {
     super({
       event: USER_LOG_EVENT.USER_INVALID_EMAIL,
       message: USER_LOG_MESSAGE.USER_INVALID_EMAIL,
-      code: 'user.error.InvalidUserEmail',
+      code: 'user_error_InvalidUserEmail',
       detail: {
         field: 'email',
       },
