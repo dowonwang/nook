@@ -7,4 +7,8 @@
   --ui-secondary: #faf9f6;
   --ui-secondary-foreground: #6b7280;
   --ui-secondary-hover: #f5f4f0;
+
+  --ui-warning: #f59e0b;
+  --ui-warning-foreground: #fff;
+  --ui-warning-hover: #d97706;
 }

@@ -18,7 +18,7 @@ export async function signInAction(
   const password =
     typeof passwordValue === 'string' ? passwordValue.trim() : '';
 
-  const body = signInSchema.safeParse({ email, password: 1234 });
+  const body = signInSchema.safeParse({ email, password });
 
   if (!body.success) {
     return actionStateBuilder.error<SignInState, SignInResponseError>(

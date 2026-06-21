@@ -41,6 +41,10 @@
   --color-secondary: var(--ui-secondary);
   --color-secondary-foreground: var(--ui-secondary-foreground);
   --color-secondary-hover: var(--ui-secondary-hover);
+
+  --color-warning: var(--ui-warning);
+  --color-warning-foreground: var(--ui-warning-foreground);
+  --color-warnign-hover: var(--ui-warning-hover);
 }
 
 @layer base {

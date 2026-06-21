@@ -14,8 +14,10 @@ import { useTranslations } from 'next-intl';
 import { useActionState } from 'react';
 
 import { signInAction } from '$features/auth/sign-in/api';
-
-import type { ActionStateZodError } from '$shared/api/action';
+import {
+  useActionFieldErrors,
+  type ActionStateZodError,
+} from '$shared/api/action';
 
 export function SignInForm() {
   const t = useTranslations('validation');
@@ -25,7 +27,12 @@ export function SignInForm() {
     state: { email: '' },
   });
 
-  console.log(actionState);
+  const { register, getFieldError } = useActionFieldErrors(
+    actionState.error as ActionStateZodError,
+  );
+
+  const emailError = getFieldError('email');
+  const passwordError = getFieldError('password');
 
   return (
     <form action={formAction} noValidate>
@@ -33,25 +40,35 @@ export function SignInForm() {
         <Field>
           <FieldLabel htmlFor='email'>Email</FieldLabel>
           <Input
+            ref={register('email')}
             id='email'
             type='email'
             name='email'
             defaultValue={actionState.state.email}
+            aria-invalid={!!emailError}
+            aria-describedby={emailError ? 'email-error' : undefined}
           />
 
-          {actionState.error && (
-            <FieldDescription>
-              {t((actionState.error as ActionStateZodError)[0].message)}
+          {emailError && (
+            <FieldDescription id='email-error'>
+              {t(emailError)}
             </FieldDescription>
           )}
         </Field>
 
         <Field>
           <FieldLabel htmlFor='password'>Password</FieldLabel>
-          <Input id='password' type='password' name='password' />
-          {actionState.error && (
-            <FieldDescription>
-              {t((actionState.error as ActionStateZodError)[1].message)}
+          <Input
+            ref={register('password')}
+            id='password'
+            type='password'
+            name='password'
+            aria-invalid={!!passwordError}
+            aria-describedby={passwordError ? 'password-error' : undefined}
+          />
+          {passwordError && (
+            <FieldDescription id='password-error'>
+              {t(passwordError)}
             </FieldDescription>
           )}
         </Field>

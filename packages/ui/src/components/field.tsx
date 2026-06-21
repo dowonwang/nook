@@ -55,7 +55,7 @@ export function FieldDescription({
   className,
   ...rest
 }: React.HTMLAttributes<HTMLParagraphElement>) {
-  const style = tw`text-secondary-foreground px-2 text-sm`;
+  const style = tw`text-warning px-2 text-sm`;
 
   return (
     <p {...rest} className={cn(style, className)}>
