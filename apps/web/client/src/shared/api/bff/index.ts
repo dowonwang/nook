@@ -1,1 +1,5 @@
-export { setAuthCookie } from './cookies/auth-cookie';
+export {
+  setAuthCookie,
+  getAuthTokenFromCookie,
+  clearAuthCookie,
+} from './cookies/auth-cookie';

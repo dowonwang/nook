@@ -27,8 +27,6 @@ export function useRedirectOnCondition({
   const queryRedirectTo = searchParams?.get(APP_CONSTANT.redirectQueryKey);
 
   useEffect(() => {
-    console.log('check');
-
     if (!condition) {
       return;
     }

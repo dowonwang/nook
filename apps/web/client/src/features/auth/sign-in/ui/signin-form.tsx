@@ -43,8 +43,6 @@ export function SignInForm() {
     replace: true,
   });
 
-  console.log(actionState);
-
   return (
     <form action={formAction} noValidate>
       <FieldGroup>
