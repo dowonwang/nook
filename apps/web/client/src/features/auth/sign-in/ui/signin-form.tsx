@@ -9,12 +9,14 @@ import {
 } from '@packages/ui/components/field';
 import { Input } from '@packages/ui/components/input';
 import { Separator } from '@packages/ui/components/separator';
+import { WarningMessage } from '@packages/ui/components/warning-message';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { useActionState } from 'react';
 
 import { signInAction } from '$features/auth/sign-in/api';
 import {
+  useActionErrorMessage,
   useActionFieldErrors,
   type ActionStateZodError,
 } from '$shared/api/action';
@@ -22,7 +24,6 @@ import { useRedirectOnCondition } from '$shared/lib/navigate';
 
 export function SignInForm() {
   const t = useTranslations('validation');
-  // const tR = useTranslations('response');
   const [actionState, formAction] = useActionState(signInAction, {
     success: false,
     error: null,
@@ -35,6 +36,7 @@ export function SignInForm() {
 
   const emailError = getFieldError('email');
   const passwordError = getFieldError('password');
+  const actionError = useActionErrorMessage(actionState.error);
 
   useRedirectOnCondition({
     condition: actionState.success,
@@ -82,9 +84,7 @@ export function SignInForm() {
           )}
         </Field>
 
-        {/* {actionState.error?.code && (
-          <WarningMessage>{tR(actionState.error.code)}</WarningMessage>
-        )} */}
+        {actionError && <WarningMessage>{actionError}</WarningMessage>}
 
         <Button type='submit' className='w-full'>
           Log In
