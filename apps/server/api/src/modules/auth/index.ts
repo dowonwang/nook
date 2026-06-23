@@ -19,11 +19,18 @@ const userQueryRepository = new PrismaUserQueryRepository(prismaApiClient);
 
 // service
 const passwordHasher = new BcryptPasswordHasher();
-const tokenIssuer = new JwtTokenIssuer(
-  process.env.JWT_SECRET,
-  process.env.JWT_EXPIRES,
+const tokenVerifier = new JwtTokenVerifier(
+  process.env.ACCESS_TOKEN_SECRET,
+  process.env.REFRESH_TOKEN_SECRET,
 );
-const tokenVerifier = new JwtTokenVerifier(process.env.JWT_SECRET);
+const accessTokenIssuer = new JwtTokenIssuer(
+  process.env.ACCESS_TOKEN_SECRET,
+  process.env.ACCESS_TOKEN_EXPIRES,
+);
+const refreshTokenIssuer = new JwtTokenIssuer(
+  process.env.REFRESH_TOKEN_SECRET,
+  process.env.REFRESH_TOKEN_EXPIRES,
+);
 
 // guard
 export const authGuard = createAuthGuard(tokenVerifier);
@@ -33,7 +40,8 @@ const signUpHandler = new SignUpHandler(userCommandRepository, passwordHasher);
 const signInHandler = new SignInHandler(
   userCommandRepository,
   passwordHasher,
-  tokenIssuer,
+  accessTokenIssuer,
+  refreshTokenIssuer,
 );
 const meHandler = new MeHandler(userQueryRepository);
 

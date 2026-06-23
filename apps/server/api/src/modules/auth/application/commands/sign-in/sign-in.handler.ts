@@ -1,4 +1,5 @@
 import { AccessTokenClaims } from '$modules/auth/domain/value-objects/access-token-claims.vo';
+import { RefreshTokenClaims } from '$modules/auth/domain/value-objects/refresh-token-claims.vo';
 import { UserDtoMapper } from '$modules/user/application/mapper/user-dto.mapper';
 import { UserEmail } from '$modules/user/domain/value-objects/email.vo';
 import { InvaildCredentials } from '$modules/user/error/invaild-credentials.error';
@@ -13,11 +14,13 @@ export class SignInHandler {
   constructor(
     private readonly userCommandRepository: UserCommandRepository,
     private readonly passwordHasher: PasswordHaser,
-    private readonly tokenIssuer: TokenIssuer,
+    private readonly accessTokenIssuer: TokenIssuer,
+    private readonly refreshTokenIssuer: TokenIssuer,
   ) {}
 
   async excute(command: SignInCommand): Promise<{
     accessToken: string;
+    refreshToken: string;
     user: UserDetailDto;
   }> {
     const email = UserEmail.create(command.email);
@@ -36,14 +39,21 @@ export class SignInHandler {
       throw new InvaildCredentials(SignInHandler.name);
     }
 
-    const claims = AccessTokenClaims.create({
+    const acessTokenClaims = AccessTokenClaims.create({
+      sub: user.id.getValue(),
+    });
+    const refreshTokenClaims = RefreshTokenClaims.create({
       sub: user.id.getValue(),
     });
 
-    const accessToken = await this.tokenIssuer.issueAccessToken(claims);
+    const accessToken =
+      await this.accessTokenIssuer.issueToken(acessTokenClaims);
+    const refreshToken =
+      await this.refreshTokenIssuer.issueToken(refreshTokenClaims);
 
     return {
       accessToken,
+      refreshToken,
       user: UserDtoMapper.fromEntity(user),
     };
   }

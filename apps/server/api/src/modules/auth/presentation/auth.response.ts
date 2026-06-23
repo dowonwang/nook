@@ -6,6 +6,7 @@ export const AuthResponseSchemas = {
   }),
   signIn: z.object({
     accessToken: z.jwt(),
+    refreshToken: z.jwt(),
     user: z.object({
       id: z.uuidv7(),
       email: z.email(),

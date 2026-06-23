@@ -36,10 +36,17 @@ export function createAuthGuard(tokenVerifier: JwtTokenVerifier) {
       }
 
       const claims = await tokenVerifier.verifyAccessToken(token);
+      const subject = claims.getSubject();
+
+      if (!subject) {
+        throw new UnauthorizedError({
+          scope: createAuthGuard.name,
+        });
+      }
 
       return {
         authUser: {
-          id: claims.getSubject(),
+          id: subject,
         } satisfies AuthUser,
       };
     })
