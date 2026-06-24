@@ -1,6 +1,8 @@
 import { prismaApiClient } from '@packages/api-db';
 import 'dotenv/config';
 
+import { PrismaAuthSessionCommandRepository } from '$modules/auth/infrastructure/repositories/prisma-auth-session-command.repository';
+import { JwtTokenHasher } from '$modules/auth/infrastructure/services/jwt-token-hasher';
 import { PrismaUserCommandRepository } from '$modules/user/infrastructure/repositories/prisma-user-command.repository';
 import { PrismaUserQueryRepository } from '$modules/user/infrastructure/repositories/prisma-user-query.repository';
 
@@ -16,6 +18,9 @@ import { createAuthController } from './presentation/auth.controller';
 // repository
 const userCommandRepository = new PrismaUserCommandRepository(prismaApiClient);
 const userQueryRepository = new PrismaUserQueryRepository(prismaApiClient);
+const authSessionCommandRepository = new PrismaAuthSessionCommandRepository(
+  prismaApiClient,
+);
 
 // service
 const passwordHasher = new BcryptPasswordHasher();
@@ -31,6 +36,7 @@ const refreshTokenIssuer = new JwtTokenIssuer(
   process.env.REFRESH_TOKEN_SECRET,
   process.env.REFRESH_TOKEN_EXPIRES,
 );
+const tokenHasher = new JwtTokenHasher();
 
 // guard
 export const authGuard = createAuthGuard(tokenVerifier);
@@ -39,9 +45,11 @@ export const authGuard = createAuthGuard(tokenVerifier);
 const signUpHandler = new SignUpHandler(userCommandRepository, passwordHasher);
 const signInHandler = new SignInHandler(
   userCommandRepository,
+  authSessionCommandRepository,
   passwordHasher,
   accessTokenIssuer,
   refreshTokenIssuer,
+  tokenHasher,
 );
 const meHandler = new MeHandler(userQueryRepository);
 
