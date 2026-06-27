@@ -17,12 +17,12 @@ model User {
 model AuthSession {
     id String @id @default(uuid()) @db.Uuid
 
-    userId String
+    userId String @db.Uuid
     user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-    tokenHash String  @unique
-    userAgent String?
-    ipAddress String?
+    tokenHash String @unique
+    userAgent String
+    ipAddress String
 
     expiresAt DateTime
     revokeAt  DateTime?

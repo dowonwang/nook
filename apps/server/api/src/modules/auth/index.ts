@@ -1,6 +1,7 @@
 import { prismaApiClient } from '@packages/api-db';
 import 'dotenv/config';
 
+import { RefreshHandler } from '$modules/auth/application/commands/refresh/refresh.handler';
 import { PrismaAuthSessionCommandRepository } from '$modules/auth/infrastructure/repositories/prisma-auth-session-command.repository';
 import { JwtTokenHasher } from '$modules/auth/infrastructure/services/jwt-token-hasher';
 import { PrismaUserCommandRepository } from '$modules/user/infrastructure/repositories/prisma-user-command.repository';
@@ -52,11 +53,20 @@ const signInHandler = new SignInHandler(
   tokenHasher,
 );
 const meHandler = new MeHandler(userQueryRepository);
+const refreshHandler = new RefreshHandler(
+  authSessionCommandRepository,
+  userCommandRepository,
+  accessTokenIssuer,
+  refreshTokenIssuer,
+  tokenVerifier,
+  tokenHasher,
+);
 
 const authModule = createAuthController({
   signUpHandler,
   signInHandler,
   meHandler,
+  refreshHandler,
 });
 
 export default authModule;

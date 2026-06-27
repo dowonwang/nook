@@ -7,6 +7,10 @@ export abstract class TokenClaims {
     return this.payload.sub;
   }
 
+  getJti(): JWTPayload['jti'] {
+    return this.payload.jti;
+  }
+
   toPrimitives(): JWTPayload {
     return this.payload;
   }

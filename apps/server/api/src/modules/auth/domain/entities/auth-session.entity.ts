@@ -9,7 +9,7 @@ interface AuthSessionProps {
   userAgent: string;
   ipAddress: string;
   expiresAt: Date;
-  revokeAt?: Date;
+  revokeAt: Date | null;
 }
 
 export class AuthSession extends Entity<AuthSessionUuid> {

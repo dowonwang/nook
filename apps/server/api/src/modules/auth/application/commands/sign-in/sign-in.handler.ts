@@ -48,21 +48,24 @@ export class SignInHandler {
     const acessTokenClaims = AccessTokenClaims.create({
       sub: user.id.getValue(),
     });
-    const refreshTokenClaims = RefreshTokenClaims.create({
-      sub: user.id.getValue(),
-    });
-
     const accessToken =
       await this.accessTokenIssuer.issueToken(acessTokenClaims);
+
+    const refreshTokenId = AuthSessionUuid.generate();
+    const refreshTokenClaims = RefreshTokenClaims.create({
+      sub: user.id.getValue(),
+      jti: refreshTokenId.getValue(),
+    });
     const refreshToken =
       await this.refreshTokenIssuer.issueToken(refreshTokenClaims);
 
-    const authSession = AuthSession.create(AuthSessionUuid.generate(), {
+    const authSession = AuthSession.create(refreshTokenId, {
       userId: user.id,
       tokenHash: this.tokenHasher.create(refreshToken),
       userAgent: 'userAgent',
       expiresAt: new Date(),
       ipAddress: 'ipAddress',
+      revokeAt: null,
     });
 
     await this.authSessionCommandRepository.save(authSession);
