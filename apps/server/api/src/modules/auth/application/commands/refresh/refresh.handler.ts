@@ -13,6 +13,7 @@ import type { TokenIssuer } from '$modules/auth/domain/services/token-issuer';
 import type { TokenVerifier } from '$modules/auth/domain/services/token-verifier';
 import type { UserDetailDto } from '$modules/user/application/dto/user-detail.dto';
 import type { UserCommandRepository } from '$modules/user/domain/repositories/user-command.repository';
+import type { RequestMetadata } from '$shared/http/lib/get-request-metadata';
 
 export class RefreshHandler {
   constructor(
@@ -24,7 +25,10 @@ export class RefreshHandler {
     private readonly tokenHasher: TokenHasher,
   ) {}
 
-  async excute(refreshToken: string): Promise<{
+  async excute(
+    refreshToken: string,
+    { ipAddress, userAgent }: RequestMetadata,
+  ): Promise<{
     accessToken: string;
     refreshToken: string;
     user: UserDetailDto;
@@ -68,10 +72,10 @@ export class RefreshHandler {
     const newAuthSession = AuthSession.create(refreshTokenId, {
       userId: user.id,
       tokenHash: this.tokenHasher.create(newRefreshToken),
-      userAgent: 'userAgent',
       expiresAt: new Date(),
-      ipAddress: 'ipAddress',
       revokeAt: null,
+      userAgent,
+      ipAddress,
     });
 
     await this.authSessionCommandRepository.save(newAuthSession);

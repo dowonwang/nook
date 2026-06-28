@@ -14,7 +14,7 @@ export class AccessTokenClaims extends TokenClaims {
 
   private constructor(payload: AccessTokenPayload) {
     super();
-    this.payload = payload;
+    this.payload = { ...payload };
   }
 
   static create(payload: AccessTokenPayload): AccessTokenClaims {

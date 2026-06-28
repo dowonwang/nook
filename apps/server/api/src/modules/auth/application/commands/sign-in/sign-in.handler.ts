@@ -12,6 +12,7 @@ import type { TokenHasher } from '$modules/auth/domain/services/token-hasher';
 import type { TokenIssuer } from '$modules/auth/domain/services/token-issuer';
 import type { UserDetailDto } from '$modules/user/application/dto/user-detail.dto';
 import type { UserCommandRepository } from '$modules/user/domain/repositories/user-command.repository';
+import type { RequestMetadata } from '$shared/http/lib/get-request-metadata';
 import type { SignInCommand } from './sign-in.command';
 
 export class SignInHandler {
@@ -24,7 +25,10 @@ export class SignInHandler {
     private readonly tokenHasher: TokenHasher,
   ) {}
 
-  async excute(command: SignInCommand): Promise<{
+  async excute(
+    command: SignInCommand,
+    { userAgent, ipAddress }: RequestMetadata,
+  ): Promise<{
     accessToken: string;
     refreshToken: string;
     user: UserDetailDto;
@@ -62,10 +66,10 @@ export class SignInHandler {
     const authSession = AuthSession.create(refreshTokenId, {
       userId: user.id,
       tokenHash: this.tokenHasher.create(refreshToken),
-      userAgent: 'userAgent',
       expiresAt: new Date(),
-      ipAddress: 'ipAddress',
       revokeAt: null,
+      ipAddress,
+      userAgent,
     });
 
     await this.authSessionCommandRepository.save(authSession);

@@ -11,6 +11,9 @@ export const LOG_EVENT = {
   HTTP_UNPROCESSABLE_CONTENT: 'http.unprocessable_content',
   HTTP_INTERNAL_SERVER_ERROR: 'http.internal_server_error',
 
+  HTTP_INVALID_REQUEST_IP: 'http.invalid_request_ip',
+  HTTP_INVALID_REQUEST_USER_AGENT: 'http.invalid_request_user_agent',
+
   APP_START: 'app.start',
   APP_ERROR_OCCURRED: 'app.error.occurred',
   APP_UNHANDLED_EXCEPTION: 'app.unhandled.exception',

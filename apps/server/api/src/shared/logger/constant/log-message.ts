@@ -13,6 +13,9 @@ export const LOG_MESSAGE: LogEventMessage = {
   HTTP_UNPROCESSABLE_CONTENT: 'Unprocessable Content',
   HTTP_INTERNAL_SERVER_ERROR: 'Internal server error',
 
+  HTTP_INVALID_REQUEST_IP: 'Client IP could not be verified',
+  HTTP_INVALID_REQUEST_USER_AGENT: 'Client UserAgent could not be verified',
+
   APP_START: 'REST API server is running at',
   APP_ERROR_OCCURRED: 'Application error occured',
   APP_UNHANDLED_EXCEPTION: 'Unhandled exception occurred',

@@ -3,7 +3,7 @@ import { jwtVerify } from 'jose';
 import { AccessTokenClaims } from '$modules/auth/domain/value-objects/access-token-claims.vo';
 import { RefreshTokenClaims } from '$modules/auth/domain/value-objects/refresh-token-claims.vo';
 import { InvalidAccessTokenClaims } from '$modules/auth/error/invalid-access-token-claims.error';
-import { InvalidRefreshTokenClaims } from '$modules/auth/error/invalid-refresh-token-claims.erro';
+import { InvalidRefreshTokenClaims } from '$modules/auth/error/invalid-refresh-token-claims.error';
 import { MissingJwtSecret } from '$modules/auth/error/missing-jwt-secret.error';
 
 import type { TokenVerifier } from '$modules/auth/domain/services/token-verifier';

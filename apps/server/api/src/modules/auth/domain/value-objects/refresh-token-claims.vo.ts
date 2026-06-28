@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 import { TokenClaims } from '$modules/auth/domain/value-objects/abstract/token-claims.base';
-import { InvalidRefreshTokenClaims } from '$modules/auth/error/invalid-refresh-token-claims.erro';
+import { InvalidRefreshTokenClaims } from '$modules/auth/error/invalid-refresh-token-claims.error';
 
 const payloadSchema = z.object({
   sub: z.uuidv7(),
@@ -15,7 +15,7 @@ export class RefreshTokenClaims extends TokenClaims {
 
   private constructor(payload: RefreshTokenPayload) {
     super();
-    this.payload = payload;
+    this.payload = { ...payload };
   }
 
   static create(payload: RefreshTokenPayload): RefreshTokenClaims {
