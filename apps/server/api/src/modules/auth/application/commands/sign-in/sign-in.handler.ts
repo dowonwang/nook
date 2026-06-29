@@ -2,6 +2,7 @@ import { AuthSession } from '$modules/auth/domain/entities/auth-session.entity';
 import { AccessTokenClaims } from '$modules/auth/domain/value-objects/access-token-claims.vo';
 import { AuthSessionUuid } from '$modules/auth/domain/value-objects/auth-session-uuid.vo';
 import { RefreshTokenClaims } from '$modules/auth/domain/value-objects/refresh-token-claims.vo';
+import { RefreshTokenMalFormed } from '$modules/auth/error/refresh-token-malformed.error';
 import { UserDtoMapper } from '$modules/user/application/mapper/user-dto.mapper';
 import { UserEmail } from '$modules/user/domain/value-objects/email.vo';
 import { InvaildCredentials } from '$modules/user/error/invaild-credentials.error';
@@ -52,7 +53,7 @@ export class SignInHandler {
     const acessTokenClaims = AccessTokenClaims.create({
       sub: user.id.getValue(),
     });
-    const accessToken =
+    const { token: accessToken } =
       await this.accessTokenIssuer.issueToken(acessTokenClaims);
 
     const refreshTokenId = AuthSessionUuid.generate();
@@ -60,16 +61,20 @@ export class SignInHandler {
       sub: user.id.getValue(),
       jti: refreshTokenId.getValue(),
     });
-    const refreshToken =
+    const { token: refreshToken, expiresAt } =
       await this.refreshTokenIssuer.issueToken(refreshTokenClaims);
+
+    if (!expiresAt) {
+      throw new RefreshTokenMalFormed(SignInHandler.name);
+    }
 
     const authSession = AuthSession.create(refreshTokenId, {
       userId: user.id,
       tokenHash: this.tokenHasher.create(refreshToken),
-      expiresAt: new Date(),
       revokeAt: null,
       ipAddress,
       userAgent,
+      expiresAt,
     });
 
     await this.authSessionCommandRepository.save(authSession);

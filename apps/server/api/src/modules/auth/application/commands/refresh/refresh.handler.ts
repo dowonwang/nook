@@ -58,7 +58,7 @@ export class RefreshHandler {
     const accessTokenClaims = AccessTokenClaims.create({
       sub: user.id.getValue(),
     });
-    const newAccessToken =
+    const { token: newAccessToken } =
       await this.accessTokenIssuer.issueToken(accessTokenClaims);
 
     const refreshTokenId = AuthSessionUuid.generate();
@@ -66,16 +66,20 @@ export class RefreshHandler {
       sub: user.id.getValue(),
       jti: refreshTokenId.getValue(),
     });
-    const newRefreshToken =
+    const { token: newRefreshToken, expiresAt } =
       await this.refreshTokenIssuer.issueToken(refreshTokenClaims);
+
+    if (!expiresAt) {
+      throw new RefreshTokenMalFormed(RefreshHandler.name);
+    }
 
     const newAuthSession = AuthSession.create(refreshTokenId, {
       userId: user.id,
       tokenHash: this.tokenHasher.create(newRefreshToken),
-      expiresAt: new Date(),
       revokeAt: null,
       userAgent,
       ipAddress,
+      expiresAt,
     });
 
     await this.authSessionCommandRepository.save(newAuthSession);
