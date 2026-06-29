@@ -1,6 +1,9 @@
 import { prismaApiClient } from '@packages/api-db';
 import 'dotenv/config';
 
+import { RefreshHandler } from '$modules/auth/application/commands/refresh/refresh.handler';
+import { PrismaAuthSessionCommandRepository } from '$modules/auth/infrastructure/repositories/prisma-auth-session-command.repository';
+import { JwtTokenHasher } from '$modules/auth/infrastructure/services/jwt-token-hasher';
 import { PrismaUserCommandRepository } from '$modules/user/infrastructure/repositories/prisma-user-command.repository';
 import { PrismaUserQueryRepository } from '$modules/user/infrastructure/repositories/prisma-user-query.repository';
 
@@ -16,14 +19,25 @@ import { createAuthController } from './presentation/auth.controller';
 // repository
 const userCommandRepository = new PrismaUserCommandRepository(prismaApiClient);
 const userQueryRepository = new PrismaUserQueryRepository(prismaApiClient);
+const authSessionCommandRepository = new PrismaAuthSessionCommandRepository(
+  prismaApiClient,
+);
 
 // service
 const passwordHasher = new BcryptPasswordHasher();
-const tokenIssuer = new JwtTokenIssuer(
-  process.env.JWT_SECRET,
-  process.env.JWT_EXPIRES,
+const tokenVerifier = new JwtTokenVerifier(
+  process.env.ACCESS_TOKEN_SECRET,
+  process.env.REFRESH_TOKEN_SECRET,
 );
-const tokenVerifier = new JwtTokenVerifier(process.env.JWT_SECRET);
+const accessTokenIssuer = new JwtTokenIssuer(
+  process.env.ACCESS_TOKEN_SECRET,
+  process.env.ACCESS_TOKEN_EXPIRES,
+);
+const refreshTokenIssuer = new JwtTokenIssuer(
+  process.env.REFRESH_TOKEN_SECRET,
+  process.env.REFRESH_TOKEN_EXPIRES,
+);
+const tokenHasher = new JwtTokenHasher();
 
 // guard
 export const authGuard = createAuthGuard(tokenVerifier);
@@ -32,15 +46,27 @@ export const authGuard = createAuthGuard(tokenVerifier);
 const signUpHandler = new SignUpHandler(userCommandRepository, passwordHasher);
 const signInHandler = new SignInHandler(
   userCommandRepository,
+  authSessionCommandRepository,
   passwordHasher,
-  tokenIssuer,
+  accessTokenIssuer,
+  refreshTokenIssuer,
+  tokenHasher,
 );
 const meHandler = new MeHandler(userQueryRepository);
+const refreshHandler = new RefreshHandler(
+  authSessionCommandRepository,
+  userCommandRepository,
+  accessTokenIssuer,
+  refreshTokenIssuer,
+  tokenVerifier,
+  tokenHasher,
+);
 
 const authModule = createAuthController({
   signUpHandler,
   signInHandler,
   meHandler,
+  refreshHandler,
 });
 
 export default authModule;

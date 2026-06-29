@@ -9,6 +9,28 @@ model User {
     updatedAt DateTime @updatedAt
 
     organizationMembers OrganizationMember[]
+    authSessions        AuthSession[]
 
     @@map("user")
+}
+
+model AuthSession {
+    id String @id @default(uuid()) @db.Uuid
+
+    userId String @db.Uuid
+    user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    tokenHash String @unique
+    userAgent String
+    ipAddress String
+
+    expiresAt DateTime
+    revokeAt  DateTime?
+
+    createAt DateTime @default(now())
+    updateAt DateTime @updatedAt
+
+    @@index([userId])
+    @@index([expiresAt])
+    @@map("auth-session")
 }

@@ -4,7 +4,7 @@
   "version": "1.0.50",
   "scripts": {
     "typecheck": "tsc --noEmit",
-    "dev": "pnpm run db:up && pnpm -F @packages/api-db run db:generate && bun run --watch src/index.ts",
+    "dev": "pnpm run db:up && pnpm -F @packages/api-db run db:generate && NODE_ENV=development bun run --watch src/index.ts",
     "db:up": "docker compose -f ../../../packages/api-db/docker-compose.yml up -d",
     "db:down": "docker compose -f ../../../packages/api-db/docker-compose.yml down",
     "db:logs": "docker compose -f ../../../packages/api-db/docker-compose.yml logs -f",

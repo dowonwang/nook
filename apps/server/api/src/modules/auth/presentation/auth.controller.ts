@@ -2,6 +2,7 @@ import { Elysia } from 'elysia';
 
 import { authGuard } from '$modules/auth';
 import { AuthResponseSchemas } from '$modules/auth/presentation/auth.response';
+import { getRequestMetadata } from '$shared/http/lib/get-request-metadata';
 import { errorPlugin } from '$shared/http/plugin/error.plugin';
 import {
   ApiErrorResponseSchema,
@@ -11,6 +12,7 @@ import { ApiResponseBuilder } from '$shared/responses/api-response-builder';
 
 import { AuthHttpModel } from './auth.http-model';
 
+import type { RefreshHandler } from '$modules/auth/application/commands/refresh/refresh.handler';
 import type { SignInHandler } from '$modules/auth/application/commands/sign-in/sign-in.handler';
 import type { SignUpHandler } from '$modules/auth/application/commands/sign-up/sign-up.handler';
 import type { MeHandler } from '$modules/auth/application/queries/me/me.handler';
@@ -19,6 +21,7 @@ interface AuthControllerDependencies {
   signUpHandler: SignUpHandler;
   signInHandler: SignInHandler;
   meHandler: MeHandler;
+  refreshHandler: RefreshHandler;
 }
 
 export function createAuthController(deps: AuthControllerDependencies) {
@@ -61,8 +64,9 @@ export function createAuthController(deps: AuthControllerDependencies) {
       // POST /auth/sign-in
       .post(
         '/sign-in',
-        async ({ body }) => {
-          const result = await deps.signInHandler.excute(body);
+        async ({ body, request }) => {
+          const metadata = getRequestMetadata(request);
+          const result = await deps.signInHandler.excute(body, metadata);
 
           return ApiResponseBuilder.success(result);
         },
@@ -80,6 +84,36 @@ export function createAuthController(deps: AuthControllerDependencies) {
             }),
             401: ApiErrorResponseSchema.meta({
               description: 'Invalid username or password',
+            }),
+          },
+        },
+      )
+      .post(
+        '/refresh',
+        async ({ cookie, request }) => {
+          const refreshToken = cookie.refreshToken;
+          const metadata = getRequestMetadata(request);
+
+          const result = await deps.refreshHandler.excute(
+            refreshToken.value as string,
+            metadata,
+          );
+
+          return ApiResponseBuilder.success(result);
+        },
+        {
+          parse: 'application/json',
+          detail: {
+            summary: 'Refresh Auth Token',
+            security: [],
+          },
+          response: {
+            200: createApiSuccessResponseSchema(AuthResponseSchemas.refresh),
+            401: ApiErrorResponseSchema.meta({
+              description: 'Invalid refreshToken',
+            }),
+            404: ApiErrorResponseSchema.meta({
+              description: 'Session Not Found',
             }),
           },
         },

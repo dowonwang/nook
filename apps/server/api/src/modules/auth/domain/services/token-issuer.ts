@@ -1,5 +1,10 @@
-import type { AccessTokenClaims } from '$modules/auth/domain/value-objects/access-token-claims.vo';
+import type { TokenClaims } from '$modules/auth/domain/value-objects/abstract/token-claims.base';
+import type { JWTPayload } from 'jose';
 
 export interface TokenIssuer {
-  issueAccessToken(claims: AccessTokenClaims): Promise<string>;
+  issueToken(claims: TokenClaims): Promise<{
+    token: string;
+    payload: JWTPayload;
+    expiresAt: Date | null;
+  }>;
 }
