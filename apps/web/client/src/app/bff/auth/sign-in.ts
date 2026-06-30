@@ -13,7 +13,7 @@ export async function handleSignInRequest(
   const { data, status } = await postAuthSignIn(requestBody);
 
   if (data.success) {
-    const { accessToken, ...rest } = data.data;
+    const { accessToken, refreshToken, ...rest } = data.data;
 
     const response = NextResponse.json(
       { ...data, data: { ...rest } },
@@ -22,7 +22,7 @@ export async function handleSignInRequest(
       },
     );
 
-    setAuthCookie(response, accessToken);
+    setAuthCookie(response, accessToken, refreshToken);
 
     return response;
   }

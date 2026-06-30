@@ -209,6 +209,15 @@ export const PostAuthSignInResponse = zod.object({
         validator: 'string',
       }),
     ),
+    refreshToken: zod.string(
+      zodParams({
+        operationId: 'postAuthSign-in',
+        location: 'response',
+        schemaName: 'PostAuthSignInResponse',
+        fieldPath: ['data', 'refreshToken'],
+        validator: 'string',
+      }),
+    ),
     user: zod.object({
       id: zod
         .uuid(
@@ -278,6 +287,123 @@ export const PostAuthSignInResponse = zod.object({
           operationId: 'postAuthSign-in',
           location: 'response',
           schemaName: 'PostAuthSignInResponse',
+          fieldPath: ['meta', 'requestId'],
+          validator: 'string',
+        }),
+      )
+      .optional(),
+  }),
+});
+
+/**
+ * @summary Refresh Auth Token
+ */
+export const postAuthRefreshResponseDataUserIdRegExp = new RegExp(
+  '^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-7[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12})$',
+);
+export const postAuthRefreshResponseDataUserEmailRegExp = new RegExp(
+  "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$",
+);
+
+export const PostAuthRefreshResponse = zod.object({
+  success: zod.literal(
+    true,
+    zodParams({
+      operationId: 'postAuthRefresh',
+      location: 'response',
+      schemaName: 'PostAuthRefreshResponse',
+      fieldPath: ['success'],
+      validator: 'literal',
+    }),
+  ),
+  data: zod.object({
+    accessToken: zod.string(
+      zodParams({
+        operationId: 'postAuthRefresh',
+        location: 'response',
+        schemaName: 'PostAuthRefreshResponse',
+        fieldPath: ['data', 'accessToken'],
+        validator: 'string',
+      }),
+    ),
+    refreshToken: zod.string(
+      zodParams({
+        operationId: 'postAuthRefresh',
+        location: 'response',
+        schemaName: 'PostAuthRefreshResponse',
+        fieldPath: ['data', 'refreshToken'],
+        validator: 'string',
+      }),
+    ),
+    user: zod.object({
+      id: zod
+        .uuid(
+          zodParams({
+            operationId: 'postAuthRefresh',
+            location: 'response',
+            schemaName: 'PostAuthRefreshResponse',
+            fieldPath: ['data', 'user', 'id'],
+            validator: 'uuid',
+          }),
+        )
+        .regex(
+          postAuthRefreshResponseDataUserIdRegExp,
+          zodParams({
+            operationId: 'postAuthRefresh',
+            location: 'response',
+            schemaName: 'PostAuthRefreshResponse',
+            fieldPath: ['data', 'user', 'id'],
+            validator: 'regex',
+          }),
+        ),
+      email: zod
+        .string(
+          zodParams({
+            operationId: 'postAuthRefresh',
+            location: 'response',
+            schemaName: 'PostAuthRefreshResponse',
+            fieldPath: ['data', 'user', 'email'],
+            validator: 'string',
+          }),
+        )
+        .regex(
+          postAuthRefreshResponseDataUserEmailRegExp,
+          zodParams({
+            operationId: 'postAuthRefresh',
+            location: 'response',
+            schemaName: 'PostAuthRefreshResponse',
+            fieldPath: ['data', 'user', 'email'],
+            validator: 'regex',
+          }),
+        ),
+      name: zod.string(
+        zodParams({
+          operationId: 'postAuthRefresh',
+          location: 'response',
+          schemaName: 'PostAuthRefreshResponse',
+          fieldPath: ['data', 'user', 'name'],
+          validator: 'string',
+        }),
+      ),
+    }),
+  }),
+  error: zod.unknown().nullable(),
+  meta: zod.object({
+    unixTimestamp: zod.number(
+      zodParams({
+        operationId: 'postAuthRefresh',
+        location: 'response',
+        schemaName: 'PostAuthRefreshResponse',
+        fieldPath: ['meta', 'unixTimestamp'],
+        validator: 'number',
+      }),
+    ),
+    requestId: zod
+      .string(
+        zodParams({
+          operationId: 'postAuthRefresh',
+          location: 'response',
+          schemaName: 'PostAuthRefreshResponse',
           fieldPath: ['meta', 'requestId'],
           validator: 'string',
         }),

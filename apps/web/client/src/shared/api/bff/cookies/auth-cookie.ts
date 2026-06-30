@@ -6,14 +6,30 @@ import { signedCookie, verifySignedCookie } from './cookie-sign';
 
 import type { NextResponse } from 'next/server';
 
-const AUTH_COOKIE_NAME = '_auth_';
+const ACCESS_TOKEN_COOKIE_NAME = '_auth_access_';
+const REFRESH_TOKEN_COOKIE_NAME = '_auth_refresh_';
 
-export function setAuthCookie(response: NextResponse, accessToken: string) {
+export function setAuthCookie(
+  response: NextResponse,
+  accessToken: string,
+  refreshToken: string,
+) {
   const AUTH_SECRET = SERVER_ENV_CONFIG.AUTH_COOKIE_SECRET;
 
   response.cookies.set(
-    AUTH_COOKIE_NAME,
+    ACCESS_TOKEN_COOKIE_NAME,
     signedCookie(accessToken, AUTH_SECRET),
+    {
+      httpOnly: true,
+      sameSite: 'lax',
+      path: '/',
+      secure: true,
+    },
+  );
+
+  response.cookies.set(
+    REFRESH_TOKEN_COOKIE_NAME,
+    signedCookie(refreshToken, AUTH_SECRET),
     {
       httpOnly: true,
       sameSite: 'lax',
@@ -24,14 +40,26 @@ export function setAuthCookie(response: NextResponse, accessToken: string) {
 }
 
 export function clearAuthCookie(response: NextResponse) {
-  response.cookies.delete(AUTH_COOKIE_NAME);
+  response.cookies.delete(ACCESS_TOKEN_COOKIE_NAME);
+  response.cookies.delete(REFRESH_TOKEN_COOKIE_NAME);
 }
 
-export async function getAuthTokenFromCookie() {
+export async function getAuthAccessFromCookie() {
   const AUTH_SECRET = SERVER_ENV_CONFIG.AUTH_COOKIE_SECRET;
 
   const cookieStore = await cookies();
-  const cookieValue = cookieStore.get(AUTH_COOKIE_NAME)?.value;
+  const cookieValue = cookieStore.get(ACCESS_TOKEN_COOKIE_NAME)?.value;
+
+  if (!cookieValue) return null;
+
+  return verifySignedCookie(cookieValue, AUTH_SECRET);
+}
+
+export async function getAuthRefreshFromCookie() {
+  const AUTH_SECRET = SERVER_ENV_CONFIG.AUTH_COOKIE_SECRET;
+
+  const cookieStore = await cookies();
+  const cookieValue = cookieStore.get(REFRESH_TOKEN_COOKIE_NAME)?.value;
 
   if (!cookieValue) return null;
 

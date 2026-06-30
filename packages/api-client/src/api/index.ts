@@ -5,6 +5,7 @@
  * Development documentation
  * OpenAPI spec version: 0.0.0
  */
+import { bffFetcher } from '../lib/bff-fetcher';
 export type PostAuthSignUpBody = {
   /** @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$ */
   email: string;
@@ -89,6 +90,7 @@ export type PostAuthSignIn200DataUser = {
 
 export type PostAuthSignIn200Data = {
   accessToken: string;
+  refreshToken: string;
   user: PostAuthSignIn200DataUser;
 };
 
@@ -142,6 +144,72 @@ export type PostAuthSignIn401 = {
   data: unknown | null;
   error: PostAuthSignIn401Error;
   meta: PostAuthSignIn401Meta;
+};
+
+export type PostAuthRefresh200DataUser = {
+  /** @pattern ^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-7[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12})$ */
+  id: string;
+  /** @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$ */
+  email: string;
+  name: string;
+};
+
+export type PostAuthRefresh200Data = {
+  accessToken: string;
+  refreshToken: string;
+  user: PostAuthRefresh200DataUser;
+};
+
+export type PostAuthRefresh200Meta = {
+  unixTimestamp: number;
+  requestId?: string;
+};
+
+export type PostAuthRefresh200 = {
+  success: true;
+  data: PostAuthRefresh200Data;
+  error: unknown | null;
+  meta: PostAuthRefresh200Meta;
+};
+
+export type PostAuthRefresh401Error = {
+  code: string;
+  details?: unknown;
+};
+
+export type PostAuthRefresh401Meta = {
+  unixTimestamp: number;
+  requestId?: string;
+};
+
+/**
+ * Invalid refreshToken
+ */
+export type PostAuthRefresh401 = {
+  success: false;
+  data: unknown | null;
+  error: PostAuthRefresh401Error;
+  meta: PostAuthRefresh401Meta;
+};
+
+export type PostAuthRefresh404Error = {
+  code: string;
+  details?: unknown;
+};
+
+export type PostAuthRefresh404Meta = {
+  unixTimestamp: number;
+  requestId?: string;
+};
+
+/**
+ * Session Not Found
+ */
+export type PostAuthRefresh404 = {
+  success: false;
+  data: unknown | null;
+  error: PostAuthRefresh404Error;
+  meta: PostAuthRefresh404Meta;
 };
 
 export type GetAuthMe200Data = {
@@ -461,21 +529,12 @@ export const postAuthSignUp = async (
   postAuthSignUpBody: PostAuthSignUpBody,
   options?: RequestInit,
 ): Promise<postAuthSignUpResponse> => {
-  const res = await fetch(getPostAuthSignUpUrl(), {
+  return bffFetcher<postAuthSignUpResponse>(getPostAuthSignUpUrl(), {
     ...options,
     method: 'POST',
     headers: { 'Content-Type': 'application/json', ...options?.headers },
     body: JSON.stringify(postAuthSignUpBody),
   });
-
-  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
-
-  const data: postAuthSignUpResponse['data'] = body ? JSON.parse(body) : {};
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as postAuthSignUpResponse;
 };
 
 export type postAuthSignInResponse200 = {
@@ -518,21 +577,57 @@ export const postAuthSignIn = async (
   postAuthSignInBody: PostAuthSignInBody,
   options?: RequestInit,
 ): Promise<postAuthSignInResponse> => {
-  const res = await fetch(getPostAuthSignInUrl(), {
+  return bffFetcher<postAuthSignInResponse>(getPostAuthSignInUrl(), {
     ...options,
     method: 'POST',
     headers: { 'Content-Type': 'application/json', ...options?.headers },
     body: JSON.stringify(postAuthSignInBody),
   });
+};
 
-  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
+export type postAuthRefreshResponse200 = {
+  data: PostAuthRefresh200;
+  status: 200;
+};
 
-  const data: postAuthSignInResponse['data'] = body ? JSON.parse(body) : {};
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as postAuthSignInResponse;
+export type postAuthRefreshResponse401 = {
+  data: PostAuthRefresh401;
+  status: 401;
+};
+
+export type postAuthRefreshResponse404 = {
+  data: PostAuthRefresh404;
+  status: 404;
+};
+
+export type postAuthRefreshResponseSuccess = postAuthRefreshResponse200 & {
+  headers: Headers;
+};
+export type postAuthRefreshResponseError = (
+  | postAuthRefreshResponse401
+  | postAuthRefreshResponse404
+) & {
+  headers: Headers;
+};
+
+export type postAuthRefreshResponse =
+  | postAuthRefreshResponseSuccess
+  | postAuthRefreshResponseError;
+
+export const getPostAuthRefreshUrl = () => {
+  return `http://localhost:4000/auth/refresh`;
+};
+
+/**
+ * @summary Refresh Auth Token
+ */
+export const postAuthRefresh = async (
+  options?: RequestInit,
+): Promise<postAuthRefreshResponse> => {
+  return bffFetcher<postAuthRefreshResponse>(getPostAuthRefreshUrl(), {
+    ...options,
+    method: 'POST',
+  });
 };
 
 export type getAuthMeResponse200 = {
@@ -575,19 +670,10 @@ export const getGetAuthMeUrl = () => {
 export const getAuthMe = async (
   options?: RequestInit,
 ): Promise<getAuthMeResponse> => {
-  const res = await fetch(getGetAuthMeUrl(), {
+  return bffFetcher<getAuthMeResponse>(getGetAuthMeUrl(), {
     ...options,
     method: 'GET',
   });
-
-  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
-
-  const data: getAuthMeResponse['data'] = body ? JSON.parse(body) : {};
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as getAuthMeResponse;
 };
 
 export type postOrganizationResponse201 = {
@@ -636,21 +722,12 @@ export const postOrganization = async (
   postOrganizationBody: PostOrganizationBody,
   options?: RequestInit,
 ): Promise<postOrganizationResponse> => {
-  const res = await fetch(getPostOrganizationUrl(), {
+  return bffFetcher<postOrganizationResponse>(getPostOrganizationUrl(), {
     ...options,
     method: 'POST',
     headers: { 'Content-Type': 'application/json', ...options?.headers },
     body: JSON.stringify(postOrganizationBody),
   });
-
-  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
-
-  const data: postOrganizationResponse['data'] = body ? JSON.parse(body) : {};
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as postOrganizationResponse;
 };
 
 export type postOrganizationAddMembersResponse201 = {
@@ -712,21 +789,13 @@ export const postOrganizationAddMembers = async (
   postOrganizationAddMembersBody: PostOrganizationAddMembersBody,
   options?: RequestInit,
 ): Promise<postOrganizationAddMembersResponse> => {
-  const res = await fetch(getPostOrganizationAddMembersUrl(), {
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(postOrganizationAddMembersBody),
-  });
-
-  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
-
-  const data: postOrganizationAddMembersResponse['data'] = body
-    ? JSON.parse(body)
-    : {};
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as postOrganizationAddMembersResponse;
+  return bffFetcher<postOrganizationAddMembersResponse>(
+    getPostOrganizationAddMembersUrl(),
+    {
+      ...options,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', ...options?.headers },
+      body: JSON.stringify(postOrganizationAddMembersBody),
+    },
+  );
 };

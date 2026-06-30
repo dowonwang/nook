@@ -1,13 +1,13 @@
 import { getAuthMe } from '@packages/api-client/api';
 import { NextResponse } from 'next/server';
 
-import { getAuthTokenFromCookie } from '$shared/api/bff';
+import { getAuthAccessFromCookie } from '$shared/api/bff';
 
 export async function handleMeRequest() {
-  const accessToken = await getAuthTokenFromCookie();
+  const accessToken = await getAuthAccessFromCookie();
 
   if (!accessToken) {
-    return NextResponse.json('Auth', {
+    return NextResponse.json('Unauthenticated', {
       status: 401,
     });
   }

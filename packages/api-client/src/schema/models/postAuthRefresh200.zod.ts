@@ -7,21 +7,21 @@
  */
 import { z as zod } from 'zod';
 
-export const postAuthSignIn200DataUserIdRegExp = new RegExp(
+export const postAuthRefresh200DataUserIdRegExp = new RegExp(
   '^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-7[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12})$',
 );
-export const postAuthSignIn200DataUserEmailRegExp = new RegExp(
+export const postAuthRefresh200DataUserEmailRegExp = new RegExp(
   "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$",
 );
 
-export const PostAuthSignIn200 = zod.object({
+export const PostAuthRefresh200 = zod.object({
   success: zod.literal(true),
   data: zod.object({
     accessToken: zod.string(),
     refreshToken: zod.string(),
     user: zod.object({
-      id: zod.uuid().regex(postAuthSignIn200DataUserIdRegExp),
-      email: zod.string().regex(postAuthSignIn200DataUserEmailRegExp),
+      id: zod.uuid().regex(postAuthRefresh200DataUserIdRegExp),
+      email: zod.string().regex(postAuthRefresh200DataUserEmailRegExp),
       name: zod.string(),
     }),
   }),
@@ -32,5 +32,5 @@ export const PostAuthSignIn200 = zod.object({
   }),
 });
 
-export type PostAuthSignIn200 = zod.input<typeof PostAuthSignIn200>;
-export type PostAuthSignIn200Output = zod.output<typeof PostAuthSignIn200>;
+export type PostAuthRefresh200 = zod.input<typeof PostAuthRefresh200>;
+export type PostAuthRefresh200Output = zod.output<typeof PostAuthRefresh200>;

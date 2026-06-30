@@ -13,6 +13,12 @@ export default defineConfig({
       formatter: 'prettier',
       indexFiles: true,
       baseUrl: 'http://localhost:4000',
+      override: {
+        mutator: {
+          path: './src/lib/bff-fetcher.ts',
+          name: 'bffFetcher',
+        },
+      },
     },
   },
 
