@@ -5,7 +5,6 @@
  * Development documentation
  * OpenAPI spec version: 0.0.0
  */
-import { bffFetcher } from '../lib/bff-fetcher';
 export type PostAuthSignUpBody = {
   /** @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$ */
   email: string;
@@ -529,12 +528,21 @@ export const postAuthSignUp = async (
   postAuthSignUpBody: PostAuthSignUpBody,
   options?: RequestInit,
 ): Promise<postAuthSignUpResponse> => {
-  return bffFetcher<postAuthSignUpResponse>(getPostAuthSignUpUrl(), {
+  const res = await fetch(getPostAuthSignUpUrl(), {
     ...options,
     method: 'POST',
     headers: { 'Content-Type': 'application/json', ...options?.headers },
     body: JSON.stringify(postAuthSignUpBody),
   });
+
+  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
+
+  const data: postAuthSignUpResponse['data'] = body ? JSON.parse(body) : {};
+  return {
+    data,
+    status: res.status,
+    headers: res.headers,
+  } as postAuthSignUpResponse;
 };
 
 export type postAuthSignInResponse200 = {
@@ -577,12 +585,21 @@ export const postAuthSignIn = async (
   postAuthSignInBody: PostAuthSignInBody,
   options?: RequestInit,
 ): Promise<postAuthSignInResponse> => {
-  return bffFetcher<postAuthSignInResponse>(getPostAuthSignInUrl(), {
+  const res = await fetch(getPostAuthSignInUrl(), {
     ...options,
     method: 'POST',
     headers: { 'Content-Type': 'application/json', ...options?.headers },
     body: JSON.stringify(postAuthSignInBody),
   });
+
+  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
+
+  const data: postAuthSignInResponse['data'] = body ? JSON.parse(body) : {};
+  return {
+    data,
+    status: res.status,
+    headers: res.headers,
+  } as postAuthSignInResponse;
 };
 
 export type postAuthRefreshResponse200 = {
@@ -624,10 +641,19 @@ export const getPostAuthRefreshUrl = () => {
 export const postAuthRefresh = async (
   options?: RequestInit,
 ): Promise<postAuthRefreshResponse> => {
-  return bffFetcher<postAuthRefreshResponse>(getPostAuthRefreshUrl(), {
+  const res = await fetch(getPostAuthRefreshUrl(), {
     ...options,
     method: 'POST',
   });
+
+  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
+
+  const data: postAuthRefreshResponse['data'] = body ? JSON.parse(body) : {};
+  return {
+    data,
+    status: res.status,
+    headers: res.headers,
+  } as postAuthRefreshResponse;
 };
 
 export type getAuthMeResponse200 = {
@@ -670,10 +696,19 @@ export const getGetAuthMeUrl = () => {
 export const getAuthMe = async (
   options?: RequestInit,
 ): Promise<getAuthMeResponse> => {
-  return bffFetcher<getAuthMeResponse>(getGetAuthMeUrl(), {
+  const res = await fetch(getGetAuthMeUrl(), {
     ...options,
     method: 'GET',
   });
+
+  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
+
+  const data: getAuthMeResponse['data'] = body ? JSON.parse(body) : {};
+  return {
+    data,
+    status: res.status,
+    headers: res.headers,
+  } as getAuthMeResponse;
 };
 
 export type postOrganizationResponse201 = {
@@ -722,12 +757,21 @@ export const postOrganization = async (
   postOrganizationBody: PostOrganizationBody,
   options?: RequestInit,
 ): Promise<postOrganizationResponse> => {
-  return bffFetcher<postOrganizationResponse>(getPostOrganizationUrl(), {
+  const res = await fetch(getPostOrganizationUrl(), {
     ...options,
     method: 'POST',
     headers: { 'Content-Type': 'application/json', ...options?.headers },
     body: JSON.stringify(postOrganizationBody),
   });
+
+  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
+
+  const data: postOrganizationResponse['data'] = body ? JSON.parse(body) : {};
+  return {
+    data,
+    status: res.status,
+    headers: res.headers,
+  } as postOrganizationResponse;
 };
 
 export type postOrganizationAddMembersResponse201 = {
@@ -789,13 +833,21 @@ export const postOrganizationAddMembers = async (
   postOrganizationAddMembersBody: PostOrganizationAddMembersBody,
   options?: RequestInit,
 ): Promise<postOrganizationAddMembersResponse> => {
-  return bffFetcher<postOrganizationAddMembersResponse>(
-    getPostOrganizationAddMembersUrl(),
-    {
-      ...options,
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', ...options?.headers },
-      body: JSON.stringify(postOrganizationAddMembersBody),
-    },
-  );
+  const res = await fetch(getPostOrganizationAddMembersUrl(), {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(postOrganizationAddMembersBody),
+  });
+
+  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
+
+  const data: postOrganizationAddMembersResponse['data'] = body
+    ? JSON.parse(body)
+    : {};
+  return {
+    data,
+    status: res.status,
+    headers: res.headers,
+  } as postOrganizationAddMembersResponse;
 };

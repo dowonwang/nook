@@ -15,6 +15,7 @@ import { useTranslations } from 'next-intl';
 import { useActionState } from 'react';
 
 import { signInAction } from '$features/auth/sign-in/api';
+import { useSignInSuccessEffect } from '$features/auth/sign-in/lib';
 import {
   useActionErrorMessage,
   useActionFieldErrors,
@@ -38,6 +39,7 @@ export function SignInForm() {
   const passwordError = getFieldError('password');
   const actionError = useActionErrorMessage(actionState.error);
 
+  useSignInSuccessEffect({ success: actionState.success });
   useRedirectOnCondition({
     condition: actionState.success,
     replace: true,

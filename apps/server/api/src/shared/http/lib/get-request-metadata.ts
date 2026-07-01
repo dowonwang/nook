@@ -1,4 +1,5 @@
 import { ForbiddenError } from '$shared/error/common.error';
+import { createLogger } from '$shared/logger';
 import { LOG_EVENT } from '$shared/logger/constant/log-event';
 import { LOG_MESSAGE } from '$shared/logger/constant/log-message';
 
@@ -7,14 +8,31 @@ export interface RequestMetadata {
   userAgent: string;
 }
 
+const logger = createLogger(getRequestMetadata.name);
 const WHITE_LIST_USER_AGENT = ['bruno-runtime'];
 
 export function getRequestMetadata(request: Request): RequestMetadata {
   const forwardedFor = request.headers.get('x-forwarded-for');
   const realIp = request.headers.get('x-real-ip');
-  const userAgent = request.headers.get('user-agent');
+  // client BFF에서 전달한 클라이언트 IP
+  const clientIp = request.headers.get('x-client-ip');
+  const originUserAgent = request.headers.get('user-agent');
+  // client BFF에서 전달한 클라이언트 user-agent
+  const clientUserAgent = request.headers.get('x-client-user-agent');
 
-  const ipAddress = forwardedFor?.split(',')[0]?.trim() || realIp || null;
+  const ipAddress =
+    forwardedFor?.split(',')[0]?.trim() || realIp || clientIp || null;
+  const userAgent = clientUserAgent || originUserAgent || null;
+
+  logger.debug(
+    {
+      details: {
+        ipAddress,
+        userAgent,
+      },
+    },
+    'request metadata',
+  );
 
   if (!userAgent) {
     throw new ForbiddenError({

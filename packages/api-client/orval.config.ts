@@ -9,16 +9,11 @@ export default defineConfig({
       mode: 'single',
       target: './src/api/index.ts',
       client: 'fetch',
+      httpClient: 'fetch',
       clean: true,
       formatter: 'prettier',
       indexFiles: true,
       baseUrl: 'http://localhost:4000',
-      override: {
-        mutator: {
-          path: './src/lib/bff-fetcher.ts',
-          name: 'bffFetcher',
-        },
-      },
     },
   },
 

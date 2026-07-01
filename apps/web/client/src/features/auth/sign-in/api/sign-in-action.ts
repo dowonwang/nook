@@ -1,3 +1,5 @@
+'use client';
+
 import { signInSchema } from '$features/auth/sign-in/model';
 import { actionStateBuilder, createActionStateError } from '$shared/api/action';
 
