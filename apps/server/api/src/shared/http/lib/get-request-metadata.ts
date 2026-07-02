@@ -29,6 +29,7 @@ export function getRequestMetadata(request: Request): RequestMetadata {
       details: {
         ipAddress,
         userAgent,
+        headers: request.headers,
       },
     },
     'request metadata',

@@ -38,7 +38,6 @@ export class JwtTokenIssuer implements TokenIssuer {
         .sign(secretBuffer);
 
       const payload = decodeJwt(token);
-      console.log(payload.exp ? new Date(payload.exp * 1000) : null);
 
       return {
         token,

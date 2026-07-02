@@ -1,24 +1,19 @@
 import { getAuthMe } from '@packages/api-client/api';
 import { NextResponse } from 'next/server';
 
-import { getAuthAccessFromCookie } from '$shared/api/bff';
+import { applyCookieEffect, bffWrapper } from '$shared/api/bff';
 
-export async function handleMeRequest() {
-  const accessToken = await getAuthAccessFromCookie();
-
-  if (!accessToken) {
-    return NextResponse.json('Unauthenticated', {
-      status: 401,
-    });
-  }
-
-  const { data, status } = await getAuthMe({
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
+export async function handleMeRequest(request: Request) {
+  const { result, cookieEffect } = await bffWrapper({
+    request,
+    authenticated: true,
+    call: (headers) => getAuthMe({ headers }),
   });
 
-  return NextResponse.json(data, {
-    status,
-  });
+  return applyCookieEffect(
+    NextResponse.json(result.data, {
+      status: result.status,
+    }),
+    cookieEffect,
+  );
 }

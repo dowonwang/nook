@@ -1,7 +1,7 @@
 import { postAuthSignIn } from '@packages/api-client/api';
 import { NextResponse } from 'next/server';
 
-import { setAuthCookie } from '$shared/api/bff';
+import { applyCookieEffect, bffWrapper, setAuthCookie } from '$shared/api/bff';
 
 import type { PostAuthSignInBody } from '@packages/api-client/api';
 
@@ -10,7 +10,15 @@ export async function handleSignInRequest(
 ): Promise<NextResponse> {
   const requestBody = (await request.json()) as PostAuthSignInBody;
 
-  const { data, status } = await postAuthSignIn(requestBody);
+  const { result, cookieEffect } = await bffWrapper({
+    request,
+    authenticated: false,
+    call: (headers) =>
+      postAuthSignIn(requestBody, {
+        headers,
+      }),
+  });
+  const { data, status } = result;
 
   if (data.success) {
     const { accessToken, refreshToken, ...rest } = data.data;
@@ -24,10 +32,13 @@ export async function handleSignInRequest(
 
     setAuthCookie(response, accessToken, refreshToken);
 
-    return response;
+    return applyCookieEffect(response, cookieEffect);
   }
 
-  return NextResponse.json(data, {
-    status,
-  });
+  return applyCookieEffect(
+    NextResponse.json(data, {
+      status,
+    }),
+    cookieEffect,
+  );
 }
