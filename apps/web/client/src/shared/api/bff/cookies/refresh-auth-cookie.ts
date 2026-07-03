@@ -12,6 +12,7 @@ export type CookieEffect = (response: NextResponse) => void;
 
 export async function refreshAuthCookie(request: Request): Promise<{
   refreshed: boolean;
+  accessToken?: string;
   cookieEffect?: CookieEffect;
 }> {
   const refreshToken = await getAuthRefreshFromCookie();
@@ -47,6 +48,7 @@ export async function refreshAuthCookie(request: Request): Promise<{
 
   return {
     refreshed: true,
+    accessToken: data.accessToken,
     cookieEffect(response) {
       setAuthCookie(response, data.accessToken, data.refreshToken);
     },

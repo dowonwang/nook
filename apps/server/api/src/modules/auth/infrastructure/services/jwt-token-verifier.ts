@@ -38,6 +38,10 @@ export class JwtTokenVerifier implements TokenVerifier {
 
         return claims;
       } catch {
+        // if (error?.code === 'ERR_JWT_EXPIRED') {
+        //   throw new Error();
+        // }
+
         throw new InvalidAccessTokenClaims(JwtTokenVerifier.name);
       }
     };

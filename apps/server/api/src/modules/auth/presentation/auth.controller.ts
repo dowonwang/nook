@@ -2,6 +2,7 @@ import { Elysia } from 'elysia';
 
 import { authGuard } from '$modules/auth';
 import { AuthResponseSchemas } from '$modules/auth/presentation/auth.response';
+import { UnauthorizedError } from '$shared/error/common.error';
 import { getRequestMetadata } from '$shared/http/lib/get-request-metadata';
 import { errorPlugin } from '$shared/http/plugin/error.plugin';
 import {
@@ -90,12 +91,26 @@ export function createAuthController(deps: AuthControllerDependencies) {
       )
       .post(
         '/refresh',
-        async ({ cookie, request }) => {
-          const refreshToken = cookie.refreshToken;
+        async ({ request, headers }) => {
           const metadata = getRequestMetadata(request);
+          const authorization = headers.authorization;
+
+          if (!authorization) {
+            throw new UnauthorizedError({
+              scope: createAuthController.name,
+            });
+          }
+
+          const [type, refreshToken] = authorization.split(' ');
+
+          if (type !== 'Bearer' || !refreshToken) {
+            throw new UnauthorizedError({
+              scope: createAuthController.name,
+            });
+          }
 
           const result = await deps.refreshHandler.excute(
-            refreshToken.value as string,
+            refreshToken,
             metadata,
           );
 

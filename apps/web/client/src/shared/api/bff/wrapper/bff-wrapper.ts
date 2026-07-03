@@ -48,25 +48,27 @@ export async function bffWrapper<TResponse extends BffResponse>({
     };
   }
 
-  const refreshResult = await refreshAuthCookie(request);
+  const { refreshed, cookieEffect, accessToken } =
+    await refreshAuthCookie(request);
 
-  if (!refreshResult.refreshed) {
+  if (!refreshed) {
     return {
       refreshed: false,
       result: firstResult,
-      cookieEffect: refreshResult.cookieEffect,
+      cookieEffect,
     };
   }
 
   const retryHeaders = await createBffHeaders(request, {
     authenticated: true,
+    accessToken,
   });
 
   const retryResult = await call(retryHeaders);
 
   return {
     result: retryResult,
-    cookieEffect: refreshResult.cookieEffect,
     refreshed: true,
+    cookieEffect,
   };
 }
