@@ -145,6 +145,8 @@ export type PostAuthSignIn401 = {
   meta: PostAuthSignIn401Meta;
 };
 
+export type PostAuthRefreshBody = { [key: string]: unknown };
+
 export type PostAuthRefresh200DataUser = {
   /** @pattern ^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-7[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12})$ */
   id: string;
@@ -639,11 +641,14 @@ export const getPostAuthRefreshUrl = () => {
  * @summary Refresh Auth Token
  */
 export const postAuthRefresh = async (
+  postAuthRefreshBody: PostAuthRefreshBody,
   options?: RequestInit,
 ): Promise<postAuthRefreshResponse> => {
   const res = await fetch(getPostAuthRefreshUrl(), {
     ...options,
     method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(postAuthRefreshBody),
   });
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text();

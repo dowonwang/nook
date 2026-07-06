@@ -11,6 +11,7 @@ export const i18nResponseKo = {
   common_error_InternalServerError: '일시적인 오류가 발생했습니다.',
 
   // auth error
+  auth_error_token_expired: '로그인 세션이 만료되었습니다.',
 
   // user error
   user_error_UserNotFound: '존재하지 않는 사용자입니다.',

@@ -1,3 +1,5 @@
+import { postAuthRefresh } from '@packages/api-client/api';
+
 import {
   clearAuthCookie,
   createForwardedHeaders,
@@ -5,7 +7,6 @@ import {
   setAuthCookie,
 } from '$shared/api/bff';
 
-import type { PostAuthRefresh200 } from '@packages/api-client/api';
 import type { NextResponse } from 'next/server';
 
 export type CookieEffect = (response: NextResponse) => void;
@@ -26,16 +27,17 @@ export async function refreshAuthCookie(request: Request): Promise<{
     };
   }
 
-  const response = await fetch('/api/auth/refresh', {
-    method: 'POST',
-    headers: {
-      ...createForwardedHeaders(request),
-      'content-type': 'application/json',
-      Authorization: `Bearer ${refreshToken}`,
+  const { data: response, status } = await postAuthRefresh(
+    {},
+    {
+      headers: {
+        ...createForwardedHeaders(request),
+        Authorization: `Bearer ${refreshToken}`,
+      },
     },
-  });
+  );
 
-  if (!response.ok) {
+  if (status !== 200) {
     return {
       refreshed: false,
       cookieEffect(response) {
@@ -44,7 +46,7 @@ export async function refreshAuthCookie(request: Request): Promise<{
     };
   }
 
-  const { data } = (await response.json()) as PostAuthRefresh200;
+  const { data } = response;
 
   return {
     refreshed: true,

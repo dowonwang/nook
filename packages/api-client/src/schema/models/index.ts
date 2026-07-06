@@ -12,6 +12,7 @@ export * from './getAuthMe404.zod';
 export * from './postAuthRefresh200.zod';
 export * from './postAuthRefresh401.zod';
 export * from './postAuthRefresh404.zod';
+export * from './postAuthRefreshBody.zod';
 export * from './postAuthSignIn200.zod';
 export * from './postAuthSignIn400.zod';
 export * from './postAuthSignIn401.zod';

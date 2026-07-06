@@ -118,6 +118,7 @@ export function createAuthController(deps: AuthControllerDependencies) {
         },
         {
           parse: 'application/json',
+          body: AuthHttpModel.refreshBody,
           detail: {
             summary: 'Refresh Auth Token',
             security: [],

@@ -4,6 +4,7 @@ import { AccessTokenClaims } from '$modules/auth/domain/value-objects/access-tok
 import { RefreshTokenClaims } from '$modules/auth/domain/value-objects/refresh-token-claims.vo';
 import { InvalidAccessTokenClaims } from '$modules/auth/error/invalid-access-token-claims.error';
 import { InvalidRefreshTokenClaims } from '$modules/auth/error/invalid-refresh-token-claims.error';
+import { JwtTokenExpired } from '$modules/auth/error/jwt-token-expired.error';
 import { MissingJwtSecret } from '$modules/auth/error/missing-jwt-secret.error';
 
 import type { TokenVerifier } from '$modules/auth/domain/services/token-verifier';
@@ -37,10 +38,13 @@ export class JwtTokenVerifier implements TokenVerifier {
         const claims = AccessTokenClaims.create(payload as AccessTokenPayload);
 
         return claims;
-      } catch {
-        // if (error?.code === 'ERR_JWT_EXPIRED') {
-        //   throw new Error();
-        // }
+      } catch (error: unknown) {
+        // 토큰 만료 예외 처리
+        if (error && typeof error === 'object' && 'code' in error) {
+          if (error.code === 'ERR_JWT_EXPIRED') {
+            throw new JwtTokenExpired(JwtTokenVerifier.name);
+          }
+        }
 
         throw new InvalidAccessTokenClaims(JwtTokenVerifier.name);
       }
@@ -57,7 +61,14 @@ export class JwtTokenVerifier implements TokenVerifier {
         );
 
         return claims;
-      } catch {
+      } catch (error: unknown) {
+        // 토큰 만료 예외 처리
+        if (error && typeof error === 'object' && 'code' in error) {
+          if (error.code === 'ERR_JWT_EXPIRED') {
+            throw new JwtTokenExpired(JwtTokenVerifier.name);
+          }
+        }
+
         throw new InvalidRefreshTokenClaims(JwtTokenVerifier.name);
       }
     };

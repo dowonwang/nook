@@ -11,6 +11,8 @@ export const AuthHttpModel = {
     email: z.string().trim().toLowerCase().pipe(z.email()),
     password: z.string().trim(),
   }),
+
+  refreshBody: z.object({}),
 };
 
 export type AuthHttpModel = {
