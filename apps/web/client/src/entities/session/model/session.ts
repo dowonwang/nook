@@ -15,3 +15,4 @@ export interface UnauthenticatedSession {
 }
 
 export type Session = AuthenticatedSession | UnauthenticatedSession;
+export const sessionQueryKey = ['session'] as const;

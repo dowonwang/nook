@@ -1,9 +1,9 @@
+import { createBffHeaders } from '$shared/api/bff/headers/create-headers';
 import {
   refreshAuthCookie,
   type BffHeaders,
   type CookieEffect,
-} from '$shared/api/bff';
-import { createBffHeaders } from '$shared/api/bff/headers/create-headers';
+} from '$shared/api/bff/index.server';
 
 interface BffResponse<TData = unknown> {
   data: TData;

@@ -13,6 +13,8 @@ const ALLOWED_HEADERS = [
   'content-type',
   'authorization',
   'x-csrf-token',
+  'x-forwarded-for',
+  'x-real-ip',
 ] as const;
 
 export function isAllowedOrigin(

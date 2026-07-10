@@ -1,7 +1,11 @@
 import { postAuthSignIn } from '@packages/api-client/api';
 import { NextResponse } from 'next/server';
 
-import { applyCookieEffect, bffWrapper, setAuthCookie } from '$shared/api/bff';
+import {
+  applyCookieEffect,
+  bffWrapper,
+  setAuthCookie,
+} from '$shared/api/bff/index.server';
 
 import type { PostAuthSignInBody } from '@packages/api-client/api';
 

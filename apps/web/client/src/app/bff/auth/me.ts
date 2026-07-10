@@ -4,17 +4,22 @@ import { NextResponse } from 'next/server';
 import {
   applyCookieEffect,
   bffWrapper,
+  clearAuthCookie,
   getAuthAccessFromCookie,
-} from '$shared/api/bff';
+} from '$shared/api/bff/index.server';
 
 export async function handleMeRequest(request: Request) {
   if (!(await getAuthAccessFromCookie())) {
-    return NextResponse.json(
+    const response = NextResponse.json(
       {},
       {
         status: 401,
       },
     );
+
+    clearAuthCookie(response);
+
+    return response;
   }
 
   const { result, cookieEffect } = await bffWrapper({

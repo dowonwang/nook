@@ -9,9 +9,10 @@ export { createForwardedHeaders } from './headers/create-headers';
 export type { BffHeaders } from './headers/create-headers';
 
 export {
-  refreshAuthCookie,
   applyCookieEffect,
+  refreshAuthCookie,
 } from './cookies/refresh-auth-cookie';
 export type { CookieEffect } from './cookies/refresh-auth-cookie';
 
-export { bffWrapper } from './wrapper/bff-wrapper';
+export { bffFetcher } from './lib/bff-fetcher';
+export { bffWrapper } from './lib/bff-wrapper';

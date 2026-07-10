@@ -1,8 +1,10 @@
+import { bffFetcher } from '$shared/api/bff/index.server';
+
 import type { Session } from '$entities/session';
 import type { getAuthMeResponseSuccess } from '@packages/api-client/api';
 
-export async function getSession(): Promise<Session> {
-  const response = await fetch('/api/auth/me', {
+export async function getServerSession(): Promise<Session> {
+  const response = await bffFetcher('/api/auth/me', {
     method: 'GET',
     headers: {
       'content-type': 'application/json',

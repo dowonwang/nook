@@ -5,7 +5,7 @@ import {
   createForwardedHeaders,
   getAuthRefreshFromCookie,
   setAuthCookie,
-} from '$shared/api/bff';
+} from '$shared/api/bff/index.server';
 
 import type { NextResponse } from 'next/server';
 

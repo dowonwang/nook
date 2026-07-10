@@ -1,10 +1,10 @@
+export { sessionQueryKey } from './model/session';
 export type {
+  AuthenticatedSession,
   Session,
   SessionUser,
-  AuthenticatedSession,
   UnauthenticatedSession,
 } from './model/session';
 
-export { sessionQueryKey, sessionQueryOptions } from './model/session-query';
-
 export { getSession } from './api/get-session';
+export { sessionQueryOptions } from './model/session-query';
