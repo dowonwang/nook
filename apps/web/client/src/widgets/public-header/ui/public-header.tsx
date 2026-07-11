@@ -1,13 +1,14 @@
 'use client';
 
-import { Button } from '@packages/ui/components/button';
 import { useQuery } from '@tanstack/react-query';
-import { Moon } from 'lucide-react';
-import Link from 'next/link';
 
 import { sessionQueryOptions } from '$entities/session';
 import { CLIENT_ENV_CONFIG } from '$shared/config/client-env';
 import { AppLogo } from '$shared/ui';
+import {
+  AuthenticatedButtonGroup,
+  UnauthenticatedButtonGroup,
+} from '$widgets/public-header';
 
 export function PublicHeader() {
   const { data } = useQuery(sessionQueryOptions);
@@ -22,19 +23,11 @@ export function PublicHeader() {
           </span>
         </a>
 
-        <div className='flex items-center gap-2'>
-          <Button variant='secondary' size='icon'>
-            <Moon />
-          </Button>
-          <Button variant='secondary' asChild>
-            {data?.authenticated ? (
-              <Link href={'/login'}>Log out</Link>
-            ) : (
-              <Link href={'/login'}>Log in</Link>
-            )}
-          </Button>
-          <Button>Get Started</Button>
-        </div>
+        {data?.authenticated ? (
+          <AuthenticatedButtonGroup />
+        ) : (
+          <UnauthenticatedButtonGroup />
+        )}
       </div>
     </header>
   );

@@ -93,7 +93,7 @@ export function SignInForm() {
         <Separator content={"Don't have an account?"} />
 
         <Button variant='secondary' className='w-full' asChild>
-          <Link href={'/sign-up'}>Sign Up</Link>
+          <Link href={'/signup'}>Sign Up</Link>
         </Button>
       </FieldGroup>
     </form>

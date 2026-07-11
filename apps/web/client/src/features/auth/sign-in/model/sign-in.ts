@@ -4,8 +4,9 @@ import type { ActionState } from '$shared/api/action';
 import type { postAuthSignInResponseError } from '@packages/api-client/api';
 import type { z } from 'zod';
 
-export const signInSchema = PostAuthSignInBody;
 type SignInPayload = z.infer<typeof signInSchema>;
+
+export const signInSchema = PostAuthSignInBody;
 
 export type SignInState = Pick<SignInPayload, 'email'>;
 export type SignInResponseError = postAuthSignInResponseError['data']['error'];
