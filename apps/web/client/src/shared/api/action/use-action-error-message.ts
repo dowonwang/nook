@@ -18,6 +18,8 @@ function hasErrorCode(error: unknown): error is ErrorCode {
 export function useActionErrorMessage(error: unknown) {
   const t = useTranslations('response');
 
+  console.log(error);
+
   if (!hasErrorCode(error)) {
     return null;
   }

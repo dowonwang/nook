@@ -7,18 +7,19 @@
  */
 import { z as zod } from 'zod';
 
+export const postAuthSignUpBodyNameMin = 2;
+export const postAuthSignUpBodyNameMax = 20;
+
 export const postAuthSignUpBodyEmailRegExp = new RegExp(
   "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$",
 );
-export const postAuthSignUpBodyNameMin = 5;
-export const postAuthSignUpBodyNameMax = 20;
 
 export const PostAuthSignUpBody = zod.object({
-  email: zod.string().regex(postAuthSignUpBodyEmailRegExp),
   name: zod
     .string()
     .min(postAuthSignUpBodyNameMin)
     .max(postAuthSignUpBodyNameMax),
+  email: zod.string().regex(postAuthSignUpBodyEmailRegExp),
   password: zod.string(),
 });
 

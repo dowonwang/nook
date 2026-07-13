@@ -110,17 +110,22 @@ function collectValidationKeys(schemaSource: string) {
 
 function createIndexFile(tagNames: string[]) {
   return `
+  import type { I18N_CUSTOM_VALIDATION_KEY } from './custom.ts';
   ${tagNames
     .map((tagName) => {
       return `import type {${createTypeName(tagName)}} from './${tagName}.ts'`;
     })
     .join('\n')}
 
-  export type I18N_VALIDATION_KEY = ${tagNames
-    .map((tagName) => {
-      return createTypeName(tagName);
-    })
-    .join('|')}
+  export type I18N_VALIDATION_KEY = 
+    I18N_CUSTOM_VALIDATION_KEY |
+    ${tagNames
+      .map((tagName) => {
+        return createTypeName(tagName);
+      })
+      .join('|')}
+
+  export type { I18N_CUSTOM_VALIDATION_KEY } from './custom.ts';
 `;
 }
 

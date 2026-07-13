@@ -11,6 +11,7 @@ export const i18ValidationKo = {
   PostAuthSignUpBody_name_min: '이름은 2자 이상 20자 이하로 입력해주세요.',
   PostAuthSignUpBody_name_string: '이름을 입력해주세요.',
   PostAuthSignUpBody_password_string: '비밀번호를 입력해주세요.',
+  PostAuthSignUpBody_confirmPassword_mismatch: '비밀번호가 일치하지 않습니다.',
 
   PostOrganizationAddMembersBody_members_role_enum:
     '올바른 멤버 역할을 선택해주세요.',

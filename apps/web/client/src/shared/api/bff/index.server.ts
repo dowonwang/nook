@@ -16,3 +16,5 @@ export type { CookieEffect } from './cookies/refresh-auth-cookie';
 
 export { bffFetcher } from './lib/bff-fetcher';
 export { bffWrapper } from './lib/bff-wrapper';
+
+export { getFlashCookie, setFlashCookie } from './cookies/flash-cookie';

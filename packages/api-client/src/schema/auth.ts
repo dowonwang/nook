@@ -12,33 +12,14 @@ import { zodParams } from '../lib/zod-params';
 /**
  * @summary Sign Up User
  */
+export const postAuthSignUpBodyNameMin = 2;
+export const postAuthSignUpBodyNameMax = 20;
+
 export const postAuthSignUpBodyEmailRegExp = new RegExp(
   "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$",
 );
-export const postAuthSignUpBodyNameMin = 5;
-export const postAuthSignUpBodyNameMax = 20;
 
 export const PostAuthSignUpBody = zod.object({
-  email: zod
-    .string(
-      zodParams({
-        operationId: 'postAuthSign-up',
-        location: 'body',
-        schemaName: 'PostAuthSignUpBody',
-        fieldPath: ['email'],
-        validator: 'string',
-      }),
-    )
-    .regex(
-      postAuthSignUpBodyEmailRegExp,
-      zodParams({
-        operationId: 'postAuthSign-up',
-        location: 'body',
-        schemaName: 'PostAuthSignUpBody',
-        fieldPath: ['email'],
-        validator: 'regex',
-      }),
-    ),
   name: zod
     .string(
       zodParams({
@@ -67,6 +48,26 @@ export const PostAuthSignUpBody = zod.object({
         schemaName: 'PostAuthSignUpBody',
         fieldPath: ['name'],
         validator: 'max',
+      }),
+    ),
+  email: zod
+    .string(
+      zodParams({
+        operationId: 'postAuthSign-up',
+        location: 'body',
+        schemaName: 'PostAuthSignUpBody',
+        fieldPath: ['email'],
+        validator: 'string',
+      }),
+    )
+    .regex(
+      postAuthSignUpBodyEmailRegExp,
+      zodParams({
+        operationId: 'postAuthSign-up',
+        location: 'body',
+        schemaName: 'PostAuthSignUpBody',
+        fieldPath: ['email'],
+        validator: 'regex',
       }),
     ),
   password: zod.string(

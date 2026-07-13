@@ -10,4 +10,4 @@ export const COMMON_ERROR = [
   FALLBACK_ERROR_KEY,
 ] as const;
 
-export type I18N_COMMON_ERROR_KEY = (typeof COMMON_ERROR)[number];
+export type I18N_COMMON_ERROR = (typeof COMMON_ERROR)[number];

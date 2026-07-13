@@ -11,7 +11,9 @@ export function UnauthenticatedButtonGroup() {
       <Button variant='secondary' asChild>
         <Link href={'/signin'}>Sign in</Link>
       </Button>
-      <Button>Sign Up</Button>
+      <Button>
+        <Link href={'/signup'}>Sign Up</Link>
+      </Button>
     </div>
   );
 }

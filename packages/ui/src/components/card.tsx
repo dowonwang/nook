@@ -69,5 +69,9 @@ export function CardTitle({
 }
 
 export function CardDescription({ children }: { children: string }) {
-  return <p className='text-secondary-foreground mt-1 text-sm'>{children}</p>;
+  return (
+    <p className='text-secondary-foreground mt-1 text-sm whitespace-pre-line'>
+      {children}
+    </p>
+  );
 }

@@ -1,3 +1,5 @@
+import { redirect } from 'next/navigation';
+
 import { signUpSchema } from '$features/auth/sign-up/model/sign-up';
 import { actionStateBuilder, createActionStateError } from '$shared/api/action';
 
@@ -15,16 +17,20 @@ export async function signUpAction(
   const nameValue = formData.get('name');
   const emailValue = formData.get('email');
   const passwordValue = formData.get('password');
+  const confirmPasswordValue = formData.get('confirmPassword');
 
   const name = typeof nameValue === 'string' ? nameValue.trim() : '';
   const email = typeof emailValue === 'string' ? emailValue.trim() : '';
   const password =
     typeof passwordValue === 'string' ? passwordValue.trim() : '';
+  const confirmPassword =
+    typeof confirmPasswordValue === 'string' ? confirmPasswordValue.trim() : '';
 
   const body = signUpSchema.safeParse({
     name,
     email,
     password,
+    confirmPassword,
   });
 
   if (!body.success) {
@@ -45,11 +51,8 @@ export async function signUpAction(
     body: JSON.stringify(body.data),
   });
 
-  if (response.ok) {
-    return actionStateBuilder.success({
-      email: '',
-      name: '',
-    });
+  if (response.redirected) {
+    redirect(response.url);
   }
 
   return actionStateBuilder.error(
