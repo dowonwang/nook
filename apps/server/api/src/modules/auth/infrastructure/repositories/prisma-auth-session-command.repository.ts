@@ -32,4 +32,16 @@ export class PrismaAuthSessionCommandRepository implements AuthSessionCommandRep
       ? AuthSessionPrismaMapper.toAuthSessionDomain(session)
       : null;
   }
+
+  async revoke(sessionId: string): Promise<void> {
+    await this.prisma.authSession.update({
+      where: {
+        id: sessionId,
+        revokeAt: null,
+      },
+      data: {
+        revokeAt: new Date(),
+      },
+    });
+  }
 }

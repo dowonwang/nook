@@ -213,6 +213,42 @@ export type PostAuthRefresh404 = {
   meta: PostAuthRefresh404Meta;
 };
 
+export type PostAuthSignOutBody = { [key: string]: unknown };
+
+export type PostAuthSignOut200Data = { [key: string]: unknown };
+
+export type PostAuthSignOut200Meta = {
+  unixTimestamp: number;
+  requestId?: string;
+};
+
+export type PostAuthSignOut200 = {
+  success: true;
+  data: PostAuthSignOut200Data;
+  error: unknown | null;
+  meta: PostAuthSignOut200Meta;
+};
+
+export type PostAuthSignOut401Error = {
+  code: string;
+  details?: unknown;
+};
+
+export type PostAuthSignOut401Meta = {
+  unixTimestamp: number;
+  requestId?: string;
+};
+
+/**
+ * Invalid refreshToken
+ */
+export type PostAuthSignOut401 = {
+  success: false;
+  data: unknown | null;
+  error: PostAuthSignOut401Error;
+  meta: PostAuthSignOut401Meta;
+};
+
 export type GetAuthMe200Data = {
   /** @pattern ^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-7[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12})$ */
   id: string;
@@ -659,6 +695,55 @@ export const postAuthRefresh = async (
     status: res.status,
     headers: res.headers,
   } as postAuthRefreshResponse;
+};
+
+export type postAuthSignOutResponse200 = {
+  data: PostAuthSignOut200;
+  status: 200;
+};
+
+export type postAuthSignOutResponse401 = {
+  data: PostAuthSignOut401;
+  status: 401;
+};
+
+export type postAuthSignOutResponseSuccess = postAuthSignOutResponse200 & {
+  headers: Headers;
+};
+export type postAuthSignOutResponseError = postAuthSignOutResponse401 & {
+  headers: Headers;
+};
+
+export type postAuthSignOutResponse =
+  | postAuthSignOutResponseSuccess
+  | postAuthSignOutResponseError;
+
+export const getPostAuthSignOutUrl = () => {
+  return `http://localhost:4000/auth/sign-out`;
+};
+
+/**
+ * @summary Sign Out
+ */
+export const postAuthSignOut = async (
+  postAuthSignOutBody: PostAuthSignOutBody,
+  options?: RequestInit,
+): Promise<postAuthSignOutResponse> => {
+  const res = await fetch(getPostAuthSignOutUrl(), {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(postAuthSignOutBody),
+  });
+
+  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
+
+  const data: postAuthSignOutResponse['data'] = body ? JSON.parse(body) : {};
+  return {
+    data,
+    status: res.status,
+    headers: res.headers,
+  } as postAuthSignOutResponse;
 };
 
 export type getAuthMeResponse200 = {

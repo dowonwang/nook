@@ -14,6 +14,7 @@ export const i18nResponseKo = {
   auth_error_token_expired: '로그인 세션이 만료되었습니다.',
   auth_signup_success_signin_required:
     '회원가입이 완료되었습니다.\n로그인 후 서비스를 이용해 주세요.',
+  auth_required_signin: '로그인 후 다시 시도해 주세요.',
 
   // user
   user_error_UserNotFound: '존재하지 않는 사용자입니다.',

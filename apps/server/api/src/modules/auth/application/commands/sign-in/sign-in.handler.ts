@@ -26,7 +26,7 @@ export class SignInHandler {
     private readonly tokenHasher: TokenHasher,
   ) {}
 
-  async excute(
+  async execute(
     command: SignInCommand,
     { userAgent, ipAddress }: RequestMetadata,
   ): Promise<{

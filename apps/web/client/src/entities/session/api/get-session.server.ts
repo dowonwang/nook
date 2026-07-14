@@ -1,9 +1,21 @@
-import { bffFetcher } from '$shared/api/bff/index.server';
+import {
+  bffFetcher,
+  getAuthAccessFromCookie,
+} from '$shared/api/bff/index.server';
 
 import type { Session } from '$entities/session';
 import type { getAuthMeResponseSuccess } from '@packages/api-client/api';
 
 export async function getServerSession(): Promise<Session> {
+  const accessToken = await getAuthAccessFromCookie();
+
+  if (!accessToken) {
+    return {
+      authenticated: false,
+      user: null,
+    };
+  }
+
   const response = await bffFetcher('/api/auth/me', {
     method: 'GET',
     headers: {

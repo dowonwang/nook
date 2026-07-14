@@ -1,14 +1,22 @@
-import {
-  Avatar,
-  AvatarBody,
-  AvatarFallBack,
-} from '@packages/ui/components/avatar';
+'use client';
+
 import { Button } from '@packages/ui/components/button';
+import { useQuery } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import { Bell } from 'lucide-react';
+import { redirect } from 'next/navigation';
+
+import { sessionQueryOptions } from '$entities/session';
+import { UserAvatar } from '$entities/user';
+import { SignOutButton } from '$features/auth/sign-out';
 
 export function PrivateHeader() {
   const today = dayjs().format('dddd, MMM D');
+  const { data } = useQuery(sessionQueryOptions);
+
+  if (!(data && data.authenticated)) {
+    redirect('/signin');
+  }
 
   return (
     <header className='bg-header border-border h-header flex items-center justify-between gap-4 border-b px-6'>
@@ -21,12 +29,8 @@ export function PrivateHeader() {
           <Bell />
         </Button>
 
-        <Avatar>
-          <AvatarFallBack>Avatar</AvatarFallBack>
-          <AvatarBody>
-            <span className='font-semibold'>User name</span>
-          </AvatarBody>
-        </Avatar>
+        <UserAvatar name={data.user.name} />
+        <SignOutButton />
       </div>
     </header>
   );

@@ -37,6 +37,8 @@ export async function refreshAuthCookie(request: Request): Promise<{
     },
   );
 
+  console.log('refresh');
+
   if (status !== 200) {
     return {
       refreshed: false,

@@ -13,6 +13,8 @@ export const AuthHttpModel = {
   }),
 
   refreshBody: z.object({}),
+
+  signOutBody: z.object({}),
 };
 
 export type AuthHttpModel = {

@@ -27,4 +27,5 @@ export const AuthResponseSchemas = {
       name: z.string(),
     }),
   }),
+  signOut: z.object({}),
 };

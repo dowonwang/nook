@@ -15,6 +15,7 @@ import { AuthHttpModel } from './auth.http-model';
 
 import type { RefreshHandler } from '$modules/auth/application/commands/refresh/refresh.handler';
 import type { SignInHandler } from '$modules/auth/application/commands/sign-in/sign-in.handler';
+import type { SignOutHandler } from '$modules/auth/application/commands/sign-out/sign-out.handler';
 import type { SignUpHandler } from '$modules/auth/application/commands/sign-up/sign-up.handler';
 import type { MeHandler } from '$modules/auth/application/queries/me/me.handler';
 
@@ -23,6 +24,7 @@ interface AuthControllerDependencies {
   signInHandler: SignInHandler;
   meHandler: MeHandler;
   refreshHandler: RefreshHandler;
+  signOutHandler: SignOutHandler;
 }
 
 export function createAuthController(deps: AuthControllerDependencies) {
@@ -67,7 +69,7 @@ export function createAuthController(deps: AuthControllerDependencies) {
         '/sign-in',
         async ({ body, request }) => {
           const metadata = getRequestMetadata(request);
-          const result = await deps.signInHandler.excute(body, metadata);
+          const result = await deps.signInHandler.execute(body, metadata);
 
           return ApiResponseBuilder.success(result);
         },
@@ -130,6 +132,44 @@ export function createAuthController(deps: AuthControllerDependencies) {
             }),
             404: ApiErrorResponseSchema.meta({
               description: 'Session Not Found',
+            }),
+          },
+        },
+      )
+      .post(
+        '/sign-out',
+        async ({ headers }) => {
+          const authorization = headers.authorization;
+
+          if (!authorization) {
+            throw new UnauthorizedError({
+              scope: createAuthController.name,
+            });
+          }
+
+          const [type, refreshToken] = authorization.split(' ');
+
+          if (type !== 'Bearer' || !refreshToken) {
+            throw new UnauthorizedError({
+              scope: createAuthController.name,
+            });
+          }
+
+          await deps.signOutHandler.execute(refreshToken);
+
+          return ApiResponseBuilder.success({});
+        },
+        {
+          parse: 'application/json',
+          body: AuthHttpModel.signOutBody,
+          detail: {
+            summary: 'Sign Out',
+            security: [],
+          },
+          response: {
+            200: createApiSuccessResponseSchema(AuthResponseSchemas.signOut),
+            401: ApiErrorResponseSchema.meta({
+              description: 'Invalid refreshToken',
             }),
           },
         },

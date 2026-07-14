@@ -416,6 +416,48 @@ export const PostAuthRefreshResponse = zod.object({
 });
 
 /**
+ * @summary Sign Out
+ */
+export const PostAuthSignOutBody = zod.object({});
+
+export const PostAuthSignOutResponse = zod.object({
+  success: zod.literal(
+    true,
+    zodParams({
+      operationId: 'postAuthSign-out',
+      location: 'response',
+      schemaName: 'PostAuthSignOutResponse',
+      fieldPath: ['success'],
+      validator: 'literal',
+    }),
+  ),
+  data: zod.object({}),
+  error: zod.unknown().nullable(),
+  meta: zod.object({
+    unixTimestamp: zod.number(
+      zodParams({
+        operationId: 'postAuthSign-out',
+        location: 'response',
+        schemaName: 'PostAuthSignOutResponse',
+        fieldPath: ['meta', 'unixTimestamp'],
+        validator: 'number',
+      }),
+    ),
+    requestId: zod
+      .string(
+        zodParams({
+          operationId: 'postAuthSign-out',
+          location: 'response',
+          schemaName: 'PostAuthSignOutResponse',
+          fieldPath: ['meta', 'requestId'],
+          validator: 'string',
+        }),
+      )
+      .optional(),
+  }),
+});
+
+/**
  * Retrieves the profile information of the currently authenticated user.
  * @summary Get Current User
  */

@@ -4,6 +4,7 @@ import type { NextResponse } from 'next/server';
 
 const FLASH_COOKIE_NAME = '_flash_';
 
+// TODO: 쿠키 삭제 고려해야함
 export function setFlashCookie(response: NextResponse, message: string) {
   response.cookies.set(FLASH_COOKIE_NAME, message, {
     httpOnly: true,
