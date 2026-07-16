@@ -15,7 +15,7 @@ export function PrivateHeader() {
   const { data } = useQuery(sessionQueryOptions);
 
   if (!(data && data.authenticated)) {
-    redirect('/signin');
+    redirect('/api/auth/required-signin');
   }
 
   return (
