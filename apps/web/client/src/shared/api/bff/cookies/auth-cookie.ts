@@ -4,19 +4,14 @@ import { SERVER_ENV_CONFIG } from '$shared/config/server-env';
 
 import { signedCookie, verifySignedCookie } from './cookie-sign';
 
-import type { NextResponse } from 'next/server';
-
 const ACCESS_TOKEN_COOKIE_NAME = '_auth_access_';
 const REFRESH_TOKEN_COOKIE_NAME = '_auth_refresh_';
 
-export function setAuthCookie(
-  response: NextResponse,
-  accessToken: string,
-  refreshToken: string,
-) {
+export async function setAuthCookie(accessToken: string, refreshToken: string) {
   const AUTH_SECRET = SERVER_ENV_CONFIG.AUTH_COOKIE_SECRET;
+  const cookieStore = await cookies();
 
-  response.cookies.set(
+  cookieStore.set(
     ACCESS_TOKEN_COOKIE_NAME,
     signedCookie(accessToken, AUTH_SECRET),
     {
@@ -27,7 +22,7 @@ export function setAuthCookie(
     },
   );
 
-  response.cookies.set(
+  cookieStore.set(
     REFRESH_TOKEN_COOKIE_NAME,
     signedCookie(refreshToken, AUTH_SECRET),
     {
@@ -39,9 +34,11 @@ export function setAuthCookie(
   );
 }
 
-export function clearAuthCookie(response: NextResponse) {
-  response.cookies.delete(ACCESS_TOKEN_COOKIE_NAME);
-  response.cookies.delete(REFRESH_TOKEN_COOKIE_NAME);
+export async function clearAuthCookie() {
+  const cookieStore = await cookies();
+
+  cookieStore.delete(ACCESS_TOKEN_COOKIE_NAME);
+  cookieStore.delete(REFRESH_TOKEN_COOKIE_NAME);
 }
 
 export async function getAuthAccessFromCookie() {

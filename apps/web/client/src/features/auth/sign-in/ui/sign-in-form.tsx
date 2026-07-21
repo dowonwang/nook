@@ -14,14 +14,15 @@ import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { useActionState } from 'react';
 
-import { signInAction } from '$features/auth/sign-in/api';
-import { useSignInSuccessEffect } from '$features/auth/sign-in/lib';
+import { signInAction } from '$features/auth/sign-in/api/sign-in-action';
+import { useSignInSuccessEffect } from '$features/auth/sign-in/lib/use-success-effect';
 import {
   useActionErrorMessage,
   useActionFieldErrors,
-  type ActionStateZodError,
 } from '$shared/api/action';
 import { useRedirectOnCondition } from '$shared/lib/navigate';
+
+import type { ActionStateZodError } from '$shared/api/action';
 
 export function SignInForm() {
   const t = useTranslations('validation');

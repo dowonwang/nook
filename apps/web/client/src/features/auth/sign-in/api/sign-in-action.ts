@@ -1,13 +1,15 @@
-'use client';
+'use server';
 
-import { signInSchema } from '$features/auth/sign-in/model';
+import { signInSchema } from '$features/auth/sign-in/model/sign-in';
 import { actionStateBuilder, createActionStateError } from '$shared/api/action';
+import { bffFetcher, setAuthCookie } from '$shared/api/bff/index.server';
 
 import type {
   SignInActionState,
   SignInResponseError,
+  SignInResponseSuccess,
   SignInState,
-} from '$features/auth/sign-in/model';
+} from '$features/auth/sign-in/model/sign-in';
 import type { postAuthSignInResponseError } from '@packages/api-client/api';
 
 export async function signInAction(
@@ -32,7 +34,7 @@ export async function signInAction(
     );
   }
 
-  const response = await fetch('/api/auth/sign-in', {
+  const response = await bffFetcher('/api/auth/sign-in', {
     method: 'POST',
     headers: {
       'content-type': 'application/json',
@@ -44,6 +46,9 @@ export async function signInAction(
   });
 
   if (response.ok) {
+    const { data } = (await response.json()) as SignInResponseSuccess;
+    await setAuthCookie(data.accessToken, data.refreshToken);
+
     return actionStateBuilder.success({ email: '' });
   }
 
