@@ -6,6 +6,7 @@ import { RefreshTokenMalFormed } from '$modules/auth/error/refresh-token-malform
 import { UserDtoMapper } from '$modules/user/application/mapper/user-dto.mapper';
 import { UserEmail } from '$modules/user/domain/value-objects/email.vo';
 import { InvaildCredentials } from '$modules/user/error/invaild-credentials.error';
+import { createLogger } from '$shared/logger';
 
 import type { AuthSessionCommandRepository } from '$modules/auth/domain/repositories/auth-session-command.repository';
 import type { PasswordHaser } from '$modules/auth/domain/services/password-hasher';
@@ -79,6 +80,16 @@ export class SignInHandler {
 
     await this.authSessionCommandRepository.save(authSession);
 
+    logger.info(
+      {
+        details: {
+          userId: user.id.getValue(),
+          authSessionId: authSession.id.getValue(),
+        },
+      },
+      'User signed in successfully',
+    );
+
     return {
       accessToken,
       refreshToken,
@@ -86,3 +97,5 @@ export class SignInHandler {
     };
   }
 }
+
+const logger = createLogger(SignInHandler.name);

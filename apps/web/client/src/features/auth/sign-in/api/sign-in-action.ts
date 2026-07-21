@@ -1,5 +1,7 @@
 'use server';
 
+import { redirect } from 'next/navigation';
+
 import { signInSchema } from '$features/auth/sign-in/model/sign-in';
 import { actionStateBuilder, createActionStateError } from '$shared/api/action';
 import { bffFetcher, setAuthCookie } from '$shared/api/bff/index.server';
@@ -49,7 +51,7 @@ export async function signInAction(
     const { data } = (await response.json()) as SignInResponseSuccess;
     await setAuthCookie(data.accessToken, data.refreshToken);
 
-    return actionStateBuilder.success({ email: '' });
+    redirect('/');
   }
 
   return actionStateBuilder.error(

@@ -6,6 +6,7 @@ import { AuthSessionNotFound } from '$modules/auth/error/auth-session-not-found.
 import { RefreshTokenMalFormed } from '$modules/auth/error/refresh-token-malformed.error';
 import { UserDtoMapper } from '$modules/user/application/mapper/user-dto.mapper';
 import { UserNotFound } from '$modules/user/error/user-not-found.error';
+import { createLogger } from '$shared/logger';
 
 import type { AuthSessionCommandRepository } from '$modules/auth/domain/repositories/auth-session-command.repository';
 import type { TokenHasher } from '$modules/auth/domain/services/token-hasher';
@@ -84,6 +85,11 @@ export class RefreshHandler {
 
     await this.authSessionCommandRepository.save(newAuthSession);
 
+    logger.info(
+      { details: user.id.getValue() },
+      'Token refreshed successfully',
+    );
+
     return {
       accessToken: newAccessToken,
       refreshToken: newRefreshToken,
@@ -91,3 +97,5 @@ export class RefreshHandler {
     };
   }
 }
+
+const logger = createLogger(RefreshHandler.name);

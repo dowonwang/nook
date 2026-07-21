@@ -1,6 +1,7 @@
 import { UserDtoMapper } from '$modules/user/application/mapper/user-dto.mapper';
 import { UserUuid } from '$modules/user/domain/value-objects/uuid.vo';
 import { UserNotFound } from '$modules/user/error/user-not-found.error';
+import { createLogger } from '$shared/logger';
 
 import type { UserDetailDto } from '$modules/user/application/dto/user-detail.dto';
 import type { UserQueryRepository } from '$modules/user/domain/repositories/user-query.repository';
@@ -18,6 +19,10 @@ export class MeHandler {
       throw new UserNotFound(MeHandler.name);
     }
 
+    logger.info({ details: user.id.getValue() }, 'User retrieval successful');
+
     return UserDtoMapper.fromEntity(user);
   }
 }
+
+const logger = createLogger(MeHandler.name);

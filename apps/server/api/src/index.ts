@@ -3,6 +3,7 @@ import 'dotenv/config';
 import { Elysia } from 'elysia';
 
 import organizationModule from '$modules/organization';
+import { errorPlugin } from '$shared/http/plugin/error.plugin';
 import { zodToOpenApiSchema } from '$shared/responses/api-openapi';
 
 import authModule from './modules/auth';
@@ -37,6 +38,7 @@ const app = new Elysia()
       },
     }),
   )
+  .use(errorPlugin)
   .use(authModule)
   .use(organizationModule)
   .listen(process.env.APP_PORT ?? 3000);

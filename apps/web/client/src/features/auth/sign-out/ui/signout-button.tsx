@@ -1,19 +1,24 @@
+'use client';
+
 import { Button } from '@packages/ui/components/button';
+import { useFormStatus } from 'react-dom';
 
-import { useSignOut } from '$features/auth/sign-out/lib/use-sign-out';
+import { signOutAction } from '$features/auth/sign-out/api/sign-out-action.server';
 
-export function SignOutButton() {
-  const { mutate, isPending } = useSignOut();
+function SubmitButton() {
+  const { pending } = useFormStatus();
 
   return (
-    <Button
-      variant='secondary'
-      onClick={() => {
-        mutate();
-      }}
-      disabled={isPending}
-    >
+    <Button type='submit' variant='secondary' disabled={pending}>
       Sign Out
     </Button>
+  );
+}
+
+export function SignOutButton() {
+  return (
+    <form action={signOutAction}>
+      <SubmitButton />
+    </form>
   );
 }

@@ -1,12 +1,12 @@
 import { cookies } from 'next/headers';
 
-import type { NextResponse } from 'next/server';
-
 const FLASH_COOKIE_NAME = '_flash_';
 
 // TODO: 쿠키 삭제 고려해야함
-export function setFlashCookie(response: NextResponse, message: string) {
-  response.cookies.set(FLASH_COOKIE_NAME, message, {
+export async function setFlashCookie(message: string) {
+  const cookieStore = await cookies();
+
+  cookieStore.set(FLASH_COOKIE_NAME, message, {
     httpOnly: true,
     sameSite: 'lax',
     path: '/',

@@ -13,7 +13,7 @@ import { WarningMessage } from '@packages/ui/components/warning-message';
 import { useTranslations } from 'next-intl';
 import { useActionState } from 'react';
 
-import { signUpAction } from '$features/auth/sign-up/api/sign-up-action';
+import { signUpAction } from '$features/auth/sign-up/api/sign-up-action.server';
 import {
   useActionErrorMessage,
   useActionFieldErrors,

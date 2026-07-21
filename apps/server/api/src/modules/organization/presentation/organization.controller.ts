@@ -3,7 +3,6 @@ import { Elysia } from 'elysia';
 import { authGuard } from '$modules/auth';
 import { OrganizationHttpModel } from '$modules/organization/presentation/organization.http-model';
 import { OrganizationResponseSchemas } from '$modules/organization/presentation/organization.response';
-import { errorPlugin } from '$shared/http/plugin/error.plugin';
 import {
   ApiErrorResponseSchema,
   createApiSuccessResponseSchema,
@@ -27,7 +26,6 @@ export function createOrganizationController(deps: OrganizationDependencies) {
         tags: ['Organization'],
       },
     })
-      .use(errorPlugin)
       .use(authGuard)
       // POST /organization
       .post(

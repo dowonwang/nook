@@ -1,7 +1,10 @@
+'use server';
+
 import { redirect } from 'next/navigation';
 
 import { signUpSchema } from '$features/auth/sign-up/model/sign-up';
 import { actionStateBuilder, createActionStateError } from '$shared/api/action';
+import { bffFetcher, setFlashCookie } from '$shared/api/bff/index.server';
 
 import type {
   SignUpActionState,
@@ -43,7 +46,7 @@ export async function signUpAction(
     );
   }
 
-  const response = await fetch('/api/auth/sign-up', {
+  const response = await bffFetcher('/api/auth/sign-up', {
     method: 'POST',
     headers: {
       'content-type': 'application/json',
@@ -51,8 +54,9 @@ export async function signUpAction(
     body: JSON.stringify(body.data),
   });
 
-  if (response.redirected) {
-    redirect(response.url);
+  if (response.ok) {
+    await setFlashCookie('auth_signup_success_signin_required');
+    redirect('/signin');
   }
 
   return actionStateBuilder.error(

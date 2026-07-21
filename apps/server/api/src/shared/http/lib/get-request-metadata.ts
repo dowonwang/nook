@@ -21,7 +21,7 @@ export function getRequestMetadata(request: Request): RequestMetadata {
   const clientUserAgent = request.headers.get('x-client-user-agent');
 
   const ipAddress =
-    forwardedFor?.split(',')[0]?.trim() || realIp || clientIp || null;
+    clientIp || realIp || forwardedFor?.split(',')[0]?.trim() || null;
   const userAgent = clientUserAgent || originUserAgent || null;
 
   logger.debug(
@@ -29,7 +29,6 @@ export function getRequestMetadata(request: Request): RequestMetadata {
       details: {
         ipAddress,
         userAgent,
-        headers: request.headers,
       },
     },
     'request metadata',

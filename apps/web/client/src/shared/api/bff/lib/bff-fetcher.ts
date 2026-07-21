@@ -37,5 +37,6 @@ export async function bffFetcher(
   return fetch(`${SERVER_ENV_CONFIG.APP_BASE_URL}${url}`, {
     ...options,
     headers: requestHeaders,
+    cache: 'no-store',
   });
 }

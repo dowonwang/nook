@@ -21,7 +21,7 @@ import { LOG_MESSAGE } from '$shared/logger/constant/log-message';
 import { ApiResponseBuilder } from '$shared/responses/api-response-builder';
 
 export const errorPlugin = new Elysia().onError(
-  { as: 'scoped' },
+  { as: 'global' },
   ({ set, error, request, path }) => {
     const uuid = randomUUIDv7();
     const searchParams = Object.fromEntries(new URL(request.url).searchParams);

@@ -1,6 +1,6 @@
 import { getClientIp } from './get-client-ip';
 
-const HEADER_ALLOW_LIST = ['content-type'] as const;
+const HEADER_ALLOW_LIST = ['content-type', 'authorization'] as const;
 
 export function createForwardedHeaders(
   request?: Request,
@@ -37,7 +37,7 @@ export function createForwardedHeaders(
     headers.set('x-client-user-agent', userAgent);
   }
 
-  if (authorization) {
+  if (authorization && !headers.has('authorization')) {
     headers.set('authorization', `Bearer ${authorization}`);
   }
 

@@ -18,6 +18,9 @@ export async function refreshAuthToken(request: NextRequest): Promise<{
   }
 
   const headers = createForwardedHeaders(request, refreshToken);
+
+  console.log(headers);
+
   const { data } = await postAuthRefresh(
     {},
     {
