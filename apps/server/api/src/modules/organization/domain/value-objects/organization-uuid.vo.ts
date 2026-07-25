@@ -1,6 +1,6 @@
 import { randomUUIDv7 } from 'bun';
 
-import { Uuid } from '$shared/ddd/value-object/uuid-vo.abstract';
+import { Uuid } from '$shared/ddd';
 
 export class OrganizationUuid extends Uuid<OrganizationUuid> {
   private constructor(value: string) {

@@ -4,7 +4,7 @@ import {
   BadRequestError,
   ConflictError,
   InternalServerError,
-} from '$shared/error/common.error';
+} from '$shared/error';
 import { LOG_EVENT } from '$shared/logger/constant/log-event';
 import { LOG_MESSAGE } from '$shared/logger/constant/log-message';
 

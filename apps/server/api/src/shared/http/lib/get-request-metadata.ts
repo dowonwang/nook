@@ -1,7 +1,7 @@
-import { ForbiddenError } from '$shared/error/common.error';
-import { createLogger } from '$shared/logger';
+import { ForbiddenError } from '$shared/error';
 import { LOG_EVENT } from '$shared/logger/constant/log-event';
 import { LOG_MESSAGE } from '$shared/logger/constant/log-message';
+import { createLogger } from '$shared/logger/logger';
 
 export interface RequestMetadata {
   ipAddress: string;

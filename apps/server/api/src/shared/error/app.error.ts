@@ -1,6 +1,6 @@
 import type { I18N_RESPONSE_KEY } from '@packages/i18n/response';
 
-export interface AppErrorOptions {
+interface AppErrorOptions {
   event: string;
   status: number;
   message: string;

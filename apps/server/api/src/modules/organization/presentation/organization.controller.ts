@@ -1,20 +1,24 @@
 import { Elysia } from 'elysia';
 
-import { authGuard } from '$modules/auth';
-import { OrganizationHttpModel } from '$modules/organization/presentation/organization.http-model';
-import { OrganizationResponseSchemas } from '$modules/organization/presentation/organization.response';
 import {
   ApiErrorResponseSchema,
+  ApiResponseBuilder,
   createApiSuccessResponseSchema,
-} from '$shared/responses/api-response';
-import { ApiResponseBuilder } from '$shared/responses/api-response-builder';
+} from '$shared/responses';
 
-import type { AddMemberHandler } from '$modules/organization/application/commands/add-member/add-member.handler';
-import type { CreateHandler } from '$modules/organization/application/commands/create/create.handler';
+import { OrganizationHttpModel } from './organization.http-model';
+import { OrganizationResponseSchemas } from './organization.response';
+
+import type { createAuthGuard } from '$modules/auth/infrastructure';
+import type {
+  AddMemberHandler,
+  CreateHandler,
+} from '$modules/organization/application';
 
 interface OrganizationDependencies {
   createHandler: CreateHandler;
   addMemberHandler: AddMemberHandler;
+  authGuard: ReturnType<typeof createAuthGuard>;
 }
 
 export function createOrganizationController(deps: OrganizationDependencies) {
@@ -26,7 +30,7 @@ export function createOrganizationController(deps: OrganizationDependencies) {
         tags: ['Organization'],
       },
     })
-      .use(authGuard)
+      .use(deps.authGuard)
       // POST /organization
       .post(
         '/',

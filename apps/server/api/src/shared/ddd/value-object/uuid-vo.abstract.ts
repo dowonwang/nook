@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
-import { InvalidUuid } from '$shared/ddd/errors/InvalidUuid.error';
-import { PrimitiveValueObject } from '$shared/ddd/value-object/primitive-vo.abstract';
+import { PrimitiveValueObject } from './primitive-vo.abstract';
+import { InvalidUuid } from '../errors/InvalidUuid.error';
 
 const schema = z.uuidv7();
 

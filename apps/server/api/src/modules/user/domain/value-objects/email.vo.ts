@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { InvalidUserEmail } from '$modules/user/error/invalid-user-email.error';
+import { InvalidUserEmail } from '$modules/user/error';
 
 const schema = z.email();
 

@@ -1,6 +1,6 @@
-import { hash, compare } from 'bcrypt';
+import { compare, hash } from 'bcrypt';
 
-import type { PasswordHaser } from '$modules/auth/domain/services/password-hasher';
+import type { PasswordHaser } from '$modules/auth/domain';
 
 export class BcryptPasswordHasher implements PasswordHaser {
   constructor(private readonly saltRounds = 10) {}

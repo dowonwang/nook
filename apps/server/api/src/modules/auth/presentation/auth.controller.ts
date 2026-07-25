@@ -1,22 +1,24 @@
 import { Elysia } from 'elysia';
 
-import { authGuard } from '$modules/auth';
-import { AuthResponseSchemas } from '$modules/auth/presentation/auth.response';
-import { UnauthorizedError } from '$shared/error/common.error';
-import { getRequestMetadata } from '$shared/http/lib/get-request-metadata';
+import { UnauthorizedError } from '$shared/error';
+import { getRequestMetadata } from '$shared/http';
 import {
   ApiErrorResponseSchema,
+  ApiResponseBuilder,
   createApiSuccessResponseSchema,
-} from '$shared/responses/api-response';
-import { ApiResponseBuilder } from '$shared/responses/api-response-builder';
+} from '$shared/responses';
 
 import { AuthHttpModel } from './auth.http-model';
+import { AuthResponseSchemas } from './auth.response';
 
-import type { RefreshHandler } from '$modules/auth/application/commands/refresh/refresh.handler';
-import type { SignInHandler } from '$modules/auth/application/commands/sign-in/sign-in.handler';
-import type { SignOutHandler } from '$modules/auth/application/commands/sign-out/sign-out.handler';
-import type { SignUpHandler } from '$modules/auth/application/commands/sign-up/sign-up.handler';
-import type { MeHandler } from '$modules/auth/application/queries/me/me.handler';
+import type {
+  MeHandler,
+  RefreshHandler,
+  SignInHandler,
+  SignOutHandler,
+  SignUpHandler,
+} from '$modules/auth/application';
+import type { createAuthGuard } from '../infrastructure';
 
 interface AuthControllerDependencies {
   signUpHandler: SignUpHandler;
@@ -24,6 +26,7 @@ interface AuthControllerDependencies {
   meHandler: MeHandler;
   refreshHandler: RefreshHandler;
   signOutHandler: SignOutHandler;
+  authGuard: ReturnType<typeof createAuthGuard>;
 }
 
 export function createAuthController(deps: AuthControllerDependencies) {
@@ -173,7 +176,7 @@ export function createAuthController(deps: AuthControllerDependencies) {
         },
       )
       // 액세스 토큰 검증 필요 라우터
-      .use(authGuard)
+      .use(deps.authGuard)
       // GET /auth/me
       .get(
         '/me',
