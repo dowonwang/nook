@@ -1,21 +1,27 @@
 import { prismaApiClient } from '@packages/api-db';
 import 'dotenv/config';
 
-import { RefreshHandler } from '$modules/auth/application/commands/refresh/refresh.handler';
-import { SignOutHandler } from '$modules/auth/application/commands/sign-out/sign-out.handler';
-import { PrismaAuthSessionCommandRepository } from '$modules/auth/infrastructure/repositories/prisma-auth-session-command.repository';
-import { JwtTokenHasher } from '$modules/auth/infrastructure/services/jwt-token-hasher';
-import { PrismaUserCommandRepository } from '$modules/user/infrastructure/repositories/prisma-user-command.repository';
-import { PrismaUserQueryRepository } from '$modules/user/infrastructure/repositories/prisma-user-query.repository';
+import {
+  PrismaUserCommandRepository,
+  PrismaUserQueryRepository,
+} from '$modules/user/infrastructure';
 
-import { SignInHandler } from './application/commands/sign-in/sign-in.handler';
-import { SignUpHandler } from './application/commands/sign-up/sign-up.handler';
-import { MeHandler } from './application/queries/me/me.handler';
-import { createAuthGuard } from './infrastructure/guard/auth.guard';
-import { BcryptPasswordHasher } from './infrastructure/services/bcrypt-password-hasher';
-import { JwtTokenIssuer } from './infrastructure/services/jwt-token-issuer';
-import { JwtTokenVerifier } from './infrastructure/services/jwt-token-verifier';
-import { createAuthController } from './presentation/auth.controller';
+import {
+  MeHandler,
+  RefreshHandler,
+  SignInHandler,
+  SignOutHandler,
+  SignUpHandler,
+} from './application';
+import {
+  BcryptPasswordHasher,
+  createAuthGuard,
+  JwtTokenHasher,
+  JwtTokenIssuer,
+  JwtTokenVerifier,
+  PrismaAuthSessionCommandRepository,
+} from './infrastructure';
+import { createAuthController } from './presentation';
 
 // repository
 const userCommandRepository = new PrismaUserCommandRepository(prismaApiClient);
@@ -73,6 +79,7 @@ const authModule = createAuthController({
   meHandler,
   refreshHandler,
   signOutHandler,
+  authGuard,
 });
 
 export default authModule;
