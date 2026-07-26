@@ -1,4 +1,4 @@
-import { handleProxyRequest } from '$app/proxy/index.server';
+import { handleProxyRequest } from '$app/proxy/server';
 
 export const GET = handleProxyRequest;
 export const POST = handleProxyRequest;

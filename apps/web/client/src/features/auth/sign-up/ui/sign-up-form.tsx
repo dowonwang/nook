@@ -13,11 +13,12 @@ import { WarningMessage } from '@packages/ui/components/warning-message';
 import { useTranslations } from 'next-intl';
 import { useActionState } from 'react';
 
-import { signUpAction } from '$features/auth/sign-up/api/sign-up-action.server';
 import {
   useActionErrorMessage,
   useActionFieldErrors,
 } from '$shared/api/action';
+
+import { signUpAction } from '../api/sign-up-action.server';
 
 import type { ActionStateZodError } from '$shared/api/action';
 

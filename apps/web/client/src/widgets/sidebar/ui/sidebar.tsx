@@ -1,6 +1,8 @@
-import { CLIENT_ENV_CONFIG } from '$shared/config/client-env';
+import { CLIENT_ENV_CONFIG } from '$shared/config/client';
 import { AppLogo } from '$shared/ui';
-import { Menu, MENU_DATA } from '$widgets/sidebar';
+
+import { MENU_DATA } from '../config/menu-data';
+import { Menu } from './menu/menu';
 
 export function Sidebar() {
   return (

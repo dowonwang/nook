@@ -5,7 +5,7 @@ import {
 } from '@tanstack/react-query';
 import { redirect } from 'next/navigation';
 
-import { serverSessionQueryOptions } from '$entities/session/index.server';
+import { serverSessionQueryOptions } from '$entities/session/server';
 import { Footer } from '$widgets/footer';
 import { PrivateHeader } from '$widgets/private-header';
 import { Sidebar } from '$widgets/sidebar';

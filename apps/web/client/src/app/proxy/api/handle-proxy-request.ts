@@ -2,7 +2,7 @@ import {
   clearAuthCookie,
   getAuthAccessFromCookie,
   setAuthCookie,
-} from '$shared/api/bff/index.server';
+} from '$shared/api/bff/server';
 
 import { refreshAuthToken } from './refresh-auth-token';
 import { requestBackend } from './request-backend';

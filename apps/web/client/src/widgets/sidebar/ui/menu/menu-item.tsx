@@ -4,10 +4,7 @@ import { cn } from '@packages/ui/lib/cn';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-export interface MenuData {
-  href: string;
-  title: string;
-}
+import type { MenuData } from '../../model/menu';
 
 export function MenuItem({ href, title }: MenuData) {
   const pathname = usePathname();

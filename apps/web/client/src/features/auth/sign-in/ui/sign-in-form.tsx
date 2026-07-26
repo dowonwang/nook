@@ -14,11 +14,12 @@ import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { useActionState } from 'react';
 
-import { signInAction } from '$features/auth/sign-in/api/sign-in-action';
 import {
   useActionErrorMessage,
   useActionFieldErrors,
 } from '$shared/api/action';
+
+import { signInAction } from '../api/sign-in-action.server';
 
 import type { ActionStateZodError } from '$shared/api/action';
 

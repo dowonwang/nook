@@ -1,7 +1,4 @@
-import {
-  bffFetcher,
-  getAuthAccessFromCookie,
-} from '$shared/api/bff/index.server';
+import { bffFetcher, getAuthAccessFromCookie } from '$shared/api/bff/server';
 
 import type { Session } from '$entities/session';
 import type { getAuthMeResponseSuccess } from '@packages/api-client/api';

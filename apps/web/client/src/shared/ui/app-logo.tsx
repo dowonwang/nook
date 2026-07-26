@@ -1,6 +1,6 @@
 import { getImageProps } from 'next/image';
 
-import { CLIENT_ENV_CONFIG } from '$shared/config/client-env';
+import { CLIENT_ENV_CONFIG } from '$shared/config/client';
 import { getBackgroundImage } from '$shared/lib/image';
 
 interface Props {

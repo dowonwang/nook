@@ -1,1 +1,1 @@
-export { getBackgroundImage } from './get-background-image';
+export * from './get-background-image';

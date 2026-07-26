@@ -4,7 +4,7 @@ import {
   QueryClient,
 } from '@tanstack/react-query';
 
-import { serverSessionQueryOptions } from '$entities/session/index.server';
+import { serverSessionQueryOptions } from '$entities/session/server';
 import { Footer } from '$widgets/footer';
 import { PublicHeader } from '$widgets/public-header';
 

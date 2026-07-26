@@ -1,6 +1,7 @@
 import { queryOptions } from '@tanstack/react-query';
 
-import { getSession, sessionQueryKey } from '$entities/session';
+import { sessionQueryKey } from './session';
+import { getSession } from '../api/get-session';
 
 export const sessionQueryOptions = queryOptions({
   queryKey: sessionQueryKey,
