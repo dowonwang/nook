@@ -1,5 +1,5 @@
 import { createBackendUrl } from '$app/proxy/lib/create-backend-url';
-import { createForwardedHeaders } from '$shared/api/bff/index.server';
+import { createForwardedHeaders } from '$shared/api/bff/server';
 
 import type { NextRequest } from 'next/server';
 

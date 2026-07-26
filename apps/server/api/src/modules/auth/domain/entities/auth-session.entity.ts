@@ -1,7 +1,7 @@
-import { Entity } from '$shared/ddd/entity/entity.abstract';
+import { Entity } from '$shared/ddd';
 
-import type { AuthSessionUuid } from '$modules/auth/domain/value-objects/auth-session-uuid.vo';
-import type { UserUuid } from '$modules/user/domain/value-objects/uuid.vo';
+import type { UserUuid } from '$modules/user/domain';
+import type { AuthSessionUuid } from '../value-objects/auth-session-uuid.vo';
 
 interface AuthSessionProps {
   userId: UserUuid;

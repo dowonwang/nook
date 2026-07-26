@@ -1,6 +1,6 @@
 import { cookies } from 'next/headers';
 
-import { SERVER_ENV_CONFIG } from '$shared/config/server-env';
+import { SERVER_ENV_CONFIG } from '$shared/config/server';
 
 import { signedCookie, verifySignedCookie } from './cookie-sign';
 

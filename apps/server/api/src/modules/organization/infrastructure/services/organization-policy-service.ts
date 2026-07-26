@@ -1,7 +1,9 @@
-import { DuplicateOrganizationTitle } from '$modules/organization/error/duplicate-organization-title.error';
+import { DuplicateOrganizationTitle } from '$modules/organization/error';
 
-import type { OrganizationQueryRepository } from '$modules/organization/domain/repositories/organization-query.repository';
-import type { OrganizationPolicy } from '$modules/organization/domain/services/organization-policy';
+import type {
+  OrganizationPolicy,
+  OrganizationQueryRepository,
+} from '$modules/organization/domain';
 
 export class OrganizationPolicyService implements OrganizationPolicy {
   constructor(

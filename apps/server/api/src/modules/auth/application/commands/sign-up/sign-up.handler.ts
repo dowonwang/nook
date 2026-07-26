@@ -1,16 +1,20 @@
-import { User } from '$modules/user/domain/entities/user.entity';
-import { UserEmail } from '$modules/user/domain/value-objects/email.vo';
-import { UserName } from '$modules/user/domain/value-objects/name.vo';
-import { UserPassword } from '$modules/user/domain/value-objects/password.vo';
-import { UserUuid } from '$modules/user/domain/value-objects/uuid.vo';
-import { EmailAlreadyExists } from '$modules/user/error/email-already-exists.error';
+import {
+  User,
+  UserEmail,
+  UserName,
+  UserPassword,
+  UserUuid,
+  type UserCommandRepository,
+} from '$modules/user/domain';
+import { EmailAlreadyExists } from '$modules/user/error';
 import { createLogger } from '$shared/logger';
 
-import type { PasswordHaser } from '$modules/auth/domain/services/password-hasher';
-import type { UserCommandRepository } from '$modules/user/domain/repositories/user-command.repository';
+import type { PasswordHaser } from '$modules/auth/domain';
 import type { SignUpCommand } from './sign-up.command';
 
 export class SignUpHandler {
+  private readonly logger = createLogger(SignUpHandler.name);
+
   constructor(
     private readonly userCommandRepository: UserCommandRepository,
     private readonly passwordHasher: PasswordHaser,
@@ -38,7 +42,7 @@ export class SignUpHandler {
 
     await this.userCommandRepository.save(user);
 
-    logger.info(
+    this.logger.info(
       {
         details: user.id.getValue(),
       },
@@ -48,5 +52,3 @@ export class SignUpHandler {
     return { id: user.id.getValue() };
   }
 }
-
-const logger = createLogger(SignUpHandler.name);

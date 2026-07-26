@@ -1,5 +1,4 @@
-import { LOG_EVENT } from '$shared/logger/constant/log-event';
-import { LOG_MESSAGE } from '$shared/logger/constant/log-message';
+import { LOG_EVENT, LOG_MESSAGE } from '$shared/logger';
 
 import { AppError } from './app.error';
 

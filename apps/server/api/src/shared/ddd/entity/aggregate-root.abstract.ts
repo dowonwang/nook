@@ -1,4 +1,4 @@
-import { Entity } from '$shared/ddd/entity/entity.abstract';
+import { Entity } from './entity.abstract';
 
 export interface DomainEvent {
   readonly occurredAt: Date;

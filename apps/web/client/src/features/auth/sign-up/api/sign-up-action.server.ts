@@ -2,15 +2,16 @@
 
 import { redirect } from 'next/navigation';
 
-import { signUpSchema } from '$features/auth/sign-up/model/sign-up';
 import { actionStateBuilder, createActionStateError } from '$shared/api/action';
-import { bffFetcher, setFlashCookie } from '$shared/api/bff/index.server';
+import { bffFetcher, setFlashCookie } from '$shared/api/bff/server';
+
+import { signUpSchema } from '../model/sign-up';
 
 import type {
-  SignUpActionState,
   SignUpResponseError,
   SignUpState,
-} from '$features/auth/sign-up/model/sign-up';
+  SignUpActionState,
+} from '../model/sign-up';
 import type { postAuthSignUpResponseError } from '@packages/api-client/api';
 
 export async function signUpAction(

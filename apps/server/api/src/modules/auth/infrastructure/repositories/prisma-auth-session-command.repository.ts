@@ -1,7 +1,9 @@
-import { AuthSessionPrismaMapper } from '$modules/auth/infrastructure/repositories/mapper/auth-session-prisma.mapper';
+import { AuthSessionPrismaMapper } from './mapper/auth-session-prisma.mapper';
 
-import type { AuthSession } from '$modules/auth/domain/entities/auth-session.entity';
-import type { AuthSessionCommandRepository } from '$modules/auth/domain/repositories/auth-session-command.repository';
+import type {
+  AuthSession,
+  AuthSessionCommandRepository,
+} from '$modules/auth/domain';
 import type { PrismaClient } from '@packages/api-db';
 
 export class PrismaAuthSessionCommandRepository implements AuthSessionCommandRepository {

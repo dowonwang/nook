@@ -1,4 +1,4 @@
-import { UnauthorizedError } from '$shared/error/common.error';
+import { UnauthorizedError } from '$shared/error';
 
 export class JwtTokenExpired extends UnauthorizedError {
   constructor(scope: string) {

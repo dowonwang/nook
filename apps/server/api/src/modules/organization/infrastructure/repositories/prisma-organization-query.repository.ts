@@ -1,4 +1,4 @@
-import type { OrganizationQueryRepository } from '$modules/organization/domain/repositories/organization-query.repository';
+import type { OrganizationQueryRepository } from '$modules/organization/domain';
 import type { PrismaClient } from '@packages/api-db';
 
 export class PrismaOrganizationQueryRepository implements OrganizationQueryRepository {

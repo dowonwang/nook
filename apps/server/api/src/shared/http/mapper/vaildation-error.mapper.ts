@@ -1,4 +1,4 @@
-import { BadRequestError } from '$shared/error/common.error';
+import { BadRequestError } from '$shared/error';
 
 import type { ValidationError } from 'elysia';
 

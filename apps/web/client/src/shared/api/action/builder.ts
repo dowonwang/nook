@@ -1,4 +1,4 @@
-import type { ActionState, ActionStateZodError } from '$shared/api/action/type';
+import type { ActionState, ActionStateZodError } from './type';
 
 export const actionStateBuilder = {
   success<TState, TResponseError = never>(

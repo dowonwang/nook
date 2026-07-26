@@ -1,6 +1,6 @@
 import { createHash } from 'node:crypto';
 
-import type { TokenHasher } from '$modules/auth/domain/services/token-hasher';
+import type { TokenHasher } from '$modules/auth/domain';
 
 export class JwtTokenHasher implements TokenHasher {
   create(token: string): string {

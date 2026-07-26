@@ -1,4 +1,4 @@
-import { SERVER_ENV_CONFIG } from '$shared/config/server-env';
+import { SERVER_ENV_CONFIG } from '$shared/config/server';
 
 import type { NextRequest } from 'next/server';
 

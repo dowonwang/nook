@@ -1,7 +1,7 @@
-import { UserTimeStampsRequired } from '$modules/user/error/user-timestamps-required.error';
+import { UserTimeStampsRequired } from '$modules/user/error';
 
-import type { UserDetailDto } from '$modules/user/application/dto/user-detail.dto';
-import type { User } from '$modules/user/domain/entities/user.entity';
+import type { User } from '$modules/user/domain';
+import type { UserDetailDto } from '../dto/user-detail.dto';
 
 const name = Symbol('UserDtoMapper');
 

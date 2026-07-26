@@ -3,7 +3,7 @@ import { postAuthRefresh } from '@packages/api-client/api';
 import {
   createForwardedHeaders,
   getAuthRefreshFromCookie,
-} from '$shared/api/bff/index.server';
+} from '$shared/api/bff/server';
 
 import type { NextRequest } from 'next/server';
 

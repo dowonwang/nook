@@ -2,16 +2,17 @@
 
 import { redirect } from 'next/navigation';
 
-import { signInSchema } from '$features/auth/sign-in/model/sign-in';
 import { actionStateBuilder, createActionStateError } from '$shared/api/action';
-import { bffFetcher, setAuthCookie } from '$shared/api/bff/index.server';
+import { bffFetcher, setAuthCookie } from '$shared/api/bff/server';
+
+import { signInSchema } from '../model/sign-in';
 
 import type {
   SignInActionState,
   SignInResponseError,
   SignInResponseSuccess,
   SignInState,
-} from '$features/auth/sign-in/model/sign-in';
+} from '../model/sign-in';
 import type { postAuthSignInResponseError } from '@packages/api-client/api';
 
 export async function signInAction(

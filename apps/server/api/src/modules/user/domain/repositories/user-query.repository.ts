@@ -1,4 +1,4 @@
-import type { User } from '$modules/user/domain/entities/user.entity';
+import type { User } from '../entities/user.entity';
 
 export interface UserQueryRepository {
   findById(id: string): Promise<User | null>;

@@ -5,7 +5,7 @@ import {
   CardTitle,
 } from '@packages/ui/components/card';
 
-import { CLIENT_ENV_CONFIG } from '$shared/config/client-env';
+import { CLIENT_ENV_CONFIG } from '$shared/config/client';
 
 export function HomePage() {
   return (

@@ -1,7 +1,6 @@
-import { UserPrismaMapper } from '$modules/user/infrastructure/mappers/user-prisma.mapper';
+import { UserPrismaMapper } from '../mappers/user-prisma.mapper';
 
-import type { User } from '$modules/user/domain/entities/user.entity';
-import type { UserCommandRepository } from '$modules/user/domain/repositories/user-command.repository';
+import type { User, UserCommandRepository } from '$modules/user/domain';
 import type { PrismaClient } from '@packages/api-db';
 
 export class PrismaUserCommandRepository implements UserCommandRepository {

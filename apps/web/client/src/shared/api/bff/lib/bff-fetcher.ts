@@ -1,6 +1,6 @@
 import { headers } from 'next/headers';
 
-import { SERVER_ENV_CONFIG } from '$shared/config/server-env';
+import { SERVER_ENV_CONFIG } from '$shared/config/server';
 
 function getClientIp(headers: Headers): string | null {
   const forwardedFor = headers.get('x-forwarded-for');

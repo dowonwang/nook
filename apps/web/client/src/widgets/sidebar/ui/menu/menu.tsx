@@ -1,6 +1,6 @@
 import { MenuItem } from './menu-item';
 
-import type { MenuData } from './menu-item';
+import type { MenuData } from '../../model/menu';
 
 export function Menu({ data }: { data: MenuData[] }) {
   return (

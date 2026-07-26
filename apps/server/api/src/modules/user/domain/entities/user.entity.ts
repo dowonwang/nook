@@ -1,9 +1,11 @@
-import { Entity } from '$shared/ddd/entity/entity.abstract';
+import { Entity } from '$shared/ddd';
 
-import type { UserEmail } from '$modules/user/domain/value-objects/email.vo';
-import type { UserName } from '$modules/user/domain/value-objects/name.vo';
-import type { UserPassword } from '$modules/user/domain/value-objects/password.vo';
-import type { UserUuid } from '$modules/user/domain/value-objects/uuid.vo';
+import type {
+  UserEmail,
+  UserName,
+  UserPassword,
+  UserUuid,
+} from '../value-objects';
 
 export interface UserProps {
   email: UserEmail;

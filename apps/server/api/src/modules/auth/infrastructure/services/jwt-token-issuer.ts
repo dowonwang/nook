@@ -1,10 +1,8 @@
 import { decodeJwt, SignJWT } from 'jose';
 
-import { MissingJwtExpires } from '$modules/auth/error/missing-jwt-expires.error';
-import { MissingJwtSecret } from '$modules/auth/error/missing-jwt-secret.error';
+import { MissingJwtExpires, MissingJwtSecret } from '$modules/auth/error';
 
-import type { TokenIssuer } from '$modules/auth/domain/services/token-issuer';
-import type { TokenClaims } from '$modules/auth/domain/value-objects/abstract/token-claims.base';
+import type { TokenClaims, TokenIssuer } from '$modules/auth/domain';
 import type { JWTPayload } from 'jose';
 
 export class JwtTokenIssuer implements TokenIssuer {
