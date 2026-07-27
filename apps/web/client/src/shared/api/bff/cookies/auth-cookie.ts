@@ -1,8 +1,7 @@
 import { cookies } from 'next/headers';
 
 import { SERVER_ENV_CONFIG } from '$shared/config/server';
-
-import { signedCookie, verifySignedCookie } from './cookie-sign';
+import { signedValue, verifySignedValue } from '$shared/lib/crypto';
 
 const ACCESS_TOKEN_COOKIE_NAME = '_auth_access_';
 const REFRESH_TOKEN_COOKIE_NAME = '_auth_refresh_';
@@ -13,7 +12,7 @@ export async function setAuthCookie(accessToken: string, refreshToken: string) {
 
   cookieStore.set(
     ACCESS_TOKEN_COOKIE_NAME,
-    signedCookie(accessToken, AUTH_SECRET),
+    signedValue(accessToken, AUTH_SECRET),
     {
       httpOnly: true,
       sameSite: 'lax',
@@ -24,7 +23,7 @@ export async function setAuthCookie(accessToken: string, refreshToken: string) {
 
   cookieStore.set(
     REFRESH_TOKEN_COOKIE_NAME,
-    signedCookie(refreshToken, AUTH_SECRET),
+    signedValue(refreshToken, AUTH_SECRET),
     {
       httpOnly: true,
       sameSite: 'lax',
@@ -49,7 +48,7 @@ export async function getAuthAccessFromCookie() {
 
   if (!cookieValue) return null;
 
-  return verifySignedCookie(cookieValue, AUTH_SECRET);
+  return verifySignedValue(cookieValue, AUTH_SECRET);
 }
 
 export async function getAuthRefreshFromCookie() {
@@ -60,5 +59,5 @@ export async function getAuthRefreshFromCookie() {
 
   if (!cookieValue) return null;
 
-  return verifySignedCookie(cookieValue, AUTH_SECRET);
+  return verifySignedValue(cookieValue, AUTH_SECRET);
 }

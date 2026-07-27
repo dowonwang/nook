@@ -5,12 +5,12 @@ import {
   getAuthRefreshFromCookie,
 } from '$shared/api/bff/server';
 
+import type { SessionTokens } from '../model/session';
 import type { NextRequest } from 'next/server';
 
-export async function refreshAuthToken(request: NextRequest): Promise<{
-  accessToken: string;
-  refreshToken: string;
-} | null> {
+export async function refreshSession(
+  request: NextRequest,
+): Promise<SessionTokens | null> {
   const refreshToken = await getAuthRefreshFromCookie();
 
   if (!refreshToken) {
@@ -18,8 +18,6 @@ export async function refreshAuthToken(request: NextRequest): Promise<{
   }
 
   const headers = createForwardedHeaders(request, refreshToken);
-
-  console.log(headers);
 
   const { data } = await postAuthRefresh(
     {},

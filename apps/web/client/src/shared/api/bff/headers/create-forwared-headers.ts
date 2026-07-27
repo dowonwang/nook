@@ -1,4 +1,4 @@
-import { getClientIp } from './get-client-ip';
+import { getClientIp } from '$shared/lib/http';
 
 const HEADER_ALLOW_LIST = ['content-type', 'authorization'] as const;
 

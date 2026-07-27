@@ -1,10 +1,10 @@
+import { refreshSession } from '$entities/session/server';
 import {
   clearAuthCookie,
   getAuthAccessFromCookie,
   setAuthCookie,
 } from '$shared/api/bff/server';
 
-import { refreshAuthToken } from './refresh-auth-token';
 import { requestBackend } from './request-backend';
 
 import type { NextRequest } from 'next/server';
@@ -20,7 +20,7 @@ export async function handleProxyRequest(
     return response;
   }
 
-  const newTokens = await refreshAuthToken(request);
+  const newTokens = await refreshSession(request);
 
   if (!newTokens) {
     await clearAuthCookie();
