@@ -22,7 +22,7 @@ export async function refreshSession(
   const { data } = await postAuthRefresh(
     {},
     {
-      headers,
+      headers: Object.fromEntries(headers.entries()),
     },
   );
 

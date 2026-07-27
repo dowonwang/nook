@@ -1,1 +1,1 @@
-export * from './check-session';
+export * from './refresh-session-cookie-if-needed';

@@ -1,9 +1,9 @@
 import { queryOptions } from '@tanstack/react-query';
 
 import { getServerSession } from '../api/get-session.server';
-import { sessionQueryKey } from '../config/query-key';
+import { SESSION_QUERY_KEY } from '../config/query-key';
 
 export const serverSessionQueryOptions = queryOptions({
-  queryKey: sessionQueryKey,
+  queryKey: SESSION_QUERY_KEY,
   queryFn: getServerSession,
 });

@@ -1,1 +1,1 @@
-export const sessionQueryKey = ['session'] as const;
+export const SESSION_QUERY_KEY = ['session'] as const;

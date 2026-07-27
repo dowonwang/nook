@@ -1,9 +1,11 @@
+import { SESSION_ERROR_CODE } from '$entities/session';
 import { refreshSession } from '$entities/session/server';
 import {
   clearAuthCookie,
   getAuthAccessFromCookie,
   setAuthCookie,
 } from '$shared/api/bff/server';
+import { findErrorCode } from '$shared/api/error';
 
 import { requestBackend } from './request-backend';
 
@@ -15,8 +17,14 @@ export async function handleProxyRequest(
   const accessToken = await getAuthAccessFromCookie();
   let response = await requestBackend(request, accessToken);
 
-  // TODO: 토큰 만료 커스텀 에러 코드 기준으로 리프리쉬 토큰 요청
   if (response.ok) {
+    return response;
+  }
+
+  const data = (await response.clone().json()) as unknown;
+  const errorCode = findErrorCode(data);
+
+  if (errorCode !== SESSION_ERROR_CODE.accessTokenExpired) {
     return response;
   }
 
