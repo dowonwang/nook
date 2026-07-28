@@ -1,4 +1,4 @@
-import type { Organization } from '$modules/organization/domain/entities/organization.entity';
+import type { Organization } from '../entities/organization.entity';
 
 export interface OrganizationCommandRepository {
   save(organization: Organization): Promise<void>;

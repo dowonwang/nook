@@ -1,6 +1,5 @@
-import { AuthSession } from '$modules/auth/domain/entities/auth-session.entity';
-import { AuthSessionUuid } from '$modules/auth/domain/value-objects/auth-session-uuid.vo';
-import { UserUuid } from '$modules/user/domain/value-objects/uuid.vo';
+import { AuthSession, AuthSessionUuid } from '$modules/auth/domain';
+import { UserUuid } from '$modules/user/domain';
 
 import type { AuthSession as PrismaAuthSession } from '@packages/api-db';
 

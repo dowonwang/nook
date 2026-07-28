@@ -1,7 +1,7 @@
-import { ForbiddenError } from '$shared/error/common.error';
-import { createLogger } from '$shared/logger';
+import { ForbiddenError } from '$shared/error';
 import { LOG_EVENT } from '$shared/logger/constant/log-event';
 import { LOG_MESSAGE } from '$shared/logger/constant/log-message';
+import { createLogger } from '$shared/logger/logger';
 
 export interface RequestMetadata {
   ipAddress: string;
@@ -21,7 +21,7 @@ export function getRequestMetadata(request: Request): RequestMetadata {
   const clientUserAgent = request.headers.get('x-client-user-agent');
 
   const ipAddress =
-    forwardedFor?.split(',')[0]?.trim() || realIp || clientIp || null;
+    clientIp || realIp || forwardedFor?.split(',')[0]?.trim() || null;
   const userAgent = clientUserAgent || originUserAgent || null;
 
   logger.debug(
@@ -29,7 +29,6 @@ export function getRequestMetadata(request: Request): RequestMetadata {
       details: {
         ipAddress,
         userAgent,
-        headers: request.headers,
       },
     },
     'request metadata',

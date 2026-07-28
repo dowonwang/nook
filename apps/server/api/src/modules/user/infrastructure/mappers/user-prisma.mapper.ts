@@ -1,8 +1,10 @@
-import { User } from '$modules/user/domain/entities/user.entity';
-import { UserEmail } from '$modules/user/domain/value-objects/email.vo';
-import { UserName } from '$modules/user/domain/value-objects/name.vo';
-import { UserPassword } from '$modules/user/domain/value-objects/password.vo';
-import { UserUuid } from '$modules/user/domain/value-objects/uuid.vo';
+import {
+  User,
+  UserEmail,
+  UserName,
+  UserPassword,
+  UserUuid,
+} from '$modules/user/domain';
 
 import type { User as PrismaUser } from '@packages/api-db';
 

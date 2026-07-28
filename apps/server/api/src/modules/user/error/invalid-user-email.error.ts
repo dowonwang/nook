@@ -1,6 +1,7 @@
-import { USER_LOG_EVENT } from '$modules/user/error/constant/user-log-event';
-import { USER_LOG_MESSAGE } from '$modules/user/error/constant/user-log-message';
-import { UnprocessableContent } from '$shared/error/common.error';
+import { UnprocessableContent } from '$shared/error';
+
+import { USER_LOG_EVENT } from './constant/user-log-event';
+import { USER_LOG_MESSAGE } from './constant/user-log-message';
 
 export class InvalidUserEmail extends UnprocessableContent {
   constructor(scope: string) {

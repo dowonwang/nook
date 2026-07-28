@@ -1,8 +1,8 @@
-import { UserDtoMapper } from '$modules/user/application/mapper/user-dto.mapper';
+import { UserDtoMapper } from '../mapper/user-dto.mapper';
 
-import type { UserDetailDto } from '$modules/user/application/dto/user-detail.dto';
-import type { UserQueryRepository } from '$modules/user/domain/repositories/user-query.repository';
+import type { UserQueryRepository } from '$modules/user/domain';
 import type { FindUserByUuidQuery } from './find-user-by-uuid.query';
+import type { UserDetailDto } from '../dto/user-detail.dto';
 
 export class FindUserByUuidHandler {
   constructor(private readonly userQueryRepository: UserQueryRepository) {}

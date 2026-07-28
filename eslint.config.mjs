@@ -35,12 +35,6 @@ export default defineConfig(
       ],
       'import-x/no-relative-parent-imports': 'off',
       'no-restricted-imports': 'off',
-      '@typescript-eslint/no-restricted-imports': [
-        'error',
-        {
-          patterns: ['../**'],
-        },
-      ],
       '@typescript-eslint/consistent-type-imports': [
         'error',
         {

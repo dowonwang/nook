@@ -1,6 +1,7 @@
-import { ORGANIZATION_LOG_EVENT } from '$modules/organization/error/constant/organization-log-event';
-import { ORGANIZATION_LOG_MESSAGE } from '$modules/organization/error/constant/organization-log-message';
-import { UnprocessableContent } from '$shared/error/common.error';
+import { UnprocessableContent } from '$shared/error';
+
+import { ORGANIZATION_LOG_EVENT } from './constant/organization-log-event';
+import { ORGANIZATION_LOG_MESSAGE } from './constant/organization-log-message';
 
 export class OrganizationAdminLimitExceeded extends UnprocessableContent {
   constructor(scope: string) {

@@ -1,21 +1,27 @@
-import { AuthSession } from '$modules/auth/domain/entities/auth-session.entity';
-import { AccessTokenClaims } from '$modules/auth/domain/value-objects/access-token-claims.vo';
-import { AuthSessionUuid } from '$modules/auth/domain/value-objects/auth-session-uuid.vo';
-import { RefreshTokenClaims } from '$modules/auth/domain/value-objects/refresh-token-claims.vo';
-import { AuthSessionNotFound } from '$modules/auth/error/auth-session-not-found.error';
-import { RefreshTokenMalFormed } from '$modules/auth/error/refresh-token-malformed.error';
-import { UserDtoMapper } from '$modules/user/application/mapper/user-dto.mapper';
-import { UserNotFound } from '$modules/user/error/user-not-found.error';
+import {
+  AccessTokenClaims,
+  AuthSession,
+  AuthSessionUuid,
+  RefreshTokenClaims,
+  type AuthSessionCommandRepository,
+  type TokenHasher,
+  type TokenIssuer,
+  type TokenVerifier,
+} from '$modules/auth/domain';
+import {
+  AuthSessionNotFound,
+  RefreshTokenMalFormed,
+} from '$modules/auth/error';
+import { UserDtoMapper, type UserDetailDto } from '$modules/user/application';
+import { UserNotFound } from '$modules/user/error';
+import { createLogger } from '$shared/logger';
 
-import type { AuthSessionCommandRepository } from '$modules/auth/domain/repositories/auth-session-command.repository';
-import type { TokenHasher } from '$modules/auth/domain/services/token-hasher';
-import type { TokenIssuer } from '$modules/auth/domain/services/token-issuer';
-import type { TokenVerifier } from '$modules/auth/domain/services/token-verifier';
-import type { UserDetailDto } from '$modules/user/application/dto/user-detail.dto';
-import type { UserCommandRepository } from '$modules/user/domain/repositories/user-command.repository';
-import type { RequestMetadata } from '$shared/http/lib/get-request-metadata';
+import type { UserCommandRepository } from '$modules/user/domain';
+import type { RequestMetadata } from '$shared/http';
 
 export class RefreshHandler {
+  private readonly logger = createLogger(RefreshHandler.name);
+
   constructor(
     private readonly authSessionCommandRepository: AuthSessionCommandRepository,
     private readonly userCommandRepository: UserCommandRepository,
@@ -83,6 +89,11 @@ export class RefreshHandler {
     });
 
     await this.authSessionCommandRepository.save(newAuthSession);
+
+    this.logger.info(
+      { details: user.id.getValue() },
+      'Token refreshed successfully',
+    );
 
     return {
       accessToken: newAccessToken,

@@ -14,14 +14,14 @@ import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { useActionState } from 'react';
 
-import { signInAction } from '$features/auth/sign-in/api';
-import { useSignInSuccessEffect } from '$features/auth/sign-in/lib';
 import {
   useActionErrorMessage,
   useActionFieldErrors,
-  type ActionStateZodError,
 } from '$shared/api/action';
-import { useRedirectOnCondition } from '$shared/lib/navigate';
+
+import { signInAction } from '../api/sign-in-action.server';
+
+import type { ActionStateZodError } from '$shared/api/action';
 
 export function SignInForm() {
   const t = useTranslations('validation');
@@ -38,12 +38,6 @@ export function SignInForm() {
   const emailError = getFieldError('email');
   const passwordError = getFieldError('password');
   const actionError = useActionErrorMessage(actionState.error);
-
-  useSignInSuccessEffect({ success: actionState.success });
-  useRedirectOnCondition({
-    condition: actionState.success,
-    replace: true,
-  });
 
   return (
     <form action={formAction} noValidate>

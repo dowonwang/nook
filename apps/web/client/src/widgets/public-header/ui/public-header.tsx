@@ -3,12 +3,11 @@
 import { useQuery } from '@tanstack/react-query';
 
 import { sessionQueryOptions } from '$entities/session';
-import { CLIENT_ENV_CONFIG } from '$shared/config/client-env';
+import { CLIENT_ENV_CONFIG } from '$shared/config/client';
 import { AppLogo } from '$shared/ui';
-import {
-  AuthenticatedButtonGroup,
-  UnauthenticatedButtonGroup,
-} from '$widgets/public-header';
+
+import { AuthenticatedButtonGroup } from './authenticated-button-group';
+import { UnauthenticatedButtonGroup } from './unauthenticated-button-group';
 
 export function PublicHeader() {
   const { data } = useQuery(sessionQueryOptions);

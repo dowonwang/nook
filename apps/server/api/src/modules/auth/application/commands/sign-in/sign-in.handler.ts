@@ -1,22 +1,25 @@
-import { AuthSession } from '$modules/auth/domain/entities/auth-session.entity';
-import { AccessTokenClaims } from '$modules/auth/domain/value-objects/access-token-claims.vo';
-import { AuthSessionUuid } from '$modules/auth/domain/value-objects/auth-session-uuid.vo';
-import { RefreshTokenClaims } from '$modules/auth/domain/value-objects/refresh-token-claims.vo';
-import { RefreshTokenMalFormed } from '$modules/auth/error/refresh-token-malformed.error';
-import { UserDtoMapper } from '$modules/user/application/mapper/user-dto.mapper';
-import { UserEmail } from '$modules/user/domain/value-objects/email.vo';
-import { InvaildCredentials } from '$modules/user/error/invaild-credentials.error';
+import {
+  AccessTokenClaims,
+  AuthSession,
+  AuthSessionUuid,
+  RefreshTokenClaims,
+  type AuthSessionCommandRepository,
+  type PasswordHaser,
+  type TokenHasher,
+  type TokenIssuer,
+} from '$modules/auth/domain';
+import { RefreshTokenMalFormed } from '$modules/auth/error';
+import { UserDtoMapper } from '$modules/user/application';
+import { UserEmail, type UserCommandRepository } from '$modules/user/domain';
+import { InvaildCredentials } from '$modules/user/error';
+import { createLogger } from '$shared/logger';
 
-import type { AuthSessionCommandRepository } from '$modules/auth/domain/repositories/auth-session-command.repository';
-import type { PasswordHaser } from '$modules/auth/domain/services/password-hasher';
-import type { TokenHasher } from '$modules/auth/domain/services/token-hasher';
-import type { TokenIssuer } from '$modules/auth/domain/services/token-issuer';
-import type { UserDetailDto } from '$modules/user/application/dto/user-detail.dto';
-import type { UserCommandRepository } from '$modules/user/domain/repositories/user-command.repository';
-import type { RequestMetadata } from '$shared/http/lib/get-request-metadata';
-import type { SignInCommand } from './sign-in.command';
+import type { RequestMetadata } from '$shared/http';
+import type { SignInCommand, SingInResult } from './sign-in.types';
 
 export class SignInHandler {
+  private readonly logger = createLogger(SignInHandler.name);
+
   constructor(
     private readonly userCommandRepository: UserCommandRepository,
     private readonly authSessionCommandRepository: AuthSessionCommandRepository,
@@ -29,11 +32,7 @@ export class SignInHandler {
   async execute(
     command: SignInCommand,
     { userAgent, ipAddress }: RequestMetadata,
-  ): Promise<{
-    accessToken: string;
-    refreshToken: string;
-    user: UserDetailDto;
-  }> {
+  ): Promise<SingInResult> {
     const email = UserEmail.create(command.email);
     const user = await this.userCommandRepository.findByEmail(email.getValue());
 
@@ -78,6 +77,16 @@ export class SignInHandler {
     });
 
     await this.authSessionCommandRepository.save(authSession);
+
+    this.logger.info(
+      {
+        details: {
+          userId: user.id.getValue(),
+          authSessionId: authSession.id.getValue(),
+        },
+      },
+      'User signed in successfully',
+    );
 
     return {
       accessToken,

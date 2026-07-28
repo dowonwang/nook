@@ -1,4 +1,4 @@
-import type { ActionStateZodError } from '$shared/api/action';
+import type { ActionStateZodError } from './type';
 import type { ZodError } from 'zod';
 
 export function createActionStateError(error: ZodError): ActionStateZodError {

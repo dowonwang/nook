@@ -1,11 +1,40 @@
-import { handleRequest } from '$app/proxy';
+import { NextResponse } from 'next/server';
 
-import type { NextRequest, ProxyConfig } from 'next/server';
+import { refreshSessionCookieIfNeeded } from '$app/middleware';
+import {
+  createAuthCookieHeader,
+  setAuthCookieToResponse,
+} from '$shared/api/bff/server';
 
-export function proxy(request: NextRequest) {
-  return handleRequest(request);
+import type { NextRequest } from 'next/server';
+
+export async function proxy(request: NextRequest) {
+  const tokens = await refreshSessionCookieIfNeeded(request);
+
+  if (!tokens) {
+    return NextResponse.next();
+  }
+
+  const requestHeaders = new Headers(request.headers);
+
+  requestHeaders.set(
+    'cookie',
+    createAuthCookieHeader(request, tokens.accessToken, tokens.refreshToken),
+  );
+
+  const response = NextResponse.next({
+    request: {
+      headers: requestHeaders,
+    },
+  });
+
+  setAuthCookieToResponse(response, tokens.accessToken, tokens.refreshToken);
+
+  return response;
 }
 
-export const config: ProxyConfig = {
-  matcher: ['/api/:path*'],
+export const config = {
+  matcher: [
+    '/((?!api|_next/static|_next/image|favicon.ico|robots.txt|sitemap.xml).*)',
+  ],
 };

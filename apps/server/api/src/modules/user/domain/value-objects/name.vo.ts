@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { InvalidUserName } from '$modules/user/error/invalid-user-name.error';
+import { InvalidUserName } from '$modules/user/error';
 
 const schema = z.string().min(2).max(20);
 

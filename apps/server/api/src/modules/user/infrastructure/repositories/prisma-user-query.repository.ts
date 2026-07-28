@@ -1,7 +1,6 @@
-import { UserEntityMapper } from '$modules/user/infrastructure/mappers/user-entity.mapper';
+import { UserEntityMapper } from '../mappers/user-entity.mapper';
 
-import type { User } from '$modules/user/domain/entities/user.entity';
-import type { UserQueryRepository } from '$modules/user/domain/repositories/user-query.repository';
+import type { User, UserQueryRepository } from '$modules/user/domain';
 import type { PrismaClient } from '@packages/api-db';
 
 export class PrismaUserQueryRepository implements UserQueryRepository {

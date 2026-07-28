@@ -8,7 +8,7 @@ import {
 import { getTranslations } from 'next-intl/server';
 
 import { SignInForm } from '$features/auth/sign-in';
-import { getFlashCookie } from '$shared/api/bff/index.server';
+import { getFlashCookie } from '$shared/api/bff/server';
 import { AppLogo } from '$shared/ui';
 
 export async function SignInPage() {

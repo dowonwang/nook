@@ -29,11 +29,6 @@ export default defineConfig({
       formatter: 'prettier',
       indexFiles: true,
 
-      schemas: {
-        path: './src/schema/models',
-        type: 'zod',
-      },
-
       operationSchemas: './src/schema/operations',
 
       override: {

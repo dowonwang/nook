@@ -1,3 +1,8 @@
+export interface SessionTokens {
+  accessToken: string;
+  refreshToken: string;
+}
+
 export interface SessionUser {
   id: string;
   email: string;
@@ -15,4 +20,3 @@ export interface UnauthenticatedSession {
 }
 
 export type Session = AuthenticatedSession | UnauthenticatedSession;
-export const sessionQueryKey = ['session'] as const;
