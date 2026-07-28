@@ -1,9 +1,4 @@
-export {
-  clearAuthCookie,
-  getAuthAccessFromCookie,
-  getAuthRefreshFromCookie,
-  setAuthCookie,
-} from './cookies/auth-cookie';
+export * from './cookies/auth-cookie';
 
 export { bffFetcher } from './bff-fetcher';
 

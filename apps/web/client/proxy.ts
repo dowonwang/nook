@@ -3,8 +3,8 @@ import { NextResponse } from 'next/server';
 import { refreshSessionCookieIfNeeded } from '$app/middleware';
 import {
   createAuthCookieHeader,
-  setAuthCookie,
-} from '$shared/api/bff/cookies/auth-cookie';
+  setAuthCookieToResponse,
+} from '$shared/api/bff/server';
 
 import type { NextRequest } from 'next/server';
 
@@ -28,7 +28,7 @@ export async function proxy(request: NextRequest) {
     },
   });
 
-  setAuthCookie(tokens.accessToken, tokens.refreshToken, response);
+  setAuthCookieToResponse(response, tokens.accessToken, tokens.refreshToken);
 
   return response;
 }

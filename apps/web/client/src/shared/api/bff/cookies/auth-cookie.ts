@@ -14,46 +14,10 @@ const AUTH_COOKIE_OPTIONS = {
   secure: true,
 } as const;
 
-export function setAuthCookie(
-  accessToken: string,
-  refreshToken: string,
-  response: NextResponse,
-): void;
 export async function setAuthCookie(
   accessToken: string,
   refreshToken: string,
-  response?: NextResponse,
-): Promise<void>;
-export function setAuthCookie(
-  accessToken: string,
-  refreshToken: string,
-  response?: NextResponse,
-): void | Promise<void> {
-  const AUTH_SECRET = SERVER_ENV_CONFIG.AUTH_COOKIE_SECRET;
-
-  if (response) {
-    response.cookies.set(
-      ACCESS_TOKEN_COOKIE_NAME,
-      signedValue(accessToken, AUTH_SECRET),
-      AUTH_COOKIE_OPTIONS,
-    );
-
-    response.cookies.set(
-      ACCESS_TOKEN_COOKIE_NAME,
-      signedValue(accessToken, AUTH_SECRET),
-      AUTH_COOKIE_OPTIONS,
-    );
-
-    return;
-  }
-
-  return setAuthCookieFromStore(accessToken, refreshToken);
-}
-
-async function setAuthCookieFromStore(
-  accessToken: string,
-  refreshToken: string,
-) {
+): Promise<void> {
   const AUTH_SECRET = SERVER_ENV_CONFIG.AUTH_COOKIE_SECRET;
   const cookieStore = await cookies();
 
@@ -70,19 +34,32 @@ async function setAuthCookieFromStore(
   );
 }
 
-export function clearAuthCookie(response: NextResponse): void;
-export async function clearAuthCookie(): Promise<void>;
-export function clearAuthCookie(response?: NextResponse): void | Promise<void> {
-  if (response) {
-    response.cookies.delete(ACCESS_TOKEN_COOKIE_NAME);
-    response.cookies.delete(REFRESH_TOKEN_COOKIE_NAME);
-    return;
-  }
+export function setAuthCookieToResponse(
+  response: NextResponse,
+  accessToken: string,
+  refreshToken: string,
+) {
+  const AUTH_SECRET = SERVER_ENV_CONFIG.AUTH_COOKIE_SECRET;
 
-  return clearAuthCookieFromStore();
+  response.cookies.set(
+    ACCESS_TOKEN_COOKIE_NAME,
+    signedValue(accessToken, AUTH_SECRET),
+    AUTH_COOKIE_OPTIONS,
+  );
+
+  response.cookies.set(
+    REFRESH_TOKEN_COOKIE_NAME,
+    signedValue(refreshToken, AUTH_SECRET),
+    AUTH_COOKIE_OPTIONS,
+  );
 }
 
-async function clearAuthCookieFromStore(): Promise<void> {
+export function clearAuthCookieToResponse(response: NextResponse): void {
+  response.cookies.delete(ACCESS_TOKEN_COOKIE_NAME);
+  response.cookies.delete(REFRESH_TOKEN_COOKIE_NAME);
+}
+
+export async function clearAuthCookie(): Promise<void> {
   const cookieStore = await cookies();
 
   cookieStore.delete(ACCESS_TOKEN_COOKIE_NAME);
