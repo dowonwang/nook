@@ -15,7 +15,7 @@ export async function refreshSessionCookieIfNeeded(
   }
 
   const tokenExipred = isTokenExpired(accessToken, {
-    refreshBeforeSeconds: 0,
+    refreshBeforeSeconds: 30,
   });
 
   if (!tokenExipred) {
