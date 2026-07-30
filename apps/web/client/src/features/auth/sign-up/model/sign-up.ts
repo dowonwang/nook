@@ -1,24 +1,18 @@
 import { PostAuthSignUpBody } from '@packages/api-client/schema/auth';
 import { z } from 'zod';
 
+import { SIGN_UP_CONFIRM_PASSWORD_ERROR } from '../config/i18n.key';
+
 import type { ActionState } from '$shared/api/action';
 import type { postAuthSignUpResponseError } from '@packages/api-client/api';
-import type { I18N_CUSTOM_VALIDATION_KEY } from '@packages/i18n/validation';
 
 type SignUpPayload = z.infer<typeof signUpSchema>;
-type ConfirmPasswordError = Extract<
-  I18N_CUSTOM_VALIDATION_KEY,
-  'PostAuthSignUpBody_confirmPassword_mismatch'
->;
-
-const confirmPasswordError: ConfirmPasswordError =
-  'PostAuthSignUpBody_confirmPassword_mismatch';
 
 export const signUpSchema = PostAuthSignUpBody.extend({
   confirmPassword: z.string(),
 }).refine((value) => value.password === value.confirmPassword, {
   path: ['confirmPassword'],
-  error: confirmPasswordError,
+  error: SIGN_UP_CONFIRM_PASSWORD_ERROR,
 });
 
 export type SignUpState = Omit<SignUpPayload, 'password' | 'confirmPassword'>;

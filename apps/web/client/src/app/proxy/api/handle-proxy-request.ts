@@ -1,9 +1,10 @@
+import { NextResponse } from 'next/server';
+
 import { SESSION_ERROR_CODE } from '$entities/session';
 import { refreshSession } from '$entities/session/server';
 import {
-  clearAuthCookie,
   getAuthAccessFromCookie,
-  setAuthCookie,
+  setAuthCookieToResponse,
 } from '$shared/api/bff/server';
 import { findErrorCode } from '$shared/api/error';
 
@@ -13,9 +14,9 @@ import type { NextRequest } from 'next/server';
 
 export async function handleProxyRequest(
   request: NextRequest,
-): Promise<Response> {
+): Promise<NextResponse> {
   const accessToken = await getAuthAccessFromCookie();
-  let response = await requestBackend(request, accessToken);
+  const response = await requestBackend(request, accessToken);
 
   if (response.ok) {
     return response;
@@ -28,15 +29,29 @@ export async function handleProxyRequest(
     return response;
   }
 
-  const newTokens = await refreshSession(request);
+  try {
+    const newTokens = await refreshSession(request);
+    const response = await requestBackend(request, newTokens.accessToken);
 
-  if (!newTokens) {
-    await clearAuthCookie();
+    setAuthCookieToResponse(
+      response,
+      newTokens.accessToken,
+      newTokens.refreshToken,
+    );
+
+    return response;
+  } catch {
+    const response = NextResponse.json(
+      {
+        error: {
+          code: SESSION_ERROR_CODE.refreshTokenExpried,
+        },
+      },
+      {
+        status: 401,
+      },
+    );
+
     return response;
   }
-
-  await setAuthCookie(newTokens.accessToken, newTokens.refreshToken);
-  response = await requestBackend(request, newTokens.accessToken);
-
-  return response;
 }

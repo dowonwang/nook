@@ -3,7 +3,6 @@ import {
   HydrationBoundary,
   QueryClient,
 } from '@tanstack/react-query';
-import { redirect } from 'next/navigation';
 
 import { serverSessionQueryOptions } from '$entities/session/server';
 import { Footer } from '$widgets/footer';
@@ -16,13 +15,7 @@ interface Props {
 
 export async function PrivateLayout({ children }: Props) {
   const queryClient = new QueryClient();
-  const { authenticated } = await queryClient.fetchQuery(
-    serverSessionQueryOptions,
-  );
-
-  if (!authenticated) {
-    redirect('/api/auth/required-signin');
-  }
+  await queryClient.prefetchQuery(serverSessionQueryOptions);
 
   return (
     <div id='root' className='flex min-h-dvh'>

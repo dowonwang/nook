@@ -5,6 +5,7 @@ import { redirect } from 'next/navigation';
 import { actionStateBuilder, createActionStateError } from '$shared/api/action';
 import { bffFetcher, setFlashCookie } from '$shared/api/bff/server';
 
+import { SIGN_UP_SUCCESS_SIGNIN_REQUIRED } from '../config/i18n.key';
 import { signUpSchema } from '../model/sign-up';
 
 import type {
@@ -56,7 +57,7 @@ export async function signUpAction(
   });
 
   if (response.ok) {
-    await setFlashCookie('auth_signup_success_signin_required');
+    await setFlashCookie(SIGN_UP_SUCCESS_SIGNIN_REQUIRED);
     redirect('/signin');
   }
 

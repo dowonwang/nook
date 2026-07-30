@@ -14,8 +14,8 @@ export function PrivateHeader() {
   const today = dayjs().format('dddd, MMM D');
   const { data } = useQuery(sessionQueryOptions);
 
-  if (!(data && data.authenticated)) {
-    redirect('/api/auth/required-signin');
+  if (!data?.authenticated) {
+    redirect('/signin');
   }
 
   return (

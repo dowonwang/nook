@@ -10,11 +10,11 @@ import type { NextRequest } from 'next/server';
 
 export async function refreshSession(
   request: NextRequest,
-): Promise<SessionTokens | null> {
+): Promise<SessionTokens> {
   const refreshToken = await getAuthRefreshFromCookie();
 
   if (!refreshToken) {
-    return null;
+    throw new Error('Refresh Token is required.');
   }
 
   const headers = createForwardedHeaders(request, refreshToken);
@@ -27,7 +27,7 @@ export async function refreshSession(
   );
 
   if (!data.success) {
-    return null;
+    throw new Error('Token refresh failed.');
   }
 
   const { data: response } = data;
