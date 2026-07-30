@@ -4,7 +4,6 @@ import { Button } from '@packages/ui/components/button';
 import { useQuery } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import { Bell } from 'lucide-react';
-import { redirect } from 'next/navigation';
 
 import { sessionQueryOptions } from '$entities/session';
 import { UserAvatar } from '$entities/user';
@@ -15,7 +14,7 @@ export function PrivateHeader() {
   const { data } = useQuery(sessionQueryOptions);
 
   if (!data?.authenticated) {
-    redirect('/signin');
+    return null;
   }
 
   return (

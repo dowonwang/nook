@@ -1,11 +1,11 @@
 import { NextResponse, type NextRequest } from 'next/server';
 
 import { SESSION_REQUIRED_SIGN_IN } from '$entities/session';
+import { APP_CONSTANT } from '$shared/config';
 import {
   clearAuthCookieToResponse,
   setFlashCookieToResponse,
-} from '$shared/api/bff/server';
-import { APP_CONSTANT } from '$shared/config';
+} from '$shared/lib/cookie/server';
 
 export function createSignInRedirect(request: NextRequest) {
   const signInUrl = new URL('/signin', request.url);

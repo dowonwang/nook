@@ -23,12 +23,18 @@ import { signInAction } from '../api/sign-in-action.server';
 
 import type { ActionStateZodError } from '$shared/api/action';
 
-export function SignInForm() {
+interface Props {
+  redirectTo: string | string[] | undefined;
+}
+
+export function SignInForm({ redirectTo }: Props) {
   const t = useTranslations('validation');
+  const redirectPath = typeof redirectTo === 'string' ? redirectTo : '/';
+
   const [actionState, formAction] = useActionState(signInAction, {
     success: false,
     error: null,
-    state: { email: '' },
+    state: { email: '', 'redirect-to': redirectPath },
   });
 
   const { register, getFieldError } = useActionFieldErrors(

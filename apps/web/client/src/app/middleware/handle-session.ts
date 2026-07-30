@@ -6,7 +6,7 @@ import {
   getAuthAccessFromCookie,
   getAuthRefreshFromCookie,
   setAuthCookieToResponse,
-} from '$shared/api/bff/server';
+} from '$shared/lib/cookie/server';
 
 import type { HandleSessionResult } from './model/type';
 

@@ -10,8 +10,8 @@
   },
   "dependencies": {
     "@packages/api-client": "workspace:*",
-    "@packages/ui": "workspace:*",
     "@packages/i18n": "workspace:*",
+    "@packages/ui": "workspace:*",
     "@tanstack/react-query": "^5.100.10",
     "dayjs": "^1.11.20",
     "lucide-react": "^1.14.0",

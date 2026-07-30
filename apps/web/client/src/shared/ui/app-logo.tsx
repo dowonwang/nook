@@ -15,7 +15,7 @@ export function AppLogo({ height = 60, width = 60 }: Props) {
     alt: '',
     height,
     width,
-    src: `/logo.png`,
+    src: `/images/logo.png`,
   });
   const backgroundImage = getBackgroundImage(srcSet);
   const style: React.CSSProperties = {

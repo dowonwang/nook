@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 
-import { clearAuthCookieToResponse } from '$shared/api/bff/server';
+import { clearAuthCookieToResponse } from '$shared/lib/cookie/server';
 
 import { handleSession } from './handle-session';
 import { createSignInRedirect } from './lib/create-sign-in-redirect';

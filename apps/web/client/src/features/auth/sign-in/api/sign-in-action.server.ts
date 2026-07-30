@@ -3,7 +3,8 @@
 import { redirect } from 'next/navigation';
 
 import { actionStateBuilder, createActionStateError } from '$shared/api/action';
-import { bffFetcher, setAuthCookie } from '$shared/api/bff/server';
+import { bffFetcher } from '$shared/api/bff/server';
+import { setAuthCookie } from '$shared/lib/cookie/server';
 
 import { signInSchema } from '../model/sign-in';
 
@@ -16,7 +17,7 @@ import type {
 import type { postAuthSignInResponseError } from '@packages/api-client/api';
 
 export async function signInAction(
-  _previousState: SignInActionState,
+  previousState: SignInActionState,
   formData: FormData,
 ): Promise<SignInActionState> {
   const emailValue = formData.get('email');
@@ -32,6 +33,7 @@ export async function signInAction(
     return actionStateBuilder.error<SignInState, SignInResponseError>(
       {
         email,
+        'redirect-to': previousState.state['redirect-to'],
       },
       createActionStateError(body.error),
     );
@@ -52,11 +54,11 @@ export async function signInAction(
     const { data } = (await response.json()) as SignInResponseSuccess;
     await setAuthCookie(data.accessToken, data.refreshToken);
 
-    redirect('/');
+    redirect(previousState.state['redirect-to']);
   }
 
   return actionStateBuilder.error(
-    { email },
+    { email, 'redirect-to': previousState.state['redirect-to'] },
     ((await response.json()) as postAuthSignInResponseError['data']).error,
   );
 }

@@ -2,11 +2,11 @@ import { NextResponse } from 'next/server';
 
 import { SESSION_ERROR_CODE } from '$entities/session';
 import { refreshSession } from '$entities/session/server';
+import { findErrorCode } from '$shared/api/error';
 import {
   getAuthAccessFromCookie,
   setAuthCookieToResponse,
-} from '$shared/api/bff/server';
-import { findErrorCode } from '$shared/api/error';
+} from '$shared/lib/cookie/server';
 
 import { requestBackend } from './request-backend';
 

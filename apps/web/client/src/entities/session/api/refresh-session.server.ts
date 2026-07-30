@@ -1,9 +1,7 @@
 import { postAuthRefresh } from '@packages/api-client/api';
 
-import {
-  createForwardedHeaders,
-  getAuthRefreshFromCookie,
-} from '$shared/api/bff/server';
+import { createForwardedHeaders } from '$shared/api/bff/server';
+import { getAuthRefreshFromCookie } from '$shared/lib/cookie/server';
 
 import type { SessionTokens } from '../model/session';
 import type { NextRequest } from 'next/server';
