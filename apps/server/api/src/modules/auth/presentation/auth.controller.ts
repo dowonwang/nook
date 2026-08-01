@@ -1,5 +1,6 @@
 import { Elysia } from 'elysia';
 
+import { RefreshTokenRequired } from '$modules/auth/error';
 import { UnauthorizedError } from '$shared/error';
 import { getRequestMetadata } from '$shared/http';
 import {
@@ -10,7 +11,6 @@ import {
 
 import { AuthHttpModel } from './auth.http-model';
 import { AuthResponseSchemas } from './auth.response';
-import { RefreshTokenRequired } from '../error';
 
 import type {
   MeHandler,
@@ -19,7 +19,7 @@ import type {
   SignOutHandler,
   SignUpHandler,
 } from '$modules/auth/application';
-import type { createAuthGuard } from '../infrastructure';
+import type { createAuthGuard } from '$modules/auth/infrastructure';
 
 interface AuthControllerDependencies {
   signUpHandler: SignUpHandler;
