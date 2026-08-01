@@ -1,10 +1,8 @@
 import { RefreshTokenMalFormed } from '$modules/auth/error';
 import { createLogger } from '$shared/logger';
 
-import type {
-  AuthSessionCommandRepository,
-  TokenVerifier,
-} from '$modules/auth/domain';
+import type { AuthSessionCommandRepository } from '$modules/auth/domain';
+import type { TokenVerifier } from '../../ports/token-verifier.port';
 
 export class SignOutHandler {
   private readonly logger = createLogger(SignOutHandler.name);

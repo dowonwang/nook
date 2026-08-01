@@ -8,10 +8,10 @@ import {
   MissingJwtSecret,
 } from '$modules/auth/error';
 
+import type { TokenVerifier } from '$modules/auth/application';
 import type {
   AccessTokenPayload,
   RefreshTokenPayload,
-  TokenVerifier,
 } from '$modules/auth/domain';
 
 type Secret = string | null | undefined;

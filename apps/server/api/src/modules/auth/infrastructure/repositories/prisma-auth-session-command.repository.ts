@@ -11,17 +11,34 @@ export class PrismaAuthSessionCommandRepository implements AuthSessionCommandRep
 
   async save(session: AuthSession): Promise<void> {
     await this.prisma.authSession.create({
-      data: {
-        id: session.id.getValue(),
-        userId: session.userId.getValue(),
+      data: session.toSnapshot(),
+    });
+  }
 
-        tokenHash: session.tokenHash,
-        ipAddress: session.ipAddress,
-        userAgent: session.userAgent,
+  async rotate(
+    sessionId: string,
+    newAuthSession: AuthSession,
+  ): Promise<boolean> {
+    return this.prisma.$transaction(async (tx) => {
+      const revoked = await tx.authSession.updateMany({
+        where: {
+          id: sessionId,
+          revokedAt: null,
+        },
+        data: {
+          revokedAt: new Date(),
+        },
+      });
 
-        expiresAt: session.expiresAt,
-        revokeAt: session.revokeAt,
-      },
+      if (revoked.count === 0) {
+        return false;
+      }
+
+      await tx.authSession.create({
+        data: newAuthSession.toSnapshot(),
+      });
+
+      return true;
     });
   }
 
@@ -39,10 +56,10 @@ export class PrismaAuthSessionCommandRepository implements AuthSessionCommandRep
     await this.prisma.authSession.update({
       where: {
         id: sessionId,
-        revokeAt: null,
+        revokedAt: null,
       },
       data: {
-        revokeAt: new Date(),
+        revokedAt: new Date(),
       },
     });
   }

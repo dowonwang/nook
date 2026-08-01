@@ -9,8 +9,8 @@ import {
 import { EmailAlreadyExists } from '$modules/user/error';
 import { createLogger } from '$shared/logger';
 
-import type { PasswordHaser } from '$modules/auth/domain';
 import type { SignUpCommand } from './sign-up.command';
+import type { PasswordHaser } from '../../ports/password-hasher.port';
 
 export class SignUpHandler {
   private readonly logger = createLogger(SignUpHandler.name);

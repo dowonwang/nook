@@ -10,6 +10,7 @@ import {
 
 import { AuthHttpModel } from './auth.http-model';
 import { AuthResponseSchemas } from './auth.response';
+import { RefreshTokenRequired } from '../error';
 
 import type {
   MeHandler,
@@ -107,12 +108,10 @@ export function createAuthController(deps: AuthControllerDependencies) {
           const [type, refreshToken] = authorization.split(' ');
 
           if (type !== 'Bearer' || !refreshToken) {
-            throw new UnauthorizedError({
-              scope: createAuthController.name,
-            });
+            throw new RefreshTokenRequired(createAuthController.name);
           }
 
-          const result = await deps.refreshHandler.excute(
+          const result = await deps.refreshHandler.execute(
             refreshToken,
             metadata,
           );

@@ -4,9 +4,6 @@ import {
   AuthSessionUuid,
   RefreshTokenClaims,
   type AuthSessionCommandRepository,
-  type PasswordHaser,
-  type TokenHasher,
-  type TokenIssuer,
 } from '$modules/auth/domain';
 import { RefreshTokenMalFormed } from '$modules/auth/error';
 import { UserDtoMapper } from '$modules/user/application';
@@ -15,7 +12,10 @@ import { InvaildCredentials } from '$modules/user/error';
 import { createLogger } from '$shared/logger';
 
 import type { RequestMetadata } from '$shared/http';
-import type { SignInCommand, SingInResult } from './sign-in.types';
+import type { SignInCommand, SingInResult } from './sign-in.command';
+import type { PasswordHaser } from '../../ports/password-hasher.port';
+import type { TokenHasher } from '../../ports/token-hasher.port';
+import type { TokenIssuer } from '../../ports/token-issuer.port';
 
 export class SignInHandler {
   private readonly logger = createLogger(SignInHandler.name);
@@ -70,7 +70,7 @@ export class SignInHandler {
     const authSession = AuthSession.create(refreshTokenId, {
       userId: user.id,
       tokenHash: this.tokenHasher.create(refreshToken),
-      revokeAt: null,
+      revokedAt: null,
       ipAddress,
       userAgent,
       expiresAt,

@@ -11,7 +11,7 @@ export const AuthSessionPrismaMapper = {
       userAgent: record.userAgent,
       ipAddress: record.ipAddress,
       expiresAt: record.expiresAt,
-      revokeAt: record.revokeAt,
+      revokedAt: record.revokedAt,
     });
   },
 };

@@ -1,5 +1,7 @@
-import type { AccessTokenClaims } from '../value-objects/access-token-claims.vo';
-import type { RefreshTokenClaims } from '../value-objects/refresh-token-claims.vo';
+import type {
+  AccessTokenClaims,
+  RefreshTokenClaims,
+} from '$modules/auth/domain';
 
 export interface TokenVerifier {
   verifyAccessToken(token: string): Promise<AccessTokenClaims>;

@@ -3,11 +3,13 @@ import {
   OrganizationMember,
   OrganizationMemberUuid,
   OrganizationUuid,
-  type OrganizationCommandRepository,
-  type OrganizationPolicy,
 } from '$modules/organization/domain';
 import { UserUuid } from '$modules/user/domain';
 
+import type {
+  OrganizationCommandRepository,
+  OrganizationPolicy,
+} from '$modules/organization/domain';
 import type { CreateCommnad } from './create.command';
 
 export class CreateHandler {

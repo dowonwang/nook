@@ -3,7 +3,7 @@ import { Elysia } from 'elysia';
 import { UnauthorizedError } from '$shared/error';
 import { ApiErrorResponseSchema } from '$shared/responses';
 
-import type { JwtTokenVerifier } from '../services/jwt-token-verifier';
+import type { JwtTokenVerifier } from '../services/jwt/jwt-token-verifier';
 
 export interface AuthUser {
   id: string;
