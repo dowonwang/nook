@@ -10,14 +10,14 @@ import { EmailAlreadyExists } from '$modules/user/error';
 import { createLogger } from '$shared/logger';
 
 import type { SignUpCommand } from './sign-up.command';
-import type { PasswordHaser } from '../../ports/password-hasher.port';
+import type { PasswordHasher } from '../../ports/password-hasher.port';
 
 export class SignUpHandler {
   private readonly logger = createLogger(SignUpHandler.name);
 
   constructor(
     private readonly userCommandRepository: UserCommandRepository,
-    private readonly passwordHasher: PasswordHaser,
+    private readonly passwordHasher: PasswordHasher,
   ) {}
 
   async execute(command: SignUpCommand): Promise<{ id: string }> {

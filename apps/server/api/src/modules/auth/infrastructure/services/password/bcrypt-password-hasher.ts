@@ -1,8 +1,8 @@
 import { compare, hash } from 'bcrypt';
 
-import type { PasswordHaser } from '$modules/auth/application';
+import type { PasswordHasher } from '$modules/auth/application';
 
-export class BcryptPasswordHasher implements PasswordHaser {
+export class BcryptPasswordHasher implements PasswordHasher {
   constructor(private readonly saltRounds = 10) {}
 
   hash(rawPassword: string): Promise<string> {

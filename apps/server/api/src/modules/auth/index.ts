@@ -8,12 +8,12 @@ import {
 
 import {
   MeHandler,
-  RefershTokenValidator,
+  RefreshTokenValidator,
   RefreshHandler,
   SignInHandler,
   SignOutHandler,
   SignUpHandler,
-  TokenRotationsService,
+  TokenRotationService,
 } from './application';
 import {
   BcryptPasswordHasher,
@@ -47,8 +47,8 @@ const refreshTokenIssuer = new JwtTokenIssuer(
   process.env.REFRESH_TOKEN_EXPIRES,
 );
 const tokenHasher = new JwtTokenHasher(process.env.HASH_TOKEN_SECRET);
-const refreshTokenValidator = new RefershTokenValidator(tokenHasher);
-const tokenRotation = new TokenRotationsService(
+const refreshTokenValidator = new RefreshTokenValidator(tokenHasher);
+const tokenRotation = new TokenRotationService(
   accessTokenIssuer,
   refreshTokenIssuer,
   tokenHasher,

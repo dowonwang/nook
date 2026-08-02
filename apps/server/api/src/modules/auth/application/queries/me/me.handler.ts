@@ -10,7 +10,7 @@ export class MeHandler {
 
   constructor(private readonly userQueryRepository: UserQueryRepository) {}
 
-  async excute(query: MeQuery): Promise<UserDetailDto> {
+  async execute(query: MeQuery): Promise<UserDetailDto> {
     const id = UserUuid.create(query.id);
 
     const user = await this.userQueryRepository.findById(id.getValue());

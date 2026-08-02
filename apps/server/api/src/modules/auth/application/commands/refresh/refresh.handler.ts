@@ -4,7 +4,7 @@ import {
 } from '$modules/auth/domain';
 import {
   AuthSessionNotFound,
-  RefreshTokenMalFormed,
+  RefreshTokenMalformed,
   RefreshTokenRevoked,
 } from '$modules/auth/error';
 import { UserDtoMapper } from '$modules/user/application';
@@ -15,8 +15,8 @@ import type { UserCommandRepository } from '$modules/user/domain';
 import type { RequestMetadata } from '$shared/http';
 import type { RefreshResult } from './refresh.command';
 import type { TokenVerifier } from '../../ports/token-verifier.port';
-import type { RefershTokenValidator } from '../../services/refresh-token-validator.service';
-import type { TokenRotationsService } from '../../services/token-rotation.service';
+import type { RefreshTokenValidator } from '../../services/refresh-token-validator.service';
+import type { TokenRotationService } from '../../services/token-rotation.service';
 
 export class RefreshHandler {
   private readonly logger = createLogger(RefreshHandler.name);
@@ -24,8 +24,8 @@ export class RefreshHandler {
   constructor(
     private readonly authSessionCommandRepository: AuthSessionCommandRepository,
     private readonly userCommandRepository: UserCommandRepository,
-    private readonly refreshTokenValidator: RefershTokenValidator,
-    private readonly tokenRotaion: TokenRotationsService,
+    private readonly refreshTokenValidator: RefreshTokenValidator,
+    private readonly tokenRotation: TokenRotationService,
     private readonly tokenVerifier: TokenVerifier,
   ) {}
 
@@ -40,7 +40,7 @@ export class RefreshHandler {
     const refreshSub = refreshPayload.getSubject();
 
     if (!refreshJti || !refreshSub) {
-      throw new RefreshTokenMalFormed(RefreshHandler.name);
+      throw new RefreshTokenMalformed(RefreshHandler.name);
     }
 
     const session =
@@ -63,7 +63,7 @@ export class RefreshHandler {
       user.id.getValue(),
     );
 
-    const { authSession, ...rotatedToken } = await this.tokenRotaion.rotate(
+    const { authSession, ...rotatedToken } = await this.tokenRotation.rotate(
       user,
       requestMetaData,
     );

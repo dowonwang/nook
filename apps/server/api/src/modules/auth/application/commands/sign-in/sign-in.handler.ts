@@ -5,15 +5,15 @@ import {
   RefreshTokenClaims,
   type AuthSessionCommandRepository,
 } from '$modules/auth/domain';
-import { RefreshTokenMalFormed } from '$modules/auth/error';
+import { RefreshTokenMalformed } from '$modules/auth/error';
 import { UserDtoMapper } from '$modules/user/application';
 import { UserEmail, type UserCommandRepository } from '$modules/user/domain';
-import { InvaildCredentials } from '$modules/user/error';
+import { InvalidCredentials } from '$modules/user/error';
 import { createLogger } from '$shared/logger';
 
 import type { RequestMetadata } from '$shared/http';
 import type { SignInCommand, SingInResult } from './sign-in.command';
-import type { PasswordHaser } from '../../ports/password-hasher.port';
+import type { PasswordHasher } from '../../ports/password-hasher.port';
 import type { TokenHasher } from '../../ports/token-hasher.port';
 import type { TokenIssuer } from '../../ports/token-issuer.port';
 
@@ -23,7 +23,7 @@ export class SignInHandler {
   constructor(
     private readonly userCommandRepository: UserCommandRepository,
     private readonly authSessionCommandRepository: AuthSessionCommandRepository,
-    private readonly passwordHasher: PasswordHaser,
+    private readonly passwordHasher: PasswordHasher,
     private readonly accessTokenIssuer: TokenIssuer,
     private readonly refreshTokenIssuer: TokenIssuer,
     private readonly tokenHasher: TokenHasher,
@@ -37,7 +37,7 @@ export class SignInHandler {
     const user = await this.userCommandRepository.findByEmail(email.getValue());
 
     if (!user) {
-      throw new InvaildCredentials(SignInHandler.name);
+      throw new InvalidCredentials(SignInHandler.name);
     }
 
     const isMatched = await this.passwordHasher.compare(
@@ -46,7 +46,7 @@ export class SignInHandler {
     );
 
     if (!isMatched) {
-      throw new InvaildCredentials(SignInHandler.name);
+      throw new InvalidCredentials(SignInHandler.name);
     }
 
     const acessTokenClaims = AccessTokenClaims.create({
@@ -64,7 +64,7 @@ export class SignInHandler {
       await this.refreshTokenIssuer.issueToken(refreshTokenClaims);
 
     if (!expiresAt) {
-      throw new RefreshTokenMalFormed(SignInHandler.name);
+      throw new RefreshTokenMalformed(SignInHandler.name);
     }
 
     const authSession = AuthSession.create(refreshTokenId, {

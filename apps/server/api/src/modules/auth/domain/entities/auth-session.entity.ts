@@ -15,7 +15,7 @@ interface AuthSessionProps extends AuthSessionAttributes {
   userId: UserUuid;
 }
 
-interface AuthSessionSnapShot extends AuthSessionAttributes {
+interface AuthSessionSnapshot extends AuthSessionAttributes {
   id: string;
   userId: string;
 }
@@ -44,7 +44,7 @@ export class AuthSession extends Entity<AuthSessionUuid> {
     return this.props.revokedAt !== null;
   }
 
-  toSnapshot(): AuthSessionSnapShot {
+  toSnapshot(): AuthSessionSnapshot {
     return {
       id: this.id.getValue(),
       userId: this.props.userId.getValue(),

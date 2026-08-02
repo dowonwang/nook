@@ -1,6 +1,6 @@
 import {
   RefreshTokenExpired,
-  RefreshTokenMalFormed,
+  RefreshTokenMalformed,
   RefreshTokenRevoked,
 } from '$modules/auth/error';
 
@@ -21,7 +21,7 @@ export const RefreshSessionPolicy = {
 
   assertSubjectMatchesUser(tokenSubject: string, userId: string): void {
     if (tokenSubject !== userId) {
-      throw new RefreshTokenMalFormed(SCOPE);
+      throw new RefreshTokenMalformed(SCOPE);
     }
   },
 } as const;

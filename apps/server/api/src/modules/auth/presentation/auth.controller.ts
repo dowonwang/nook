@@ -180,7 +180,7 @@ export function createAuthController(deps: AuthControllerDependencies) {
       .get(
         '/me',
         async ({ authUser }) => {
-          const result = await deps.meHandler.excute(authUser);
+          const result = await deps.meHandler.execute(authUser);
 
           return ApiResponseBuilder.success(result);
         },

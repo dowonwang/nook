@@ -4,7 +4,7 @@ import {
   AuthSessionUuid,
   RefreshTokenClaims,
 } from '$modules/auth/domain';
-import { RefreshTokenMalFormed } from '$modules/auth/error';
+import { RefreshTokenMalformed } from '$modules/auth/error';
 
 import type { User } from '$modules/user/domain';
 import type { RequestMetadata } from '$shared/http';
@@ -17,7 +17,7 @@ interface TokenRotationResult {
   authSession: AuthSession;
 }
 
-export class TokenRotationsService {
+export class TokenRotationService {
   constructor(
     private readonly accessTokenIssuer: TokenIssuer,
     private readonly refreshTokenIssuer: TokenIssuer,
@@ -45,7 +45,7 @@ export class TokenRotationsService {
       await this.refreshTokenIssuer.issueToken(refreshTokenClaims);
 
     if (!expiresAt) {
-      throw new RefreshTokenMalFormed(TokenRotationsService.name);
+      throw new RefreshTokenMalformed(TokenRotationService.name);
     }
 
     const authSession = AuthSession.create(refreshTokenId, {
