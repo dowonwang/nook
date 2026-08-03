@@ -1,6 +1,5 @@
 export * from './email-already-exists.error';
 export * from './inavalid-user-uuid.error';
-export * from './invalid-credentials.error';
 export * from './invalid-password-hash.error';
 export * from './invalid-user-email.error';
 export * from './invalid-user-name.error';

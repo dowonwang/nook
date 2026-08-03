@@ -15,8 +15,8 @@ import type { UserCommandRepository } from '$modules/user/domain';
 import type { RequestMetadata } from '$shared/http';
 import type { RefreshResult } from './refresh.command';
 import type { TokenVerifier } from '../../ports/token-verifier.port';
+import type { AuthTokenIssuer } from '../../services/auth-token-issuer.service';
 import type { RefreshTokenValidator } from '../../services/refresh-token-validator.service';
-import type { TokenRotationService } from '../../services/token-rotation.service';
 
 export class RefreshHandler {
   private readonly logger = createLogger(RefreshHandler.name);
@@ -25,7 +25,7 @@ export class RefreshHandler {
     private readonly authSessionCommandRepository: AuthSessionCommandRepository,
     private readonly userCommandRepository: UserCommandRepository,
     private readonly refreshTokenValidator: RefreshTokenValidator,
-    private readonly tokenRotation: TokenRotationService,
+    private readonly authTokenIssuer: AuthTokenIssuer,
     private readonly tokenVerifier: TokenVerifier,
   ) {}
 
@@ -63,7 +63,7 @@ export class RefreshHandler {
       user.id.getValue(),
     );
 
-    const { authSession, ...rotatedToken } = await this.tokenRotation.rotate(
+    const { authSession, ...authToken } = await this.authTokenIssuer.issue(
       user,
       requestMetaData,
     );
@@ -83,8 +83,8 @@ export class RefreshHandler {
     );
 
     return {
-      accessToken: rotatedToken.accessToken,
-      refreshToken: rotatedToken.refreshToken,
+      accessToken: authToken.accessToken,
+      refreshToken: authToken.refreshToken,
       user: UserDtoMapper.fromEntity(user),
     };
   }

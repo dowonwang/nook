@@ -1,80 +1,34 @@
-import {
-  AccessTokenClaims,
-  AuthSession,
-  AuthSessionUuid,
-  RefreshTokenClaims,
-  type AuthSessionCommandRepository,
-} from '$modules/auth/domain';
-import { RefreshTokenMalformed } from '$modules/auth/error';
+import { type AuthSessionCommandRepository } from '$modules/auth/domain';
 import { UserDtoMapper } from '$modules/user/application';
-import { UserEmail, type UserCommandRepository } from '$modules/user/domain';
-import { InvalidCredentials } from '$modules/user/error';
+import { UserEmail } from '$modules/user/domain';
 import { createLogger } from '$shared/logger';
 
 import type { RequestMetadata } from '$shared/http';
 import type { SignInCommand, SingInResult } from './sign-in.command';
-import type { PasswordHasher } from '../../ports/password-hasher.port';
-import type { TokenHasher } from '../../ports/token-hasher.port';
-import type { TokenIssuer } from '../../ports/token-issuer.port';
+import type { AuthTokenIssuer } from '../../services/auth-token-issuer.service';
+import type { CredentialAuthenticator } from '../../services/credential-authenticator.service';
 
 export class SignInHandler {
   private readonly logger = createLogger(SignInHandler.name);
 
   constructor(
-    private readonly userCommandRepository: UserCommandRepository,
     private readonly authSessionCommandRepository: AuthSessionCommandRepository,
-    private readonly passwordHasher: PasswordHasher,
-    private readonly accessTokenIssuer: TokenIssuer,
-    private readonly refreshTokenIssuer: TokenIssuer,
-    private readonly tokenHasher: TokenHasher,
+    private readonly credentialAuthenticator: CredentialAuthenticator,
+    private readonly authTokenIssuer: AuthTokenIssuer,
   ) {}
 
   async execute(
     command: SignInCommand,
-    { userAgent, ipAddress }: RequestMetadata,
+    requestMetaData: RequestMetadata,
   ): Promise<SingInResult> {
     const email = UserEmail.create(command.email);
-    const user = await this.userCommandRepository.findByEmail(email.getValue());
-
-    if (!user) {
-      throw new InvalidCredentials(SignInHandler.name);
-    }
-
-    const isMatched = await this.passwordHasher.compare(
-      command.password,
-      user.password.getValue(),
-    );
-
-    if (!isMatched) {
-      throw new InvalidCredentials(SignInHandler.name);
-    }
-
-    const acessTokenClaims = AccessTokenClaims.create({
-      sub: user.id.getValue(),
+    const user = await this.credentialAuthenticator.authenticate({
+      email,
+      password: command.password,
     });
-    const { token: accessToken } =
-      await this.accessTokenIssuer.issueToken(acessTokenClaims);
 
-    const refreshTokenId = AuthSessionUuid.generate();
-    const refreshTokenClaims = RefreshTokenClaims.create({
-      sub: user.id.getValue(),
-      jti: refreshTokenId.getValue(),
-    });
-    const { token: refreshToken, expiresAt } =
-      await this.refreshTokenIssuer.issueToken(refreshTokenClaims);
-
-    if (!expiresAt) {
-      throw new RefreshTokenMalformed(SignInHandler.name);
-    }
-
-    const authSession = AuthSession.create(refreshTokenId, {
-      userId: user.id,
-      tokenHash: this.tokenHasher.create(refreshToken),
-      revokedAt: null,
-      ipAddress,
-      userAgent,
-      expiresAt,
-    });
+    const { authSession, accessToken, refreshToken } =
+      await this.authTokenIssuer.issue(user, requestMetaData);
 
     await this.authSessionCommandRepository.save(authSession);
 

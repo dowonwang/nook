@@ -13,7 +13,8 @@ import {
   SignInHandler,
   SignOutHandler,
   SignUpHandler,
-  TokenRotationService,
+  AuthTokenIssuer,
+  CredentialAuthenticator,
 } from './application';
 import {
   BcryptPasswordHasher,
@@ -48,10 +49,14 @@ const refreshTokenIssuer = new JwtTokenIssuer(
 );
 const tokenHasher = new JwtTokenHasher(process.env.HASH_TOKEN_SECRET);
 const refreshTokenValidator = new RefreshTokenValidator(tokenHasher);
-const tokenRotation = new TokenRotationService(
+const authTokenIssuer = new AuthTokenIssuer(
   accessTokenIssuer,
   refreshTokenIssuer,
   tokenHasher,
+);
+const credentialAuthenticator = new CredentialAuthenticator(
+  userCommandRepository,
+  passwordHasher,
 );
 
 // guard
@@ -60,19 +65,16 @@ export const authGuard = createAuthGuard(tokenVerifier);
 // handler
 const signUpHandler = new SignUpHandler(userCommandRepository, passwordHasher);
 const signInHandler = new SignInHandler(
-  userCommandRepository,
   authSessionCommandRepository,
-  passwordHasher,
-  accessTokenIssuer,
-  refreshTokenIssuer,
-  tokenHasher,
+  credentialAuthenticator,
+  authTokenIssuer,
 );
 const meHandler = new MeHandler(userQueryRepository);
 const refreshHandler = new RefreshHandler(
   authSessionCommandRepository,
   userCommandRepository,
   refreshTokenValidator,
-  tokenRotation,
+  authTokenIssuer,
   tokenVerifier,
 );
 const signOutHandler = new SignOutHandler(

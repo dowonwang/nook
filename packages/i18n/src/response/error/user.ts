@@ -1,7 +1,6 @@
 export const USER_ERROR = [
   'user_error_UserNotFound',
   'user_error_EmailAlreadyExists',
-  'user_error_InvaildCredentials',
   'user_error_InvalidUserEmail',
   'user_error_InvalidUserName',
 ] as const;

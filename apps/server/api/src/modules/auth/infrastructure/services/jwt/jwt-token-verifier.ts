@@ -6,6 +6,7 @@ import {
   InvalidRefreshTokenClaims,
   JwtTokenExpired,
   MissingJwtSecret,
+  RefreshTokenExpired,
 } from '$modules/auth/error';
 
 import type { TokenVerifier } from '$modules/auth/application';
@@ -68,7 +69,7 @@ export class JwtTokenVerifier implements TokenVerifier {
         // 토큰 만료 예외 처리
         if (error && typeof error === 'object' && 'code' in error) {
           if (error.code === 'ERR_JWT_EXPIRED') {
-            throw new JwtTokenExpired(JwtTokenVerifier.name);
+            throw new RefreshTokenExpired(JwtTokenVerifier.name);
           }
         }
 

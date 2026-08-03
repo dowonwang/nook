@@ -1,5 +1,6 @@
 export * from './auth-session-not-found.error';
 export * from './invalid-access-token-claims.error';
+export * from './invalid-credentials.error';
 export * from './invalid-refresh-token-claims.error';
 export * from './jwt-token-expired.error';
 export * from './missing-jwt-expires.error';

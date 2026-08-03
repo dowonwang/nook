@@ -17,14 +17,14 @@ interface TokenRotationResult {
   authSession: AuthSession;
 }
 
-export class TokenRotationService {
+export class AuthTokenIssuer {
   constructor(
     private readonly accessTokenIssuer: TokenIssuer,
     private readonly refreshTokenIssuer: TokenIssuer,
     private readonly tokenHasher: TokenHasher,
   ) {}
 
-  async rotate(
+  async issue(
     user: User,
     metadata: RequestMetadata,
   ): Promise<TokenRotationResult> {
@@ -45,7 +45,7 @@ export class TokenRotationService {
       await this.refreshTokenIssuer.issueToken(refreshTokenClaims);
 
     if (!expiresAt) {
-      throw new RefreshTokenMalformed(TokenRotationService.name);
+      throw new RefreshTokenMalformed(AuthTokenIssuer.name);
     }
 
     const authSession = AuthSession.create(refreshTokenId, {
