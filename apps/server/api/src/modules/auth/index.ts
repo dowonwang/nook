@@ -18,13 +18,13 @@ import {
 } from './application';
 import {
   BcryptPasswordHasher,
-  createAuthGuard,
   JwtTokenHasher,
   JwtTokenIssuer,
   JwtTokenVerifier,
   PrismaAuthSessionCommandRepository,
 } from './infrastructure';
 import { createAuthController } from './presentation';
+import { createAuthGuard } from './presentation/guard/auth.guard';
 
 // repository
 const userCommandRepository = new PrismaUserCommandRepository(prismaApiClient);
@@ -61,6 +61,7 @@ const credentialAuthenticator = new CredentialAuthenticator(
 
 // guard
 export const authGuard = createAuthGuard(tokenVerifier);
+export type AuthGuard = ReturnType<typeof createAuthGuard>;
 
 // handler
 const signUpHandler = new SignUpHandler(userCommandRepository, passwordHasher);

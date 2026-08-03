@@ -1,4 +1,3 @@
-export * from './guard/auth.guard';
 export * from './repositories/prisma-auth-session-command.repository';
 export * from './repositories/mapper/auth-session-prisma.mapper';
 export * from './services/jwt/jwt-token-hasher';

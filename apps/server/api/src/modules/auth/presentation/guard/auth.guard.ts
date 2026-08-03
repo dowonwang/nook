@@ -3,13 +3,15 @@ import { Elysia } from 'elysia';
 import { UnauthorizedError } from '$shared/error';
 import { ApiErrorResponseSchema } from '$shared/responses';
 
-import type { JwtTokenVerifier } from '../services/jwt/jwt-token-verifier';
+import type { TokenVerifier } from '$modules/auth/application';
 
-export interface AuthUser {
+interface AuthUser {
   id: string;
 }
 
-export function createAuthGuard(tokenVerifier: JwtTokenVerifier) {
+export type AuthGuard = ReturnType<typeof createAuthGuard>;
+
+export function createAuthGuard(tokenVerifier: TokenVerifier) {
   const authGuard = new Elysia({ name: 'auth.guard' })
     .guard({
       response: {
@@ -27,9 +29,9 @@ export function createAuthGuard(tokenVerifier: JwtTokenVerifier) {
         });
       }
 
-      const [type, token] = authorization.split(' ');
+      const [type, token, ...rest] = authorization.trim().split(/\s+/);
 
-      if (type !== 'Bearer' || !token) {
+      if (type !== 'Bearer' || !token || rest.length > 0) {
         throw new UnauthorizedError({
           scope: createAuthGuard.name,
         });

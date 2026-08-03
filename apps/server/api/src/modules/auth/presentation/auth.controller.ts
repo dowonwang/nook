@@ -19,7 +19,7 @@ import type {
   SignOutHandler,
   SignUpHandler,
 } from '$modules/auth/application';
-import type { createAuthGuard } from '$modules/auth/infrastructure';
+import type { AuthGuard } from './guard/auth.guard';
 
 interface AuthControllerDependencies {
   signUpHandler: SignUpHandler;
@@ -27,7 +27,7 @@ interface AuthControllerDependencies {
   meHandler: MeHandler;
   refreshHandler: RefreshHandler;
   signOutHandler: SignOutHandler;
-  authGuard: ReturnType<typeof createAuthGuard>;
+  authGuard: AuthGuard;
 }
 
 export function createAuthController(deps: AuthControllerDependencies) {

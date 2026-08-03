@@ -9,7 +9,7 @@ import {
 import { OrganizationHttpModel } from './organization.http-model';
 import { OrganizationResponseSchemas } from './organization.response';
 
-import type { createAuthGuard } from '$modules/auth/infrastructure';
+import type { AuthGuard } from '$modules/auth';
 import type {
   AddMemberHandler,
   CreateHandler,
@@ -18,7 +18,7 @@ import type {
 interface OrganizationDependencies {
   createHandler: CreateHandler;
   addMemberHandler: AddMemberHandler;
-  authGuard: ReturnType<typeof createAuthGuard>;
+  authGuard: AuthGuard;
 }
 
 export function createOrganizationController(deps: OrganizationDependencies) {
