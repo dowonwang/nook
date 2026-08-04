@@ -3,7 +3,7 @@ import 'dotenv/config';
 import { Elysia } from 'elysia';
 
 import organizationModule from '$modules/organization';
-import { errorPlugin } from '$shared/http/plugin/error.plugin';
+import { errorPlugin } from '$shared/http';
 import { zodToOpenApiSchema } from '$shared/responses/api-openapi';
 
 import authModule from './modules/auth';

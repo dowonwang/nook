@@ -1,17 +1,20 @@
+import { Elysia } from 'elysia';
+
 import { ForbiddenError } from '$shared/error';
-import { LOG_EVENT } from '$shared/logger/constant/log-event';
-import { LOG_MESSAGE } from '$shared/logger/constant/log-message';
-import { createLogger } from '$shared/logger/logger';
+import { createLogger, LOG_EVENT, LOG_MESSAGE } from '$shared/logger';
 
 export interface RequestMetadata {
   ipAddress: string;
   userAgent: string;
 }
 
-const logger = createLogger(getRequestMetadata.name);
-const WHITE_LIST_USER_AGENT = ['bruno-runtime'];
+const SCOPE = 'requestMetaDataPlugin' as const;
+const WHITE_LIST_USER_AGENT = ['bruno-runtime'] as const;
+const logger = createLogger(SCOPE);
 
-export function getRequestMetadata(request: Request): RequestMetadata {
+export const requestMetaDataPlugin = new Elysia({
+  name: 'request-metadata-plugin',
+}).derive({ as: 'scoped' }, ({ request }) => {
   const forwardedFor = request.headers.get('x-forwarded-for');
   const realIp = request.headers.get('x-real-ip');
   // client BFF에서 전달한 클라이언트 IP
@@ -36,7 +39,7 @@ export function getRequestMetadata(request: Request): RequestMetadata {
 
   if (!userAgent) {
     throw new ForbiddenError({
-      scope: getRequestMetadata.name,
+      scope: SCOPE,
       event: LOG_EVENT.HTTP_INVALID_REQUEST_USER_AGENT,
       message: LOG_MESSAGE.HTTP_INVALID_REQUEST_USER_AGENT,
     });
@@ -51,14 +54,16 @@ export function getRequestMetadata(request: Request): RequestMetadata {
     !(isWhiteListUserAgent && process.env.NODE_ENV === 'development')
   ) {
     throw new ForbiddenError({
-      scope: getRequestMetadata.name,
+      scope: SCOPE,
       event: LOG_EVENT.HTTP_INVALID_REQUEST_IP,
       message: LOG_MESSAGE.HTTP_INVALID_REQUEST_IP,
     });
   }
 
   return {
-    ipAddress: ipAddress || '127.0.0.1',
-    userAgent,
+    requestMetadata: {
+      ipAddress: ipAddress || '127.0.0.1',
+      userAgent,
+    } satisfies RequestMetadata,
   };
-}
+});
