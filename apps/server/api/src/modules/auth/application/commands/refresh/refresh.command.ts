@@ -1,7 +1,7 @@
-import type { UserDetailDto } from '$modules/user/application';
+import type { AuthUserDto } from '../../dto/auth-user.dto';
 
 export interface RefreshResult {
   accessToken: string;
   refreshToken: string;
-  user: UserDetailDto;
+  user: AuthUserDto;
 }

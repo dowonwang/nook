@@ -44,8 +44,8 @@ export class AuthSession extends Entity<AuthSessionUuid> {
     return this.props.revokedAt !== null;
   }
 
-  toSnapshot(): AuthSessionSnapshot {
-    return {
+  toSnapshot(): Readonly<AuthSessionSnapshot> {
+    return Object.freeze({
       id: this.id.getValue(),
       userId: this.props.userId.getValue(),
       tokenHash: this.props.tokenHash,
@@ -53,7 +53,7 @@ export class AuthSession extends Entity<AuthSessionUuid> {
       ipAddress: this.props.ipAddress,
       expiresAt: new Date(this.props.expiresAt),
       revokedAt: this.props.revokedAt ? new Date(this.props.revokedAt) : null,
-    };
+    });
   }
 
   get userId(): UserUuid {

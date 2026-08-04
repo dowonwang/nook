@@ -1,28 +1,25 @@
 import { Elysia } from 'elysia';
 
+import { authGuard } from '$modules/auth';
 import {
   ApiErrorResponseSchema,
   ApiResponseBuilder,
   createApiSuccessResponseSchema,
 } from '$shared/responses';
 
-import { AuthResponseSchemas } from '../auth.response';
+import { UserResponseSchema } from '../user.response';
 
-import type { AuthGuard } from '$modules/auth';
-import type { MeHandler } from '$modules/auth/application';
+import type { MeHandler } from '$modules/user/application';
 
-interface Denpendencies {
-  meHandler: MeHandler;
-  authGuard: AuthGuard;
-}
-
-export function createAuthProtectedRoutes(deps: Denpendencies) {
-  const meRoute = new Elysia({ name: 'auth.routes.me' })
-    .use(deps.authGuard)
+export function createMeRoutes(meHandler: MeHandler) {
+  return new Elysia({
+    name: 'user.routes.me',
+  })
+    .use(authGuard)
     .get(
       '/me',
       async ({ authUser }) => {
-        const result = await deps.meHandler.execute(authUser);
+        const result = await meHandler.execute(authUser);
 
         return ApiResponseBuilder.success(result);
       },
@@ -34,13 +31,11 @@ export function createAuthProtectedRoutes(deps: Denpendencies) {
             'Retrieves the profile information of the currently authenticated user.',
         },
         response: {
-          200: createApiSuccessResponseSchema(AuthResponseSchemas.me),
+          200: createApiSuccessResponseSchema(UserResponseSchema.me),
           404: ApiErrorResponseSchema.meta({
             description: 'User not found',
           }),
         },
       },
     );
-
-  return new Elysia({ name: 'auth.routes.protected' }).use(meRoute);
 }

@@ -1,4 +1,4 @@
-import type { UserDetailDto } from '$modules/user/application';
+import type { AuthUserDto } from '../../dto/auth-user.dto';
 
 export interface SignInCommand {
   email: string;
@@ -8,5 +8,5 @@ export interface SignInCommand {
 export interface SingInResult {
   accessToken: string;
   refreshToken: string;
-  user: UserDetailDto;
+  user: AuthUserDto;
 }

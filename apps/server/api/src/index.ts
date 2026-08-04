@@ -2,14 +2,12 @@ import { openapi } from '@elysia/openapi';
 import 'dotenv/config';
 import { Elysia } from 'elysia';
 
+import authModule from '$modules/auth';
 import organizationModule from '$modules/organization';
+import userModule from '$modules/user';
 import { errorPlugin } from '$shared/http';
-import { zodToOpenApiSchema } from '$shared/responses/api-openapi';
-
-import authModule from './modules/auth';
-import { LOG_EVENT } from './shared/logger/constant/log-event';
-import { LOG_MESSAGE } from './shared/logger/constant/log-message';
-import { logger } from './shared/logger/logger';
+import { LOG_EVENT, LOG_MESSAGE, logger } from '$shared/logger';
+import { zodToOpenApiSchema } from '$shared/responses';
 
 const app = new Elysia()
   .use(
@@ -41,6 +39,7 @@ const app = new Elysia()
   .use(errorPlugin)
   .use(authModule)
   .use(organizationModule)
+  .use(userModule)
   .listen(process.env.APP_PORT ?? 3000);
 
 if (app.server?.hostname && app.server.port) {

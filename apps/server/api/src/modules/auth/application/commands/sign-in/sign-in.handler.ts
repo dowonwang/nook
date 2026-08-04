@@ -1,7 +1,8 @@
 import { type AuthSessionCommandRepository } from '$modules/auth/domain';
-import { UserDtoMapper } from '$modules/user/application';
 import { UserEmail } from '$modules/user/domain';
 import { createLogger } from '$shared/logger';
+
+import { AuthUserDtoMapper } from '../../mappers/auth-user.mapper';
 
 import type { RequestMetadata } from '$shared/http';
 import type { SignInCommand, SingInResult } from './sign-in.command';
@@ -45,7 +46,7 @@ export class SignInHandler {
     return {
       accessToken,
       refreshToken,
-      user: UserDtoMapper.fromEntity(user),
+      user: AuthUserDtoMapper.fromEntity(user),
     };
   }
 }

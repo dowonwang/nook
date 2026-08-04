@@ -7,9 +7,9 @@ import {
   RefreshTokenMalformed,
   RefreshTokenRevoked,
 } from '$modules/auth/error';
-import { UserDtoMapper } from '$modules/user/application';
-import { UserNotFound } from '$modules/user/error';
 import { createLogger } from '$shared/logger';
+
+import { AuthUserDtoMapper } from '../../mappers/auth-user.mapper';
 
 import type { UserCommandRepository } from '$modules/user/domain';
 import type { RequestMetadata } from '$shared/http';
@@ -56,7 +56,7 @@ export class RefreshHandler {
       session.userId.getValue(),
     );
     if (!user) {
-      throw new UserNotFound(RefreshHandler.name);
+      throw new AuthSessionNotFound(RefreshHandler.name);
     }
     RefreshSessionPolicy.assertSubjectMatchesUser(
       refreshSub,
@@ -85,7 +85,7 @@ export class RefreshHandler {
     return {
       accessToken: authToken.accessToken,
       refreshToken: authToken.refreshToken,
-      user: UserDtoMapper.fromEntity(user),
+      user: AuthUserDtoMapper.fromEntity(user),
     };
   }
 }

@@ -1,13 +1,9 @@
 import { prismaApiClient } from '@packages/api-db';
 import 'dotenv/config';
 
-import {
-  PrismaUserCommandRepository,
-  PrismaUserQueryRepository,
-} from '$modules/user/infrastructure';
+import { PrismaUserCommandRepository } from '$modules/user/infrastructure';
 
 import {
-  MeHandler,
   RefreshTokenValidator,
   RefreshHandler,
   SignInHandler,
@@ -28,7 +24,6 @@ import { createAuthGuard } from './presentation/guard/auth.guard';
 
 // repository
 const userCommandRepository = new PrismaUserCommandRepository(prismaApiClient);
-const userQueryRepository = new PrismaUserQueryRepository(prismaApiClient);
 const authSessionCommandRepository = new PrismaAuthSessionCommandRepository(
   prismaApiClient,
 );
@@ -70,7 +65,6 @@ const signInHandler = new SignInHandler(
   credentialAuthenticator,
   authTokenIssuer,
 );
-const meHandler = new MeHandler(userQueryRepository);
 const refreshHandler = new RefreshHandler(
   authSessionCommandRepository,
   userCommandRepository,
@@ -86,10 +80,8 @@ const signOutHandler = new SignOutHandler(
 const authModule = createAuthController({
   signUpHandler,
   signInHandler,
-  meHandler,
   refreshHandler,
   signOutHandler,
-  authGuard,
 });
 
 export default authModule;

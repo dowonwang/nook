@@ -1,4 +1,5 @@
 export * from './auth-session-not-found.error';
+export * from './email-already-exists.error';
 export * from './invalid-access-token-claims.error';
 export * from './invalid-credentials.error';
 export * from './invalid-refresh-token-claims.error';

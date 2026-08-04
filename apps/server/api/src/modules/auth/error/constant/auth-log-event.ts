@@ -10,6 +10,7 @@ export const AUTH_LOG_EVENT = {
   AUTH_REFRESH_TOKEN_REQUIRED: 'auth.refresh_token_required',
   AUTH_TOKEN_HASH_SECRET: 'auth.token_hash_secret',
   AUTH_INVAILD_CREDENTIALS: 'auth.invaild_credentials',
+  AUTH_EMAIL_ALREADY_EXIST: 'auth.email_already_exist',
 } as const;
 
 export type AuthLogEventMessage = Record<keyof typeof AUTH_LOG_EVENT, string>;

@@ -12,5 +12,3 @@ export * from './commands/sign-up/sign-up.handler';
 export * from './services/auth-token-issuer.service';
 export * from './services/credential-authenticator.service';
 export * from './services/refresh-token-validator.service';
-export * from './queries/me/me.handler';
-export * from './queries/me/me.query';

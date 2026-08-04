@@ -1,3 +1,4 @@
+import { EmailAlreadyExists } from '$modules/auth/error';
 import {
   User,
   UserEmail,
@@ -6,7 +7,6 @@ import {
   UserUuid,
   type UserCommandRepository,
 } from '$modules/user/domain';
-import { EmailAlreadyExists } from '$modules/user/error';
 import { createLogger } from '$shared/logger';
 
 import type { SignUpCommand } from './sign-up.command';
