@@ -1,19 +1,22 @@
-import { OrganizationMember } from '$modules/organization/domain/entities/organization-member.entity';
-import { OrganizationCreatededEvent } from '$modules/organization/domain/events/organization-createded.event';
-import { OrganizationMembersAddedEvent } from '$modules/organization/domain/events/organization-members-added.event';
-import { OrganizationMemberUuid } from '$modules/organization/domain/value-objects/organization-member-uuid.vo';
-import { OrganizationAccessDenied } from '$modules/organization/errors/access-denied.error';
-import { DuplicateOrganizationMember } from '$modules/organization/errors/duplicate-organization-member.error';
-import { MinMemberConstraint } from '$modules/organization/errors/min-member-constraint.error';
-import { OrganizationAdminLimitExceeded } from '$modules/organization/errors/organization-admin-limit-exceeded.error';
-import { OrganizationAdminRequirement } from '$modules/organization/errors/organization-admin-requirement.error';
-import { OrganizationTitleEmpty } from '$modules/organization/errors/organization-title-empty.error';
-import { UnaffiliatedMember } from '$modules/organization/errors/unaffiliated_member.error';
-import { AggregateRoot } from '$shared/ddd/entity/aggregate-root.abstract';
+import {
+  DuplicateOrganizationMember,
+  MinMemberConstraint,
+  OrganizationAccessDenied,
+  OrganizationAdminLimitExceeded,
+  OrganizationAdminRequirement,
+  OrganizationTitleEmpty,
+  UnaffiliatedMember,
+} from '$modules/organization/error';
+import { AggregateRoot } from '$shared/ddd';
 
-import type { OrganizationMemberRole } from '$modules/organization/domain/entities/organization-member.entity';
-import type { OrganizationUuid } from '$modules/organization/domain/value-objects/organization-uuid.vo';
-import type { UserUuid } from '$modules/user/domain/value-objects/uuid.vo';
+import { OrganizationMember } from './organization-member.entity';
+import { OrganizationCreatededEvent } from '../events/organization-createded.event';
+import { OrganizationMembersAddedEvent } from '../events/organization-members-added.event';
+import { OrganizationMemberUuid } from '../value-objects/organization-member-uuid.vo';
+
+import type { UserUuid } from '$modules/user/domain';
+import type { OrganizationMemberRole } from './organization-member.entity';
+import type { OrganizationUuid } from '../value-objects/organization-uuid.vo';
 
 interface OrganizationProps {
   title: string;

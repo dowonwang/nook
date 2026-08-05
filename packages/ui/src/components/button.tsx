@@ -1,4 +1,5 @@
 import { cn } from '../lib/cn';
+import { renderSlot } from '../lib/renderSlot';
 
 type ButtonVariant = 'primary' | 'secondary' | 'ghost';
 type ButtonSize = 'default' | 'icon';
@@ -6,6 +7,7 @@ type ButtonSize = 'default' | 'icon';
 type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   variant?: ButtonVariant;
   size?: ButtonSize;
+  asChild?: boolean;
 };
 
 const tw = String.raw;
@@ -25,17 +27,23 @@ export function Button({
   className,
   variant = 'primary',
   size = 'default',
+  asChild = false,
   ...props
 }: ButtonProps) {
-  return (
-    <button
-      className={cn(
-        'inline-flex items-center justify-center text-sm font-medium transition-colors disabled:pointer-events-none disabled:opacity-50',
-        variants[variant],
-        sizeVariants[size],
-        className,
-      )}
-      {...props}
-    />
+  const style = cn(
+    'inline-flex items-center justify-center text-sm font-medium transition-colors disabled:pointer-events-none disabled:opacity-50',
+    variants[variant],
+    sizeVariants[size],
+    className,
   );
+
+  if (asChild) {
+    return renderSlot({
+      ...props,
+      children: props.children,
+      className: style,
+    });
+  }
+
+  return <button className={style} {...props} />;
 }

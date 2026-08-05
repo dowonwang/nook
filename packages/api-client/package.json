@@ -4,18 +4,19 @@
   "private": true,
   "type": "module",
   "exports": {
-    ".": "./src/index.ts"
+    "./schema/*": "./src/schema/*.ts",
+    "./api": "./src/api/index.ts",
+    "./i18n": "./src/i18n/index.ts"
   },
   "scripts": {
-    "generate": "orval --config ./orval.config.ts",
-    "clean": "rm -rf ./src/generated"
+    "generate": "orval --config ./orval.config.ts"
   },
   "dependencies": {
     "zod": "catalog:"
   },
   "devDependencies": {
     "@types/node": "^25.3.5",
-    "orval": "^8.9.1",
+    "orval": "^8.16.0",
     "typescript": "catalog:"
   },
   "packageManager": "pnpm@10.30.3"

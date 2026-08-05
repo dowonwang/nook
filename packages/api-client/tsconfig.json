@@ -2,7 +2,8 @@
   "extends": "../../tsconfig.base.json",
   "include": ["src", "orval.config.ts"],
   "compilerOptions": {
-    "types": ["node"]
+    "types": ["node"],
+    "allowImportingTsExtensions": false
   },
   "exclude": ["node_modules"]
 }

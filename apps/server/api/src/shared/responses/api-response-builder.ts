@@ -23,9 +23,8 @@ export const ApiResponseBuilder = {
   },
 
   error({
-    message,
+    code,
     requestId,
-    userMessage,
     details,
   }: ApiErrorDetail & {
     requestId: ApiResponseMeta['requestId'];
@@ -34,8 +33,7 @@ export const ApiResponseBuilder = {
       success: false,
       data: null,
       error: {
-        message,
-        ...(userMessage !== undefined ? { userMessage } : {}),
+        code,
         ...(details !== undefined ? { details } : {}),
       },
       meta: createMeta(requestId),

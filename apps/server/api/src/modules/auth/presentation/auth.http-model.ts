@@ -2,8 +2,8 @@ import { z } from 'zod';
 
 export const AuthHttpModel = {
   signUpBody: z.object({
+    name: z.string().trim().min(2).max(20),
     email: z.string().trim().toLowerCase().pipe(z.email()),
-    name: z.string().trim().min(5).max(20),
     password: z.string().trim(),
   }),
 
@@ -11,6 +11,10 @@ export const AuthHttpModel = {
     email: z.string().trim().toLowerCase().pipe(z.email()),
     password: z.string().trim(),
   }),
+
+  refreshBody: z.object({}),
+
+  signOutBody: z.object({}),
 };
 
 export type AuthHttpModel = {

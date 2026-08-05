@@ -6,8 +6,7 @@ export const ApiResponseMetaSchema = z.object({
 });
 
 export const ApiErrorDetailSchema = z.object({
-  message: z.string(),
-  userMessage: z.string().optional(),
+  code: z.string(),
   details: z.unknown().optional(),
 });
 

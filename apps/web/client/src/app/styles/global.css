@@ -1,0 +1,66 @@
+@import 'tailwindcss';
+@source '../../../node_modules/@packages/ui/src';
+
+:root {
+  /* 
+  색성 변경 시 ui 패키지 css 변수 복사 후 적용
+
+  ex)
+  --ui-primary: #66bb6a;
+  --ui-primary-foreground: #fff;
+  --ui-primary-hover: #4caf50;
+  */
+}
+
+@theme {
+  /* cusstom space */
+  --spacing-header: 72px;
+  --spacing-active-sidebar: 240px;
+
+  /* 레이아웃 색상 */
+  --color-header: #fff;
+  --color-sidebar: #fff;
+  --color-footer: #fff;
+
+  --color-card: #fff;
+  --color-base-text: #1f2937;
+
+  /* 색상 변수 */
+  --color-background: #fafbf9;
+  --color-border: #f5f4f0;
+  --color-focus: #388e3c;
+
+  /* shadow */
+  --shadow-soft: 0 2px 12px rgba(0, 0, 0, 0.05);
+
+  /* ui package 색상값 */
+  --color-primary: var(--ui-primary);
+  --color-primary-foreground: var(--ui-primary-foreground);
+  --color-primary-hover: var(--ui-primary-hover);
+
+  --color-secondary: var(--ui-secondary);
+  --color-secondary-foreground: var(--ui-secondary-foreground);
+  --color-secondary-hover: var(--ui-secondary-hover);
+
+  --color-warning: var(--ui-warning);
+  --color-warning-foreground: var(--ui-warning-foreground);
+  --color-warning-hover: var(--ui-warning-hover);
+}
+
+@layer base {
+  html {
+    @apply text-base-text;
+  }
+
+  button {
+    @apply cursor-pointer;
+  }
+
+  *:focus {
+    @apply outline-focus;
+  }
+
+  *:focus-visible {
+    @apply outline-focus;
+  }
+}

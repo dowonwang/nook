@@ -1,14 +1,21 @@
-import { OrganizationCreatededEvent } from '$modules/organization/domain/events/organization-createded.event';
-import { OrganizationMembersAddedEvent } from '$modules/organization/domain/events/organization-members-added.event';
-import { OrganizationPrismaMapper } from '$modules/organization/infrastructure/mappers/organization-prisma.mapper';
-import { logger } from '$shared/logger/logger';
+import {
+  OrganizationCreatededEvent,
+  OrganizationMembersAddedEvent,
+  type Organization,
+  type OrganizationCommandRepository,
+} from '$modules/organization/domain';
+import { createLogger } from '$shared/logger';
 
-import type { Organization } from '$modules/organization/domain/entities/organization.entity';
-import type { OrganizationCommandRepository } from '$modules/organization/domain/repositories/organization-command.repository';
+import { OrganizationPrismaMapper } from '../mappers/organization-prisma.mapper';
+
 import type { PrismaClient } from '@packages/api-db';
 import type { OrganizationMemberCreateManyAndReturnArgs } from '@packages/api-db/generated/prisma/models';
 
 export class PrismaOrganizationCommandRepository implements OrganizationCommandRepository {
+  private readonly logger = createLogger(
+    PrismaOrganizationCommandRepository.name,
+  );
+
   constructor(private readonly prisma: PrismaClient) {}
 
   async save(organization: Organization): Promise<void> {
@@ -39,7 +46,7 @@ export class PrismaOrganizationCommandRepository implements OrganizationCommandR
       }
     });
 
-    logger.debug({ details: organization }, 'infra');
+    this.logger.debug({ details: organization }, 'Organization Save');
   }
 
   async findOrganizationById(id: string): Promise<Organization | null> {

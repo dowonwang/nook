@@ -4,7 +4,7 @@
   "version": "1.0.50",
   "scripts": {
     "typecheck": "tsc --noEmit",
-    "dev": "pnpm run db:up && pnpm -F @packages/api-db run db:generate && bun run --watch src/index.ts",
+    "dev": "pnpm run db:up && pnpm -F @packages/api-db run db:generate && NODE_ENV=development bun run --watch src/index.ts",
     "db:up": "docker compose -f ../../../packages/api-db/docker-compose.yml up -d",
     "db:down": "docker compose -f ../../../packages/api-db/docker-compose.yml down",
     "db:logs": "docker compose -f ../../../packages/api-db/docker-compose.yml logs -f",
@@ -13,6 +13,7 @@
   "dependencies": {
     "@elysia/openapi": "^1.4.15",
     "@packages/api-db": "workspace:*",
+    "@packages/i18n": "workspace:*",
     "bcrypt": "^6.0.0",
     "dotenv": "^17.3.1",
     "elysia": "catalog:",

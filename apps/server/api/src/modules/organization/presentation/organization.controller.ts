@@ -1,21 +1,24 @@
 import { Elysia } from 'elysia';
 
-import { authGuard } from '$modules/auth';
-import { OrganizationHttpModel } from '$modules/organization/presentation/organization.http-model';
-import { OrganizationResponseSchemas } from '$modules/organization/presentation/organization.response';
-import { errorPlugin } from '$shared/http/plugin/error.plugin';
 import {
   ApiErrorResponseSchema,
+  ApiResponseBuilder,
   createApiSuccessResponseSchema,
-} from '$shared/responses/api-response';
-import { ApiResponseBuilder } from '$shared/responses/api-response-builder';
+} from '$shared/responses';
 
-import type { AddMemberHandler } from '$modules/organization/application/commands/add-member/add-member.handler';
-import type { CreateHandler } from '$modules/organization/application/commands/create/create.handler';
+import { OrganizationHttpModel } from './organization.http-model';
+import { OrganizationResponseSchemas } from './organization.response';
+
+import type { AuthGuard } from '$modules/auth';
+import type {
+  AddMemberHandler,
+  CreateHandler,
+} from '$modules/organization/application';
 
 interface OrganizationDependencies {
   createHandler: CreateHandler;
   addMemberHandler: AddMemberHandler;
+  authGuard: AuthGuard;
 }
 
 export function createOrganizationController(deps: OrganizationDependencies) {
@@ -27,8 +30,7 @@ export function createOrganizationController(deps: OrganizationDependencies) {
         tags: ['Organization'],
       },
     })
-      .use(errorPlugin)
-      .use(authGuard)
+      .use(deps.authGuard)
       // POST /organization
       .post(
         '/',
@@ -44,6 +46,7 @@ export function createOrganizationController(deps: OrganizationDependencies) {
           });
         },
         {
+          parse: 'application/json',
           body: OrganizationHttpModel.create,
           detail: {
             summary: 'Create Organization',
@@ -76,6 +79,7 @@ export function createOrganizationController(deps: OrganizationDependencies) {
           });
         },
         {
+          parse: 'application/json',
           body: OrganizationHttpModel.addMember,
           detail: {
             summary: 'Add Members',

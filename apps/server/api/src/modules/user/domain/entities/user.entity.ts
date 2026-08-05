@@ -1,17 +1,23 @@
-import { Entity } from '$shared/ddd/entity/entity.abstract';
+import { Entity } from '$shared/ddd';
 
-import type { UserEmail } from '$modules/user/domain/value-objects/email.vo';
-import type { UserName } from '$modules/user/domain/value-objects/name.vo';
-import type { UserPassword } from '$modules/user/domain/value-objects/password.vo';
-import type { UserUuid } from '$modules/user/domain/value-objects/uuid.vo';
+import type {
+  UserEmail,
+  UserName,
+  UserPassword,
+  UserUuid,
+} from '../value-objects';
 
-export interface UserProps {
+interface UserProps {
   email: UserEmail;
   password: UserPassword;
   name: UserName;
+}
 
-  createdAt?: Date;
-  updatedAt?: Date;
+interface UserSnapshot {
+  id: string;
+  email: string;
+  password: string;
+  name: string;
 }
 
 export class User extends Entity<UserUuid> {
@@ -26,31 +32,16 @@ export class User extends Entity<UserUuid> {
     return new User(uuid, props);
   }
 
-  changeName(name: UserName) {
-    this.props.name = name;
-  }
-
-  changePassword(password: UserPassword) {
-    this.props.password = password;
-  }
-
-  get email(): UserEmail {
-    return this.props.email;
-  }
-
-  get name(): UserName {
-    return this.props.name;
+  toSnapshot(): Readonly<UserSnapshot> {
+    return Object.freeze({
+      id: this.id.getValue(),
+      email: this.props.email.getValue(),
+      password: this.props.password.getValue(),
+      name: this.props.name.getValue(),
+    });
   }
 
   get password(): UserPassword {
     return this.props.password;
-  }
-
-  get createdAt(): Date | undefined {
-    return this.props.createdAt;
-  }
-
-  get updatedAt(): Date | undefined {
-    return this.props.updatedAt;
   }
 }

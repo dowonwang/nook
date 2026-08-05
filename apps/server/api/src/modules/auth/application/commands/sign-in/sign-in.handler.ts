@@ -1,50 +1,52 @@
-import { AccessTokenClaims } from '$modules/auth/domain/value-objects/access-token-claims.vo';
-import { UserDtoMapper } from '$modules/user/application/mapper/user-dto.mapper';
-import { InvaildCredentials } from '$modules/user/domain/errors/invaild-credentials.error';
-import { UserEmail } from '$modules/user/domain/value-objects/email.vo';
+import { type AuthSessionCommandRepository } from '$modules/auth/domain';
+import { UserEmail } from '$modules/user/domain';
+import { createLogger } from '$shared/logger';
 
-import type { PasswordHaser } from '$modules/auth/domain/services/password-hasher';
-import type { TokenIssuer } from '$modules/auth/domain/services/token-issuer';
-import type { UserDetailDto } from '$modules/user/application/dto/user-detail.dto';
-import type { UserCommandRepository } from '$modules/user/domain/repositories/user-command.repository';
-import type { SignInCommand } from './sign-in.command';
+import { AuthUserDtoMapper } from '../../mappers/auth-user.mapper';
+
+import type { RequestMetadata } from '$shared/http';
+import type { SignInCommand, SingInResult } from './sign-in.command';
+import type { AuthTokenIssuer } from '../../services/auth-token-issuer.service';
+import type { CredentialAuthenticator } from '../../services/credential-authenticator.service';
 
 export class SignInHandler {
+  private readonly logger = createLogger(SignInHandler.name);
+
   constructor(
-    private readonly userCommandRepository: UserCommandRepository,
-    private readonly passwordHasher: PasswordHaser,
-    private readonly tokenIssuer: TokenIssuer,
+    private readonly authSessionCommandRepository: AuthSessionCommandRepository,
+    private readonly credentialAuthenticator: CredentialAuthenticator,
+    private readonly authTokenIssuer: AuthTokenIssuer,
   ) {}
 
-  async excute(command: SignInCommand): Promise<{
-    accessToken: string;
-    user: UserDetailDto;
-  }> {
+  async execute(
+    command: SignInCommand,
+    requestMetaData: RequestMetadata,
+  ): Promise<SingInResult> {
     const email = UserEmail.create(command.email);
-    const user = await this.userCommandRepository.findByEmail(email.getValue());
-
-    if (!user) {
-      throw new InvaildCredentials(SignInHandler.name);
-    }
-
-    const isMatched = await this.passwordHasher.compare(
-      command.password,
-      user.password.getValue(),
-    );
-
-    if (!isMatched) {
-      throw new InvaildCredentials(SignInHandler.name);
-    }
-
-    const claims = AccessTokenClaims.create({
-      sub: user.id.getValue(),
+    const user = await this.credentialAuthenticator.authenticate({
+      email,
+      password: command.password,
     });
 
-    const accessToken = await this.tokenIssuer.issueAccessToken(claims);
+    const { authSession, accessToken, refreshToken } =
+      await this.authTokenIssuer.issue(user, requestMetaData);
+
+    await this.authSessionCommandRepository.save(authSession);
+
+    this.logger.info(
+      {
+        details: {
+          userId: user.id.getValue(),
+          authSessionId: authSession.id.getValue(),
+        },
+      },
+      'User signed in successfully',
+    );
 
     return {
       accessToken,
-      user: UserDtoMapper.fromEntity(user),
+      refreshToken,
+      user: AuthUserDtoMapper.fromEntity(user),
     };
   }
 }

@@ -4,11 +4,11 @@ import {
   BadRequestError,
   ConflictError,
   InternalServerError,
-} from '$shared/errors/common.erorr';
+} from '$shared/error';
 import { LOG_EVENT } from '$shared/logger/constant/log-event';
 import { LOG_MESSAGE } from '$shared/logger/constant/log-message';
 
-import type { AppError } from '$shared/errors/app.error';
+import type { AppError } from '$shared/error/app.error';
 
 const SCOPE = 'PRISMA' as const;
 

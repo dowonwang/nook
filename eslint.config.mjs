@@ -35,12 +35,6 @@ export default defineConfig(
       ],
       'import-x/no-relative-parent-imports': 'off',
       'no-restricted-imports': 'off',
-      '@typescript-eslint/no-restricted-imports': [
-        'error',
-        {
-          patterns: ['../**'],
-        },
-      ],
       '@typescript-eslint/consistent-type-imports': [
         'error',
         {
@@ -62,6 +56,16 @@ export default defineConfig(
           ],
 
           pathGroups: [
+            {
+              pattern: '@*/**/*.css',
+              group: 'builtin',
+              position: 'before',
+            },
+            {
+              pattern: '$*/**/*.css',
+              group: 'builtin',
+              position: 'before',
+            },
             {
               pattern: '**/*.css',
               group: 'builtin',
@@ -97,13 +101,6 @@ export default defineConfig(
       ],
     },
   },
-  // 공통 jsx, tsx
-  {
-    files: ['**/*.{jsx,tsx}'],
-    plugins: {},
-    settings: {},
-    rules: {},
-  },
   // nextjs 앱
   {
     files: ['apps/web/client/**/*.{js,jsx,ts,tsx}'],
@@ -129,7 +126,7 @@ export default defineConfig(
   },
 
   globalIgnores([
-    'packages/api-client/src/generated/**',
+    'packages/api-client/src/**',
     '**/.next/**',
     '**/out/**',
     '**/build/**',

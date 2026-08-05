@@ -1,0 +1,14 @@
+import { UnprocessableContent } from '$shared/error';
+
+import { ORGANIZATION_LOG_EVENT } from './constant/organization-log-event';
+import { ORGANIZATION_LOG_MESSAGE } from './constant/organization-log-message';
+
+export class MinMemberConstraint extends UnprocessableContent {
+  constructor(scope: string) {
+    super({
+      event: ORGANIZATION_LOG_EVENT.ORG_MIN_MEMBER_VIOLATION,
+      message: ORGANIZATION_LOG_MESSAGE.ORG_MIN_MEMBER_VIOLATION,
+      scope,
+    });
+  }
+}

@@ -6,9 +6,9 @@ function isJsonObject(value: unknown): value is JsonObject {
   return value !== null && typeof value === 'object' && !Array.isArray(value);
 }
 
-function normalizeJsonSchemaForOpenApi30(value: unknown): unknown {
+function normalizeJsonSchemaForOpenApi(value: unknown): unknown {
   if (Array.isArray(value)) {
-    return value.map(normalizeJsonSchemaForOpenApi30);
+    return value.map(normalizeJsonSchemaForOpenApi);
   }
 
   if (!isJsonObject(value)) {
@@ -32,12 +32,20 @@ function normalizeJsonSchemaForOpenApi30(value: unknown): unknown {
       continue;
     }
 
-    output[key] = normalizeJsonSchemaForOpenApi30(childValue);
+    if (
+      key === 'format' &&
+      childValue === 'email' &&
+      typeof value.pattern === 'string'
+    ) {
+      continue;
+    }
+
+    output[key] = normalizeJsonSchemaForOpenApi(childValue);
   }
 
   return output;
 }
 
 export function zodToOpenApiSchema(schema: z.ZodType) {
-  return normalizeJsonSchemaForOpenApi30(z.toJSONSchema(schema));
+  return normalizeJsonSchemaForOpenApi(z.toJSONSchema(schema));
 }

@@ -1,11 +1,14 @@
 import { prismaApiClient } from '@packages/api-db';
 
-import { AddMemberHandler } from './application/commands/add-member/add-member.handler';
-import { CreateHandler } from './application/commands/create/create.handler';
-import { PrismaOrganizationCommandRepository } from './infrastructure/repositories/prisma-organization-command.repository';
-import { PrismaOrganizationQueryRepository } from './infrastructure/repositories/prisma-organization-query.repository';
-import { OrganizationPolicyService } from './infrastructure/services/organization-policy-service';
-import { createOrganizationController } from './presentation/organization.controller';
+import { authGuard } from '$modules/auth';
+
+import { AddMemberHandler, CreateHandler } from './application';
+import {
+  OrganizationPolicyService,
+  PrismaOrganizationCommandRepository,
+  PrismaOrganizationQueryRepository,
+} from './infrastructure';
+import { createOrganizationController } from './presentation';
 
 // repository
 const organizationCommandRepository = new PrismaOrganizationCommandRepository(
@@ -31,6 +34,7 @@ const addMemberHandler = new AddMemberHandler(organizationCommandRepository);
 const organizationModule = createOrganizationController({
   createHandler,
   addMemberHandler,
+  authGuard,
 });
 
 export default organizationModule;

@@ -1,8 +1,8 @@
-import { Entity } from '$shared/ddd/entity/entity.abstract';
+import { Entity } from '$shared/ddd';
 
-import type { OrganizationMemberUuid } from '$modules/organization/domain/value-objects/organization-member-uuid.vo';
-import type { OrganizationUuid } from '$modules/organization/domain/value-objects/organization-uuid.vo';
-import type { UserUuid } from '$modules/user/domain/value-objects/uuid.vo';
+import type { UserUuid } from '$modules/user/domain';
+import type { OrganizationMemberUuid } from '../value-objects/organization-member-uuid.vo';
+import type { OrganizationUuid } from '../value-objects/organization-uuid.vo';
 
 export type OrganizationMemberRole = 'ADMIN' | 'MAINTAINER' | 'MEMBER';
 

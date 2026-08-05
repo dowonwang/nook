@@ -1,29 +1,24 @@
 import { z } from 'zod';
 
-import { ZodErrorMapper } from '$shared/http/mapper/zod-error.mapper';
+import { InvalidUserName } from '$modules/user/error';
+import { PrimitiveValueObject } from '$shared/ddd';
 
-const nameSchema = z.object({
-  name: z.string().min(5).max(20),
-});
+const schema = z.string().min(2).max(20);
 
-export class UserName {
-  private constructor(private readonly value: string) {}
+export class UserName extends PrimitiveValueObject<string, UserName> {
+  private constructor(value: string) {
+    super(value);
+  }
 
   static create(input: string): UserName {
-    const vaildation = nameSchema.safeParse({ name: input });
+    return new UserName(input);
+  }
 
-    if (!vaildation.success) {
-      throw ZodErrorMapper(vaildation.error, UserName.name);
+  protected validation(input: string): void {
+    const validation = schema.safeParse(input);
+
+    if (!validation.success) {
+      throw new InvalidUserName(UserName.name);
     }
-
-    return new UserName(vaildation.data.name);
-  }
-
-  equals(other: UserName): boolean {
-    return this.value === other.value;
-  }
-
-  getValue(): string {
-    return this.value;
   }
 }

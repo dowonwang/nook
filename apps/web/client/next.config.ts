@@ -1,8 +1,12 @@
+import createNextIntlPlugin from 'next-intl/plugin';
+
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
   /* config options here */
-  transpilePackages: ['@packages/ui'],
+  transpilePackages: ['@packages/ui', '@packages/api-client', '@packages/i18n'],
 };
 
-export default nextConfig;
+const withNextIntl = createNextIntlPlugin('./src/app/i18n/request.ts');
+
+export default withNextIntl(nextConfig);
