@@ -1,7 +1,9 @@
 import { Elysia } from 'elysia';
 
-import { createAuthPublicRoutes } from './routes/auth-public.routes';
-import { createAuthSessionRoutes } from './routes/auth-session.routes';
+import { createRefreshRoutes } from './routes/refresh.routes';
+import { createSignInRoutes } from './routes/sign-in.routes';
+import { createSignOutRoutes } from './routes/sign-out.routes';
+import { createSignUpRoutes } from './routes/sign-up.routes';
 
 import type {
   RefreshHandler,
@@ -26,15 +28,23 @@ export function createAuthController(deps: AuthControllerDependencies) {
     },
   })
     .use(
-      createAuthPublicRoutes({
+      createSignInRoutes({
         signInHandler: deps.signInHandler,
+      }),
+    )
+    .use(
+      createSignUpRoutes({
         signUpHandler: deps.signUpHandler,
       }),
     )
     .use(
-      createAuthSessionRoutes({
-        refreshHandler: deps.refreshHandler,
+      createSignOutRoutes({
         signOutHandler: deps.signOutHandler,
+      }),
+    )
+    .use(
+      createRefreshRoutes({
+        refreshHandler: deps.refreshHandler,
       }),
     );
 }

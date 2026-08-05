@@ -1,6 +1,5 @@
 import { Elysia } from 'elysia';
 
-import { authGuard } from '$modules/auth';
 import {
   ApiErrorResponseSchema,
   ApiResponseBuilder,
@@ -9,9 +8,15 @@ import {
 
 import { UserResponseSchema } from '../user.response';
 
+import type { AuthGuard } from '$modules/auth';
 import type { MeHandler } from '$modules/user/application';
 
-export function createMeRoutes(meHandler: MeHandler) {
+interface Dependencies {
+  meHandler: MeHandler;
+  authGuard: AuthGuard;
+}
+
+export function createMeRoutes({ authGuard, meHandler }: Dependencies) {
   return new Elysia({
     name: 'user.routes.me',
   })

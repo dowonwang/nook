@@ -54,10 +54,6 @@ const credentialAuthenticator = new CredentialAuthenticator(
   passwordHasher,
 );
 
-// guard
-export const authGuard = createAuthGuard(tokenVerifier);
-export type AuthGuard = ReturnType<typeof createAuthGuard>;
-
 // handler
 const signUpHandler = new SignUpHandler(userCommandRepository, passwordHasher);
 const signInHandler = new SignInHandler(
@@ -83,5 +79,9 @@ const authModule = createAuthController({
   refreshHandler,
   signOutHandler,
 });
+
+// guard
+export const authGuard = createAuthGuard(tokenVerifier);
+export type { AuthGuard } from './presentation/guard/auth.guard';
 
 export default authModule;

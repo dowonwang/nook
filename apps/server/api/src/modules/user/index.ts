@@ -1,5 +1,7 @@
 import { prismaApiClient } from '@packages/api-db';
 
+import { authGuard } from '$modules/auth';
+
 import { MeHandler } from './application';
 import { PrismaUserCommandRepository } from './infrastructure';
 import { createUserController } from './presentation';
@@ -12,6 +14,7 @@ const meHandler = new MeHandler(userCommandRepository);
 
 const userModule = createUserController({
   meHandler,
+  authGuard: authGuard,
 });
 
 export default userModule;

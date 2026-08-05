@@ -11,15 +11,14 @@ import { AuthHttpModel } from '../auth.http-model';
 import { AuthResponseSchemas } from '../auth.response';
 import { refreshTokenPlugin } from '../plugins/refresh-token.plugin';
 
-import type { RefreshHandler, SignOutHandler } from '$modules/auth/application';
+import type { RefreshHandler } from '$modules/auth/application';
 
-interface Denpendencies {
+interface Dependencies {
   refreshHandler: RefreshHandler;
-  signOutHandler: SignOutHandler;
 }
 
-export function createAuthSessionRoutes(deps: Denpendencies) {
-  const refreshRoute = new Elysia({
+export function createRefreshRoutes({ refreshHandler }: Dependencies) {
+  return new Elysia({
     name: 'auth.routes.refresh',
   })
     .use(requestMetaDataPlugin)
@@ -27,7 +26,7 @@ export function createAuthSessionRoutes(deps: Denpendencies) {
     .post(
       '/refresh',
       async ({ requestMetadata, refreshToken }) => {
-        const result = await deps.refreshHandler.execute(
+        const result = await refreshHandler.execute(
           refreshToken,
           requestMetadata,
         );
@@ -52,37 +51,4 @@ export function createAuthSessionRoutes(deps: Denpendencies) {
         },
       },
     );
-
-  const signOutRoute = new Elysia({
-    name: 'auth.routes.sign-out',
-  })
-    .use(refreshTokenPlugin)
-    .post(
-      '/sign-out',
-      async ({ refreshToken }) => {
-        await deps.signOutHandler.execute(refreshToken);
-
-        return ApiResponseBuilder.success({});
-      },
-      {
-        parse: 'application/json',
-        body: AuthHttpModel.signOutBody,
-        detail: {
-          summary: 'Sign Out',
-          security: [],
-        },
-        response: {
-          200: createApiSuccessResponseSchema(AuthResponseSchemas.signOut),
-          401: ApiErrorResponseSchema.meta({
-            description: 'Invalid refreshToken',
-          }),
-        },
-      },
-    );
-
-  return new Elysia({
-    name: 'auth.routes.session',
-  })
-    .use(signOutRoute)
-    .use(refreshRoute);
 }
