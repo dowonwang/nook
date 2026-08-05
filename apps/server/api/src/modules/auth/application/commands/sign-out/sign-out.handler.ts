@@ -1,10 +1,8 @@
-import { RefreshTokenMalFormed } from '$modules/auth/error';
+import { RefreshTokenMalformed } from '$modules/auth/error';
 import { createLogger } from '$shared/logger';
 
-import type {
-  AuthSessionCommandRepository,
-  TokenVerifier,
-} from '$modules/auth/domain';
+import type { AuthSessionCommandRepository } from '$modules/auth/domain';
+import type { TokenVerifier } from '../../ports/token-verifier.port';
 
 export class SignOutHandler {
   private readonly logger = createLogger(SignOutHandler.name);
@@ -20,7 +18,7 @@ export class SignOutHandler {
     const refreshJti = refreshPayload.getJti();
 
     if (!refreshJti) {
-      throw new RefreshTokenMalFormed(SignOutHandler.name);
+      throw new RefreshTokenMalformed(SignOutHandler.name);
     }
 
     await this.authSessionCommandRepository.revoke(refreshJti);

@@ -7,8 +7,8 @@ export class InvalidAccessTokenClaims extends UnauthorizedError {
   constructor(scope: string) {
     super({
       scope,
-      event: AUTH_LOG_EVENT.AUTH_INVAILD_ACCESS_TOKEN_CLAIMS,
-      message: AUTH_LOG_MESSAGE.AUTH_INVAILD_ACCESS_TOKEN_CLAIMS,
+      event: AUTH_LOG_EVENT.AUTH_INVALID_ACCESS_TOKEN_CLAIMS,
+      message: AUTH_LOG_MESSAGE.AUTH_INVALID_ACCESS_TOKEN_CLAIMS,
     });
   }
 }

@@ -1,31 +1,29 @@
 import { prismaApiClient } from '@packages/api-db';
 import 'dotenv/config';
 
-import {
-  PrismaUserCommandRepository,
-  PrismaUserQueryRepository,
-} from '$modules/user/infrastructure';
+import { PrismaUserCommandRepository } from '$modules/user/infrastructure';
 
 import {
-  MeHandler,
+  RefreshTokenValidator,
   RefreshHandler,
   SignInHandler,
   SignOutHandler,
   SignUpHandler,
+  AuthTokenIssuer,
+  CredentialAuthenticator,
 } from './application';
 import {
   BcryptPasswordHasher,
-  createAuthGuard,
   JwtTokenHasher,
   JwtTokenIssuer,
   JwtTokenVerifier,
   PrismaAuthSessionCommandRepository,
 } from './infrastructure';
 import { createAuthController } from './presentation';
+import { createAuthGuard } from './presentation/guard/auth.guard';
 
 // repository
 const userCommandRepository = new PrismaUserCommandRepository(prismaApiClient);
-const userQueryRepository = new PrismaUserQueryRepository(prismaApiClient);
 const authSessionCommandRepository = new PrismaAuthSessionCommandRepository(
   prismaApiClient,
 );
@@ -44,29 +42,31 @@ const refreshTokenIssuer = new JwtTokenIssuer(
   process.env.REFRESH_TOKEN_SECRET,
   process.env.REFRESH_TOKEN_EXPIRES,
 );
-const tokenHasher = new JwtTokenHasher();
-
-// guard
-export const authGuard = createAuthGuard(tokenVerifier);
-
-// handler
-const signUpHandler = new SignUpHandler(userCommandRepository, passwordHasher);
-const signInHandler = new SignInHandler(
-  userCommandRepository,
-  authSessionCommandRepository,
-  passwordHasher,
+const tokenHasher = new JwtTokenHasher(process.env.HASH_TOKEN_SECRET);
+const refreshTokenValidator = new RefreshTokenValidator(tokenHasher);
+const authTokenIssuer = new AuthTokenIssuer(
   accessTokenIssuer,
   refreshTokenIssuer,
   tokenHasher,
 );
-const meHandler = new MeHandler(userQueryRepository);
+const credentialAuthenticator = new CredentialAuthenticator(
+  userCommandRepository,
+  passwordHasher,
+);
+
+// handler
+const signUpHandler = new SignUpHandler(userCommandRepository, passwordHasher);
+const signInHandler = new SignInHandler(
+  authSessionCommandRepository,
+  credentialAuthenticator,
+  authTokenIssuer,
+);
 const refreshHandler = new RefreshHandler(
   authSessionCommandRepository,
   userCommandRepository,
-  accessTokenIssuer,
-  refreshTokenIssuer,
+  refreshTokenValidator,
+  authTokenIssuer,
   tokenVerifier,
-  tokenHasher,
 );
 const signOutHandler = new SignOutHandler(
   authSessionCommandRepository,
@@ -76,10 +76,12 @@ const signOutHandler = new SignOutHandler(
 const authModule = createAuthController({
   signUpHandler,
   signInHandler,
-  meHandler,
   refreshHandler,
   signOutHandler,
-  authGuard,
 });
+
+// guard
+export const authGuard = createAuthGuard(tokenVerifier);
+export type { AuthGuard } from './presentation/guard/auth.guard';
 
 export default authModule;

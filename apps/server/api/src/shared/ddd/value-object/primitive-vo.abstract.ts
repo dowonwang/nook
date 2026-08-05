@@ -10,8 +10,11 @@ export abstract class PrimitiveValueObject<
   ValueType extends Primitive,
   SelfType extends PrimitiveValueObject<ValueType, SelfType>,
 > {
-  protected constructor(private readonly value: ValueType) {
+  private readonly value: ValueType;
+
+  protected constructor(value: ValueType) {
     this.validation(value);
+    this.value = value;
   }
 
   protected abstract validation(input: ValueType): void;

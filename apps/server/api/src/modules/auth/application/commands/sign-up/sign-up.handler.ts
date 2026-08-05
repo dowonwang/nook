@@ -1,3 +1,4 @@
+import { EmailAlreadyExists } from '$modules/auth/error';
 import {
   User,
   UserEmail,
@@ -6,18 +7,17 @@ import {
   UserUuid,
   type UserCommandRepository,
 } from '$modules/user/domain';
-import { EmailAlreadyExists } from '$modules/user/error';
 import { createLogger } from '$shared/logger';
 
-import type { PasswordHaser } from '$modules/auth/domain';
 import type { SignUpCommand } from './sign-up.command';
+import type { PasswordHasher } from '../../ports/password-hasher.port';
 
 export class SignUpHandler {
   private readonly logger = createLogger(SignUpHandler.name);
 
   constructor(
     private readonly userCommandRepository: UserCommandRepository,
-    private readonly passwordHasher: PasswordHaser,
+    private readonly passwordHasher: PasswordHasher,
   ) {}
 
   async execute(command: SignUpCommand): Promise<{ id: string }> {

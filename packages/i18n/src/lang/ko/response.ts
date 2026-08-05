@@ -15,12 +15,13 @@ export const i18nResponseKo = {
   auth_signup_success_signin_required:
     '회원가입이 완료되었습니다.\n로그인 후 서비스를 이용해 주세요.',
   auth_required_signin: '로그인 후 다시 시도해 주세요.',
+  auth_error_InvaildCredentials: '로그인 정보가 올바르지 않습니다.',
+  auth_error_EmailAlreadyExists:
+    '이미 가입된 계정이거나 사용할 수 없는 이메일입니다.',
 
   // user
   user_error_UserNotFound: '존재하지 않는 사용자입니다.',
-  user_error_EmailAlreadyExists:
-    '이미 가입된 계정이거나 사용할 수 없는 이메일입니다.',
-  user_error_InvaildCredentials: '로그인 정보가 올바르지 않습니다.',
+
   user_error_InvalidUserEmail: '잘못된 이메일 형식입니다.',
   user_error_InvalidUserName: '이름은 2글자 이상 20글자 이하로 입력해주세요.',
 

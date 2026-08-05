@@ -1,23 +1,22 @@
 import {
-  AccessTokenClaims,
-  AuthSession,
-  AuthSessionUuid,
-  RefreshTokenClaims,
+  RefreshSessionPolicy,
   type AuthSessionCommandRepository,
-  type TokenHasher,
-  type TokenIssuer,
-  type TokenVerifier,
 } from '$modules/auth/domain';
 import {
   AuthSessionNotFound,
-  RefreshTokenMalFormed,
+  RefreshTokenMalformed,
+  RefreshTokenRevoked,
 } from '$modules/auth/error';
-import { UserDtoMapper, type UserDetailDto } from '$modules/user/application';
-import { UserNotFound } from '$modules/user/error';
 import { createLogger } from '$shared/logger';
+
+import { AuthUserDtoMapper } from '../../mappers/auth-user.mapper';
 
 import type { UserCommandRepository } from '$modules/user/domain';
 import type { RequestMetadata } from '$shared/http';
+import type { RefreshResult } from './refresh.command';
+import type { TokenVerifier } from '../../ports/token-verifier.port';
+import type { AuthTokenIssuer } from '../../services/auth-token-issuer.service';
+import type { RefreshTokenValidator } from '../../services/refresh-token-validator.service';
 
 export class RefreshHandler {
   private readonly logger = createLogger(RefreshHandler.name);
@@ -25,26 +24,23 @@ export class RefreshHandler {
   constructor(
     private readonly authSessionCommandRepository: AuthSessionCommandRepository,
     private readonly userCommandRepository: UserCommandRepository,
-    private readonly accessTokenIssuer: TokenIssuer,
-    private readonly refreshTokenIssuer: TokenIssuer,
+    private readonly refreshTokenValidator: RefreshTokenValidator,
+    private readonly authTokenIssuer: AuthTokenIssuer,
     private readonly tokenVerifier: TokenVerifier,
-    private readonly tokenHasher: TokenHasher,
   ) {}
 
-  async excute(
+  async execute(
     refreshToken: string,
-    { ipAddress, userAgent }: RequestMetadata,
-  ): Promise<{
-    accessToken: string;
-    refreshToken: string;
-    user: UserDetailDto;
-  }> {
+    requestMetaData: RequestMetadata,
+  ): Promise<RefreshResult> {
     const refreshPayload =
       await this.tokenVerifier.verifyRefreshToken(refreshToken);
-    const refreshJti = refreshPayload.getJti();
 
-    if (!refreshJti) {
-      throw new RefreshTokenMalFormed(RefreshHandler.name);
+    const refreshJti = refreshPayload.getJti();
+    const refreshSub = refreshPayload.getSubject();
+
+    if (!refreshJti || !refreshSub) {
+      throw new RefreshTokenMalformed(RefreshHandler.name);
     }
 
     const session =
@@ -53,42 +49,33 @@ export class RefreshHandler {
       throw new AuthSessionNotFound(RefreshHandler.name);
     }
 
-    const sessionUserId = session.userId;
+    RefreshSessionPolicy.assertRefreshable(session);
+    this.refreshTokenValidator.assertMatchesSession(refreshToken, session);
+
     const user = await this.userCommandRepository.findById(
-      sessionUserId.getValue(),
+      session.userId.getValue(),
     );
     if (!user) {
-      throw new UserNotFound(RefreshHandler.name);
+      throw new AuthSessionNotFound(RefreshHandler.name);
     }
+    RefreshSessionPolicy.assertSubjectMatchesUser(
+      refreshSub,
+      user.id.getValue(),
+    );
 
-    const accessTokenClaims = AccessTokenClaims.create({
-      sub: user.id.getValue(),
-    });
-    const { token: newAccessToken } =
-      await this.accessTokenIssuer.issueToken(accessTokenClaims);
+    const { authSession, ...authToken } = await this.authTokenIssuer.issue(
+      user,
+      requestMetaData,
+    );
 
-    const refreshTokenId = AuthSessionUuid.generate();
-    const refreshTokenClaims = RefreshTokenClaims.create({
-      sub: user.id.getValue(),
-      jti: refreshTokenId.getValue(),
-    });
-    const { token: newRefreshToken, expiresAt } =
-      await this.refreshTokenIssuer.issueToken(refreshTokenClaims);
+    const rotated = await this.authSessionCommandRepository.rotate(
+      session.id.getValue(),
+      authSession,
+    );
 
-    if (!expiresAt) {
-      throw new RefreshTokenMalFormed(RefreshHandler.name);
+    if (!rotated) {
+      throw new RefreshTokenRevoked(RefreshHandler.name);
     }
-
-    const newAuthSession = AuthSession.create(refreshTokenId, {
-      userId: user.id,
-      tokenHash: this.tokenHasher.create(newRefreshToken),
-      revokeAt: null,
-      userAgent,
-      ipAddress,
-      expiresAt,
-    });
-
-    await this.authSessionCommandRepository.save(newAuthSession);
 
     this.logger.info(
       { details: user.id.getValue() },
@@ -96,9 +83,9 @@ export class RefreshHandler {
     );
 
     return {
-      accessToken: newAccessToken,
-      refreshToken: newRefreshToken,
-      user: UserDtoMapper.fromEntity(user),
+      accessToken: authToken.accessToken,
+      refreshToken: authToken.refreshToken,
+      user: AuthUserDtoMapper.fromEntity(user),
     };
   }
 }

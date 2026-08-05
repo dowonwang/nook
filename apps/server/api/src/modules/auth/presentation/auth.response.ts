@@ -13,11 +13,6 @@ export const AuthResponseSchemas = {
       name: z.string(),
     }),
   }),
-  me: z.object({
-    id: z.uuidv7(),
-    email: z.email(),
-    name: z.string(),
-  }),
   refresh: z.object({
     accessToken: z.jwt(),
     refreshToken: z.jwt(),

@@ -1,4 +1,4 @@
-import { UserPrismaMapper } from '../mappers/user-prisma.mapper';
+import { UserPrismaMapper } from './mappers/user-entity.mapper';
 
 import type { User, UserCommandRepository } from '$modules/user/domain';
 import type { PrismaClient } from '@packages/api-db';
@@ -21,19 +21,12 @@ export class PrismaUserCommandRepository implements UserCommandRepository {
   }
 
   async save(user: User): Promise<void> {
+    const { id, ...data } = user.toSnapshot();
+
     await this.prisma.user.upsert({
-      where: { id: user.id.getValue() },
-      create: {
-        id: user.id.getValue(),
-        email: user.email.getValue(),
-        name: user.name.getValue(),
-        password: user.password.getValue(),
-      },
-      update: {
-        email: user.email.getValue(),
-        name: user.name.getValue(),
-        password: user.password.getValue(),
-      },
+      where: { id },
+      create: { id, ...data },
+      update: data,
     });
   }
 }
