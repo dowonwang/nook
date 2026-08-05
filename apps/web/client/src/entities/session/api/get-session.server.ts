@@ -14,7 +14,7 @@ export async function getServerSession(): Promise<Session> {
     };
   }
 
-  const response = await bffFetcher('/api/auth/me', {
+  const response = await bffFetcher('/api/user/me', {
     method: 'GET',
     headers: {
       'content-type': 'application/json',

@@ -2,7 +2,7 @@ import type { Session } from '$entities/session';
 import type { GetAuthMe200 } from '@packages/api-client/api';
 
 export async function getSession(): Promise<Session> {
-  const response = await fetch('/api/auth/me', {
+  const response = await fetch('/api/user/me', {
     method: 'GET',
     headers: {
       'content-type': 'application/json',
