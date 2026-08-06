@@ -5,74 +5,6 @@
  * Development documentation
  * OpenAPI spec version: 0.0.0
  */
-export type PostAuthSignUpBody = {
-  /**
-   * @minLength 2
-   * @maxLength 20
-   */
-  name: string;
-  /** @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$ */
-  email: string;
-  password: string;
-};
-
-export type PostAuthSignUp201Data = {
-  /** @pattern ^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-7[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12})$ */
-  id: string;
-};
-
-export type PostAuthSignUp201Meta = {
-  unixTimestamp: number;
-  requestId?: string;
-};
-
-export type PostAuthSignUp201 = {
-  success: true;
-  data: PostAuthSignUp201Data;
-  error: unknown | null;
-  meta: PostAuthSignUp201Meta;
-};
-
-export type PostAuthSignUp400Error = {
-  code: string;
-  details?: unknown;
-};
-
-export type PostAuthSignUp400Meta = {
-  unixTimestamp: number;
-  requestId?: string;
-};
-
-/**
- * Invalid input or missing required fields
- */
-export type PostAuthSignUp400 = {
-  success: false;
-  data: unknown | null;
-  error: PostAuthSignUp400Error;
-  meta: PostAuthSignUp400Meta;
-};
-
-export type PostAuthSignUp409Error = {
-  code: string;
-  details?: unknown;
-};
-
-export type PostAuthSignUp409Meta = {
-  unixTimestamp: number;
-  requestId?: string;
-};
-
-/**
- * User already exists
- */
-export type PostAuthSignUp409 = {
-  success: false;
-  data: unknown | null;
-  error: PostAuthSignUp409Error;
-  meta: PostAuthSignUp409Meta;
-};
-
 export type PostAuthSignInBody = {
   /** @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$ */
   email: string;
@@ -145,6 +77,110 @@ export type PostAuthSignIn401 = {
   meta: PostAuthSignIn401Meta;
 };
 
+export type PostAuthSignUpBody = {
+  /**
+   * @minLength 2
+   * @maxLength 20
+   */
+  name: string;
+  /** @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$ */
+  email: string;
+  password: string;
+};
+
+export type PostAuthSignUp201Data = {
+  /** @pattern ^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-7[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12})$ */
+  id: string;
+};
+
+export type PostAuthSignUp201Meta = {
+  unixTimestamp: number;
+  requestId?: string;
+};
+
+export type PostAuthSignUp201 = {
+  success: true;
+  data: PostAuthSignUp201Data;
+  error: unknown | null;
+  meta: PostAuthSignUp201Meta;
+};
+
+export type PostAuthSignUp400Error = {
+  code: string;
+  details?: unknown;
+};
+
+export type PostAuthSignUp400Meta = {
+  unixTimestamp: number;
+  requestId?: string;
+};
+
+/**
+ * Invalid input or missing required fields
+ */
+export type PostAuthSignUp400 = {
+  success: false;
+  data: unknown | null;
+  error: PostAuthSignUp400Error;
+  meta: PostAuthSignUp400Meta;
+};
+
+export type PostAuthSignUp409Error = {
+  code: string;
+  details?: unknown;
+};
+
+export type PostAuthSignUp409Meta = {
+  unixTimestamp: number;
+  requestId?: string;
+};
+
+/**
+ * User already exists
+ */
+export type PostAuthSignUp409 = {
+  success: false;
+  data: unknown | null;
+  error: PostAuthSignUp409Error;
+  meta: PostAuthSignUp409Meta;
+};
+
+export type PostAuthSignOutBody = { [key: string]: unknown };
+
+export type PostAuthSignOut200Data = { [key: string]: unknown };
+
+export type PostAuthSignOut200Meta = {
+  unixTimestamp: number;
+  requestId?: string;
+};
+
+export type PostAuthSignOut200 = {
+  success: true;
+  data: PostAuthSignOut200Data;
+  error: unknown | null;
+  meta: PostAuthSignOut200Meta;
+};
+
+export type PostAuthSignOut401Error = {
+  code: string;
+  details?: unknown;
+};
+
+export type PostAuthSignOut401Meta = {
+  unixTimestamp: number;
+  requestId?: string;
+};
+
+/**
+ * Invalid refreshToken
+ */
+export type PostAuthSignOut401 = {
+  success: false;
+  data: unknown | null;
+  error: PostAuthSignOut401Error;
+  meta: PostAuthSignOut401Meta;
+};
+
 export type PostAuthRefreshBody = { [key: string]: unknown };
 
 export type PostAuthRefresh200DataUser = {
@@ -213,108 +249,18 @@ export type PostAuthRefresh404 = {
   meta: PostAuthRefresh404Meta;
 };
 
-export type PostAuthSignOutBody = { [key: string]: unknown };
-
-export type PostAuthSignOut200Data = { [key: string]: unknown };
-
-export type PostAuthSignOut200Meta = {
-  unixTimestamp: number;
-  requestId?: string;
-};
-
-export type PostAuthSignOut200 = {
-  success: true;
-  data: PostAuthSignOut200Data;
-  error: unknown | null;
-  meta: PostAuthSignOut200Meta;
-};
-
-export type PostAuthSignOut401Error = {
-  code: string;
-  details?: unknown;
-};
-
-export type PostAuthSignOut401Meta = {
-  unixTimestamp: number;
-  requestId?: string;
-};
-
-/**
- * Invalid refreshToken
- */
-export type PostAuthSignOut401 = {
-  success: false;
-  data: unknown | null;
-  error: PostAuthSignOut401Error;
-  meta: PostAuthSignOut401Meta;
-};
-
-export type GetAuthMe200Data = {
-  /** @pattern ^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-7[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12})$ */
-  id: string;
-  /** @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$ */
-  email: string;
-  name: string;
-};
-
-export type GetAuthMe200Meta = {
-  unixTimestamp: number;
-  requestId?: string;
-};
-
-export type GetAuthMe200 = {
-  success: true;
-  data: GetAuthMe200Data;
-  error: unknown | null;
-  meta: GetAuthMe200Meta;
-};
-
-export type GetAuthMe401Error = {
-  code: string;
-  details?: unknown;
-};
-
-export type GetAuthMe401Meta = {
-  unixTimestamp: number;
-  requestId?: string;
-};
-
-/**
- * Access token verification failed.
- */
-export type GetAuthMe401 = {
-  success: false;
-  data: unknown | null;
-  error: GetAuthMe401Error;
-  meta: GetAuthMe401Meta;
-};
-
-export type GetAuthMe404Error = {
-  code: string;
-  details?: unknown;
-};
-
-export type GetAuthMe404Meta = {
-  unixTimestamp: number;
-  requestId?: string;
-};
-
-/**
- * User not found
- */
-export type GetAuthMe404 = {
-  success: false;
-  data: unknown | null;
-  error: GetAuthMe404Error;
-  meta: GetAuthMe404Meta;
-};
-
 export type PostOrganizationBody = {
+  /**
+   * @minLength 1
+   * @maxLength 20
+   */
   title: string;
 };
 
 export type PostOrganization201Data = {
-  message: string;
+  /** @pattern ^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-7[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12})$ */
+  id: string;
+  title: string;
 };
 
 export type PostOrganization201Meta = {
@@ -526,61 +472,64 @@ export type PostOrganizationAddMembers409 = {
   meta: PostOrganizationAddMembers409Meta;
 };
 
-export type postAuthSignUpResponse201 = {
-  data: PostAuthSignUp201;
-  status: 201;
+export type GetUserMe200Data = {
+  /** @pattern ^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-7[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12})$ */
+  id: string;
+  /** @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$ */
+  email: string;
+  name: string;
 };
 
-export type postAuthSignUpResponse400 = {
-  data: PostAuthSignUp400;
-  status: 400;
+export type GetUserMe200Meta = {
+  unixTimestamp: number;
+  requestId?: string;
 };
 
-export type postAuthSignUpResponse409 = {
-  data: PostAuthSignUp409;
-  status: 409;
+export type GetUserMe200 = {
+  success: true;
+  data: GetUserMe200Data;
+  error: unknown | null;
+  meta: GetUserMe200Meta;
 };
 
-export type postAuthSignUpResponseSuccess = postAuthSignUpResponse201 & {
-  headers: Headers;
-};
-export type postAuthSignUpResponseError = (
-  | postAuthSignUpResponse400
-  | postAuthSignUpResponse409
-) & {
-  headers: Headers;
+export type GetUserMe401Error = {
+  code: string;
+  details?: unknown;
 };
 
-export type postAuthSignUpResponse =
-  | postAuthSignUpResponseSuccess
-  | postAuthSignUpResponseError;
-
-export const getPostAuthSignUpUrl = () => {
-  return `http://localhost:4000/auth/sign-up`;
+export type GetUserMe401Meta = {
+  unixTimestamp: number;
+  requestId?: string;
 };
 
 /**
- * @summary Sign Up User
+ * Access token verification failed.
  */
-export const postAuthSignUp = async (
-  postAuthSignUpBody: PostAuthSignUpBody,
-  options?: RequestInit,
-): Promise<postAuthSignUpResponse> => {
-  const res = await fetch(getPostAuthSignUpUrl(), {
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(postAuthSignUpBody),
-  });
+export type GetUserMe401 = {
+  success: false;
+  data: unknown | null;
+  error: GetUserMe401Error;
+  meta: GetUserMe401Meta;
+};
 
-  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
+export type GetUserMe404Error = {
+  code: string;
+  details?: unknown;
+};
 
-  const data: postAuthSignUpResponse['data'] = body ? JSON.parse(body) : {};
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as postAuthSignUpResponse;
+export type GetUserMe404Meta = {
+  unixTimestamp: number;
+  requestId?: string;
+};
+
+/**
+ * User not found
+ */
+export type GetUserMe404 = {
+  success: false;
+  data: unknown | null;
+  error: GetUserMe404Error;
+  meta: GetUserMe404Meta;
 };
 
 export type postAuthSignInResponse200 = {
@@ -640,6 +589,112 @@ export const postAuthSignIn = async (
   } as postAuthSignInResponse;
 };
 
+export type postAuthSignUpResponse201 = {
+  data: PostAuthSignUp201;
+  status: 201;
+};
+
+export type postAuthSignUpResponse400 = {
+  data: PostAuthSignUp400;
+  status: 400;
+};
+
+export type postAuthSignUpResponse409 = {
+  data: PostAuthSignUp409;
+  status: 409;
+};
+
+export type postAuthSignUpResponseSuccess = postAuthSignUpResponse201 & {
+  headers: Headers;
+};
+export type postAuthSignUpResponseError = (
+  | postAuthSignUpResponse400
+  | postAuthSignUpResponse409
+) & {
+  headers: Headers;
+};
+
+export type postAuthSignUpResponse =
+  | postAuthSignUpResponseSuccess
+  | postAuthSignUpResponseError;
+
+export const getPostAuthSignUpUrl = () => {
+  return `http://localhost:4000/auth/sign-up`;
+};
+
+/**
+ * @summary Sign Up User
+ */
+export const postAuthSignUp = async (
+  postAuthSignUpBody: PostAuthSignUpBody,
+  options?: RequestInit,
+): Promise<postAuthSignUpResponse> => {
+  const res = await fetch(getPostAuthSignUpUrl(), {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(postAuthSignUpBody),
+  });
+
+  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
+
+  const data: postAuthSignUpResponse['data'] = body ? JSON.parse(body) : {};
+  return {
+    data,
+    status: res.status,
+    headers: res.headers,
+  } as postAuthSignUpResponse;
+};
+
+export type postAuthSignOutResponse200 = {
+  data: PostAuthSignOut200;
+  status: 200;
+};
+
+export type postAuthSignOutResponse401 = {
+  data: PostAuthSignOut401;
+  status: 401;
+};
+
+export type postAuthSignOutResponseSuccess = postAuthSignOutResponse200 & {
+  headers: Headers;
+};
+export type postAuthSignOutResponseError = postAuthSignOutResponse401 & {
+  headers: Headers;
+};
+
+export type postAuthSignOutResponse =
+  | postAuthSignOutResponseSuccess
+  | postAuthSignOutResponseError;
+
+export const getPostAuthSignOutUrl = () => {
+  return `http://localhost:4000/auth/sign-out`;
+};
+
+/**
+ * @summary Sign Out
+ */
+export const postAuthSignOut = async (
+  postAuthSignOutBody: PostAuthSignOutBody,
+  options?: RequestInit,
+): Promise<postAuthSignOutResponse> => {
+  const res = await fetch(getPostAuthSignOutUrl(), {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(postAuthSignOutBody),
+  });
+
+  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
+
+  const data: postAuthSignOutResponse['data'] = body ? JSON.parse(body) : {};
+  return {
+    data,
+    status: res.status,
+    headers: res.headers,
+  } as postAuthSignOutResponse;
+};
+
 export type postAuthRefreshResponse200 = {
   data: PostAuthRefresh200;
   status: 200;
@@ -695,110 +750,6 @@ export const postAuthRefresh = async (
     status: res.status,
     headers: res.headers,
   } as postAuthRefreshResponse;
-};
-
-export type postAuthSignOutResponse200 = {
-  data: PostAuthSignOut200;
-  status: 200;
-};
-
-export type postAuthSignOutResponse401 = {
-  data: PostAuthSignOut401;
-  status: 401;
-};
-
-export type postAuthSignOutResponseSuccess = postAuthSignOutResponse200 & {
-  headers: Headers;
-};
-export type postAuthSignOutResponseError = postAuthSignOutResponse401 & {
-  headers: Headers;
-};
-
-export type postAuthSignOutResponse =
-  | postAuthSignOutResponseSuccess
-  | postAuthSignOutResponseError;
-
-export const getPostAuthSignOutUrl = () => {
-  return `http://localhost:4000/auth/sign-out`;
-};
-
-/**
- * @summary Sign Out
- */
-export const postAuthSignOut = async (
-  postAuthSignOutBody: PostAuthSignOutBody,
-  options?: RequestInit,
-): Promise<postAuthSignOutResponse> => {
-  const res = await fetch(getPostAuthSignOutUrl(), {
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(postAuthSignOutBody),
-  });
-
-  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
-
-  const data: postAuthSignOutResponse['data'] = body ? JSON.parse(body) : {};
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as postAuthSignOutResponse;
-};
-
-export type getAuthMeResponse200 = {
-  data: GetAuthMe200;
-  status: 200;
-};
-
-export type getAuthMeResponse401 = {
-  data: GetAuthMe401;
-  status: 401;
-};
-
-export type getAuthMeResponse404 = {
-  data: GetAuthMe404;
-  status: 404;
-};
-
-export type getAuthMeResponseSuccess = getAuthMeResponse200 & {
-  headers: Headers;
-};
-export type getAuthMeResponseError = (
-  | getAuthMeResponse401
-  | getAuthMeResponse404
-) & {
-  headers: Headers;
-};
-
-export type getAuthMeResponse =
-  | getAuthMeResponseSuccess
-  | getAuthMeResponseError;
-
-export const getGetAuthMeUrl = () => {
-  return `http://localhost:4000/auth/me`;
-};
-
-/**
- * Retrieves the profile information of the currently authenticated user.
- * @summary Get Current User
- */
-export const getAuthMe = async (
-  options?: RequestInit,
-): Promise<getAuthMeResponse> => {
-  const res = await fetch(getGetAuthMeUrl(), {
-    ...options,
-    method: 'GET',
-  });
-
-  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
-
-  const data: getAuthMeResponse['data'] = body ? JSON.parse(body) : {};
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as getAuthMeResponse;
 };
 
 export type postOrganizationResponse201 = {
@@ -940,4 +891,59 @@ export const postOrganizationAddMembers = async (
     status: res.status,
     headers: res.headers,
   } as postOrganizationAddMembersResponse;
+};
+
+export type getUserMeResponse200 = {
+  data: GetUserMe200;
+  status: 200;
+};
+
+export type getUserMeResponse401 = {
+  data: GetUserMe401;
+  status: 401;
+};
+
+export type getUserMeResponse404 = {
+  data: GetUserMe404;
+  status: 404;
+};
+
+export type getUserMeResponseSuccess = getUserMeResponse200 & {
+  headers: Headers;
+};
+export type getUserMeResponseError = (
+  | getUserMeResponse401
+  | getUserMeResponse404
+) & {
+  headers: Headers;
+};
+
+export type getUserMeResponse =
+  | getUserMeResponseSuccess
+  | getUserMeResponseError;
+
+export const getGetUserMeUrl = () => {
+  return `http://localhost:4000/user/me`;
+};
+
+/**
+ * Retrieves the profile information of the currently authenticated user.
+ * @summary Get Current User
+ */
+export const getUserMe = async (
+  options?: RequestInit,
+): Promise<getUserMeResponse> => {
+  const res = await fetch(getGetUserMeUrl(), {
+    ...options,
+    method: 'GET',
+  });
+
+  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
+
+  const data: getUserMeResponse['data'] = body ? JSON.parse(body) : {};
+  return {
+    data,
+    status: res.status,
+    headers: res.headers,
+  } as getUserMeResponse;
 };

@@ -35,14 +35,15 @@ export function createOrganizationController(deps: OrganizationDependencies) {
       .post(
         '/',
         async ({ body, set, authUser }) => {
-          await deps.createHandler.execute({
+          const { id, title } = await deps.createHandler.execute({
             userId: authUser.id,
             ...body,
           });
           set.status = 201;
 
           return ApiResponseBuilder.success({
-            message: 'Organization create success',
+            id,
+            title,
           });
         },
         {

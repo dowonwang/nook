@@ -10,140 +10,6 @@ import * as zod from 'zod';
 import { zodParams } from '../lib/zod-params';
 
 /**
- * @summary Sign Up User
- */
-export const postAuthSignUpBodyNameMin = 2;
-export const postAuthSignUpBodyNameMax = 20;
-
-export const postAuthSignUpBodyEmailRegExp = new RegExp(
-  "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$",
-);
-
-export const PostAuthSignUpBody = zod.object({
-  name: zod
-    .string(
-      zodParams({
-        operationId: 'postAuthSign-up',
-        location: 'body',
-        schemaName: 'PostAuthSignUpBody',
-        fieldPath: ['name'],
-        validator: 'string',
-      }),
-    )
-    .min(
-      postAuthSignUpBodyNameMin,
-      zodParams({
-        operationId: 'postAuthSign-up',
-        location: 'body',
-        schemaName: 'PostAuthSignUpBody',
-        fieldPath: ['name'],
-        validator: 'min',
-      }),
-    )
-    .max(
-      postAuthSignUpBodyNameMax,
-      zodParams({
-        operationId: 'postAuthSign-up',
-        location: 'body',
-        schemaName: 'PostAuthSignUpBody',
-        fieldPath: ['name'],
-        validator: 'max',
-      }),
-    ),
-  email: zod
-    .string(
-      zodParams({
-        operationId: 'postAuthSign-up',
-        location: 'body',
-        schemaName: 'PostAuthSignUpBody',
-        fieldPath: ['email'],
-        validator: 'string',
-      }),
-    )
-    .regex(
-      postAuthSignUpBodyEmailRegExp,
-      zodParams({
-        operationId: 'postAuthSign-up',
-        location: 'body',
-        schemaName: 'PostAuthSignUpBody',
-        fieldPath: ['email'],
-        validator: 'regex',
-      }),
-    ),
-  password: zod.string(
-    zodParams({
-      operationId: 'postAuthSign-up',
-      location: 'body',
-      schemaName: 'PostAuthSignUpBody',
-      fieldPath: ['password'],
-      validator: 'string',
-    }),
-  ),
-});
-
-export const postAuthSignUpResponseDataIdRegExp = new RegExp(
-  '^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-7[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12})$',
-);
-
-export const PostAuthSignUpResponse = zod.object({
-  success: zod.literal(
-    true,
-    zodParams({
-      operationId: 'postAuthSign-up',
-      location: 'response',
-      schemaName: 'PostAuthSignUpResponse',
-      fieldPath: ['success'],
-      validator: 'literal',
-    }),
-  ),
-  data: zod.object({
-    id: zod
-      .uuid(
-        zodParams({
-          operationId: 'postAuthSign-up',
-          location: 'response',
-          schemaName: 'PostAuthSignUpResponse',
-          fieldPath: ['data', 'id'],
-          validator: 'uuid',
-        }),
-      )
-      .regex(
-        postAuthSignUpResponseDataIdRegExp,
-        zodParams({
-          operationId: 'postAuthSign-up',
-          location: 'response',
-          schemaName: 'PostAuthSignUpResponse',
-          fieldPath: ['data', 'id'],
-          validator: 'regex',
-        }),
-      ),
-  }),
-  error: zod.unknown().nullable(),
-  meta: zod.object({
-    unixTimestamp: zod.number(
-      zodParams({
-        operationId: 'postAuthSign-up',
-        location: 'response',
-        schemaName: 'PostAuthSignUpResponse',
-        fieldPath: ['meta', 'unixTimestamp'],
-        validator: 'number',
-      }),
-    ),
-    requestId: zod
-      .string(
-        zodParams({
-          operationId: 'postAuthSign-up',
-          location: 'response',
-          schemaName: 'PostAuthSignUpResponse',
-          fieldPath: ['meta', 'requestId'],
-          validator: 'string',
-        }),
-      )
-      .optional(),
-  }),
-});
-
-/**
  * @summary Sign In User
  */
 export const postAuthSignInBodyEmailRegExp = new RegExp(
@@ -297,6 +163,182 @@ export const PostAuthSignInResponse = zod.object({
 });
 
 /**
+ * @summary Sign Up User
+ */
+export const postAuthSignUpBodyNameMin = 2;
+export const postAuthSignUpBodyNameMax = 20;
+
+export const postAuthSignUpBodyEmailRegExp = new RegExp(
+  "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$",
+);
+
+export const PostAuthSignUpBody = zod.object({
+  name: zod
+    .string(
+      zodParams({
+        operationId: 'postAuthSign-up',
+        location: 'body',
+        schemaName: 'PostAuthSignUpBody',
+        fieldPath: ['name'],
+        validator: 'string',
+      }),
+    )
+    .min(
+      postAuthSignUpBodyNameMin,
+      zodParams({
+        operationId: 'postAuthSign-up',
+        location: 'body',
+        schemaName: 'PostAuthSignUpBody',
+        fieldPath: ['name'],
+        validator: 'min',
+      }),
+    )
+    .max(
+      postAuthSignUpBodyNameMax,
+      zodParams({
+        operationId: 'postAuthSign-up',
+        location: 'body',
+        schemaName: 'PostAuthSignUpBody',
+        fieldPath: ['name'],
+        validator: 'max',
+      }),
+    ),
+  email: zod
+    .string(
+      zodParams({
+        operationId: 'postAuthSign-up',
+        location: 'body',
+        schemaName: 'PostAuthSignUpBody',
+        fieldPath: ['email'],
+        validator: 'string',
+      }),
+    )
+    .regex(
+      postAuthSignUpBodyEmailRegExp,
+      zodParams({
+        operationId: 'postAuthSign-up',
+        location: 'body',
+        schemaName: 'PostAuthSignUpBody',
+        fieldPath: ['email'],
+        validator: 'regex',
+      }),
+    ),
+  password: zod.string(
+    zodParams({
+      operationId: 'postAuthSign-up',
+      location: 'body',
+      schemaName: 'PostAuthSignUpBody',
+      fieldPath: ['password'],
+      validator: 'string',
+    }),
+  ),
+});
+
+export const postAuthSignUpResponseDataIdRegExp = new RegExp(
+  '^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-7[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12})$',
+);
+
+export const PostAuthSignUpResponse = zod.object({
+  success: zod.literal(
+    true,
+    zodParams({
+      operationId: 'postAuthSign-up',
+      location: 'response',
+      schemaName: 'PostAuthSignUpResponse',
+      fieldPath: ['success'],
+      validator: 'literal',
+    }),
+  ),
+  data: zod.object({
+    id: zod
+      .uuid(
+        zodParams({
+          operationId: 'postAuthSign-up',
+          location: 'response',
+          schemaName: 'PostAuthSignUpResponse',
+          fieldPath: ['data', 'id'],
+          validator: 'uuid',
+        }),
+      )
+      .regex(
+        postAuthSignUpResponseDataIdRegExp,
+        zodParams({
+          operationId: 'postAuthSign-up',
+          location: 'response',
+          schemaName: 'PostAuthSignUpResponse',
+          fieldPath: ['data', 'id'],
+          validator: 'regex',
+        }),
+      ),
+  }),
+  error: zod.unknown().nullable(),
+  meta: zod.object({
+    unixTimestamp: zod.number(
+      zodParams({
+        operationId: 'postAuthSign-up',
+        location: 'response',
+        schemaName: 'PostAuthSignUpResponse',
+        fieldPath: ['meta', 'unixTimestamp'],
+        validator: 'number',
+      }),
+    ),
+    requestId: zod
+      .string(
+        zodParams({
+          operationId: 'postAuthSign-up',
+          location: 'response',
+          schemaName: 'PostAuthSignUpResponse',
+          fieldPath: ['meta', 'requestId'],
+          validator: 'string',
+        }),
+      )
+      .optional(),
+  }),
+});
+
+/**
+ * @summary Sign Out
+ */
+export const PostAuthSignOutBody = zod.object({});
+
+export const PostAuthSignOutResponse = zod.object({
+  success: zod.literal(
+    true,
+    zodParams({
+      operationId: 'postAuthSign-out',
+      location: 'response',
+      schemaName: 'PostAuthSignOutResponse',
+      fieldPath: ['success'],
+      validator: 'literal',
+    }),
+  ),
+  data: zod.object({}),
+  error: zod.unknown().nullable(),
+  meta: zod.object({
+    unixTimestamp: zod.number(
+      zodParams({
+        operationId: 'postAuthSign-out',
+        location: 'response',
+        schemaName: 'PostAuthSignOutResponse',
+        fieldPath: ['meta', 'unixTimestamp'],
+        validator: 'number',
+      }),
+    ),
+    requestId: zod
+      .string(
+        zodParams({
+          operationId: 'postAuthSign-out',
+          location: 'response',
+          schemaName: 'PostAuthSignOutResponse',
+          fieldPath: ['meta', 'requestId'],
+          validator: 'string',
+        }),
+      )
+      .optional(),
+  }),
+});
+
+/**
  * @summary Refresh Auth Token
  */
 export const PostAuthRefreshBody = zod.object({});
@@ -407,146 +449,6 @@ export const PostAuthRefreshResponse = zod.object({
           operationId: 'postAuthRefresh',
           location: 'response',
           schemaName: 'PostAuthRefreshResponse',
-          fieldPath: ['meta', 'requestId'],
-          validator: 'string',
-        }),
-      )
-      .optional(),
-  }),
-});
-
-/**
- * @summary Sign Out
- */
-export const PostAuthSignOutBody = zod.object({});
-
-export const PostAuthSignOutResponse = zod.object({
-  success: zod.literal(
-    true,
-    zodParams({
-      operationId: 'postAuthSign-out',
-      location: 'response',
-      schemaName: 'PostAuthSignOutResponse',
-      fieldPath: ['success'],
-      validator: 'literal',
-    }),
-  ),
-  data: zod.object({}),
-  error: zod.unknown().nullable(),
-  meta: zod.object({
-    unixTimestamp: zod.number(
-      zodParams({
-        operationId: 'postAuthSign-out',
-        location: 'response',
-        schemaName: 'PostAuthSignOutResponse',
-        fieldPath: ['meta', 'unixTimestamp'],
-        validator: 'number',
-      }),
-    ),
-    requestId: zod
-      .string(
-        zodParams({
-          operationId: 'postAuthSign-out',
-          location: 'response',
-          schemaName: 'PostAuthSignOutResponse',
-          fieldPath: ['meta', 'requestId'],
-          validator: 'string',
-        }),
-      )
-      .optional(),
-  }),
-});
-
-/**
- * Retrieves the profile information of the currently authenticated user.
- * @summary Get Current User
- */
-export const getAuthMeResponseDataIdRegExp = new RegExp(
-  '^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-7[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12})$',
-);
-export const getAuthMeResponseDataEmailRegExp = new RegExp(
-  "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$",
-);
-
-export const GetAuthMeResponse = zod.object({
-  success: zod.literal(
-    true,
-    zodParams({
-      operationId: 'getAuthMe',
-      location: 'response',
-      schemaName: 'GetAuthMeResponse',
-      fieldPath: ['success'],
-      validator: 'literal',
-    }),
-  ),
-  data: zod.object({
-    id: zod
-      .uuid(
-        zodParams({
-          operationId: 'getAuthMe',
-          location: 'response',
-          schemaName: 'GetAuthMeResponse',
-          fieldPath: ['data', 'id'],
-          validator: 'uuid',
-        }),
-      )
-      .regex(
-        getAuthMeResponseDataIdRegExp,
-        zodParams({
-          operationId: 'getAuthMe',
-          location: 'response',
-          schemaName: 'GetAuthMeResponse',
-          fieldPath: ['data', 'id'],
-          validator: 'regex',
-        }),
-      ),
-    email: zod
-      .string(
-        zodParams({
-          operationId: 'getAuthMe',
-          location: 'response',
-          schemaName: 'GetAuthMeResponse',
-          fieldPath: ['data', 'email'],
-          validator: 'string',
-        }),
-      )
-      .regex(
-        getAuthMeResponseDataEmailRegExp,
-        zodParams({
-          operationId: 'getAuthMe',
-          location: 'response',
-          schemaName: 'GetAuthMeResponse',
-          fieldPath: ['data', 'email'],
-          validator: 'regex',
-        }),
-      ),
-    name: zod.string(
-      zodParams({
-        operationId: 'getAuthMe',
-        location: 'response',
-        schemaName: 'GetAuthMeResponse',
-        fieldPath: ['data', 'name'],
-        validator: 'string',
-      }),
-    ),
-  }),
-  error: zod.unknown().nullable(),
-  meta: zod.object({
-    unixTimestamp: zod.number(
-      zodParams({
-        operationId: 'getAuthMe',
-        location: 'response',
-        schemaName: 'GetAuthMeResponse',
-        fieldPath: ['meta', 'unixTimestamp'],
-        validator: 'number',
-      }),
-    ),
-    requestId: zod
-      .string(
-        zodParams({
-          operationId: 'getAuthMe',
-          location: 'response',
-          schemaName: 'GetAuthMeResponse',
           fieldPath: ['meta', 'requestId'],
           validator: 'string',
         }),

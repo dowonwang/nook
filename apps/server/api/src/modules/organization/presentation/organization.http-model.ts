@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 export const OrganizationHttpModel = {
   create: z.object({
-    title: z.string(),
+    title: z.string().min(1).max(20),
   }),
 
   addMember: z.object({

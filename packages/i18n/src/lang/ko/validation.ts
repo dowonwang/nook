@@ -13,6 +13,10 @@ export const i18ValidationKo = {
   PostAuthSignUpBody_password_string: '비밀번호를 입력해주세요.',
   PostAuthSignUpBody_confirmPassword_mismatch: '비밀번호가 일치하지 않습니다.',
 
+  PostOrganizationBody_title_string: '조직명을 입력해주세요.',
+  PostOrganizationBody_title_max: '조직명은 20자 미만으로 입력해주세요.',
+  PostOrganizationBody_title_min: '조직명을 입력해주세요.',
+
   PostOrganizationAddMembersBody_members_role_enum:
     '올바른 멤버 역할을 선택해주세요.',
   PostOrganizationAddMembersBody_members_userId_regex:
@@ -23,6 +27,4 @@ export const i18ValidationKo = {
     '올바른 조직 ID를 입력해주세요.',
   PostOrganizationAddMembersBody_organizationId_uuid:
     '올바른 조직 ID를 입력해주세요.',
-
-  PostOrganizationBody_title_string: '조직명을 입력해주세요.',
 } satisfies Record<I18N_VALIDATION_KEY, string>;

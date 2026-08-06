@@ -5,6 +5,8 @@ export const I18N_ORGANIZATION_VALIDATION = [
   'PostOrganizationAddMembersBody_members_userId_uuid',
   'PostOrganizationAddMembersBody_organizationId_regex',
   'PostOrganizationAddMembersBody_organizationId_uuid',
+  'PostOrganizationBody_title_max',
+  'PostOrganizationBody_title_min',
   'PostOrganizationBody_title_string',
 ] as const;
 

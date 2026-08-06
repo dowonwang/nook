@@ -1,6 +1,9 @@
-export class CreateCommnad {
-  constructor(
-    public readonly userId: string,
-    public readonly title: string,
-  ) {}
+export interface CreateCommnad {
+  userId: string;
+  title: string;
+}
+
+export interface CreateResult {
+  id: string;
+  title: string;
 }

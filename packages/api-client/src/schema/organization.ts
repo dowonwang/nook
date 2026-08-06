@@ -12,17 +12,44 @@ import { zodParams } from '../lib/zod-params';
 /**
  * @summary Create Organization
  */
+export const postOrganizationBodyTitleMax = 20;
+
 export const PostOrganizationBody = zod.object({
-  title: zod.string(
-    zodParams({
-      operationId: 'postOrganization',
-      location: 'body',
-      schemaName: 'PostOrganizationBody',
-      fieldPath: ['title'],
-      validator: 'string',
-    }),
-  ),
+  title: zod
+    .string(
+      zodParams({
+        operationId: 'postOrganization',
+        location: 'body',
+        schemaName: 'PostOrganizationBody',
+        fieldPath: ['title'],
+        validator: 'string',
+      }),
+    )
+    .min(
+      1,
+      zodParams({
+        operationId: 'postOrganization',
+        location: 'body',
+        schemaName: 'PostOrganizationBody',
+        fieldPath: ['title'],
+        validator: 'min',
+      }),
+    )
+    .max(
+      postOrganizationBodyTitleMax,
+      zodParams({
+        operationId: 'postOrganization',
+        location: 'body',
+        schemaName: 'PostOrganizationBody',
+        fieldPath: ['title'],
+        validator: 'max',
+      }),
+    ),
 });
+
+export const postOrganizationResponseDataIdRegExp = new RegExp(
+  '^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-7[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12})$',
+);
 
 export const PostOrganizationResponse = zod.object({
   success: zod.literal(
@@ -36,12 +63,32 @@ export const PostOrganizationResponse = zod.object({
     }),
   ),
   data: zod.object({
-    message: zod.string(
+    id: zod
+      .uuid(
+        zodParams({
+          operationId: 'postOrganization',
+          location: 'response',
+          schemaName: 'PostOrganizationResponse',
+          fieldPath: ['data', 'id'],
+          validator: 'uuid',
+        }),
+      )
+      .regex(
+        postOrganizationResponseDataIdRegExp,
+        zodParams({
+          operationId: 'postOrganization',
+          location: 'response',
+          schemaName: 'PostOrganizationResponse',
+          fieldPath: ['data', 'id'],
+          validator: 'regex',
+        }),
+      ),
+    title: zod.string(
       zodParams({
         operationId: 'postOrganization',
         location: 'response',
         schemaName: 'PostOrganizationResponse',
-        fieldPath: ['data', 'message'],
+        fieldPath: ['data', 'title'],
         validator: 'string',
       }),
     ),

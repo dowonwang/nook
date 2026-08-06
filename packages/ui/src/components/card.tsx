@@ -5,14 +5,22 @@ const tw = String.raw;
 export function Card({
   children,
   className,
+  disabled = false,
+  focus = false,
+  ...rest
 }: {
   children: React.ReactNode;
+  disabled?: boolean;
+  focus?: boolean;
   className?: string;
-}) {
+} & React.HtmlHTMLAttributes<HTMLDivElement>) {
   return (
     <section
+      {...rest}
+      aria-disabled={disabled}
       className={cn(
-        'bg-card border-border shadow-soft rounded-xl border',
+        'bg-card border-border shadow-soft group transition-ring rounded-xl border duration-200',
+        { 'ring-primary ring-2': focus },
         className,
       )}
     >
@@ -45,7 +53,7 @@ export function CardHeader({
 }
 
 export function CardBody({ children }: { children: React.ReactNode }) {
-  return <div className='p-5'>{children}</div>;
+  return <div className='p-5 group-aria-disabled:opacity-50'>{children}</div>;
 }
 
 export function CardTitle({

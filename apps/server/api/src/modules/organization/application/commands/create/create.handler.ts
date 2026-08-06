@@ -10,7 +10,7 @@ import type {
   OrganizationCommandRepository,
   OrganizationPolicy,
 } from '$modules/organization/domain';
-import type { CreateCommnad } from './create.command';
+import type { CreateCommnad, CreateResult } from './create.command';
 
 export class CreateHandler {
   constructor(
@@ -18,7 +18,7 @@ export class CreateHandler {
     private readonly organizationCommandRepository: OrganizationCommandRepository,
   ) {}
 
-  async execute(command: CreateCommnad): Promise<{ id: string }> {
+  async execute(command: CreateCommnad): Promise<CreateResult> {
     const userId = UserUuid.create(command.userId);
     const organizationId = OrganizationUuid.generate();
 
@@ -46,6 +46,6 @@ export class CreateHandler {
 
     await this.organizationCommandRepository.save(organization);
 
-    return { id: organization.id.getValue() };
+    return { id: organization.id.getValue(), title: organization.title };
   }
 }
