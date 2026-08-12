@@ -9,6 +9,7 @@
     "./i18n": "./src/i18n/index.ts"
   },
   "scripts": {
+    "typecheck": "tsc --noEmit",
     "generate": "orval --config ./orval.config.ts"
   },
   "dependencies": {

@@ -9,6 +9,7 @@
     "./validation": "./src/validation/index.ts"
   },
   "scripts": {
+    "typecheck": "tsc --noEmit",
     "generate:validation": "tsx --tsconfig ./tsconfig.json ./src/script/generate-validation-i18n.ts"
   },
   "devDependencies": {
