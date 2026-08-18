@@ -1,13 +1,16 @@
 import {
-  OrganizationCreatededEvent,
+  OrganizationCreatedEvent,
   OrganizationMembersAddedEvent,
-  type Organization,
-  type OrganizationCommandRepository,
 } from '$modules/organization/domain';
 import { createLogger } from '$shared/logger';
 
 import { OrganizationPrismaMapper } from '../mappers/organization-prisma.mapper';
 
+import type {
+  Organization,
+  OrganizationCommandRepository,
+  OrganizationUuid,
+} from '$modules/organization/domain';
 import type { PrismaClient } from '@packages/api-db';
 import type { OrganizationMemberCreateManyAndReturnArgs } from '@packages/api-db/generated/prisma/models';
 
@@ -21,7 +24,7 @@ export class PrismaOrganizationCommandRepository implements OrganizationCommandR
   async save(organization: Organization): Promise<void> {
     await this.prisma.$transaction(async (tx) => {
       for (const event of organization.pullDomainEvents()) {
-        if (event instanceof OrganizationCreatededEvent) {
+        if (event instanceof OrganizationCreatedEvent) {
           await tx.organization.create({
             data: {
               id: event.id.getValue(),
@@ -36,7 +39,7 @@ export class PrismaOrganizationCommandRepository implements OrganizationCommandR
               id: member.id.getValue(),
               userId: member.userId.getValue(),
               organizationId: member.organizationId.getValue(),
-              role: member.role,
+              role: member.role.getValue(),
             }));
 
           await tx.organizationMember.createMany({
@@ -49,9 +52,11 @@ export class PrismaOrganizationCommandRepository implements OrganizationCommandR
     this.logger.debug({ details: organization }, 'Organization Save');
   }
 
-  async findOrganizationById(id: string): Promise<Organization | null> {
+  async findOrganizationById(
+    id: OrganizationUuid,
+  ): Promise<Organization | null> {
     const organization = await this.prisma.organization.findUnique({
-      where: { id },
+      where: { id: id.getValue() },
       include: { organizationMembers: true },
     });
 

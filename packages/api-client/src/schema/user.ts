@@ -106,3 +106,128 @@ export const GetUserMeResponse = zod.object({
       .optional(),
   }),
 });
+
+/**
+ * Retrieves user information
+ * @summary Get User
+ */
+export const getUserQueryEmailRegExp = new RegExp(
+  "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$",
+);
+
+export const GetUserQueryParams = zod.object({
+  email: zod
+    .string(
+      zodParams({
+        operationId: 'getUser',
+        location: 'query',
+        schemaName: 'GetUserQueryParams',
+        fieldPath: ['email'],
+        validator: 'string',
+      }),
+    )
+    .regex(
+      getUserQueryEmailRegExp,
+      zodParams({
+        operationId: 'getUser',
+        location: 'query',
+        schemaName: 'GetUserQueryParams',
+        fieldPath: ['email'],
+        validator: 'regex',
+      }),
+    ),
+});
+
+export const getUserResponseDataIdRegExp = new RegExp(
+  '^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-7[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12})$',
+);
+export const getUserResponseDataEmailRegExp = new RegExp(
+  "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$",
+);
+
+export const GetUserResponse = zod.object({
+  success: zod.literal(
+    true,
+    zodParams({
+      operationId: 'getUser',
+      location: 'response',
+      schemaName: 'GetUserResponse',
+      fieldPath: ['success'],
+      validator: 'literal',
+    }),
+  ),
+  data: zod.object({
+    id: zod
+      .uuid(
+        zodParams({
+          operationId: 'getUser',
+          location: 'response',
+          schemaName: 'GetUserResponse',
+          fieldPath: ['data', 'id'],
+          validator: 'uuid',
+        }),
+      )
+      .regex(
+        getUserResponseDataIdRegExp,
+        zodParams({
+          operationId: 'getUser',
+          location: 'response',
+          schemaName: 'GetUserResponse',
+          fieldPath: ['data', 'id'],
+          validator: 'regex',
+        }),
+      ),
+    email: zod
+      .string(
+        zodParams({
+          operationId: 'getUser',
+          location: 'response',
+          schemaName: 'GetUserResponse',
+          fieldPath: ['data', 'email'],
+          validator: 'string',
+        }),
+      )
+      .regex(
+        getUserResponseDataEmailRegExp,
+        zodParams({
+          operationId: 'getUser',
+          location: 'response',
+          schemaName: 'GetUserResponse',
+          fieldPath: ['data', 'email'],
+          validator: 'regex',
+        }),
+      ),
+    name: zod.string(
+      zodParams({
+        operationId: 'getUser',
+        location: 'response',
+        schemaName: 'GetUserResponse',
+        fieldPath: ['data', 'name'],
+        validator: 'string',
+      }),
+    ),
+  }),
+  error: zod.unknown().nullable(),
+  meta: zod.object({
+    unixTimestamp: zod.number(
+      zodParams({
+        operationId: 'getUser',
+        location: 'response',
+        schemaName: 'GetUserResponse',
+        fieldPath: ['meta', 'unixTimestamp'],
+        validator: 'number',
+      }),
+    ),
+    requestId: zod
+      .string(
+        zodParams({
+          operationId: 'getUser',
+          location: 'response',
+          schemaName: 'GetUserResponse',
+          fieldPath: ['meta', 'requestId'],
+          validator: 'string',
+        }),
+      )
+      .optional(),
+  }),
+});

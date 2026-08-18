@@ -13,10 +13,10 @@ export type CreateOrganizationState = {
   title: string;
 };
 export type CreateOrganizationResponseError =
-  postOrganizationResponseError['data']['error'];
-export type CreateOrganzationResponseSuccess = PostOrganization201;
+  postOrganizationResponseError['data'];
+export type CreateOrganizationResponseSuccess = PostOrganization201;
 
 export type CreateOrganizationActionState = ActionState<
   CreateOrganizationState,
-  CreateOrganizationResponseError
+  CreateOrganizationResponseError['error']
 >;

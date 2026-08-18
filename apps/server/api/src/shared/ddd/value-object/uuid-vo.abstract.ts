@@ -14,9 +14,9 @@ export abstract class Uuid<T extends Uuid<T>> extends PrimitiveValueObject<
   }
 
   protected validation(input: string) {
-    const vaildation = schema.safeParse(input);
+    const validation = schema.safeParse(input);
 
-    if (!vaildation.success) {
+    if (!validation.success) {
       throw new InvalidUuid(Uuid.name, { input });
     }
   }

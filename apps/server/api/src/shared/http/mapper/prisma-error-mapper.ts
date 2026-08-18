@@ -37,8 +37,8 @@ export function PrismaErrorMapper(error: unknown): AppError | null {
   if (error instanceof Prisma.PrismaClientRustPanicError) {
     return new InternalServerError({
       scope: SCOPE,
-      event: LOG_EVENT.PRISMA_CLINET_RUST_PANIC,
-      message: LOG_MESSAGE.PRISMA_CLINET_RUST_PANIC,
+      event: LOG_EVENT.PRISMA_CLIENT_RUST_PANIC,
+      message: LOG_MESSAGE.PRISMA_CLIENT_RUST_PANIC,
       cause: error.message,
     });
   }

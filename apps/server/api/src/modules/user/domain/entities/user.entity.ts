@@ -7,38 +7,42 @@ import type {
   UserUuid,
 } from '../value-objects';
 
-interface UserProps {
+interface Props {
   email: UserEmail;
   password: UserPassword;
   name: UserName;
 }
 
-interface UserSnapshot {
+interface Snapshot {
   id: string;
   email: string;
   password: string;
   name: string;
 }
 
-export class User extends Entity<UserUuid> {
-  private props: UserProps;
+export class User extends Entity<UserUuid, Snapshot> {
+  private props: Props;
 
-  private constructor(uuid: UserUuid, props: UserProps) {
+  private constructor(uuid: UserUuid, props: Props) {
     super(uuid);
     this.props = { ...props };
   }
 
-  static create(uuid: UserUuid, props: UserProps): User {
+  static create(uuid: UserUuid, props: Props): User {
     return new User(uuid, props);
   }
 
-  toSnapshot(): Readonly<UserSnapshot> {
+  toSnapshot(): Readonly<Snapshot> {
     return Object.freeze({
       id: this.id.getValue(),
       email: this.props.email.getValue(),
       password: this.props.password.getValue(),
       name: this.props.name.getValue(),
     });
+  }
+
+  get email(): UserEmail {
+    return this.props.email;
   }
 
   get password(): UserPassword {

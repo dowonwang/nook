@@ -88,7 +88,7 @@ function collectValidationKeys(schemaSource: string) {
     const validator = block.match(propertyPattern.validator)?.[1];
 
     if (
-      location !== 'body' ||
+      (location !== 'body' && location !== 'query') ||
       !schemaName ||
       rawFieldPath === undefined ||
       !validator

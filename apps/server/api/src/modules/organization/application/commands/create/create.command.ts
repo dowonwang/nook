@@ -1,4 +1,4 @@
-export interface CreateCommnad {
+export interface CreateCommand {
   userId: string;
   title: string;
 }

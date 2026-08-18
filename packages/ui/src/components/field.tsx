@@ -6,7 +6,7 @@ export function FieldGroup({
   children,
   className,
   ...rest
-}: React.HTMLAttributes<HTMLFieldSetElement> & {
+}: React.FieldsetHTMLAttributes<HTMLFieldSetElement> & {
   children: React.ReactNode;
 }) {
   const style = tw`space-y-6`;
@@ -47,6 +47,22 @@ export function FieldLabel({
     <label {...rest} className={cn(style, className)}>
       {children}
     </label>
+  );
+}
+
+export function FieldLegend({
+  children,
+  className,
+  ...rest
+}: React.HTMLAttributes<HTMLLegendElement> & {
+  children: React.ReactNode;
+}) {
+  const style = tw`text-secondary-foreground block px-2 text-sm font-light`;
+
+  return (
+    <legend {...rest} className={cn(style, className)}>
+      {children}
+    </legend>
   );
 }
 

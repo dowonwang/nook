@@ -1,4 +1,4 @@
-export * from './inavalid-user-uuid.error';
+export * from './invalid-user-uuid.error';
 export * from './invalid-password-hash.error';
 export * from './invalid-user-email.error';
 export * from './invalid-user-name.error';

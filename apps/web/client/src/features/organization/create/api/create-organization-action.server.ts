@@ -8,10 +8,9 @@ import { createOrganizationSchema } from '../model/create-organization';
 import type {
   CreateOrganizationResponseError,
   CreateOrganizationState,
-  CreateOrganzationResponseSuccess,
   CreateOrganizationActionState,
+  CreateOrganizationResponseSuccess,
 } from '../model/create-organization';
-import type { postOrganizationResponseError } from '@packages/api-client/api';
 
 export async function createOrganizationAction(
   _previousState: CreateOrganizationActionState,
@@ -28,7 +27,7 @@ export async function createOrganizationAction(
   if (!body.success) {
     return actionStateBuilder.error<
       CreateOrganizationState,
-      CreateOrganizationResponseError
+      CreateOrganizationResponseError['error']
     >(
       {
         id: '',
@@ -43,19 +42,17 @@ export async function createOrganizationAction(
     headers: {
       'content-type': 'application/json',
     },
-    body: JSON.stringify({
-      title,
-    }),
+    body: JSON.stringify(body.data),
   });
 
   if (response.ok) {
     const { data } =
-      (await response.json()) as CreateOrganzationResponseSuccess;
+      (await response.json()) as CreateOrganizationResponseSuccess;
     return actionStateBuilder.success({ title, id: data.id });
   }
 
   return actionStateBuilder.error(
     { id: '', title },
-    ((await response.json()) as postOrganizationResponseError['data']).error,
+    ((await response.json()) as CreateOrganizationResponseError).error,
   );
 }

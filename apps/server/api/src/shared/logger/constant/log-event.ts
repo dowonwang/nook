@@ -20,7 +20,7 @@ export const LOG_EVENT = {
 
   PRISMA_CLIENT_KNOWN_REQUEST: 'prisma_client.known_request',
   PRISMA_CLIENT_UNKNOWN_REQUEST: 'prisma_client.unknown_request',
-  PRISMA_CLINET_RUST_PANIC: 'prisma_client.rust_panic',
+  PRISMA_CLIENT_RUST_PANIC: 'prisma_client.rust_panic',
   PRISMA_CLIENT_INITIALIZATION: 'prisma_client.initialization',
   PRISMA_CLIENT_VALIDATION: 'prisma_client.validation',
 

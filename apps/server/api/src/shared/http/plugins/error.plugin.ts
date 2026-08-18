@@ -11,7 +11,7 @@ import { NotFoundError, UnprocessableContent } from '$shared/error';
 import { AppError } from '$shared/error/app.error';
 import { getRouteLogScope } from '$shared/http/constants/route-log-scope';
 import { PrismaErrorMapper } from '$shared/http/mapper/prisma-error-mapper';
-import { VaildationErrorMapper } from '$shared/http/mapper/vaildation-error.mapper';
+import { ValidationErrorMapper } from '$shared/http/mapper/validation-error.mapper';
 import { LOG_EVENT } from '$shared/logger/constant/log-event';
 import { LOG_MESSAGE } from '$shared/logger/constant/log-message';
 import { logger } from '$shared/logger/logger';
@@ -24,7 +24,7 @@ export const errorPlugin = new Elysia().onError(
     const searchParams = Object.fromEntries(new URL(request.url).searchParams);
 
     if (error instanceof ValidationError) {
-      const appError = VaildationErrorMapper(error);
+      const appError = ValidationErrorMapper(error);
       const scope = getRouteLogScope(path);
 
       set.status = appError.status;

@@ -5,6 +5,7 @@ import type { NextConfig } from 'next';
 const nextConfig: NextConfig = {
   /* config options here */
   transpilePackages: ['@packages/ui', '@packages/api-client', '@packages/i18n'],
+  reactStrictMode: false,
 };
 
 const withNextIntl = createNextIntlPlugin('./src/app/i18n/request.ts');

@@ -17,14 +17,14 @@ export const LOG_MESSAGE: LogEventMessage = {
   HTTP_INVALID_REQUEST_USER_AGENT: 'Client UserAgent could not be verified',
 
   APP_START: 'REST API server is running at',
-  APP_ERROR_OCCURRED: 'Application error occured',
+  APP_ERROR_OCCURRED: 'Application error occurred',
   APP_UNHANDLED_EXCEPTION: 'Unhandled exception occurred',
 
   PRISMA_CLIENT_INITIALIZATION: 'Prisma Client Initialization Error',
   PRISMA_CLIENT_KNOWN_REQUEST: 'Prisma Client Known Request Error',
   PRISMA_CLIENT_UNKNOWN_REQUEST: 'Prisma Client Unknown Request Error',
-  PRISMA_CLIENT_VALIDATION: 'Prisma Client Vaildation Error',
-  PRISMA_CLINET_RUST_PANIC: 'Prisma Client Rust Panic Error',
+  PRISMA_CLIENT_VALIDATION: 'Prisma Client Validation Error',
+  PRISMA_CLIENT_RUST_PANIC: 'Prisma Client Rust Panic Error',
 
   DDD_INVALID_UUID_VO: 'Invalid uuid VO',
 } as const;

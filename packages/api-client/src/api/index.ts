@@ -335,69 +335,39 @@ export type PostOrganization409 = {
   meta: PostOrganization409Meta;
 };
 
-export type PostOrganizationAddMembersBodyMembersItemRole =
-  (typeof PostOrganizationAddMembersBodyMembersItemRole)[keyof typeof PostOrganizationAddMembersBodyMembersItemRole];
+export type PostOrganizationByOrganizationIdInvitationsBodyRole =
+  (typeof PostOrganizationByOrganizationIdInvitationsBodyRole)[keyof typeof PostOrganizationByOrganizationIdInvitationsBodyRole];
 
-export const PostOrganizationAddMembersBodyMembersItemRole = {
+export const PostOrganizationByOrganizationIdInvitationsBodyRole = {
   ADMIN: 'ADMIN',
   MAINTAINER: 'MAINTAINER',
   MEMBER: 'MEMBER',
 } as const;
 
-export type PostOrganizationAddMembersBodyMembersItem = {
-  /** @pattern ^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-7[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12})$ */
-  userId: string;
-  role: PostOrganizationAddMembersBodyMembersItemRole;
+export type PostOrganizationByOrganizationIdInvitationsBody = {
+  /** @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$ */
+  email: string;
+  role: PostOrganizationByOrganizationIdInvitationsBodyRole;
 };
 
-export type PostOrganizationAddMembersBody = {
-  /** @pattern ^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-7[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12})$ */
-  organizationId: string;
-  members: PostOrganizationAddMembersBodyMembersItem[];
-};
-
-export type PostOrganizationAddMembers201Data = {
-  message: string;
-};
-
-export type PostOrganizationAddMembers201Meta = {
+export type PostOrganizationByOrganizationIdInvitations201Meta = {
   unixTimestamp: number;
   requestId?: string;
 };
 
-export type PostOrganizationAddMembers201 = {
+export type PostOrganizationByOrganizationIdInvitations201 = {
   success: true;
-  data: PostOrganizationAddMembers201Data;
-  error: unknown | null;
-  meta: PostOrganizationAddMembers201Meta;
-};
-
-export type PostOrganizationAddMembers400Error = {
-  code: string;
-  details?: unknown;
-};
-
-export type PostOrganizationAddMembers400Meta = {
-  unixTimestamp: number;
-  requestId?: string;
-};
-
-/**
- * Invalid data or missing required fields
- */
-export type PostOrganizationAddMembers400 = {
-  success: false;
   data: unknown | null;
-  error: PostOrganizationAddMembers400Error;
-  meta: PostOrganizationAddMembers400Meta;
+  error: unknown | null;
+  meta: PostOrganizationByOrganizationIdInvitations201Meta;
 };
 
-export type PostOrganizationAddMembers401Error = {
+export type PostOrganizationByOrganizationIdInvitations401Error = {
   code: string;
   details?: unknown;
 };
 
-export type PostOrganizationAddMembers401Meta = {
+export type PostOrganizationByOrganizationIdInvitations401Meta = {
   unixTimestamp: number;
   requestId?: string;
 };
@@ -405,71 +375,71 @@ export type PostOrganizationAddMembers401Meta = {
 /**
  * Access token verification failed.
  */
-export type PostOrganizationAddMembers401 = {
+export type PostOrganizationByOrganizationIdInvitations401 = {
   success: false;
   data: unknown | null;
-  error: PostOrganizationAddMembers401Error;
-  meta: PostOrganizationAddMembers401Meta;
+  error: PostOrganizationByOrganizationIdInvitations401Error;
+  meta: PostOrganizationByOrganizationIdInvitations401Meta;
 };
 
-export type PostOrganizationAddMembers403Error = {
+export type PostOrganizationByOrganizationIdInvitations404Error = {
   code: string;
   details?: unknown;
 };
 
-export type PostOrganizationAddMembers403Meta = {
+export type PostOrganizationByOrganizationIdInvitations404Meta = {
   unixTimestamp: number;
   requestId?: string;
 };
 
 /**
- * Member cannot be added to this organization
+ * Invalid data or missing required fields
  */
-export type PostOrganizationAddMembers403 = {
+export type PostOrganizationByOrganizationIdInvitations404 = {
   success: false;
   data: unknown | null;
-  error: PostOrganizationAddMembers403Error;
-  meta: PostOrganizationAddMembers403Meta;
+  error: PostOrganizationByOrganizationIdInvitations404Error;
+  meta: PostOrganizationByOrganizationIdInvitations404Meta;
 };
 
-export type PostOrganizationAddMembers404Error = {
+export type PostOrganizationByOrganizationIdInvitations409Error = {
   code: string;
   details?: unknown;
 };
 
-export type PostOrganizationAddMembers404Meta = {
+export type PostOrganizationByOrganizationIdInvitations409Meta = {
   unixTimestamp: number;
   requestId?: string;
 };
 
 /**
- * Organization not found
+ * Invitee is wrong
  */
-export type PostOrganizationAddMembers404 = {
+export type PostOrganizationByOrganizationIdInvitations409 = {
   success: false;
   data: unknown | null;
-  error: PostOrganizationAddMembers404Error;
-  meta: PostOrganizationAddMembers404Meta;
+  error: PostOrganizationByOrganizationIdInvitations409Error;
+  meta: PostOrganizationByOrganizationIdInvitations409Meta;
 };
 
-export type PostOrganizationAddMembers409Error = {
+export type PostOrganizationByOrganizationIdInvitations422Error = {
   code: string;
   details?: unknown;
 };
 
-export type PostOrganizationAddMembers409Meta = {
+export type PostOrganizationByOrganizationIdInvitations422Meta = {
   unixTimestamp: number;
   requestId?: string;
 };
 
 /**
- * Member already exists in the organization
+ * Invalid data
  */
-export type PostOrganizationAddMembers409 = {
+export type PostOrganizationByOrganizationIdInvitations422 = {
   success: false;
   data: unknown | null;
-  error: PostOrganizationAddMembers409Error;
-  meta: PostOrganizationAddMembers409Meta;
+  error: PostOrganizationByOrganizationIdInvitations422Error;
+  meta: PostOrganizationByOrganizationIdInvitations422Meta;
 };
 
 export type GetUserMe200Data = {
@@ -530,6 +500,93 @@ export type GetUserMe404 = {
   data: unknown | null;
   error: GetUserMe404Error;
   meta: GetUserMe404Meta;
+};
+
+export type GetUserParams = {
+  /**
+   * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
+   */
+  email: string;
+};
+
+export type GetUser200Data = {
+  /** @pattern ^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-7[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12})$ */
+  id: string;
+  /** @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$ */
+  email: string;
+  name: string;
+};
+
+export type GetUser200Meta = {
+  unixTimestamp: number;
+  requestId?: string;
+};
+
+export type GetUser200 = {
+  success: true;
+  data: GetUser200Data;
+  error: unknown | null;
+  meta: GetUser200Meta;
+};
+
+export type GetUser401Error = {
+  code: string;
+  details?: unknown;
+};
+
+export type GetUser401Meta = {
+  unixTimestamp: number;
+  requestId?: string;
+};
+
+/**
+ * Access token verification failed.
+ */
+export type GetUser401 = {
+  success: false;
+  data: unknown | null;
+  error: GetUser401Error;
+  meta: GetUser401Meta;
+};
+
+export type GetUser404Error = {
+  code: string;
+  details?: unknown;
+};
+
+export type GetUser404Meta = {
+  unixTimestamp: number;
+  requestId?: string;
+};
+
+/**
+ * User not found
+ */
+export type GetUser404 = {
+  success: false;
+  data: unknown | null;
+  error: GetUser404Error;
+  meta: GetUser404Meta;
+};
+
+export type GetUser422Error = {
+  code: string;
+  details?: unknown;
+};
+
+export type GetUser422Meta = {
+  unixTimestamp: number;
+  requestId?: string;
+};
+
+/**
+ * Invalid query parameters
+ */
+export type GetUser422 = {
+  success: false;
+  data: unknown | null;
+  error: GetUser422Error;
+  meta: GetUser422Meta;
 };
 
 export type postAuthSignInResponse200 = {
@@ -815,82 +872,82 @@ export const postOrganization = async (
   } as postOrganizationResponse;
 };
 
-export type postOrganizationAddMembersResponse201 = {
-  data: PostOrganizationAddMembers201;
+export type postOrganizationByOrganizationIdInvitationsResponse201 = {
+  data: PostOrganizationByOrganizationIdInvitations201;
   status: 201;
 };
 
-export type postOrganizationAddMembersResponse400 = {
-  data: PostOrganizationAddMembers400;
-  status: 400;
-};
-
-export type postOrganizationAddMembersResponse401 = {
-  data: PostOrganizationAddMembers401;
+export type postOrganizationByOrganizationIdInvitationsResponse401 = {
+  data: PostOrganizationByOrganizationIdInvitations401;
   status: 401;
 };
 
-export type postOrganizationAddMembersResponse403 = {
-  data: PostOrganizationAddMembers403;
-  status: 403;
-};
-
-export type postOrganizationAddMembersResponse404 = {
-  data: PostOrganizationAddMembers404;
+export type postOrganizationByOrganizationIdInvitationsResponse404 = {
+  data: PostOrganizationByOrganizationIdInvitations404;
   status: 404;
 };
 
-export type postOrganizationAddMembersResponse409 = {
-  data: PostOrganizationAddMembers409;
+export type postOrganizationByOrganizationIdInvitationsResponse409 = {
+  data: PostOrganizationByOrganizationIdInvitations409;
   status: 409;
 };
 
-export type postOrganizationAddMembersResponseSuccess =
-  postOrganizationAddMembersResponse201 & {
+export type postOrganizationByOrganizationIdInvitationsResponse422 = {
+  data: PostOrganizationByOrganizationIdInvitations422;
+  status: 422;
+};
+
+export type postOrganizationByOrganizationIdInvitationsResponseSuccess =
+  postOrganizationByOrganizationIdInvitationsResponse201 & {
     headers: Headers;
   };
-export type postOrganizationAddMembersResponseError = (
-  | postOrganizationAddMembersResponse400
-  | postOrganizationAddMembersResponse401
-  | postOrganizationAddMembersResponse403
-  | postOrganizationAddMembersResponse404
-  | postOrganizationAddMembersResponse409
+export type postOrganizationByOrganizationIdInvitationsResponseError = (
+  | postOrganizationByOrganizationIdInvitationsResponse401
+  | postOrganizationByOrganizationIdInvitationsResponse404
+  | postOrganizationByOrganizationIdInvitationsResponse409
+  | postOrganizationByOrganizationIdInvitationsResponse422
 ) & {
   headers: Headers;
 };
 
-export type postOrganizationAddMembersResponse =
-  | postOrganizationAddMembersResponseSuccess
-  | postOrganizationAddMembersResponseError;
+export type postOrganizationByOrganizationIdInvitationsResponse =
+  | postOrganizationByOrganizationIdInvitationsResponseSuccess
+  | postOrganizationByOrganizationIdInvitationsResponseError;
 
-export const getPostOrganizationAddMembersUrl = () => {
-  return `http://localhost:4000/organization/add-members`;
+export const getPostOrganizationByOrganizationIdInvitationsUrl = (
+  organizationId: string,
+) => {
+  return `http://localhost:4000/organization/${organizationId}/invitations`;
 };
 
 /**
- * @summary Add Members
+ * @summary Create Invitation
  */
-export const postOrganizationAddMembers = async (
-  postOrganizationAddMembersBody: PostOrganizationAddMembersBody,
+export const postOrganizationByOrganizationIdInvitations = async (
+  organizationId: string,
+  postOrganizationByOrganizationIdInvitationsBody: PostOrganizationByOrganizationIdInvitationsBody,
   options?: RequestInit,
-): Promise<postOrganizationAddMembersResponse> => {
-  const res = await fetch(getPostOrganizationAddMembersUrl(), {
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(postOrganizationAddMembersBody),
-  });
+): Promise<postOrganizationByOrganizationIdInvitationsResponse> => {
+  const res = await fetch(
+    getPostOrganizationByOrganizationIdInvitationsUrl(organizationId),
+    {
+      ...options,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', ...options?.headers },
+      body: JSON.stringify(postOrganizationByOrganizationIdInvitationsBody),
+    },
+  );
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text();
 
-  const data: postOrganizationAddMembersResponse['data'] = body
+  const data: postOrganizationByOrganizationIdInvitationsResponse['data'] = body
     ? JSON.parse(body)
     : {};
   return {
     data,
     status: res.status,
     headers: res.headers,
-  } as postOrganizationAddMembersResponse;
+  } as postOrganizationByOrganizationIdInvitationsResponse;
 };
 
 export type getUserMeResponse200 = {
@@ -946,4 +1003,72 @@ export const getUserMe = async (
     status: res.status,
     headers: res.headers,
   } as getUserMeResponse;
+};
+
+export type getUserResponse200 = {
+  data: GetUser200;
+  status: 200;
+};
+
+export type getUserResponse401 = {
+  data: GetUser401;
+  status: 401;
+};
+
+export type getUserResponse404 = {
+  data: GetUser404;
+  status: 404;
+};
+
+export type getUserResponse422 = {
+  data: GetUser422;
+  status: 422;
+};
+
+export type getUserResponseSuccess = getUserResponse200 & {
+  headers: Headers;
+};
+export type getUserResponseError = (
+  | getUserResponse401
+  | getUserResponse404
+  | getUserResponse422
+) & {
+  headers: Headers;
+};
+
+export type getUserResponse = getUserResponseSuccess | getUserResponseError;
+
+export const getGetUserUrl = (params: GetUserParams) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value));
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0
+    ? `http://localhost:4000/user/?${stringifiedParams}`
+    : `http://localhost:4000/user/`;
+};
+
+/**
+ * Retrieves user information
+ * @summary Get User
+ */
+export const getUser = async (
+  params: GetUserParams,
+  options?: RequestInit,
+): Promise<getUserResponse> => {
+  const res = await fetch(getGetUserUrl(params), {
+    ...options,
+    method: 'GET',
+  });
+
+  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
+
+  const data: getUserResponse['data'] = body ? JSON.parse(body) : {};
+  return { data, status: res.status, headers: res.headers } as getUserResponse;
 };

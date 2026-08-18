@@ -2,8 +2,8 @@ import { BadRequestError } from '$shared/error';
 
 import type { ValidationError } from 'elysia';
 
-export function VaildationErrorMapper(error: ValidationError): BadRequestError {
-  const detail = error.detail('Vaildation', false);
+export function ValidationErrorMapper(error: ValidationError): BadRequestError {
+  const detail = error.detail('Validation', false);
 
   if (typeof detail !== 'string') {
     const errors = detail.errors;

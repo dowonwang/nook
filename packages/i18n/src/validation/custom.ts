@@ -1,5 +1,6 @@
 export const I18N_CUSTOM_VALIDATION = [
   'PostAuthSignUpBody_confirmPassword_mismatch',
+  'PostOrganizationByOrganizationIdInvitationsBody_required_organization_id',
 ] as const;
 
 export type I18N_CUSTOM_VALIDATION_KEY =

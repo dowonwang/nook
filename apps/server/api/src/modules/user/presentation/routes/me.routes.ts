@@ -29,7 +29,6 @@ export function createMeRoutes({ authGuard, meHandler }: Dependencies) {
         return ApiResponseBuilder.success(result);
       },
       {
-        parse: 'application/json',
         detail: {
           summary: 'Get Current User',
           description:

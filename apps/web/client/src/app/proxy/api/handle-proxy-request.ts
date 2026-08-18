@@ -44,7 +44,7 @@ export async function handleProxyRequest(
     const response = NextResponse.json(
       {
         error: {
-          code: SESSION_ERROR_CODE.refreshTokenExpried,
+          code: SESSION_ERROR_CODE.refreshTokenExpired,
         },
       },
       {

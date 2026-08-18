@@ -62,11 +62,7 @@ export function CreateOrganizationForm({ onSuccess }: Props) {
       <FieldGroup>
         <Field>
           <FieldLabel htmlFor='title'>Title</FieldLabel>
-          {titleError && (
-            <FieldDescription id='title-error'>
-              {t(titleError)}
-            </FieldDescription>
-          )}
+
           <Input
             ref={register('title')}
             id='title'
@@ -77,6 +73,12 @@ export function CreateOrganizationForm({ onSuccess }: Props) {
             aria-describedby={titleError ? 'title-error' : undefined}
             disabled={actionState.success}
           />
+
+          {titleError && (
+            <FieldDescription id='title-error'>
+              {t(titleError)}
+            </FieldDescription>
+          )}
         </Field>
 
         {actionError && (

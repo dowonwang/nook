@@ -11,7 +11,7 @@ export const actionStateBuilder = {
     };
   },
 
-  error<TState, TResponseError>(
+  error<TState, TResponseError = never>(
     state: TState,
     error: TResponseError | ActionStateZodError,
   ): ActionState<TState, TResponseError> {
