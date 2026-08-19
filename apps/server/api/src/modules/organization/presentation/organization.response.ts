@@ -18,9 +18,15 @@ export const OrganizationResponseSchemas = {
           email: z.email(),
         })
         .nullable(),
-      role: z.string(),
-      status: z.string(),
-      expiresAt: z.date(),
+      role: z.enum(['ADMIN', 'MAINTAINER', 'MEMBER']),
+      status: z.enum([
+        'PENDING',
+        'ACCEPTED',
+        'CANCELED',
+        'REJECTED',
+        'EXPIRED',
+      ]),
+      expiresAt: z.iso.datetime(),
     }),
   ),
 };

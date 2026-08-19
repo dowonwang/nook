@@ -10,7 +10,8 @@ import {
 import { Separator } from '@packages/ui/components/separator';
 
 import { CreateOrganizationForm } from '$features/organization/create';
-import { CreateOrganizationInvitationForm } from '$features/organization/create-invitation';
+import { CreateOrganizationInvitationForm } from '$features/organization-invitation/create';
+import { OrganizationInvitationSentList } from '$features/organization-invitation/sent-list/ui/sent-list';
 
 import { useCreateOrganizationFlow } from '../model/flow-provider';
 
@@ -43,7 +44,7 @@ export function CreateOrganizationFlowContent() {
             disabled={!isOrganizationCreated}
           />
           <Separator className='my-6' />
-          여기는 리스트
+          <OrganizationInvitationSentList organizationId={organization?.id} />
         </CardBody>
       </Card>
     </div>

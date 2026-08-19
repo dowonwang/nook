@@ -15,5 +15,5 @@ export interface OrganizationInvitationDto {
   invitee: Invitee | null;
   role: OrganizationMemberRoleValue;
   status: OrganizationInvitationStatusValue;
-  expiresAt: Date;
+  expiresAt: string;
 }

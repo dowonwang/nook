@@ -442,6 +442,81 @@ export type PostOrganizationByOrganizationIdInvitations422 = {
   meta: PostOrganizationByOrganizationIdInvitations422Meta;
 };
 
+export type GetOrganizationByOrganizationIdInvitations200DataItemInvitee =
+  | {
+      /** @pattern ^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-7[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12})$ */
+      id: string;
+      name: string;
+      /** @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$ */
+      email: string;
+    }
+  | unknown
+  | null;
+
+export type GetOrganizationByOrganizationIdInvitations200DataItemRole =
+  (typeof GetOrganizationByOrganizationIdInvitations200DataItemRole)[keyof typeof GetOrganizationByOrganizationIdInvitations200DataItemRole];
+
+export const GetOrganizationByOrganizationIdInvitations200DataItemRole = {
+  ADMIN: 'ADMIN',
+  MAINTAINER: 'MAINTAINER',
+  MEMBER: 'MEMBER',
+} as const;
+
+export type GetOrganizationByOrganizationIdInvitations200DataItemStatus =
+  (typeof GetOrganizationByOrganizationIdInvitations200DataItemStatus)[keyof typeof GetOrganizationByOrganizationIdInvitations200DataItemStatus];
+
+export const GetOrganizationByOrganizationIdInvitations200DataItemStatus = {
+  PENDING: 'PENDING',
+  ACCEPTED: 'ACCEPTED',
+  CANCELED: 'CANCELED',
+  REJECTED: 'REJECTED',
+  EXPIRED: 'EXPIRED',
+} as const;
+
+export type GetOrganizationByOrganizationIdInvitations200DataItem = {
+  /** @pattern ^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-7[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12})$ */
+  id: string;
+  /** @pattern ^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-7[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12})$ */
+  organizationId: string;
+  invitee: GetOrganizationByOrganizationIdInvitations200DataItemInvitee;
+  role: GetOrganizationByOrganizationIdInvitations200DataItemRole;
+  status: GetOrganizationByOrganizationIdInvitations200DataItemStatus;
+  /** @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$ */
+  expiresAt: string;
+};
+
+export type GetOrganizationByOrganizationIdInvitations200Meta = {
+  unixTimestamp: number;
+  requestId?: string;
+};
+
+export type GetOrganizationByOrganizationIdInvitations200 = {
+  success: true;
+  data: GetOrganizationByOrganizationIdInvitations200DataItem[];
+  error: unknown | null;
+  meta: GetOrganizationByOrganizationIdInvitations200Meta;
+};
+
+export type GetOrganizationByOrganizationIdInvitations401Error = {
+  code: string;
+  details?: unknown;
+};
+
+export type GetOrganizationByOrganizationIdInvitations401Meta = {
+  unixTimestamp: number;
+  requestId?: string;
+};
+
+/**
+ * Access token verification failed.
+ */
+export type GetOrganizationByOrganizationIdInvitations401 = {
+  success: false;
+  data: unknown | null;
+  error: GetOrganizationByOrganizationIdInvitations401Error;
+  meta: GetOrganizationByOrganizationIdInvitations401Meta;
+};
+
 export type GetUserMe200Data = {
   /** @pattern ^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-7[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12})$ */
   id: string;
@@ -948,6 +1023,62 @@ export const postOrganizationByOrganizationIdInvitations = async (
     status: res.status,
     headers: res.headers,
   } as postOrganizationByOrganizationIdInvitationsResponse;
+};
+
+export type getOrganizationByOrganizationIdInvitationsResponse200 = {
+  data: GetOrganizationByOrganizationIdInvitations200;
+  status: 200;
+};
+
+export type getOrganizationByOrganizationIdInvitationsResponse401 = {
+  data: GetOrganizationByOrganizationIdInvitations401;
+  status: 401;
+};
+
+export type getOrganizationByOrganizationIdInvitationsResponseSuccess =
+  getOrganizationByOrganizationIdInvitationsResponse200 & {
+    headers: Headers;
+  };
+export type getOrganizationByOrganizationIdInvitationsResponseError =
+  getOrganizationByOrganizationIdInvitationsResponse401 & {
+    headers: Headers;
+  };
+
+export type getOrganizationByOrganizationIdInvitationsResponse =
+  | getOrganizationByOrganizationIdInvitationsResponseSuccess
+  | getOrganizationByOrganizationIdInvitationsResponseError;
+
+export const getGetOrganizationByOrganizationIdInvitationsUrl = (
+  organizationId: string,
+) => {
+  return `http://localhost:4000/organization/${organizationId}/invitations`;
+};
+
+/**
+ * @summary Find Sent Invitations
+ */
+export const getOrganizationByOrganizationIdInvitations = async (
+  organizationId: string,
+  options?: RequestInit,
+): Promise<getOrganizationByOrganizationIdInvitationsResponse> => {
+  const res = await fetch(
+    getGetOrganizationByOrganizationIdInvitationsUrl(organizationId),
+    {
+      ...options,
+      method: 'GET',
+    },
+  );
+
+  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
+
+  const data: getOrganizationByOrganizationIdInvitationsResponse['data'] = body
+    ? JSON.parse(body)
+    : {};
+  return {
+    data,
+    status: res.status,
+    headers: res.headers,
+  } as getOrganizationByOrganizationIdInvitationsResponse;
 };
 
 export type getUserMeResponse200 = {

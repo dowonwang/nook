@@ -3,13 +3,10 @@
 import { createContext, useContext, useMemo, useState } from 'react';
 
 import type { Organization } from '$entities/organization';
-import type { User } from '$entities/user';
 
 interface CreateOrganizationFlowContext {
   organization: Organization | null;
   isOrganizationCreated: boolean;
-  members: User[];
-  setMembers: (members: User[]) => void;
   setOrganization: (organization: Organization | null) => void;
   resetOrganization: () => void;
 }
@@ -25,14 +22,11 @@ export function CreateOrganizationFlowProvider({
   children,
 }: CreateOrganizationFlowProviderProps) {
   const [organization, setOrganization] = useState<Organization | null>(null);
-  const [members, setMembers] = useState<User[]>([]);
 
   const value = useMemo<CreateOrganizationFlowContext>(
     () => ({
       organization,
       isOrganizationCreated: organization !== null,
-      members,
-      setMembers,
       setOrganization: setOrganization,
       resetOrganization: () => {
         setOrganization(null);

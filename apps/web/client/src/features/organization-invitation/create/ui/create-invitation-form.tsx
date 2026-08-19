@@ -10,10 +10,12 @@ import {
 } from '@packages/ui/components/field';
 import { Input } from '@packages/ui/components/input';
 import { WarningMessage } from '@packages/ui/components/warning-message';
+import { useQueryClient } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
-import { useActionState } from 'react';
+import { useActionState, useEffect } from 'react';
 
 import { OrganizationMemberRoleRadioGroup } from '$entities/organization-member';
+import { ORGANIZATION_INVITATION_SENT_LIST_QUERY_KEY } from '$features/organization-invitation/sent-list/config/query-key';
 import {
   useActionErrorMessage,
   useActionFieldErrors,
@@ -35,7 +37,7 @@ export function CreateOrganizationInvitationForm({
   disabled = false,
 }: Props) {
   const t = useTranslations('validation');
-  const [actionState, formAction] = useActionState(
+  const [actionState, formAction, isPending] = useActionState(
     createOrganizationInvitationAction,
     {
       success: false,
@@ -43,6 +45,7 @@ export function CreateOrganizationInvitationForm({
       state: INIT_DATA,
     },
   );
+  const queryClient = useQueryClient();
 
   const { register, getFieldError } = useActionFieldErrors(
     actionState.error as ActionStateZodError,
@@ -51,6 +54,16 @@ export function CreateOrganizationInvitationForm({
   const emailError = getFieldError('email');
   const roleError = getFieldError('role');
   const actionError = useActionErrorMessage(actionState.error);
+
+  useEffect(() => {
+    if (!actionState.success || !organization?.id || isPending) {
+      return;
+    }
+
+    void queryClient.invalidateQueries({
+      queryKey: ORGANIZATION_INVITATION_SENT_LIST_QUERY_KEY(organization.id),
+    });
+  }, [actionState.success, organization?.id, isPending]);
 
   return (
     <form action={formAction} noValidate>

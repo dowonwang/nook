@@ -21,7 +21,7 @@ export const OrganizationInvitationDtoMapper = {
         organizationId: invitationSnapshot.organizationId,
         role: invitationSnapshot.role,
         status: invitationSnapshot.status,
-        expiresAt: invitationSnapshot.expiresAt,
+        expiresAt: invitationSnapshot.expiresAt.toISOString(),
         invitee: inviteeSnapshot
           ? {
               id: inviteeSnapshot.id,
