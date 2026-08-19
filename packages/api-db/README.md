@@ -1,6 +1,6 @@
 # @packages/api-db
 
-Classroom Backend에서 사용하는 Database package입니다.
+Nook Backend에서 사용하는 Database package입니다.
 
 PostgreSQL 개발 환경과 Prisma schema, Prisma Client configuration을 한 곳에서 관리합니다.
 

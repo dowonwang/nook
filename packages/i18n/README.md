@@ -1,6 +1,6 @@
 # @packages/i18n
 
-Classroom에서 공통으로 사용하는 internationalization 리소스를 관리하는 패키지입니다.
+Nook에서 공통으로 사용하는 internationalization 리소스를 관리하는 패키지입니다.
 
 Frontend와 Backend 사이에서 공통 메시지와 validation translation을 공유하기 위해 사용합니다.
 

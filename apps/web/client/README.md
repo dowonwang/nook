@@ -1,6 +1,6 @@
 # @web/client
 
-Classroom의 Web Client 애플리케이션입니다.
+Nook의 Web Client 애플리케이션입니다.
 
 Next.js App Router를 기반으로 구성되어 있으며, 기능과 도메인의 책임을 분리하기 위해 Feature-Sliced Design 기반의 디렉터리 구조를 사용합니다.
 
@@ -95,7 +95,7 @@ Next.js route 자체와 화면의 구현 책임을 분리하기 위해 사용합
 
 - User
 - Organization
-- Classroom
+- Nook
 
 ### `shared`
 

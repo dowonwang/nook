@@ -1,6 +1,6 @@
 # @packages/ui
 
-Classroom 애플리케이션에서 공통으로 사용하는 UI components와 styles를 관리하는 패키지입니다.
+Nook 애플리케이션에서 공통으로 사용하는 UI components와 styles를 관리하는 패키지입니다.
 
 특정 비즈니스 도메인에 종속되지 않는 재사용 가능한 UI primitive를 제공하는 것을 목적으로 합니다.
 
@@ -60,7 +60,7 @@ import '@packages/ui/styles.css';
 
 ```text
 OrganizationCreateForm
-ClassroomMemberList
+NookMemberList
 UserProfileCard
 ```
 

@@ -1,6 +1,6 @@
 # @server/api
 
-Classroom의 Backend API 애플리케이션입니다.
+Nook의 Backend API 애플리케이션입니다.
 
 Bun과 Elysia를 기반으로 HTTP API를 제공하며, 데이터베이스 접근은 `@packages/api-db`, 공용 메시지는 `@packages/i18n`을 사용합니다.
 

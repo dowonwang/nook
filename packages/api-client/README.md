@@ -1,6 +1,6 @@
 # @packages/api-client
 
-Classroom API의 OpenAPI specification으로부터 생성되는 API Client와 Zod schema를 관리하는 패키지입니다.
+Nook API의 OpenAPI specification으로부터 생성되는 API Client와 Zod schema를 관리하는 패키지입니다.
 
 API 요청/응답 타입과 validation schema를 Web Client와 공유하여 Backend와 Frontend 사이의 contract를 일관되게 유지합니다.
 
