@@ -1,6 +1,7 @@
 import {
   Organization,
   OrganizationMember,
+  OrganizationMemberRole,
   OrganizationMemberUuid,
   OrganizationUuid,
 } from '$modules/organization/domain';
@@ -33,7 +34,7 @@ export const OrganizationPrismaMapper = {
     return OrganizationMember.create(OrganizationMemberUuid.create(record.id), {
       userId: UserUuid.create(record.userId),
       organizationId: OrganizationUuid.create(record.organizationId),
-      role: record.role,
+      role: OrganizationMemberRole.create(record.role),
     });
   },
 } as const;

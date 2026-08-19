@@ -1,4 +1,4 @@
-export abstract class Entity<Id> {
+export abstract class Entity<Id, Snapshot> {
   protected readonly _id: Id;
 
   protected constructor(id: Id) {
@@ -8,4 +8,6 @@ export abstract class Entity<Id> {
   get id(): Id {
     return this._id;
   }
+
+  abstract toSnapshot(): Readonly<Snapshot>;
 }

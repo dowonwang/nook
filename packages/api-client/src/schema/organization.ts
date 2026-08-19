@@ -12,17 +12,44 @@ import { zodParams } from '../lib/zod-params';
 /**
  * @summary Create Organization
  */
+export const postOrganizationBodyTitleMax = 20;
+
 export const PostOrganizationBody = zod.object({
-  title: zod.string(
-    zodParams({
-      operationId: 'postOrganization',
-      location: 'body',
-      schemaName: 'PostOrganizationBody',
-      fieldPath: ['title'],
-      validator: 'string',
-    }),
-  ),
+  title: zod
+    .string(
+      zodParams({
+        operationId: 'postOrganization',
+        location: 'body',
+        schemaName: 'PostOrganizationBody',
+        fieldPath: ['title'],
+        validator: 'string',
+      }),
+    )
+    .min(
+      1,
+      zodParams({
+        operationId: 'postOrganization',
+        location: 'body',
+        schemaName: 'PostOrganizationBody',
+        fieldPath: ['title'],
+        validator: 'min',
+      }),
+    )
+    .max(
+      postOrganizationBodyTitleMax,
+      zodParams({
+        operationId: 'postOrganization',
+        location: 'body',
+        schemaName: 'PostOrganizationBody',
+        fieldPath: ['title'],
+        validator: 'max',
+      }),
+    ),
 });
+
+export const postOrganizationResponseDataIdRegExp = new RegExp(
+  '^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-7[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12})$',
+);
 
 export const PostOrganizationResponse = zod.object({
   success: zod.literal(
@@ -36,12 +63,32 @@ export const PostOrganizationResponse = zod.object({
     }),
   ),
   data: zod.object({
-    message: zod.string(
+    id: zod
+      .uuid(
+        zodParams({
+          operationId: 'postOrganization',
+          location: 'response',
+          schemaName: 'PostOrganizationResponse',
+          fieldPath: ['data', 'id'],
+          validator: 'uuid',
+        }),
+      )
+      .regex(
+        postOrganizationResponseDataIdRegExp,
+        zodParams({
+          operationId: 'postOrganization',
+          location: 'response',
+          schemaName: 'PostOrganizationResponse',
+          fieldPath: ['data', 'id'],
+          validator: 'regex',
+        }),
+      ),
+    title: zod.string(
       zodParams({
         operationId: 'postOrganization',
         location: 'response',
         schemaName: 'PostOrganizationResponse',
-        fieldPath: ['data', 'message'],
+        fieldPath: ['data', 'title'],
         validator: 'string',
       }),
     ),
@@ -72,101 +119,77 @@ export const PostOrganizationResponse = zod.object({
 });
 
 /**
- * @summary Add Members
+ * @summary Create Invitation
  */
-export const postOrganizationAddMembersBodyOrganizationIdRegExp = new RegExp(
-  '^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-7[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12})$',
-);
-export const postOrganizationAddMembersBodyMembersItemUserIdRegExp = new RegExp(
-  '^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-7[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12})$',
-);
-
-export const PostOrganizationAddMembersBody = zod.object({
-  organizationId: zod
-    .uuid(
-      zodParams({
-        operationId: 'postOrganizationAdd-members',
-        location: 'body',
-        schemaName: 'PostOrganizationAddMembersBody',
-        fieldPath: ['organizationId'],
-        validator: 'uuid',
-      }),
-    )
-    .regex(
-      postOrganizationAddMembersBodyOrganizationIdRegExp,
-      zodParams({
-        operationId: 'postOrganizationAdd-members',
-        location: 'body',
-        schemaName: 'PostOrganizationAddMembersBody',
-        fieldPath: ['organizationId'],
-        validator: 'regex',
-      }),
-    ),
-  members: zod.array(
-    zod.object({
-      userId: zod
-        .uuid(
-          zodParams({
-            operationId: 'postOrganizationAdd-members',
-            location: 'body',
-            schemaName: 'PostOrganizationAddMembersBody',
-            fieldPath: ['members', 'userId'],
-            validator: 'uuid',
-          }),
-        )
-        .regex(
-          postOrganizationAddMembersBodyMembersItemUserIdRegExp,
-          zodParams({
-            operationId: 'postOrganizationAdd-members',
-            location: 'body',
-            schemaName: 'PostOrganizationAddMembersBody',
-            fieldPath: ['members', 'userId'],
-            validator: 'regex',
-          }),
-        ),
-      role: zod.enum(
-        ['ADMIN', 'MAINTAINER', 'MEMBER'],
-        zodParams({
-          operationId: 'postOrganizationAdd-members',
-          location: 'body',
-          schemaName: 'PostOrganizationAddMembersBody',
-          fieldPath: ['members', 'role'],
-          validator: 'enum',
-        }),
-      ),
+export const PostOrganizationByOrganizationIdInvitationsParams = zod.object({
+  organizationId: zod.string(
+    zodParams({
+      operationId: 'postOrganizationByOrganizationIdInvitations',
+      location: 'param',
+      schemaName: 'PostOrganizationByOrganizationIdInvitationsParams',
+      fieldPath: ['organizationId'],
+      validator: 'string',
     }),
   ),
 });
 
-export const PostOrganizationAddMembersResponse = zod.object({
+export const postOrganizationByOrganizationIdInvitationsBodyEmailRegExp =
+  new RegExp(
+    "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$",
+  );
+
+export const PostOrganizationByOrganizationIdInvitationsBody = zod.object({
+  email: zod
+    .string(
+      zodParams({
+        operationId: 'postOrganizationByOrganizationIdInvitations',
+        location: 'body',
+        schemaName: 'PostOrganizationByOrganizationIdInvitationsBody',
+        fieldPath: ['email'],
+        validator: 'string',
+      }),
+    )
+    .regex(
+      postOrganizationByOrganizationIdInvitationsBodyEmailRegExp,
+      zodParams({
+        operationId: 'postOrganizationByOrganizationIdInvitations',
+        location: 'body',
+        schemaName: 'PostOrganizationByOrganizationIdInvitationsBody',
+        fieldPath: ['email'],
+        validator: 'regex',
+      }),
+    ),
+  role: zod.enum(
+    ['ADMIN', 'MAINTAINER', 'MEMBER'],
+    zodParams({
+      operationId: 'postOrganizationByOrganizationIdInvitations',
+      location: 'body',
+      schemaName: 'PostOrganizationByOrganizationIdInvitationsBody',
+      fieldPath: ['role'],
+      validator: 'enum',
+    }),
+  ),
+});
+
+export const PostOrganizationByOrganizationIdInvitationsResponse = zod.object({
   success: zod.literal(
     true,
     zodParams({
-      operationId: 'postOrganizationAdd-members',
+      operationId: 'postOrganizationByOrganizationIdInvitations',
       location: 'response',
-      schemaName: 'PostOrganizationAddMembersResponse',
+      schemaName: 'PostOrganizationByOrganizationIdInvitationsResponse',
       fieldPath: ['success'],
       validator: 'literal',
     }),
   ),
-  data: zod.object({
-    message: zod.string(
-      zodParams({
-        operationId: 'postOrganizationAdd-members',
-        location: 'response',
-        schemaName: 'PostOrganizationAddMembersResponse',
-        fieldPath: ['data', 'message'],
-        validator: 'string',
-      }),
-    ),
-  }),
+  data: zod.unknown().nullable(),
   error: zod.unknown().nullable(),
   meta: zod.object({
     unixTimestamp: zod.number(
       zodParams({
-        operationId: 'postOrganizationAdd-members',
+        operationId: 'postOrganizationByOrganizationIdInvitations',
         location: 'response',
-        schemaName: 'PostOrganizationAddMembersResponse',
+        schemaName: 'PostOrganizationByOrganizationIdInvitationsResponse',
         fieldPath: ['meta', 'unixTimestamp'],
         validator: 'number',
       }),
@@ -174,9 +197,224 @@ export const PostOrganizationAddMembersResponse = zod.object({
     requestId: zod
       .string(
         zodParams({
-          operationId: 'postOrganizationAdd-members',
+          operationId: 'postOrganizationByOrganizationIdInvitations',
           location: 'response',
-          schemaName: 'PostOrganizationAddMembersResponse',
+          schemaName: 'PostOrganizationByOrganizationIdInvitationsResponse',
+          fieldPath: ['meta', 'requestId'],
+          validator: 'string',
+        }),
+      )
+      .optional(),
+  }),
+});
+
+/**
+ * @summary Find Sent Invitations
+ */
+export const GetOrganizationByOrganizationIdInvitationsParams = zod.object({
+  organizationId: zod.string(
+    zodParams({
+      operationId: 'getOrganizationByOrganizationIdInvitations',
+      location: 'param',
+      schemaName: 'GetOrganizationByOrganizationIdInvitationsParams',
+      fieldPath: ['organizationId'],
+      validator: 'string',
+    }),
+  ),
+});
+
+export const getOrganizationByOrganizationIdInvitationsResponseDataItemIdRegExp =
+  new RegExp(
+    '^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-7[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12})$',
+  );
+export const getOrganizationByOrganizationIdInvitationsResponseDataItemOrganizationIdRegExp =
+  new RegExp(
+    '^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-7[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12})$',
+  );
+export const getOrganizationByOrganizationIdInvitationsResponseDataItemInviteeOneIdRegExp =
+  new RegExp(
+    '^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-7[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12})$',
+  );
+export const getOrganizationByOrganizationIdInvitationsResponseDataItemInviteeOneEmailRegExp =
+  new RegExp(
+    "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$",
+  );
+export const getOrganizationByOrganizationIdInvitationsResponseDataItemExpiresAtRegExp =
+  new RegExp(
+    '^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$',
+  );
+
+export const GetOrganizationByOrganizationIdInvitationsResponse = zod.object({
+  success: zod.literal(
+    true,
+    zodParams({
+      operationId: 'getOrganizationByOrganizationIdInvitations',
+      location: 'response',
+      schemaName: 'GetOrganizationByOrganizationIdInvitationsResponse',
+      fieldPath: ['success'],
+      validator: 'literal',
+    }),
+  ),
+  data: zod.array(
+    zod.object({
+      id: zod
+        .uuid(
+          zodParams({
+            operationId: 'getOrganizationByOrganizationIdInvitations',
+            location: 'response',
+            schemaName: 'GetOrganizationByOrganizationIdInvitationsResponse',
+            fieldPath: ['data', 'id'],
+            validator: 'uuid',
+          }),
+        )
+        .regex(
+          getOrganizationByOrganizationIdInvitationsResponseDataItemIdRegExp,
+          zodParams({
+            operationId: 'getOrganizationByOrganizationIdInvitations',
+            location: 'response',
+            schemaName: 'GetOrganizationByOrganizationIdInvitationsResponse',
+            fieldPath: ['data', 'id'],
+            validator: 'regex',
+          }),
+        ),
+      organizationId: zod
+        .uuid(
+          zodParams({
+            operationId: 'getOrganizationByOrganizationIdInvitations',
+            location: 'response',
+            schemaName: 'GetOrganizationByOrganizationIdInvitationsResponse',
+            fieldPath: ['data', 'organizationId'],
+            validator: 'uuid',
+          }),
+        )
+        .regex(
+          getOrganizationByOrganizationIdInvitationsResponseDataItemOrganizationIdRegExp,
+          zodParams({
+            operationId: 'getOrganizationByOrganizationIdInvitations',
+            location: 'response',
+            schemaName: 'GetOrganizationByOrganizationIdInvitationsResponse',
+            fieldPath: ['data', 'organizationId'],
+            validator: 'regex',
+          }),
+        ),
+      invitee: zod.union([
+        zod.object({
+          id: zod
+            .uuid(
+              zodParams({
+                operationId: 'getOrganizationByOrganizationIdInvitations',
+                location: 'response',
+                schemaName:
+                  'GetOrganizationByOrganizationIdInvitationsResponse',
+                fieldPath: ['data', 'invitee', 'id'],
+                validator: 'uuid',
+              }),
+            )
+            .regex(
+              getOrganizationByOrganizationIdInvitationsResponseDataItemInviteeOneIdRegExp,
+              zodParams({
+                operationId: 'getOrganizationByOrganizationIdInvitations',
+                location: 'response',
+                schemaName:
+                  'GetOrganizationByOrganizationIdInvitationsResponse',
+                fieldPath: ['data', 'invitee', 'id'],
+                validator: 'regex',
+              }),
+            ),
+          name: zod.string(
+            zodParams({
+              operationId: 'getOrganizationByOrganizationIdInvitations',
+              location: 'response',
+              schemaName: 'GetOrganizationByOrganizationIdInvitationsResponse',
+              fieldPath: ['data', 'invitee', 'name'],
+              validator: 'string',
+            }),
+          ),
+          email: zod
+            .string(
+              zodParams({
+                operationId: 'getOrganizationByOrganizationIdInvitations',
+                location: 'response',
+                schemaName:
+                  'GetOrganizationByOrganizationIdInvitationsResponse',
+                fieldPath: ['data', 'invitee', 'email'],
+                validator: 'string',
+              }),
+            )
+            .regex(
+              getOrganizationByOrganizationIdInvitationsResponseDataItemInviteeOneEmailRegExp,
+              zodParams({
+                operationId: 'getOrganizationByOrganizationIdInvitations',
+                location: 'response',
+                schemaName:
+                  'GetOrganizationByOrganizationIdInvitationsResponse',
+                fieldPath: ['data', 'invitee', 'email'],
+                validator: 'regex',
+              }),
+            ),
+        }),
+        zod.unknown().nullable(),
+      ]),
+      role: zod.enum(
+        ['ADMIN', 'MAINTAINER', 'MEMBER'],
+        zodParams({
+          operationId: 'getOrganizationByOrganizationIdInvitations',
+          location: 'response',
+          schemaName: 'GetOrganizationByOrganizationIdInvitationsResponse',
+          fieldPath: ['data', 'role'],
+          validator: 'enum',
+        }),
+      ),
+      status: zod.enum(
+        ['PENDING', 'ACCEPTED', 'CANCELED', 'REJECTED', 'EXPIRED'],
+        zodParams({
+          operationId: 'getOrganizationByOrganizationIdInvitations',
+          location: 'response',
+          schemaName: 'GetOrganizationByOrganizationIdInvitationsResponse',
+          fieldPath: ['data', 'status'],
+          validator: 'enum',
+        }),
+      ),
+      expiresAt: zod.iso
+        .datetime({
+          ...{ offset: true },
+          ...zodParams({
+            operationId: 'getOrganizationByOrganizationIdInvitations',
+            location: 'response',
+            schemaName: 'GetOrganizationByOrganizationIdInvitationsResponse',
+            fieldPath: ['data', 'expiresAt'],
+            validator: 'iso.datetime',
+          }),
+        })
+        .regex(
+          getOrganizationByOrganizationIdInvitationsResponseDataItemExpiresAtRegExp,
+          zodParams({
+            operationId: 'getOrganizationByOrganizationIdInvitations',
+            location: 'response',
+            schemaName: 'GetOrganizationByOrganizationIdInvitationsResponse',
+            fieldPath: ['data', 'expiresAt'],
+            validator: 'regex',
+          }),
+        ),
+    }),
+  ),
+  error: zod.unknown().nullable(),
+  meta: zod.object({
+    unixTimestamp: zod.number(
+      zodParams({
+        operationId: 'getOrganizationByOrganizationIdInvitations',
+        location: 'response',
+        schemaName: 'GetOrganizationByOrganizationIdInvitationsResponse',
+        fieldPath: ['meta', 'unixTimestamp'],
+        validator: 'number',
+      }),
+    ),
+    requestId: zod
+      .string(
+        zodParams({
+          operationId: 'getOrganizationByOrganizationIdInvitations',
+          location: 'response',
+          schemaName: 'GetOrganizationByOrganizationIdInvitationsResponse',
           fieldPath: ['meta', 'requestId'],
           validator: 'string',
         }),

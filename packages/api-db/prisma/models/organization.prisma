@@ -2,7 +2,8 @@ model Organization {
     id    String @id @default(uuid()) @db.Uuid
     title String
 
-    organizationMembers OrganizationMember[]
+    organizationMembers     OrganizationMember[]
+    organizationInvitations OrganizationInvitation[]
 
     @@map("organization")
 }
@@ -26,8 +27,35 @@ model OrganizationMember {
     @@map("organization_member")
 }
 
+model OrganizationInvitation {
+    id String @id @default(uuid()) @db.Uuid
+
+    organizationId  String                       @db.Uuid
+    inviteeUserId   String                       @db.Uuid
+    invitedByUserId String                       @db.Uuid
+    role            OrganizationMemberRole       @default(MEMBER)
+    status          OrganizationInvitationStatus @default(PENDING)
+
+    expiresAt DateTime
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+    @@index([organizationId])
+    @@map("organization_invitation")
+}
+
 enum OrganizationMemberRole {
     ADMIN
     MAINTAINER
     MEMBER
+}
+
+enum OrganizationInvitationStatus {
+    PENDING
+    ACCEPTED
+    CANCELED
+    REJECTED
+    EXPIRED
 }

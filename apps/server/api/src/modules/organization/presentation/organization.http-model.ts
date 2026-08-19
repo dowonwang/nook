@@ -2,17 +2,12 @@ import { z } from 'zod';
 
 export const OrganizationHttpModel = {
   create: z.object({
-    title: z.string(),
+    title: z.string().min(1).max(20),
   }),
 
-  addMember: z.object({
-    organizationId: z.uuidv7(),
-    members: z.array(
-      z.object({
-        userId: z.uuidv7(),
-        role: z.enum(['ADMIN', 'MAINTAINER', 'MEMBER']),
-      }),
-    ),
+  'create-invitation': z.object({
+    email: z.email(),
+    role: z.enum(['ADMIN', 'MAINTAINER', 'MEMBER']),
   }),
 };
 

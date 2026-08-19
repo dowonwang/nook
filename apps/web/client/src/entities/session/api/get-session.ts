@@ -1,5 +1,5 @@
 import type { Session } from '$entities/session';
-import type { GetAuthMe200 } from '@packages/api-client/api';
+import type { GetUserMe200 } from '@packages/api-client/api';
 
 export async function getSession(): Promise<Session> {
   const response = await fetch('/api/user/me', {
@@ -10,7 +10,7 @@ export async function getSession(): Promise<Session> {
   });
 
   if (response.ok) {
-    const { data } = (await response.json()) as GetAuthMe200;
+    const { data } = (await response.json()) as GetUserMe200;
 
     return {
       authenticated: true,

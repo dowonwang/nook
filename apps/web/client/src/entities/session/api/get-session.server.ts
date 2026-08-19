@@ -2,7 +2,7 @@ import { bffFetcher } from '$shared/api/bff/server';
 import { getAuthAccessFromCookie } from '$shared/lib/cookie/server';
 
 import type { Session } from '$entities/session';
-import type { getAuthMeResponseSuccess } from '@packages/api-client/api';
+import type { getUserMeResponseSuccess } from '@packages/api-client/api';
 
 export async function getServerSession(): Promise<Session> {
   const accessToken = await getAuthAccessFromCookie();
@@ -23,7 +23,7 @@ export async function getServerSession(): Promise<Session> {
 
   if (response.ok) {
     const { data } =
-      (await response.json()) as getAuthMeResponseSuccess['data'];
+      (await response.json()) as getUserMeResponseSuccess['data'];
 
     return {
       authenticated: true,

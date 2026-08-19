@@ -1,6 +1,7 @@
 import {
   Organization,
   OrganizationMember,
+  OrganizationMemberRole,
   OrganizationMemberUuid,
   OrganizationUuid,
 } from '$modules/organization/domain';
@@ -10,7 +11,7 @@ import type {
   OrganizationCommandRepository,
   OrganizationPolicy,
 } from '$modules/organization/domain';
-import type { CreateCommnad } from './create.command';
+import type { CreateCommand, CreateResult } from './create.command';
 
 export class CreateHandler {
   constructor(
@@ -18,7 +19,7 @@ export class CreateHandler {
     private readonly organizationCommandRepository: OrganizationCommandRepository,
   ) {}
 
-  async execute(command: CreateCommnad): Promise<{ id: string }> {
+  async execute(command: CreateCommand): Promise<CreateResult> {
     const userId = UserUuid.create(command.userId);
     const organizationId = OrganizationUuid.generate();
 
@@ -27,7 +28,7 @@ export class CreateHandler {
       {
         organizationId,
         userId,
-        role: 'ADMIN',
+        role: OrganizationMemberRole.create('ADMIN'),
       },
     );
 
@@ -46,6 +47,6 @@ export class CreateHandler {
 
     await this.organizationCommandRepository.save(organization);
 
-    return { id: organization.id.getValue() };
+    return { id: organization.id.getValue(), title: organization.title };
   }
 }

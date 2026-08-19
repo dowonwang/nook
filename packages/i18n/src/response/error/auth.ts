@@ -1,6 +1,6 @@
 export const AUTH_ERROR = [
   'auth_error_token_expired',
-  'auth_error_InvaildCredentials',
+  'auth_error_InvalidCredentials',
   'auth_error_EmailAlreadyExists',
 ] as const;
 

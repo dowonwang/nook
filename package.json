@@ -6,11 +6,16 @@
   "scripts": {
     "prepare": "husky",
     "commit": "git-cz",
+    "typecheck": "pnpm -r typecheck",
     "format": "prettier . --write",
     "format:check": "prettier . --check",
-    "server/api:dev": "pnpm -F @server/api dev",
     "lint:fix": "eslint --fix",
-    "clean:modules": "pnpm -r exec rm -rf node_modules && rm -rf node_modules"
+    "server/api:dev": "pnpm -F @server/api dev",
+    "web/client:dev": "pnpm -F @web/client dev",
+    "generate:packages": "pnpm -C ./packages/api-client generate && pnpm -C ./packages/i18n generate:validation",
+    "clean:modules": "pnpm -r exec rm -rf node_modules && rm -rf node_modules",
+    "clean:workspace": "pnpm -r exec rm -rf .next && rm -rf .husky/_",
+    "clean": "pnpm clean:workspace && pnpm clean:modules"
   },
   "keywords": [],
   "author": "Dowon Wang",

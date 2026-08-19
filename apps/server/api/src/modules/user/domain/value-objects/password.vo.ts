@@ -3,7 +3,7 @@ import { z } from 'zod';
 import { InvalidPasswordHash } from '$modules/user/error';
 import { PrimitiveValueObject } from '$shared/ddd';
 
-const passewordHashSchema = z
+const passwordHashSchema = z
   .string()
   .regex(/^\$2[ayb]\$[0-9]{2}\$[./A-Za-z0-9]{53}$/);
 
@@ -17,9 +17,9 @@ export class UserPassword extends PrimitiveValueObject<string, UserPassword> {
   }
 
   protected validation(input: string): void {
-    const vaildation = passewordHashSchema.safeParse(input);
+    const validation = passwordHashSchema.safeParse(input);
 
-    if (!vaildation.success) {
+    if (!validation.success) {
       throw new InvalidPasswordHash(UserPassword.name);
     }
   }

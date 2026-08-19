@@ -29,11 +29,11 @@ export class AuthTokenIssuer {
     metadata: RequestMetadata,
   ): Promise<TokenRotationResult> {
     // access token 발급
-    const accessTokenCliams = AccessTokenClaims.create({
+    const accessTokenClaims = AccessTokenClaims.create({
       sub: user.id.getValue(),
     });
     const { token: accessToken } =
-      await this.accessTokenIssuer.issueToken(accessTokenCliams);
+      await this.accessTokenIssuer.issueToken(accessTokenClaims);
 
     // refresh token 발급
     const refreshTokenId = AuthSessionUuid.generate();

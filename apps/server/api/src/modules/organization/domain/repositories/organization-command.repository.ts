@@ -1,6 +1,7 @@
-import type { Organization } from '../entities/organization.entity';
+import type { Organization } from '../aggregates/organization.aggregate';
+import type { OrganizationUuid } from '../value-objects/organization-uuid.vo';
 
 export interface OrganizationCommandRepository {
   save(organization: Organization): Promise<void>;
-  findOrganizationById(id: string): Promise<Organization | null>;
+  findOrganizationById(id: OrganizationUuid): Promise<Organization | null>;
 }

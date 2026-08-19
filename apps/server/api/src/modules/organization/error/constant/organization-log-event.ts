@@ -8,6 +8,12 @@ export const ORGANIZATION_LOG_EVENT = {
   ORG_ADMIN_REQUIREMENT: 'org.admin_requirement',
   ORG_ADMIN_LIMIT_EXCEED: 'org.admin_limit_exceed',
   ORG_INSUFFICIENT_PERMISSION: 'org.insufficient_permission',
+  ORG_INVALID_MEMBER_ROLE: 'org.invalid_member_role',
+  ORG_INVALID_INVITATION_STATUS: 'org_invalid_invitation_status',
+  ORG_DUPLICATE_INVITEE_USER: 'org_duplicate_invitee_user',
+  ORG_INVITEE_USER_NOT_FOUND: 'org_invitee_user_not_found',
+  ORG_SELF_INVITATION: 'org_self_invitation',
+  ORG_PENDING_INVITATION_EXIST: 'org_pending_invitation_exist',
 } as const;
 
 export type OrganizationLogEventMessage = Record<

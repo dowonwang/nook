@@ -10,11 +10,18 @@ import {
   HeroSectionDescription,
   HeroSectionTitle,
 } from '@packages/ui/components/hero-section';
+import Link from 'next/link';
 
 export default function Page() {
   return (
     <div className='space-y-6'>
-      <HeroSection action={<Button>Create</Button>}>
+      <HeroSection
+        action={
+          <Button asChild>
+            <Link href={'/org/create'}>Create</Link>
+          </Button>
+        }
+      >
         <HeroSectionTitle>Organization</HeroSectionTitle>
         <HeroSectionDescription>
           Manage team members and their roles

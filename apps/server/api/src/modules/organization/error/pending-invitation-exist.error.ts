@@ -1,0 +1,15 @@
+import { ConflictError } from '$shared/error';
+
+import { ORGANIZATION_LOG_EVENT } from './constant/organization-log-event';
+import { ORGANIZATION_LOG_MESSAGE } from './constant/organization-log-message';
+
+export class PendingInvitationExist extends ConflictError {
+  constructor(scope: string) {
+    super({
+      event: ORGANIZATION_LOG_EVENT.ORG_PENDING_INVITATION_EXIST,
+      message: ORGANIZATION_LOG_MESSAGE.ORG_PENDING_INVITATION_EXIST,
+      code: 'organization_error_PendingInvitationExist',
+      scope,
+    });
+  }
+}

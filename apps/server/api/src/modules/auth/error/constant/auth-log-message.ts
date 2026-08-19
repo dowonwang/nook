@@ -18,6 +18,6 @@ export const AUTH_LOG_MESSAGE: AuthLogEventMessage = {
     'Authentication failed: Refresh token is required in the Authorization header.',
   AUTH_TOKEN_HASH_SECRET:
     'Missing required environment variable: HASH_TOKEN_SECRET',
-  AUTH_INVAILD_CREDENTIALS: 'Invaild user credentials',
+  AUTH_INVALID_CREDENTIALS: 'Invalid user credentials',
   AUTH_EMAIL_ALREADY_EXIST: 'User with this email already exists',
 } as const;

@@ -4,7 +4,7 @@ export interface DomainEvent {
   readonly occurredAt: Date;
 }
 
-export abstract class AggregateRoot<Id> extends Entity<Id> {
+export abstract class AggregateRoot<Id, Snapshot> extends Entity<Id, Snapshot> {
   private readonly domainEvents: DomainEvent[] = [];
 
   protected constructor(id: Id) {

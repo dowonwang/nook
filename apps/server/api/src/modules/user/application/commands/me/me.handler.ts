@@ -12,8 +12,8 @@ export class MeHandler {
 
   constructor(private readonly userCommandRepository: UserCommandRepository) {}
 
-  async execute(query: MeCommand): Promise<UserDetailDto> {
-    const id = UserUuid.create(query.id);
+  async execute(command: MeCommand): Promise<UserDetailDto> {
+    const id = UserUuid.create(command.id);
 
     const user = await this.userCommandRepository.findById(id.getValue());
 

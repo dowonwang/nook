@@ -6,5 +6,6 @@
     "source.removeUnusedImports": "always",
     "source.fixAll.eslint": "always"
   },
-  "tailwindCSS.classFunctions": ["cva", "cx"]
+  "tailwindCSS.classFunctions": ["cva", "cx"],
+  "js/ts.tsdk.path": "node_modules/typescript/lib"
 }

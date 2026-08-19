@@ -15,7 +15,7 @@ export const i18nResponseKo = {
   auth_signup_success_signin_required:
     '회원가입이 완료되었습니다.\n로그인 후 서비스를 이용해 주세요.',
   auth_required_signin: '로그인 후 다시 시도해 주세요.',
-  auth_error_InvaildCredentials: '로그인 정보가 올바르지 않습니다.',
+  auth_error_InvalidCredentials: '로그인 정보가 올바르지 않습니다.',
   auth_error_EmailAlreadyExists:
     '이미 가입된 계정이거나 사용할 수 없는 이메일입니다.',
 
@@ -41,4 +41,12 @@ export const i18nResponseKo = {
     '조직을 찾을 수 없거나 접근 권한이 없습니다.',
   organization_error_UnaffiliatedMember:
     '해당 조직의 멤버가 아니거나 접근 권한이 없습니다.',
+  organization_error_InvalidOrganizationMemberRole:
+    '유효하지 않은 조직원 권한입니다.',
+  organization_error_InvalidOrganizationInvitationStatus:
+    '유효하지 않은 조직원 상태입니다.',
+  organization_error_DuplicateInviteeUser: '이미 조직에 소속된 사용자입니다.',
+  organization_error_InviteeUserNotFound: '초대할 사용자를 찾을 수 없습니다.',
+  organization_error_SelfInvitation: '자기 자신을 초대할 수 없습니다.',
+  organization_error_PendingInvitationExist: '이미 초대를 보낸 조직원입니다.',
 } satisfies Record<I18N_RESPONSE_KEY, string>;
