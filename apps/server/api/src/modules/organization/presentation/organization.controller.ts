@@ -3,18 +3,21 @@ import { Elysia } from 'elysia';
 import { createInvitationRoutes } from './routes/create-invitation.routes';
 import { createOrganizationRoutes } from './routes/create-organization.routes';
 import { createFindSentInvitationsRoutes } from './routes/find-sent-invitations.routes';
+import { createFindUserOrganizationsRoutes } from './routes/find-user-organization.routes';
 
 import type { AuthGuard } from '$modules/auth';
 import type {
   CreateHandler,
   CreateInvitationHandler,
   FindSentInvitationsHandler,
+  FindUserOrganizationsHandler,
 } from '$modules/organization/application';
 
 interface OrganizationDependencies {
   createHandler: CreateHandler;
   createInvitationHandler: CreateInvitationHandler;
   findSentInvitationsHandler: FindSentInvitationsHandler;
+  findUserOrganizationsHandler: FindUserOrganizationsHandler;
   authGuard: AuthGuard;
 }
 
@@ -42,6 +45,12 @@ export function createOrganizationController(deps: OrganizationDependencies) {
       createFindSentInvitationsRoutes({
         authGuard: deps.authGuard,
         handler: deps.findSentInvitationsHandler,
+      }),
+    )
+    .use(
+      createFindUserOrganizationsRoutes({
+        authGuard: deps.authGuard,
+        handler: deps.findUserOrganizationsHandler,
       }),
     );
 }

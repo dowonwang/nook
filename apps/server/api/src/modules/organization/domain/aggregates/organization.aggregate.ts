@@ -127,6 +127,10 @@ export class Organization extends AggregateRoot<OrganizationUuid, Snapshot> {
     return this.members.find((member) => member.userId.equals(id)) || null;
   }
 
+  getMemberCount(): number {
+    return this.members.length;
+  }
+
   get title() {
     return this.props.title;
   }

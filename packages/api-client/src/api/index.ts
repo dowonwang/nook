@@ -335,6 +335,55 @@ export type PostOrganization409 = {
   meta: PostOrganization409Meta;
 };
 
+export type GetOrganization200DataItemUserRole =
+  (typeof GetOrganization200DataItemUserRole)[keyof typeof GetOrganization200DataItemUserRole];
+
+export const GetOrganization200DataItemUserRole = {
+  ADMIN: 'ADMIN',
+  MAINTAINER: 'MAINTAINER',
+  MEMBER: 'MEMBER',
+} as const;
+
+export type GetOrganization200DataItem = {
+  /** @pattern ^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-7[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12})$ */
+  id: string;
+  title: string;
+  userRole: GetOrganization200DataItemUserRole;
+  memberCount: number;
+};
+
+export type GetOrganization200Meta = {
+  unixTimestamp: number;
+  requestId?: string;
+};
+
+export type GetOrganization200 = {
+  success: true;
+  data: GetOrganization200DataItem[];
+  error: unknown | null;
+  meta: GetOrganization200Meta;
+};
+
+export type GetOrganization401Error = {
+  code: string;
+  details?: unknown;
+};
+
+export type GetOrganization401Meta = {
+  unixTimestamp: number;
+  requestId?: string;
+};
+
+/**
+ * Access token verification failed.
+ */
+export type GetOrganization401 = {
+  success: false;
+  data: unknown | null;
+  error: GetOrganization401Error;
+  meta: GetOrganization401Meta;
+};
+
 export type PostOrganizationByOrganizationIdInvitationsBodyRole =
   (typeof PostOrganizationByOrganizationIdInvitationsBodyRole)[keyof typeof PostOrganizationByOrganizationIdInvitationsBodyRole];
 
@@ -945,6 +994,52 @@ export const postOrganization = async (
     status: res.status,
     headers: res.headers,
   } as postOrganizationResponse;
+};
+
+export type getOrganizationResponse200 = {
+  data: GetOrganization200;
+  status: 200;
+};
+
+export type getOrganizationResponse401 = {
+  data: GetOrganization401;
+  status: 401;
+};
+
+export type getOrganizationResponseSuccess = getOrganizationResponse200 & {
+  headers: Headers;
+};
+export type getOrganizationResponseError = getOrganizationResponse401 & {
+  headers: Headers;
+};
+
+export type getOrganizationResponse =
+  | getOrganizationResponseSuccess
+  | getOrganizationResponseError;
+
+export const getGetOrganizationUrl = () => {
+  return `http://localhost:4000/organization/`;
+};
+
+/**
+ * @summary Find User Organizations List
+ */
+export const getOrganization = async (
+  options?: RequestInit,
+): Promise<getOrganizationResponse> => {
+  const res = await fetch(getGetOrganizationUrl(), {
+    ...options,
+    method: 'GET',
+  });
+
+  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
+
+  const data: getOrganizationResponse['data'] = body ? JSON.parse(body) : {};
+  return {
+    data,
+    status: res.status,
+    headers: res.headers,
+  } as getOrganizationResponse;
 };
 
 export type postOrganizationByOrganizationIdInvitationsResponse201 = {

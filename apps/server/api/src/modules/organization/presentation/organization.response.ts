@@ -29,4 +29,13 @@ export const OrganizationResponseSchemas = {
       expiresAt: z.iso.datetime(),
     }),
   ),
+
+  'find-user-organizations': z.array(
+    z.object({
+      id: z.uuidv7(),
+      title: z.string(),
+      userRole: z.enum(['ADMIN', 'MAINTAINER', 'MEMBER']),
+      memberCount: z.number(),
+    }),
+  ),
 };
