@@ -1,5 +1,5 @@
-import { CreateOrganization } from '$pages/create-organization';
+import { CreateOrganizationPage } from '$pages/organization/create';
 
 export default function Page() {
-  return <CreateOrganization />;
+  return <CreateOrganizationPage />;
 }
