@@ -2,7 +2,7 @@ import { cn } from '../lib/cn';
 import { renderSlot } from '../lib/renderSlot';
 
 type ButtonVariant = 'primary' | 'secondary' | 'ghost';
-type ButtonSize = 'default' | 'icon';
+type ButtonSize = 'default' | 'icon' | 'small';
 
 type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   variant?: ButtonVariant;
@@ -21,6 +21,7 @@ const variants: Record<ButtonVariant, string> = {
 const sizeVariants: Record<ButtonSize, string> = {
   default: tw`h-10 rounded-xl px-4`,
   icon: tw`h-10 w-10 rounded-xl px-2.5`,
+  small: tw`h-9 rounded-xl px-3`,
 };
 
 export function Button({

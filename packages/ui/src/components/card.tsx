@@ -43,7 +43,6 @@ export function CardHeader({
   if (action) {
     return (
       <div {...rest} className={cn(style, 'flex items-center', className)}>
-        {cn(style, 'flex items-center', className)}
         <div className='flex-1'>{children}</div>
         {action}
       </div>

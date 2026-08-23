@@ -7,14 +7,15 @@ import {
   CreateHandler,
   CreateInvitationHandler,
   FindSentInvitationsHandler,
+  FindUserOrganizationsHandler,
 } from './application';
 import {
   OrganizationPolicyService,
   PrismaOrganizationCommandRepository,
   PrismaOrganizationInvitationCommandRepository,
+  PrismaOrganizationInvitationQueryRepository,
   PrismaOrganizationQueryRepository,
 } from './infrastructure';
-import { PrismaOrganizationInvitationQueryRepository } from './infrastructure/repositories/prisma-organization-invitation-query.repository';
 import { createOrganizationController } from './presentation';
 
 // repository
@@ -50,12 +51,16 @@ const findSentInvitationsHandler = new FindSentInvitationsHandler(
   organizationInvitationQueryRepository,
   userQueryRepository,
 );
+const findUserOrganizationsHandler = new FindUserOrganizationsHandler(
+  organizationQueryRepository,
+);
 
 // module
 const organizationModule = createOrganizationController({
   createHandler,
   createInvitationHandler,
   findSentInvitationsHandler,
+  findUserOrganizationsHandler,
   authGuard,
 });
 

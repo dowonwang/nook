@@ -6,7 +6,7 @@ import {
 
 import { CreateOrganizationFlow } from '$widgets/create-organization-flow';
 
-export function CreateOrganization() {
+export function CreateOrganizationPage() {
   return (
     <>
       <HeroSection className='mb-6'>
