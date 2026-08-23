@@ -17,8 +17,6 @@ import { myOrganizationListQueryOptions } from '../model/my-list-query';
 export function MyOrganizationList() {
   const { data: organizations } = useQuery(myOrganizationListQueryOptions);
 
-  console.log(organizations);
-
   return (
     <div className='grid grid-cols-3 gap-4'>
       {organizations?.map((organization) => (
