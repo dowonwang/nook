@@ -38,4 +38,6 @@ export const OrganizationResponseSchemas = {
       memberCount: z.number(),
     }),
   ),
+
+  'change-invitation-status': z.null(),
 };

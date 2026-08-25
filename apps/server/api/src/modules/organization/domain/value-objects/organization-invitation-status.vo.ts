@@ -8,7 +8,6 @@ const schema = z.enum([
   'ACCEPTED', // 수락함 (즉시 조직 참여)
   'CANCELED', // 관리자가 초대 취소
   'REJECTED', // 사용자 초대 거절
-  'EXPIRED', // 유효기간 만료됨
 ]);
 export type OrganizationInvitationStatusValue = z.infer<typeof schema>;
 

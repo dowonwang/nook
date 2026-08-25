@@ -30,8 +30,6 @@ export class CreateInvitationHandler {
   async execute(input: CreateInvitationInput): Promise<void> {
     const command = new CreateInvitationCommand(input);
 
-    console.log(command.inviterUserId.getValue());
-
     const organization =
       await this.organizationCommandRepository.findOrganizationById(
         command.organizationId,

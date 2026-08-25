@@ -14,6 +14,10 @@ export const ORGANIZATION_LOG_EVENT = {
   ORG_INVITEE_USER_NOT_FOUND: 'org_invitee_user_not_found',
   ORG_SELF_INVITATION: 'org_self_invitation',
   ORG_PENDING_INVITATION_EXIST: 'org_pending_invitation_exist',
+  ORG_INVITATION_NOT_FOUND: 'org_invitation_not_found',
+  ORG_INVITATION_INSUFFICIENT_PERMISSION:
+    'org_invitation_insufficient_permission',
+  ORG_INVITATION_EXPIRED: 'org_invitation_expired',
 } as const;
 
 export type OrganizationLogEventMessage = Record<

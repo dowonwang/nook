@@ -2,8 +2,10 @@ import { prismaApiClient } from '@packages/api-db';
 
 import { authGuard } from '$modules/auth';
 import { PrismaUserQueryRepository } from '$modules/user/infrastructure';
+import { PrismaTransactionManager } from '$shared/database';
 
 import {
+  ChangeInvitationStatusHandler,
   CreateHandler,
   CreateInvitationHandler,
   FindSentInvitationsHandler,
@@ -35,6 +37,7 @@ const userQueryRepository = new PrismaUserQueryRepository(prismaApiClient);
 const organizationPolicy = new OrganizationPolicyService(
   organizationQueryRepository,
 );
+const transactionManager = new PrismaTransactionManager(prismaApiClient);
 
 // handler
 const createHandler = new CreateHandler(
@@ -54,14 +57,20 @@ const findSentInvitationsHandler = new FindSentInvitationsHandler(
 const findUserOrganizationsHandler = new FindUserOrganizationsHandler(
   organizationQueryRepository,
 );
+const changeInvitationStatusHandler = new ChangeInvitationStatusHandler(
+  organizationInvitationCommandRepository,
+  organizationCommandRepository,
+  transactionManager,
+);
 
 // module
 const organizationModule = createOrganizationController({
+  authGuard,
   createHandler,
   createInvitationHandler,
   findSentInvitationsHandler,
   findUserOrganizationsHandler,
-  authGuard,
+  changeInvitationStatusHandler,
 });
 
 export default organizationModule;

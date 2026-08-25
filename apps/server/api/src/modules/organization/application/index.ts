@@ -1,9 +1,11 @@
 export type * from './dto/organization-invitation.dto';
 export type * from './dto/organization.dto';
-export * from './mappers/organization-invitation.mapper';
-export * from './mappers/organization.mapper';
 export type * from './ports/organization-invitation-reader.port';
 export type * from './ports/organization-reader.port';
+export * from './mappers/organization-invitation.mapper';
+export * from './mappers/organization.mapper';
+export * from './commands/change-invitation-status/change-invitation-status.command';
+export * from './commands/change-invitation-status/change-invitation-status.handler';
 export type * from './commands/create/create.command';
 export * from './commands/create/create.handler';
 export * from './commands/create-invitation/create-invitation.command';

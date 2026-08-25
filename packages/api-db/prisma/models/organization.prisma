@@ -57,5 +57,4 @@ enum OrganizationInvitationStatus {
     ACCEPTED
     CANCELED
     REJECTED
-    EXPIRED
 }

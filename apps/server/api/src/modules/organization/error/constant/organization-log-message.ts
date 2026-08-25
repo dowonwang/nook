@@ -17,4 +17,9 @@ export const ORGANIZATION_LOG_MESSAGE: OrganizationLogEventMessage = {
   ORG_INVITEE_USER_NOT_FOUND: 'Invitee user not found',
   ORG_SELF_INVITATION: 'Can not invite yourself',
   ORG_PENDING_INVITATION_EXIST: 'Already pending organization invitation',
+  ORG_INVITATION_NOT_FOUND:
+    'Organization Invitation not found for the given identifier',
+  ORG_INVITATION_INSUFFICIENT_PERMISSION:
+    'Access denied: invitee user is not equal',
+  ORG_INVITATION_EXPIRED: 'This organization invitation is already expired',
 } as const;
