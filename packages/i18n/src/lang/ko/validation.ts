@@ -28,4 +28,11 @@ export const i18ValidationKo = {
     '올바른 이메일 주소를 입력해주세요.',
   PostOrganizationByOrganizationIdInvitationsBody_required_organization_id:
     '존재하지 않거나 유효하지 않은 조직입니다. 조직 정보를 확인해 주세요.',
+
+  PatchOrganizationInvitationBody_invitationId_regex:
+    '존재하지 않거나 유효하지 않은 초대입니다.',
+  PatchOrganizationInvitationBody_invitationId_uuid:
+    '존재하지 않거나 유효하지 않은 초대입니다.',
+  PatchOrganizationInvitationBody_status_enum:
+    '올바른 초대 응답이 아닙니다. 다시 확인해 주세요.',
 } satisfies Record<I18N_VALIDATION_KEY, string>;

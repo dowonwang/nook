@@ -9,4 +9,8 @@ export interface OrganizationInvitationReader {
     organizationId: OrganizationUuid;
     invitedByUserId: UserUuid;
   }): Promise<OrganizationInvitation[]>;
+
+  findReceivedInvitations(params: {
+    userId: UserUuid;
+  }): Promise<OrganizationInvitation[]>;
 }

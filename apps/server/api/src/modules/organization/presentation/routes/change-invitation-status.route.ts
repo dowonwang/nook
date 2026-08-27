@@ -17,7 +17,7 @@ interface Dependencies {
   handler: ChangeInvitationStatusHandler;
 }
 
-export function createChangeInvitaionStatusRoutes({
+export function createChangeInvitationStatusRoutes({
   authGuard,
   handler,
 }: Dependencies) {
