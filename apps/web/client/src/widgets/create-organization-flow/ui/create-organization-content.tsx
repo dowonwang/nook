@@ -25,7 +25,7 @@ export function CreateOrganizationFlowContent() {
         <CardHeader>
           <CardTitle>Step1: Create Organization</CardTitle>
 
-          <CardDescription>'Create Organization</CardDescription>
+          <CardDescription>Create Organization</CardDescription>
         </CardHeader>
         <CardBody>
           <CreateOrganizationForm onSuccess={setOrganization} />
@@ -35,7 +35,7 @@ export function CreateOrganizationFlowContent() {
       <Card disabled={!isOrganizationCreated} focus={isOrganizationCreated}>
         <CardHeader>
           <CardTitle>Step2: Add Organization Members</CardTitle>
-          <CardDescription>'Please invite members'</CardDescription>
+          <CardDescription>Please invite members</CardDescription>
         </CardHeader>
 
         <CardBody>

@@ -13,10 +13,16 @@ import Link from 'next/link';
 
 import { MyOrganizationList } from '$features/organization/my-list';
 import { serverMyOrganizationListQueryOptions } from '$features/organization/my-list/server';
+import { ReceivedOrganizationInvitationList } from '$features/organization-invitation/received-list';
+import { serverReceivedOrganizationListQueryOptions } from '$features/organization-invitation/received-list/server';
 
 export async function OrganizationHomePage() {
   const queryClient = new QueryClient();
-  await queryClient.prefetchQuery(serverMyOrganizationListQueryOptions);
+
+  await Promise.all([
+    queryClient.prefetchQuery(serverMyOrganizationListQueryOptions),
+    queryClient.prefetchQuery(serverReceivedOrganizationListQueryOptions),
+  ]);
 
   return (
     <>
@@ -35,6 +41,7 @@ export async function OrganizationHomePage() {
       </HeroSection>
 
       <HydrationBoundary state={dehydrate(queryClient)}>
+        <ReceivedOrganizationInvitationList />
         <MyOrganizationList />
       </HydrationBoundary>
     </>

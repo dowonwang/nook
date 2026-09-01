@@ -9,36 +9,32 @@ import {
 } from '@packages/ui/components/table';
 import { useQuery } from '@tanstack/react-query';
 
-import { OrganizationInvitationSentRow } from '$entities/organization-invitation';
+import { OrganizationInvitationReceivedRow } from '$entities/organization-invitation/ui/received-column';
 
-import { organizationInvitationSentListQueryOptions } from '../model/sent-list-query';
+import { receivedOrganizationInvitationListQueryOptions } from '../model/received-list-query';
 
-interface Props {
-  organizationId: string | undefined;
-}
-
-export function OrganizationInvitationSentList({ organizationId }: Props) {
+export function ReceivedOrganizationInvitationList() {
   const { data: invitations } = useQuery(
-    organizationInvitationSentListQueryOptions(organizationId),
+    receivedOrganizationInvitationListQueryOptions,
   );
 
   if (!invitations || invitations.length === 0) {
-    return <p className='text-sm'>보낸 초대가 없습니다.</p>;
+    return <p className='text-sm'>받은 초대가 없습니다.</p>;
   }
 
   return (
-    <Table>
+    <Table className='mb-6'>
       <TableHeader>
         <TableRow>
-          <TableHeaderCell>name</TableHeaderCell>
-          <TableHeaderCell>email</TableHeaderCell>
+          <TableHeaderCell>organization</TableHeaderCell>
+          <TableHeaderCell>inviter</TableHeaderCell>
           <TableHeaderCell>role</TableHeaderCell>
           <TableHeaderCell>status</TableHeaderCell>
         </TableRow>
       </TableHeader>
       <TableBody>
         {invitations.map((invitation) => (
-          <OrganizationInvitationSentRow
+          <OrganizationInvitationReceivedRow
             key={invitation.id}
             invitation={invitation}
           />

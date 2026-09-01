@@ -8,6 +8,7 @@ import {
   ChangeInvitationStatusHandler,
   CreateHandler,
   CreateInvitationHandler,
+  FindReceivedInvitationsHandler,
   FindSentInvitationsHandler,
   FindUserOrganizationsHandler,
 } from './application';
@@ -62,6 +63,11 @@ const changeInvitationStatusHandler = new ChangeInvitationStatusHandler(
   organizationCommandRepository,
   transactionManager,
 );
+const findReceivedInvitationsHandler = new FindReceivedInvitationsHandler(
+  organizationInvitationQueryRepository,
+  organizationQueryRepository,
+  userQueryRepository,
+);
 
 // module
 const organizationModule = createOrganizationController({
@@ -71,6 +77,7 @@ const organizationModule = createOrganizationController({
   findSentInvitationsHandler,
   findUserOrganizationsHandler,
   changeInvitationStatusHandler,
+  findReceivedInvitationsHandler,
 });
 
 export default organizationModule;

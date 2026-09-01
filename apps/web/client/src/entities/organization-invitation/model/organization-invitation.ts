@@ -1,3 +1,4 @@
+import type { Organization } from '$entities/organization/model/organization';
 import type { OrganizationMemberRole } from '$entities/organization-member';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -17,11 +18,26 @@ export interface OrganizationInvitationInvitee {
   email: string;
 }
 
-export interface OrganizationInvitation {
+export interface OrganizationInvitationInvitedBy {
+  id: string;
+  name: string;
+  email: string;
+}
+
+export interface OrganizationSentInvitation {
   id: string;
   organizationId: string;
   invitee: OrganizationInvitationInvitee | null;
   role: OrganizationMemberRole;
   status: OrganizationInvitationStatus;
   expiresAt: Date;
+}
+
+export interface OrganizationReceivedInvitation {
+  id: string;
+  organization: Organization;
+  invitedBy: OrganizationInvitationInvitedBy | null;
+  role: OrganizationMemberRole;
+  status: OrganizationInvitationStatus;
+  expiresAt: string;
 }
