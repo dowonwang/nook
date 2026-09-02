@@ -8,9 +8,13 @@ import type { OrganizationReceivedInvitation } from '../model/organization-invit
 
 interface Props {
   invitation: OrganizationReceivedInvitation;
+  actions?: React.ReactNode;
 }
 
-export function OrganizationInvitationReceivedRow({ invitation }: Props) {
+export function OrganizationInvitationReceivedRow({
+  invitation,
+  actions,
+}: Props) {
   return (
     <TableRow>
       <TableCell>{invitation.organization.title}</TableCell>
@@ -23,6 +27,8 @@ export function OrganizationInvitationReceivedRow({ invitation }: Props) {
       <TableCell>
         <OrganizationInvitationStatusBadge status={invitation.status} />
       </TableCell>
+
+      {actions && <TableCell>{actions}</TableCell>}
     </TableRow>
   );
 }

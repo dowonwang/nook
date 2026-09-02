@@ -10,6 +10,8 @@ import {
 import { useQuery } from '@tanstack/react-query';
 
 import { OrganizationInvitationReceivedRow } from '$entities/organization-invitation/ui/received-column';
+import { RejectOrganizationInvitationButton } from '$features/organization-invitation/change-status';
+import { AcceptOrganizationInvitationButton } from '$features/organization-invitation/change-status/ui/accept-button';
 
 import { receivedOrganizationInvitationListQueryOptions } from '../model/received-list-query';
 
@@ -30,6 +32,9 @@ export function ReceivedOrganizationInvitationList() {
           <TableHeaderCell>inviter</TableHeaderCell>
           <TableHeaderCell>role</TableHeaderCell>
           <TableHeaderCell>status</TableHeaderCell>
+          <TableHeaderCell className='w-0 whitespace-nowrap'>
+            actions
+          </TableHeaderCell>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -37,6 +42,16 @@ export function ReceivedOrganizationInvitationList() {
           <OrganizationInvitationReceivedRow
             key={invitation.id}
             invitation={invitation}
+            actions={
+              <div className='flex items-center justify-center gap-2'>
+                <AcceptOrganizationInvitationButton
+                  invitationId={invitation.id}
+                />
+                <RejectOrganizationInvitationButton
+                  invitationId={invitation.id}
+                />
+              </div>
+            }
           />
         ))}
       </TableBody>

@@ -10,6 +10,7 @@ import {
 import { useQuery } from '@tanstack/react-query';
 
 import { OrganizationInvitationSentRow } from '$entities/organization-invitation';
+import { CancelOrganizationInvitationButton } from '$features/organization-invitation/change-status';
 
 import { organizationInvitationSentListQueryOptions } from '../model/sent-list-query';
 
@@ -34,6 +35,9 @@ export function OrganizationInvitationSentList({ organizationId }: Props) {
           <TableHeaderCell>email</TableHeaderCell>
           <TableHeaderCell>role</TableHeaderCell>
           <TableHeaderCell>status</TableHeaderCell>
+          <TableHeaderCell className='w-0 whitespace-nowrap'>
+            action
+          </TableHeaderCell>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -41,6 +45,12 @@ export function OrganizationInvitationSentList({ organizationId }: Props) {
           <OrganizationInvitationSentRow
             key={invitation.id}
             invitation={invitation}
+            actions={
+              <CancelOrganizationInvitationButton
+                organizationId={organizationId || ''}
+                invitationId={invitation.id}
+              />
+            }
           />
         ))}
       </TableBody>

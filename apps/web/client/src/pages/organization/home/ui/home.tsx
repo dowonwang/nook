@@ -19,9 +19,9 @@ import { serverReceivedOrganizationListQueryOptions } from '$features/organizati
 export async function OrganizationHomePage() {
   const queryClient = new QueryClient();
 
-  await Promise.all([
+  const [, receivedList] = await Promise.all([
     queryClient.prefetchQuery(serverMyOrganizationListQueryOptions),
-    queryClient.prefetchQuery(serverReceivedOrganizationListQueryOptions),
+    queryClient.fetchQuery(serverReceivedOrganizationListQueryOptions),
   ]);
 
   return (
@@ -41,8 +41,17 @@ export async function OrganizationHomePage() {
       </HeroSection>
 
       <HydrationBoundary state={dehydrate(queryClient)}>
-        <ReceivedOrganizationInvitationList />
-        <MyOrganizationList />
+        {receivedList.length > 0 && (
+          <section>
+            <h2 className='mb-4 text-lg font-semibold'>받은 초대</h2>
+            <ReceivedOrganizationInvitationList />
+          </section>
+        )}
+
+        <section>
+          <h2 className='mb-4 text-lg font-semibold'>조직 리스트</h2>
+          <MyOrganizationList />
+        </section>
       </HydrationBoundary>
     </>
   );

@@ -8,9 +8,10 @@ import type { OrganizationSentInvitation } from '../model/organization-invitatio
 
 interface Props {
   invitation: OrganizationSentInvitation;
+  actions?: React.ReactNode;
 }
 
-export function OrganizationInvitationSentRow({ invitation }: Props) {
+export function OrganizationInvitationSentRow({ invitation, actions }: Props) {
   return (
     <TableRow>
       <TableCell>{invitation.invitee?.name || '삭제된 사용자'}</TableCell>
@@ -23,6 +24,7 @@ export function OrganizationInvitationSentRow({ invitation }: Props) {
       <TableCell>
         <OrganizationInvitationStatusBadge status={invitation.status} />
       </TableCell>
+      {actions && <TableCell>{actions}</TableCell>}
     </TableRow>
   );
 }
