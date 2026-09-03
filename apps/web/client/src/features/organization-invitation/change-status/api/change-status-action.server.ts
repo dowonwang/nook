@@ -14,8 +14,6 @@ export async function changeOrganizationInvitationServerAction({
   invitationId,
   status,
 }: ChangeOrganizationInvitationStatusState) {
-  console.log(invitationId, status);
-
   const body = changeOrganizationInvitationStatusSchema.safeParse({
     invitationId,
     status,
