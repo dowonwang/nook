@@ -1,7 +1,6 @@
 import {
   DuplicateOrganizationMember,
   MinMemberConstraint,
-  OrganizationAdminLimitExceeded,
   OrganizationAdminRequirement,
   OrganizationTitleEmpty,
   UnaffiliatedMember,
@@ -113,10 +112,6 @@ export class Organization extends AggregateRoot<OrganizationUuid, Snapshot> {
 
     if (adminUser.length === 0) {
       throw new OrganizationAdminRequirement(Organization.name);
-    }
-
-    if (adminUser.length > 1) {
-      throw new OrganizationAdminLimitExceeded(Organization.name);
     }
   }
 
