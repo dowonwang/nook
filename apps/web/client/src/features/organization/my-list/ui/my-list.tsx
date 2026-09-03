@@ -18,25 +18,29 @@ export function MyOrganizationList() {
   const { data: organizations } = useQuery(myOrganizationListQueryOptions);
 
   return (
-    <div className='grid grid-cols-3 gap-4'>
-      {organizations?.map((organization) => (
-        <Card key={organization.id}>
-          <CardHeader className='flex items-center justify-between'>
-            <CardTitle>{organization.title}</CardTitle>
-            <OrganizationMemberRoleBadge role={organization.userRole} />
-          </CardHeader>
+    <section>
+      <h2 className='mb-4 text-lg font-semibold'>조직 리스트</h2>
 
-          <CardBody>
-            <p>멤버 수: {organization.memberCount}</p>
+      <div className='grid grid-cols-3 gap-4'>
+        {organizations?.map((organization) => (
+          <Card key={organization.id}>
+            <CardHeader className='flex items-center justify-between'>
+              <CardTitle level='h3'>{organization.title}</CardTitle>
+              <OrganizationMemberRoleBadge role={organization.userRole} />
+            </CardHeader>
 
-            <Separator className='my-4' />
+            <CardBody>
+              <p>멤버 수: {organization.memberCount}</p>
 
-            <Button size='small' className='ml-auto block'>
-              더보기
-            </Button>
-          </CardBody>
-        </Card>
-      ))}
-    </div>
+              <Separator className='my-4' />
+
+              <Button size='small' className='ml-auto block'>
+                더보기
+              </Button>
+            </CardBody>
+          </Card>
+        ))}
+      </div>
+    </section>
   );
 }

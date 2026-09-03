@@ -566,6 +566,193 @@ export type GetOrganizationByOrganizationIdInvitations401 = {
   meta: GetOrganizationByOrganizationIdInvitations401Meta;
 };
 
+export type PatchOrganizationInvitationBodyStatus =
+  (typeof PatchOrganizationInvitationBodyStatus)[keyof typeof PatchOrganizationInvitationBodyStatus];
+
+export const PatchOrganizationInvitationBodyStatus = {
+  PENDING: 'PENDING',
+  ACCEPTED: 'ACCEPTED',
+  CANCELED: 'CANCELED',
+  REJECTED: 'REJECTED',
+} as const;
+
+export type PatchOrganizationInvitationBody = {
+  /** @pattern ^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-7[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12})$ */
+  invitationId: string;
+  status: PatchOrganizationInvitationBodyStatus;
+};
+
+export type PatchOrganizationInvitation200Meta = {
+  unixTimestamp: number;
+  requestId?: string;
+};
+
+export type PatchOrganizationInvitation200 = {
+  success: true;
+  data: unknown | null;
+  error: unknown | null;
+  meta: PatchOrganizationInvitation200Meta;
+};
+
+export type PatchOrganizationInvitation401Error = {
+  code: string;
+  details?: unknown;
+};
+
+export type PatchOrganizationInvitation401Meta = {
+  unixTimestamp: number;
+  requestId?: string;
+};
+
+/**
+ * Access token verification failed.
+ */
+export type PatchOrganizationInvitation401 = {
+  success: false;
+  data: unknown | null;
+  error: PatchOrganizationInvitation401Error;
+  meta: PatchOrganizationInvitation401Meta;
+};
+
+export type PatchOrganizationInvitation403Error = {
+  code: string;
+  details?: unknown;
+};
+
+export type PatchOrganizationInvitation403Meta = {
+  unixTimestamp: number;
+  requestId?: string;
+};
+
+/**
+ * Wrong Invitee or Invited User
+ */
+export type PatchOrganizationInvitation403 = {
+  success: false;
+  data: unknown | null;
+  error: PatchOrganizationInvitation403Error;
+  meta: PatchOrganizationInvitation403Meta;
+};
+
+export type PatchOrganizationInvitation404Error = {
+  code: string;
+  details?: unknown;
+};
+
+export type PatchOrganizationInvitation404Meta = {
+  unixTimestamp: number;
+  requestId?: string;
+};
+
+/**
+ * Invalid data or missing required fields
+ */
+export type PatchOrganizationInvitation404 = {
+  success: false;
+  data: unknown | null;
+  error: PatchOrganizationInvitation404Error;
+  meta: PatchOrganizationInvitation404Meta;
+};
+
+export type PatchOrganizationInvitation422Error = {
+  code: string;
+  details?: unknown;
+};
+
+export type PatchOrganizationInvitation422Meta = {
+  unixTimestamp: number;
+  requestId?: string;
+};
+
+/**
+ * Invalid data
+ */
+export type PatchOrganizationInvitation422 = {
+  success: false;
+  data: unknown | null;
+  error: PatchOrganizationInvitation422Error;
+  meta: PatchOrganizationInvitation422Meta;
+};
+
+export type GetOrganizationInvitations200DataItemOrganization = {
+  id: string;
+  title: string;
+};
+
+export type GetOrganizationInvitations200DataItemInvitedBy =
+  | {
+      /** @pattern ^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-7[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12})$ */
+      id: string;
+      name: string;
+      /** @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$ */
+      email: string;
+    }
+  | unknown
+  | null;
+
+export type GetOrganizationInvitations200DataItemRole =
+  (typeof GetOrganizationInvitations200DataItemRole)[keyof typeof GetOrganizationInvitations200DataItemRole];
+
+export const GetOrganizationInvitations200DataItemRole = {
+  ADMIN: 'ADMIN',
+  MAINTAINER: 'MAINTAINER',
+  MEMBER: 'MEMBER',
+} as const;
+
+export type GetOrganizationInvitations200DataItemStatus =
+  (typeof GetOrganizationInvitations200DataItemStatus)[keyof typeof GetOrganizationInvitations200DataItemStatus];
+
+export const GetOrganizationInvitations200DataItemStatus = {
+  PENDING: 'PENDING',
+  ACCEPTED: 'ACCEPTED',
+  CANCELED: 'CANCELED',
+  REJECTED: 'REJECTED',
+  EXPIRED: 'EXPIRED',
+} as const;
+
+export type GetOrganizationInvitations200DataItem = {
+  /** @pattern ^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-7[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12})$ */
+  id: string;
+  organization: GetOrganizationInvitations200DataItemOrganization;
+  invitedBy: GetOrganizationInvitations200DataItemInvitedBy;
+  role: GetOrganizationInvitations200DataItemRole;
+  status: GetOrganizationInvitations200DataItemStatus;
+  /** @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$ */
+  expiresAt: string;
+};
+
+export type GetOrganizationInvitations200Meta = {
+  unixTimestamp: number;
+  requestId?: string;
+};
+
+export type GetOrganizationInvitations200 = {
+  success: true;
+  data: GetOrganizationInvitations200DataItem[];
+  error: unknown | null;
+  meta: GetOrganizationInvitations200Meta;
+};
+
+export type GetOrganizationInvitations401Error = {
+  code: string;
+  details?: unknown;
+};
+
+export type GetOrganizationInvitations401Meta = {
+  unixTimestamp: number;
+  requestId?: string;
+};
+
+/**
+ * Access token verification failed.
+ */
+export type GetOrganizationInvitations401 = {
+  success: false;
+  data: unknown | null;
+  error: GetOrganizationInvitations401Error;
+  meta: GetOrganizationInvitations401Meta;
+};
+
 export type GetUserMe200Data = {
   /** @pattern ^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-7[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12})$ */
   id: string;
@@ -1174,6 +1361,128 @@ export const getOrganizationByOrganizationIdInvitations = async (
     status: res.status,
     headers: res.headers,
   } as getOrganizationByOrganizationIdInvitationsResponse;
+};
+
+export type patchOrganizationInvitationResponse200 = {
+  data: PatchOrganizationInvitation200;
+  status: 200;
+};
+
+export type patchOrganizationInvitationResponse401 = {
+  data: PatchOrganizationInvitation401;
+  status: 401;
+};
+
+export type patchOrganizationInvitationResponse403 = {
+  data: PatchOrganizationInvitation403;
+  status: 403;
+};
+
+export type patchOrganizationInvitationResponse404 = {
+  data: PatchOrganizationInvitation404;
+  status: 404;
+};
+
+export type patchOrganizationInvitationResponse422 = {
+  data: PatchOrganizationInvitation422;
+  status: 422;
+};
+
+export type patchOrganizationInvitationResponseSuccess =
+  patchOrganizationInvitationResponse200 & {
+    headers: Headers;
+  };
+export type patchOrganizationInvitationResponseError = (
+  | patchOrganizationInvitationResponse401
+  | patchOrganizationInvitationResponse403
+  | patchOrganizationInvitationResponse404
+  | patchOrganizationInvitationResponse422
+) & {
+  headers: Headers;
+};
+
+export type patchOrganizationInvitationResponse =
+  | patchOrganizationInvitationResponseSuccess
+  | patchOrganizationInvitationResponseError;
+
+export const getPatchOrganizationInvitationUrl = () => {
+  return `http://localhost:4000/organization/invitation`;
+};
+
+/**
+ * @summary Change Organization Invitation Status
+ */
+export const patchOrganizationInvitation = async (
+  patchOrganizationInvitationBody: PatchOrganizationInvitationBody,
+  options?: RequestInit,
+): Promise<patchOrganizationInvitationResponse> => {
+  const res = await fetch(getPatchOrganizationInvitationUrl(), {
+    ...options,
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(patchOrganizationInvitationBody),
+  });
+
+  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
+
+  const data: patchOrganizationInvitationResponse['data'] = body
+    ? JSON.parse(body)
+    : {};
+  return {
+    data,
+    status: res.status,
+    headers: res.headers,
+  } as patchOrganizationInvitationResponse;
+};
+
+export type getOrganizationInvitationsResponse200 = {
+  data: GetOrganizationInvitations200;
+  status: 200;
+};
+
+export type getOrganizationInvitationsResponse401 = {
+  data: GetOrganizationInvitations401;
+  status: 401;
+};
+
+export type getOrganizationInvitationsResponseSuccess =
+  getOrganizationInvitationsResponse200 & {
+    headers: Headers;
+  };
+export type getOrganizationInvitationsResponseError =
+  getOrganizationInvitationsResponse401 & {
+    headers: Headers;
+  };
+
+export type getOrganizationInvitationsResponse =
+  | getOrganizationInvitationsResponseSuccess
+  | getOrganizationInvitationsResponseError;
+
+export const getGetOrganizationInvitationsUrl = () => {
+  return `http://localhost:4000/organization/invitations`;
+};
+
+/**
+ * @summary Find Received Invitations
+ */
+export const getOrganizationInvitations = async (
+  options?: RequestInit,
+): Promise<getOrganizationInvitationsResponse> => {
+  const res = await fetch(getGetOrganizationInvitationsUrl(), {
+    ...options,
+    method: 'GET',
+  });
+
+  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
+
+  const data: getOrganizationInvitationsResponse['data'] = body
+    ? JSON.parse(body)
+    : {};
+  return {
+    data,
+    status: res.status,
+    headers: res.headers,
+  } as getOrganizationInvitationsResponse;
 };
 
 export type getUserMeResponse200 = {

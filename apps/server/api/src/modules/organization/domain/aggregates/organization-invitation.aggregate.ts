@@ -1,3 +1,8 @@
+import {
+  InvalidOrganizationInvitationStatus,
+  OrganizationInvitationAccessDenied,
+  OrganizationInvitationExpired,
+} from '$modules/organization/error';
 import { AggregateRoot } from '$shared/ddd';
 
 import { OrganizationInvitationStatus } from '../value-objects/organization-invitation-status.vo';
@@ -60,7 +65,7 @@ export class OrganizationInvitation extends AggregateRoot<
   }
 
   static reconstruct(
-    id: OrganizationUuid,
+    id: OrganizationInvitationUuid,
     props: Props,
   ): OrganizationInvitation {
     return new OrganizationInvitation(id, props);
@@ -78,11 +83,69 @@ export class OrganizationInvitation extends AggregateRoot<
     });
   }
 
+  accept(userId: UserUuid) {
+    this.assertPending();
+    this.assertExpired();
+    this.assertInvitee(userId);
+
+    this.props.status = OrganizationInvitationStatus.create('ACCEPTED');
+  }
+
+  cancel(userId: UserUuid) {
+    this.assertPending();
+    this.assertExpired();
+    this.assertInvitedUser(userId);
+
+    this.props.status = OrganizationInvitationStatus.create('CANCELED');
+  }
+
+  reject(userId: UserUuid) {
+    this.assertPending();
+    this.assertExpired();
+    this.assertInvitee(userId);
+
+    this.props.status = OrganizationInvitationStatus.create('REJECTED');
+  }
+
+  assertPending(): void {
+    if (this.props.status.getValue() !== 'PENDING') {
+      throw new InvalidOrganizationInvitationStatus(
+        OrganizationInvitation.name,
+      );
+    }
+  }
+
+  assertExpired(): void {
+    if (this.props.expiresAt.getTime() < Date.now()) {
+      throw new OrganizationInvitationExpired(OrganizationInvitation.name);
+    }
+  }
+
+  assertInvitee(userId: UserUuid): void {
+    if (!this.inviteeUserId.equals(userId)) {
+      throw new OrganizationInvitationAccessDenied(OrganizationInvitation.name);
+    }
+  }
+
+  assertInvitedUser(userId: UserUuid): void {
+    if (!this.invitedByUserId.equals(userId)) {
+      throw new OrganizationInvitationAccessDenied(OrganizationInvitation.name);
+    }
+  }
+
   get inviteeUserId(): UserUuid {
     return this.props.inviteeUserId;
   }
 
   get invitedByUserId(): UserUuid {
     return this.props.invitedByUserId;
+  }
+
+  get organizationId(): OrganizationUuid {
+    return this.props.organizationId;
+  }
+
+  get role(): OrganizationMemberRole {
+    return this.props.role;
   }
 }

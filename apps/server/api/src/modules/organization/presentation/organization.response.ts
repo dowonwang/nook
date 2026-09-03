@@ -38,4 +38,32 @@ export const OrganizationResponseSchemas = {
       memberCount: z.number(),
     }),
   ),
+
+  'change-invitation-status': z.null(),
+
+  'find-received-invitations': z.array(
+    z.object({
+      id: z.uuidv7(),
+      organization: z.object({
+        id: z.string(),
+        title: z.string(),
+      }),
+      invitedBy: z
+        .object({
+          id: z.uuidv7(),
+          name: z.string(),
+          email: z.email(),
+        })
+        .nullable(),
+      role: z.enum(['ADMIN', 'MAINTAINER', 'MEMBER']),
+      status: z.enum([
+        'PENDING',
+        'ACCEPTED',
+        'CANCELED',
+        'REJECTED',
+        'EXPIRED',
+      ]),
+      expiresAt: z.iso.datetime(),
+    }),
+  ),
 };

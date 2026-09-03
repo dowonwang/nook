@@ -1,8 +1,16 @@
 'use client';
 
+import {
+  Table,
+  TableBody,
+  TableHeader,
+  TableHeaderCell,
+  TableRow,
+} from '@packages/ui/components/table';
 import { useQuery } from '@tanstack/react-query';
 
-import { OrganizationInvitationListItem } from '$entities/organization-invitation';
+import { OrganizationInvitationSentRow } from '$entities/organization-invitation';
+import { CancelOrganizationInvitationButton } from '$features/organization-invitation/change-status';
 
 import { organizationInvitationSentListQueryOptions } from '../model/sent-list-query';
 
@@ -20,23 +28,32 @@ export function OrganizationInvitationSentList({ organizationId }: Props) {
   }
 
   return (
-    <table className='border-border w-full table-auto border-collapse border'>
-      <thead className='bg-secondary'>
-        <tr>
-          <th className='border-border border py-2'>name</th>
-          <th className='border-border border py-2'>email</th>
-          <th className='border-border border py-2'>role</th>
-          <th className='border-border border py-2'>status</th>
-        </tr>
-      </thead>
-      <tbody>
+    <Table>
+      <TableHeader>
+        <TableRow>
+          <TableHeaderCell>name</TableHeaderCell>
+          <TableHeaderCell>email</TableHeaderCell>
+          <TableHeaderCell>role</TableHeaderCell>
+          <TableHeaderCell>status</TableHeaderCell>
+          <TableHeaderCell className='w-0 whitespace-nowrap'>
+            action
+          </TableHeaderCell>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
         {invitations.map((invitation) => (
-          <OrganizationInvitationListItem
+          <OrganizationInvitationSentRow
             key={invitation.id}
             invitation={invitation}
+            actions={
+              <CancelOrganizationInvitationButton
+                organizationId={organizationId || ''}
+                invitationId={invitation.id}
+              />
+            }
           />
         ))}
-      </tbody>
-    </table>
+      </TableBody>
+    </Table>
   );
 }

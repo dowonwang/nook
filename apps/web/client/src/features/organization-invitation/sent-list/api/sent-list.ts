@@ -1,12 +1,12 @@
 import type {
-  OrganizationInvitation,
   OrganizationInvitationInvitee,
+  OrganizationSentInvitation,
 } from '$entities/organization-invitation';
 import type { GetOrganizationByOrganizationIdInvitations200 } from '@packages/api-client/api';
 
 export async function findOrganizationInvitationSentList(
   organizationId: string | undefined,
-): Promise<OrganizationInvitation[]> {
+): Promise<OrganizationSentInvitation[]> {
   if (!organizationId) return [];
 
   const response = await fetch(
@@ -23,7 +23,7 @@ export async function findOrganizationInvitationSentList(
     return data.map((item) => ({
       id: item.id,
       organizationId: item.organizationId,
-      invitee: item.invitee as OrganizationInvitationInvitee,
+      invitee: item.invitee as OrganizationInvitationInvitee | null,
       role: item.role,
       expiresAt: new Date(item.expiresAt),
       status: item.status,

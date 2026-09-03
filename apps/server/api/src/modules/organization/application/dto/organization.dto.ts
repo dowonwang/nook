@@ -1,11 +1,11 @@
 import type { OrganizationMemberRoleValue } from '$modules/organization/domain';
 
-interface Organization {
+export interface OrganizationDto {
   id: string;
   title: string;
 }
 
-export interface UserOrganizationDto extends Organization {
+export interface UserOrganizationDto extends OrganizationDto {
   userRole: OrganizationMemberRoleValue;
   memberCount: number;
 }

@@ -9,7 +9,7 @@ import { OrganizationInvitationDtoMapper } from '../../mappers/organization-invi
 import type { OrganizationCommandRepository } from '$modules/organization/domain';
 import type { UserQueryRepository } from '$modules/user/domain';
 import type { FindSentInvitationsInput } from './find-sent-invitations.query';
-import type { OrganizationInvitationDto } from '../../dto/organization-invitation.dto';
+import type { OrganizationSentInvitationDto } from '../../dto/organization-invitation.dto';
 import type { OrganizationInvitationReader } from '../../ports/organization-invitation-reader.port';
 
 export class FindSentInvitationsHandler {
@@ -21,7 +21,7 @@ export class FindSentInvitationsHandler {
 
   async execute(
     input: FindSentInvitationsInput,
-  ): Promise<OrganizationInvitationDto[]> {
+  ): Promise<OrganizationSentInvitationDto[]> {
     const query = new FindSentInvitationsQuery(input);
 
     const organization =
@@ -52,6 +52,6 @@ export class FindSentInvitationsHandler {
     const invitees =
       await this.userQueryRepository.findManyByIds(inviteeUserIds);
 
-    return OrganizationInvitationDtoMapper.fromModels(invitations, invitees);
+    return OrganizationInvitationDtoMapper.toSentList(invitations, invitees);
   }
 }
