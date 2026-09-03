@@ -21,40 +21,44 @@ export function ReceivedOrganizationInvitationList() {
   );
 
   if (!invitations || invitations.length === 0) {
-    return <p className='text-sm'>받은 초대가 없습니다.</p>;
+    return null;
   }
 
   return (
-    <Table className='mb-6'>
-      <TableHeader>
-        <TableRow>
-          <TableHeaderCell>organization</TableHeaderCell>
-          <TableHeaderCell>inviter</TableHeaderCell>
-          <TableHeaderCell>role</TableHeaderCell>
-          <TableHeaderCell>status</TableHeaderCell>
-          <TableHeaderCell className='w-0 whitespace-nowrap'>
-            actions
-          </TableHeaderCell>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {invitations.map((invitation) => (
-          <OrganizationInvitationReceivedRow
-            key={invitation.id}
-            invitation={invitation}
-            actions={
-              <div className='flex items-center justify-center gap-2'>
-                <AcceptOrganizationInvitationButton
-                  invitationId={invitation.id}
-                />
-                <RejectOrganizationInvitationButton
-                  invitationId={invitation.id}
-                />
-              </div>
-            }
-          />
-        ))}
-      </TableBody>
-    </Table>
+    <section>
+      <h2 className='mb-4 text-lg font-semibold'>받은 초대</h2>
+
+      <Table className='mb-6'>
+        <TableHeader>
+          <TableRow>
+            <TableHeaderCell>organization</TableHeaderCell>
+            <TableHeaderCell>inviter</TableHeaderCell>
+            <TableHeaderCell>role</TableHeaderCell>
+            <TableHeaderCell>status</TableHeaderCell>
+            <TableHeaderCell className='w-0 whitespace-nowrap'>
+              actions
+            </TableHeaderCell>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {invitations.map((invitation) => (
+            <OrganizationInvitationReceivedRow
+              key={invitation.id}
+              invitation={invitation}
+              actions={
+                <div className='flex items-center justify-center gap-2'>
+                  <AcceptOrganizationInvitationButton
+                    invitationId={invitation.id}
+                  />
+                  <RejectOrganizationInvitationButton
+                    invitationId={invitation.id}
+                  />
+                </div>
+              }
+            />
+          ))}
+        </TableBody>
+      </Table>
+    </section>
   );
 }
