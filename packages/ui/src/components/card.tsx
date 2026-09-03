@@ -51,22 +51,34 @@ export function CardHeader({
   return <div className={cn(style, className)}>{children}</div>;
 }
 
-export function CardBody({ children }: { children: React.ReactNode }) {
-  return <div className='p-5 group-aria-disabled:opacity-50'>{children}</div>;
+export function CardBody({
+  children,
+  className,
+  ...rest
+}: React.HTMLAttributes<HTMLDivElement>) {
+  const style = tw`p-5 group-aria-disabled:opacity-50`;
+
+  return (
+    <div {...rest} className={cn(style, className)}>
+      {children}
+    </div>
+  );
 }
 
 export function CardTitle({
   children,
   level: Component = 'h2',
   srOnly = false,
+  className,
 }: {
   children: React.ReactNode;
   level?: 'h1' | 'h2' | 'h3' | 'h4';
   srOnly?: boolean;
+  className?: string;
 }) {
   return (
     <Component
-      className={cn('font-semibold', {
+      className={cn('font-semibold', className, {
         'sr-only': srOnly,
       })}
     >
@@ -75,9 +87,15 @@ export function CardTitle({
   );
 }
 
-export function CardDescription({ children }: { children: string }) {
+export function CardDescription({
+  children,
+  className,
+  ...rest
+}: React.HTMLAttributes<HTMLParagraphElement>) {
+  const style = tw`text-secondary-foreground mt-1 text-sm whitespace-pre-line`;
+
   return (
-    <p className='text-secondary-foreground mt-1 text-sm whitespace-pre-line'>
+    <p {...rest} className={cn(style, className)}>
       {children}
     </p>
   );

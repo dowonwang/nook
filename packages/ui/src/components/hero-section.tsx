@@ -1,5 +1,7 @@
 import { cn } from '../lib/cn';
 
+const tw = String.raw;
+
 export function HeroSection({
   children,
   action,
@@ -21,10 +23,30 @@ export function HeroSection({
   return <div className={cn(className)}>{children}</div>;
 }
 
-export function HeroSectionTitle({ children }: { children: string }) {
-  return <h1 className='text-2xl font-semibold'>{children}</h1>;
+export function HeroSectionTitle({
+  children,
+  className,
+  ...rest
+}: React.HTMLAttributes<HTMLHeadElement>) {
+  const style = tw`text-2xl font-semibold`;
+
+  return (
+    <h1 {...rest} className={cn(style, className)}>
+      {children}
+    </h1>
+  );
 }
 
-export function HeroSectionDescription({ children }: { children: string }) {
-  return <p className='text-secondary-foreground mt-1 text-sm'>{children}</p>;
+export function HeroSectionDescription({
+  children,
+  className,
+  ...rest
+}: React.HTMLAttributes<HTMLParagraphElement>) {
+  const style = tw`text-secondary-foreground mt-1 text-sm`;
+
+  return (
+    <p {...rest} className={cn(style, className)}>
+      {children}
+    </p>
+  );
 }

@@ -49,7 +49,7 @@
 
 @layer base {
   html {
-    @apply text-base-text;
+    @apply text-base-text break-keep;
   }
 
   button {
@@ -62,5 +62,17 @@
 
   *:focus-visible {
     @apply outline-focus;
+  }
+}
+
+html {
+  font-size: 16px;
+
+  @media (width < 64rem) {
+    font-size: 14px;
+  }
+
+  @media (width < 40rem) {
+    font-size: 12px;
   }
 }
