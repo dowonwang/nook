@@ -39,6 +39,9 @@ export class PrismaOrganizationInvitationQueryRepository
       where: {
         inviteeUserId: params.userId.getValue(),
         status: 'PENDING',
+        expiresAt: {
+          gt: new Date(),
+        },
       },
     });
 
