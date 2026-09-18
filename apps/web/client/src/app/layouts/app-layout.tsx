@@ -3,14 +3,20 @@ import '@packages/ui/styles.css';
 import '$app/styles/global.css';
 
 import { Noto_Sans, Noto_Sans_KR } from 'next/font/google';
-import { NextIntlClientProvider } from 'next-intl';
-import { getLocale } from 'next-intl/server';
+import { I18nProvider } from 'next-i18next/client';
+import {
+  generateI18nStaticParams,
+  getResources,
+  getT,
+  initServerI18next,
+} from 'next-i18next/server';
 
 import {
   FlashCookieConsumer,
   QueryClientProvider,
   ThemeProvider,
 } from '$app/providers';
+import { i18nConfig } from '$shared/i18n/server';
 import { getFlashCookie } from '$shared/lib/cookie/server';
 import { initializeTheme } from '$shared/lib/theme';
 import { getTheme } from '$shared/lib/theme/get-theme.server';
@@ -26,14 +32,21 @@ const noto = Noto_Sans({
   variable: '--font-noto-sans',
 });
 
+initServerI18next(i18nConfig);
+
+export function generateStaticParams() {
+  return generateI18nStaticParams();
+}
+
 export async function AppLayout({ children }: Props) {
   const flashToken = await getFlashCookie();
   const theme = await getTheme();
-  const locale = await getLocale();
+  const { i18n, lng } = await getT();
+  const resource = getResources(i18n);
 
   return (
     <html
-      lang={locale}
+      lang={lng}
       className={`${notoKr.variable} ${noto.variable} ${theme === 'dark' ? 'dark' : ''}`}
     >
       <head>
@@ -48,9 +61,9 @@ export async function AppLayout({ children }: Props) {
         <FlashCookieConsumer shouldConsume={!!flashToken} />
 
         <QueryClientProvider>
-          <NextIntlClientProvider>
+          <I18nProvider language={lng} resources={resource}>
             <ThemeProvider initTheme={theme}>{children}</ThemeProvider>
-          </NextIntlClientProvider>
+          </I18nProvider>
         </QueryClientProvider>
       </body>
     </html>

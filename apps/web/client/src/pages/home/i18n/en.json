@@ -1,0 +1,87 @@
+{
+  "hero": {
+    "title": "Our Collaboration Space <appName />",
+    "description": "<appName /> is a small collaboration space where you can organize teams, share resources,<br />and communicate with members.",
+    "features": {
+      "organization": {
+        "status": "In Progress",
+        "title": "Organization Management",
+        "description": "Create organizations, invite members, and manage your team."
+      },
+      "fileShare": {
+        "status": "Planned",
+        "title": "File Sharing",
+        "description": "Upload and share files within your organization."
+      },
+      "realtimeChat": {
+        "status": "Planned",
+        "title": "Real-Time Chat",
+        "description": "Communicate with members of the same organization."
+      }
+    }
+  },
+  "motivation": {
+    "title": "Why I Built <appName />",
+    "description": "I started this project to structurally address increasingly complex domains and the limitations of reusability.<br />I also wanted to improve the front-end architecture and build the back end myself to deepen my understanding of collaborative systems.",
+    "frontend": {
+      "title": "Front-End",
+      "problem": {
+        "label": "Problem",
+        "description": "As features increased, it became unclear where components and logic should belong."
+      },
+      "solution": {
+        "label": "Approach",
+        "description": "Separate responsibilities and dependencies using Feature-Sliced Design (FSD)."
+      },
+      "goal": {
+        "label": "Goal",
+        "description": "Build a predictable and reusable structure that remains maintainable as features grow."
+      }
+    },
+    "backend": {
+      "title": "Back-End",
+      "problem": {
+        "label": "Problem",
+        "description": "Changes to API specifications caused client type mismatches and additional manual synchronization work."
+      },
+      "solution": {
+        "label": "Approach",
+        "description": "Generate code from the OpenAPI specification with Orval and distribute it through shared packages."
+      },
+      "goal": {
+        "label": "Goal",
+        "description": "Ensure type safety."
+      }
+    }
+  },
+  "technology": {
+    "title": "How <appName /> Was Built",
+    "description": "These technologies were selected to solve the problems above while improving development productivity and type safety.",
+    "frontend": {
+      "title": "Front-End",
+      "nextjs": {
+        "title": "Next.js & TypeScript",
+        "description": "Applied Feature-Sliced Design (FSD) to separate responsibilities between layers and build a predictable architecture."
+      },
+      "tanstackQuery": {
+        "title": "TanStack Query",
+        "description": "Uses generated API clients for server-state management and efficient caching."
+      }
+    },
+    "backend": {
+      "title": "Back-End & Shared",
+      "elysia": {
+        "title": "ElysiaJS & Bun & PostgreSQL",
+        "description": "Built an OpenAPI-based back end using Bun's fast runtime and Elysia's strong TypeScript support."
+      },
+      "architecture": {
+        "title": "DDD & CQRS (Architecture)",
+        "description": "Isolates business logic by domain with DDD and separates read and write responsibilities with CQRS to improve scalability and manage complexity."
+      },
+      "sharedPackages": {
+        "title": "Shared Packages (Monorepo)",
+        "description": "Separates shared UI, Orval-generated API clients, database configuration, and i18n into independent packages to improve reusability and maintainability."
+      }
+    }
+  }
+}

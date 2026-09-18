@@ -1,11 +1,11 @@
-import createMiddleware from 'next-intl/middleware';
+import { createProxy } from 'next-i18next/proxy';
 
-import { routing } from '$app/i18n';
+import { i18nConfig } from '$shared/i18n/server';
 
 import type { NextRequest } from 'next/server';
 
-const intlMiddleware = createMiddleware(routing);
+const i18nMiddleware = createProxy(i18nConfig);
 
 export function handleI18n(request: NextRequest) {
-  return intlMiddleware(request);
+  return i18nMiddleware(request);
 }

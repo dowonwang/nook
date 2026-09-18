@@ -1,0 +1,87 @@
+{
+  "hero": {
+    "title": "우리의 협업공간 <appName />",
+    "description": "<appName />는 조직을 구성하고, 자료를 공유하며, 소통할 수 있도록<br />지원하는 작은 협업 공간입니다.",
+    "features": {
+      "organization": {
+        "status": "제작중",
+        "title": "조직 관리",
+        "description": "조직을 만들고 멤버를 초대해 관리합니다."
+      },
+      "fileShare": {
+        "status": "구현 예정",
+        "title": "파일 공유",
+        "description": "조직의 파일을 업로드하고 공유합니다."
+      },
+      "realtimeChat": {
+        "status": "구현 예정",
+        "title": "실시간 대화",
+        "description": "같은 조직의 멤버들과 대화합니다."
+      }
+    }
+  },
+  "motivation": {
+    "title": "<appName />를 만든 이유",
+    "description": "복잡해지는 도메인과 재사용의 한계를 구조적으로 해결하고자 시작했습니다.<br />프론트엔드 아키텍처를 개선하고, 백엔드까지 직접 구현하며 협업의 깊이를 더하고자 합니다.",
+    "frontend": {
+      "title": "Front-End",
+      "problem": {
+        "label": "문제점",
+        "description": "기능이 늘어날수록 컴포넌트와 로직의 위치가 모호해짐"
+      },
+      "solution": {
+        "label": "해결 방식",
+        "description": "Feature-Sliced Design(FSD)을 통한 책임과 의존성 분리"
+      },
+      "goal": {
+        "label": "목표",
+        "description": "기능 확장에도 예측 가능하고 재사용 가능한 구조 구축"
+      }
+    },
+    "backend": {
+      "title": "Back-End",
+      "problem": {
+        "label": "문제점",
+        "description": "API 스펙 변경 시 클라이언트 타입 불일치 및 수동 동기화 비용 발생"
+      },
+      "solution": {
+        "label": "해결 방식",
+        "description": "OpenAPI 스펙 기반 Orval 코드 자동 생성 및 공유 패키지 구축"
+      },
+      "goal": {
+        "label": "목표",
+        "description": "타입 안정성 확보"
+      }
+    }
+  },
+  "technology": {
+    "title": "<appName />, 이렇게 만들었습니다.",
+    "description": "앞서 정의한 문제를 해결하고, 개발 생산성과 타입 안정성을 위해 선택한 기술입니다.",
+    "frontend": {
+      "title": "Front-End",
+      "nextjs": {
+        "title": "Next.js & TypeScript",
+        "description": "FSD(Feature-Sliced Design) 아키텍처를 적용하여 레이어 간 책임 분리와 예측 가능한 구조 구축"
+      },
+      "tanstackQuery": {
+        "title": "TanStack Query",
+        "description": "자동 생성된 API 클라이언트를 활용하여 서버 상태 관리 및 캐싱 최적화"
+      }
+    },
+    "backend": {
+      "title": "Back-End & Shared",
+      "elysia": {
+        "title": "ElysiaJS & Bun & PostgreSQL",
+        "description": "Bun의 빠른 런타임 환경과 TypeScript 지원에 뛰어난 Elysia를 활용해 OpenAPI 명세 기반 백엔드 구축"
+      },
+      "architecture": {
+        "title": "DDD & CQRS (Architecture)",
+        "description": "비즈니스 로직을 도메인 단위로 격리(DDD)하고, 조회와 상태 변경 책임(CQRS)을 분리하여 확장성과 복잡도 관리 최적화"
+      },
+      "sharedPackages": {
+        "title": "Shared Packages (Monorepo)",
+        "description": "공통 UI, Orval 생성 API 클라이언트, DB 설정, i18n을 독립 패키지로 분리해 재사용성과 관리 효율성 증대"
+      }
+    }
+  }
+}
