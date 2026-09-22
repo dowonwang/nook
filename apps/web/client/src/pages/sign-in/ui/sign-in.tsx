@@ -5,19 +5,27 @@ import {
   CardHeader,
   CardTitle,
 } from '@packages/ui/components/card';
-import { getTranslations } from 'next-intl/server';
+import { getT } from 'next-i18next/server';
 
-import { SESSION_REQUIRED_SIGN_IN } from '$entities/session';
+import {
+  ENTITY_SESSION_I18N_NAMESPACE,
+  SESSION_REQUIRED_SIGN_IN,
+} from '$entities/session';
 import { SignInForm } from '$features/auth/sign-in';
 import { getFlashCookie } from '$shared/lib/cookie/server';
 import { AppLogo } from '$shared/ui';
+
+import { PAGE_SIGN_IN_I18N_NAMESPACE } from '../i18n';
 
 interface Props {
   redirectTo: string | string[] | undefined;
 }
 
 export async function SignInPage({ redirectTo }: Props) {
-  const t = await getTranslations('response');
+  const { t } = await getT([
+    ENTITY_SESSION_I18N_NAMESPACE,
+    PAGE_SIGN_IN_I18N_NAMESPACE,
+  ]);
   const flashCookie = await getFlashCookie();
   const i18nKey = flashCookie || (redirectTo ? SESSION_REQUIRED_SIGN_IN : null);
 
@@ -27,9 +35,13 @@ export async function SignInPage({ redirectTo }: Props) {
         <CardHeader className='flex items-center gap-4'>
           <AppLogo height={50} width={50} />
           <div>
-            <CardTitle level='h1'>Sign in</CardTitle>
+            <CardTitle level='h1'>
+              {t(`${PAGE_SIGN_IN_I18N_NAMESPACE}:title`)}
+            </CardTitle>
             <CardDescription>
-              {i18nKey ? t(i18nKey) : 'Sign in to your account'}
+              {i18nKey
+                ? t(`${ENTITY_SESSION_I18N_NAMESPACE}:${i18nKey}`)
+                : t(`${PAGE_SIGN_IN_I18N_NAMESPACE}:description`)}
             </CardDescription>
           </div>
         </CardHeader>

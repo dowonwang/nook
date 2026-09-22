@@ -3,13 +3,7 @@ import '@packages/ui/styles.css';
 import '$app/styles/global.css';
 
 import { Noto_Sans, Noto_Sans_KR } from 'next/font/google';
-import { I18nProvider } from 'next-i18next/client';
-import {
-  generateI18nStaticParams,
-  getResources,
-  getT,
-  initServerI18next,
-} from 'next-i18next/server';
+import { getT, initServerI18next } from 'next-i18next/server';
 
 import {
   FlashCookieConsumer,
@@ -34,15 +28,10 @@ const noto = Noto_Sans({
 
 initServerI18next(i18nConfig);
 
-export function generateStaticParams() {
-  return generateI18nStaticParams();
-}
-
 export async function AppLayout({ children }: Props) {
   const flashToken = await getFlashCookie();
   const theme = await getTheme();
-  const { i18n, lng } = await getT();
-  const resource = getResources(i18n);
+  const { lng } = await getT();
 
   return (
     <html
@@ -61,9 +50,7 @@ export async function AppLayout({ children }: Props) {
         <FlashCookieConsumer shouldConsume={!!flashToken} />
 
         <QueryClientProvider>
-          <I18nProvider language={lng} resources={resource}>
-            <ThemeProvider initTheme={theme}>{children}</ThemeProvider>
-          </I18nProvider>
+          <ThemeProvider initTheme={theme}>{children}</ThemeProvider>
         </QueryClientProvider>
       </body>
     </html>

@@ -1,0 +1,17 @@
+{
+  "name": {
+    "label": "Name"
+  },
+  "email": {
+    "label": "Email"
+  },
+  "password": {
+    "label": "Password"
+  },
+  "password_confirm": {
+    "label": "Confirm Password"
+  },
+  "button": {
+    "sign_up": "Sign Up"
+  }
+}

@@ -18,13 +18,15 @@ import { Trans } from 'react-i18next/TransWithoutContext';
 
 import { AppName } from '$shared/ui';
 
+import { PAGE_HOME_I18N_NAMESPACE } from '../i18n';
+
 const tw = String.raw;
 
 export async function HomePage() {
   const HEAD_STYLE = tw`mb-3 text-3xl font-black`;
   const DESCRIPTION_STYLE = tw`text-secondary-foreground mb-12 text-lg`;
   const ICON_STYLE = tw`bg-primary/10 text-primary inline-block h-10 w-10 rounded-lg p-1.5 shadow`;
-  const { t, i18n } = await getT('pages/home');
+  const { t, i18n } = await getT(PAGE_HOME_I18N_NAMESPACE);
 
   return (
     <div className='space-y-30'>

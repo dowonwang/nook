@@ -26,8 +26,6 @@ export const i18nResponseEn = {
   auth_signup_success_signin_required:
     'Your account has been created successfully.\nPlease sign in to continue.',
 
-  auth_required_signin: 'Please sign in and try again.',
-
   auth_error_InvalidCredentials:
     'The email or password you entered is incorrect.',
 

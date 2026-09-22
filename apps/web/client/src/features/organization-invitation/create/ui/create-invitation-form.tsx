@@ -11,7 +11,7 @@ import {
 import { Input } from '@packages/ui/components/input';
 import { WarningMessage } from '@packages/ui/components/warning-message';
 import { useQueryClient } from '@tanstack/react-query';
-import { useTranslations } from 'next-intl';
+import { useT } from 'next-i18next/client';
 import { useActionState, useEffect } from 'react';
 
 import { OrganizationMemberRoleRadioGroup } from '$entities/organization-member';
@@ -36,7 +36,7 @@ export function CreateOrganizationInvitationForm({
   organization,
   disabled = false,
 }: Props) {
-  const t = useTranslations('validation');
+  const { t } = useT('validation');
   const [actionState, formAction, isPending] = useActionState(
     createOrganizationInvitationAction,
     {

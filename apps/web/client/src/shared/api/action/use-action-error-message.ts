@@ -1,6 +1,6 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
+import { useT } from 'next-i18next/client';
 
 type ErrorCode = {
   code: string;
@@ -16,11 +16,11 @@ function hasErrorCode(error: unknown): error is ErrorCode {
 }
 
 export function useActionErrorMessage(error: unknown) {
-  const t = useTranslations('response');
+  const { t, i18n } = useT();
 
   if (!hasErrorCode(error)) {
     return null;
   }
 
-  return t.has(error.code) ? t(error.code) : null;
+  return i18n.exists(error.code) ? t(error.code) : null;
 }
