@@ -2,9 +2,7 @@
 
 import { Button } from '@packages/ui/components/button';
 import { usePathname, useRouter } from 'next/navigation';
-import { useChangeLanguage } from 'next-i18next/client';
 
-import { I18N_COOKIE_NAME } from '$shared/config';
 import {
   createLocalizedPathname,
   removeLocaleFromPathname,
@@ -13,12 +11,11 @@ import {
 import type { I18nLanguagesType } from '$shared/config';
 
 export function I18nToggleButton() {
-  const changeLanguage = useChangeLanguage(I18N_COOKIE_NAME);
   const pathname = usePathname() || '/';
   const router = useRouter();
 
-  const handleChange = async (locale: I18nLanguagesType) => {
-    await changeLanguage(locale);
+  const handleChange = (locale: I18nLanguagesType) => {
+    document.documentElement.lang = locale;
 
     const cleanPathname = removeLocaleFromPathname(pathname);
     const nextPathname = createLocalizedPathname(cleanPathname, locale);
@@ -32,7 +29,9 @@ export function I18nToggleButton() {
         variant='secondary'
         size='icon'
         type='button'
-        onClick={() => void handleChange('en')}
+        onClick={() => {
+          handleChange('en');
+        }}
       >
         en
       </Button>
@@ -41,7 +40,9 @@ export function I18nToggleButton() {
         variant='secondary'
         size='icon'
         type='button'
-        onClick={() => void handleChange('ko')}
+        onClick={() => {
+          handleChange('ko');
+        }}
       >
         ko
       </Button>

@@ -4,7 +4,7 @@ import {
   I18N_LANGUAGES,
 } from '$shared/config';
 
-import { resourceBackendServer } from '../server';
+import { resourceBackendServer, resourceBackendServerDev } from '../server';
 
 import type { I18nConfig } from 'next-i18next/proxy';
 
@@ -16,7 +16,11 @@ export const i18nConfig: I18nConfig = {
   localeParamName: 'locale',
   cookieName: I18N_COOKIE_NAME,
 
-  use: [resourceBackendServer],
+  use: [
+    process.env.NODE_ENV === 'development'
+      ? resourceBackendServerDev
+      : resourceBackendServer,
+  ],
 
   reloadOnPrerender: process.env.NODE_ENV === 'development',
 };

@@ -36,14 +36,19 @@ export async function handleProxy(request: NextRequest): Promise<NextResponse> {
   }
 
   if (!locale) {
+    const response = createLocaleRedirect(request);
+
     if (session.status !== 'invalid') {
-      const response = createLocaleRedirect(request);
       return mergeResponseCookies(session.response, response);
     }
+
+    clearAuthCookieToResponse(response);
+
+    return response;
   }
 
   // public route
-  const response = handleI18n(request);
+  const response = handleI18n(request, locale);
 
   if (session.status !== 'invalid') {
     return mergeResponseCookies(session.response, response);

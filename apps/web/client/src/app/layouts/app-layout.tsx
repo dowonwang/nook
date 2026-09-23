@@ -3,13 +3,15 @@ import '@packages/ui/styles.css';
 import '$app/styles/global.css';
 
 import { Noto_Sans, Noto_Sans_KR } from 'next/font/google';
-import { getT, initServerI18next } from 'next-i18next/server';
+import { cookies } from 'next/headers';
+import { initServerI18next } from 'next-i18next/server';
 
 import {
   FlashCookieConsumer,
   QueryClientProvider,
   ThemeProvider,
 } from '$app/providers';
+import { I18N_COOKIE_NAME, I18N_FALLBACK_LANGUAGE } from '$shared/config';
 import { i18nConfig } from '$shared/i18n/server';
 import { getFlashCookie } from '$shared/lib/cookie/server';
 import { initializeTheme } from '$shared/lib/theme';
@@ -31,11 +33,14 @@ initServerI18next(i18nConfig);
 export async function AppLayout({ children }: Props) {
   const flashToken = await getFlashCookie();
   const theme = await getTheme();
-  const { lng } = await getT();
+  const languageCookie = (await cookies()).get(I18N_COOKIE_NAME);
+  const language = languageCookie
+    ? languageCookie.value
+    : I18N_FALLBACK_LANGUAGE;
 
   return (
     <html
-      lang={lng}
+      lang={language}
       className={`${notoKr.variable} ${noto.variable} ${theme === 'dark' ? 'dark' : ''}`}
     >
       <head>
