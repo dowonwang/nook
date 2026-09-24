@@ -4,6 +4,13 @@
   "dictionaryDefinitions": [],
   "dictionaries": [],
   "words": ["noto", "rgba"],
-  "ignoreWords": ["Dowon", "noreferror", "elysia", "Refreshable", "uuidv"],
+  "ignoreWords": [
+    "Dowon",
+    "Lngs",
+    "Refreshable",
+    "elysia",
+    "noreferror",
+    "uuidv"
+  ],
   "import": []
 }

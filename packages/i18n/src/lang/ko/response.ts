@@ -14,7 +14,6 @@ export const i18nResponseKo = {
   auth_error_token_expired: '로그인 세션이 만료되었습니다.',
   auth_signup_success_signin_required:
     '회원가입이 완료되었습니다.\n로그인 후 서비스를 이용해 주세요.',
-  auth_required_signin: '로그인 후 다시 시도해 주세요.',
   auth_error_InvalidCredentials: '로그인 정보가 올바르지 않습니다.',
   auth_error_EmailAlreadyExists:
     '이미 가입된 계정이거나 사용할 수 없는 이메일입니다.',

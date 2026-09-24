@@ -9,7 +9,7 @@ import {
 } from '@packages/ui/components/field';
 import { Input } from '@packages/ui/components/input';
 import { WarningMessage } from '@packages/ui/components/warning-message';
-import { useTranslations } from 'next-intl';
+import { useT } from 'next-i18next/client';
 import { useActionState, useEffect } from 'react';
 
 import {
@@ -26,7 +26,7 @@ interface Props {
 }
 
 export function CreateOrganizationForm({ onSuccess }: Props) {
-  const t = useTranslations('validation');
+  const { t } = useT('validation');
   const [actionState, formAction] = useActionState(createOrganizationAction, {
     success: false,
     error: null,

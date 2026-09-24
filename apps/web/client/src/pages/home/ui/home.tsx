@@ -13,27 +13,42 @@ import {
   MessageCircle,
   Share2,
 } from 'lucide-react';
+import { getT } from 'next-i18next/server';
+import { Trans } from 'react-i18next/TransWithoutContext';
 
 import { AppName } from '$shared/ui';
 
+import { PAGE_HOME_I18N_NAMESPACE } from '../i18n';
+
 const tw = String.raw;
 
-export function HomePage() {
+export async function HomePage() {
   const HEAD_STYLE = tw`mb-3 text-3xl font-black`;
   const DESCRIPTION_STYLE = tw`text-secondary-foreground mb-12 text-lg`;
   const ICON_STYLE = tw`bg-primary/10 text-primary inline-block h-10 w-10 rounded-lg p-1.5 shadow`;
+  const { t, i18n } = await getT(PAGE_HOME_I18N_NAMESPACE);
 
   return (
     <div className='space-y-30'>
       <section className='text-center'>
         <h1 className={HEAD_STYLE}>
-          우리의 협업공간 <AppName />
+          <Trans
+            t={t}
+            i18n={i18n}
+            i18nKey={'hero.title'}
+            components={{ appName: <AppName /> }}
+          />
         </h1>
 
         <p className={DESCRIPTION_STYLE}>
-          <AppName />는 조직을 구성하고, 자료를 공유하며, 소통할 수 있도록
-          <br />
-          지원하는 작은 협업 공간입니다.
+          <Trans
+            t={t}
+            i18n={i18n}
+            i18nKey={'hero.description'}
+            components={{
+              appName: <AppName />,
+            }}
+          />
         </p>
 
         <div className='grid grid-cols-1 gap-4 text-start md:grid-cols-3'>
@@ -42,12 +57,12 @@ export function HomePage() {
               <div className='flex items-center justify-between'>
                 <Building className={ICON_STYLE} />
                 <span className='bg-primary text-primary-foreground rounded-full px-2 py-1 text-xs shadow'>
-                  제작중
+                  {t('hero.features.organization.status')}
                 </span>
               </div>
-              <CardTitle>조직 관리</CardTitle>
+              <CardTitle>{t('hero.features.organization.title')}</CardTitle>
               <CardDescription>
-                조직을 만들고 멤버를 초대해 관리합니다.
+                {t('hero.features.organization.description')}
               </CardDescription>
             </CardBody>
           </Card>
@@ -57,12 +72,12 @@ export function HomePage() {
               <div className='flex items-center justify-between'>
                 <Share2 className={ICON_STYLE} />
                 <span className='bg-secondary text-secondary-foreground rounded-full px-2 py-1 text-xs shadow'>
-                  구현 예정
+                  {t('hero.features.fileShare.status')}
                 </span>
               </div>
-              <CardTitle>파일 공유</CardTitle>
+              <CardTitle>{t('hero.features.fileShare.title')}</CardTitle>
               <CardDescription>
-                조직의 파일을 업로드하고 공유합니다.
+                {t('hero.features.fileShare.description')}
               </CardDescription>
             </CardBody>
           </Card>
@@ -72,12 +87,12 @@ export function HomePage() {
               <div className='flex items-center justify-between'>
                 <MessageCircle className={ICON_STYLE} />
                 <span className='bg-secondary text-secondary-foreground rounded-full px-2 py-1 text-xs shadow'>
-                  구현 예정
+                  {t('hero.features.realtimeChat.status')}
                 </span>
               </div>
-              <CardTitle>실시간 대화</CardTitle>
+              <CardTitle>{t('hero.features.realtimeChat.title')}</CardTitle>
               <CardDescription>
-                같은 조직의 멤버들과 대화합니다.
+                {t('hero.features.realtimeChat.description')}
               </CardDescription>
             </CardBody>
           </Card>
@@ -88,43 +103,52 @@ export function HomePage() {
 
       <section className='text-center'>
         <h2 className={HEAD_STYLE}>
-          <AppName />를 만든 이유
+          <Trans
+            t={t}
+            i18n={i18n}
+            i18nKey={'motivation.title'}
+            components={{
+              appName: <AppName />,
+            }}
+          />
         </h2>
 
         <p className={DESCRIPTION_STYLE}>
-          복잡해지는 도메인과 재사용의 한계를 구조적으로 해결하고자
-          시작했습니다.
-          <br />
-          프론트엔드 아키텍쳐를 개선하고, 백엔드까지 직접 구현하며 협업의 깊이를
-          더하고자 합니다.
+          <Trans t={t} i18n={i18n} i18nKey={'motivation.description'} />
         </p>
 
         <div className='grid grid-cols-1 gap-4 text-start md:grid-cols-2'>
           <Card>
             <CardHeader className='flex items-center gap-3'>
               <LayoutTemplate className={ICON_STYLE} />
-              <CardTitle level='h3'>Front-End</CardTitle>
+              <CardTitle level='h3'>{t('motivation.frontend.title')}</CardTitle>
             </CardHeader>
             <CardBody>
               <dl className='space-y-6'>
                 <div className='space-y-1'>
-                  <dt className='font-semibold'>문제점</dt>
+                  <dt className='font-semibold'>
+                    {t('motivation.frontend.problem.label')}
+                  </dt>
                   <dd className='text-secondary-foreground'>
-                    기능이 늘어날수록 컴포넌트와 로직의 위치가 모호해짐
+                    {t('motivation.frontend.problem.description')}
                   </dd>
                 </div>
 
                 <div className='space-y-1'>
-                  <dt className='font-semibold'>해결 방식</dt>
+                  <dt className='font-semibold'>
+                    {t('motivation.frontend.solution.label')}
+                  </dt>
                   <dd className='text-secondary-foreground'>
-                    Feature-Sliced Design(FSD)을 통한 책임과 의존성 분리
+                    {t('motivation.frontend.solution.description')}
                   </dd>
                 </div>
 
                 <div className='space-y-1'>
-                  <dt className='font-semibold'>목표</dt>
+                  <dt className='font-semibold'>
+                    {t('motivation.frontend.goal.label')}
+                  </dt>
                   <dd className='text-secondary-foreground'>
-                    기능 확장에도 예측 가능하고 재사용 가능한 구조 구축
+                    {t('motivation.frontend.goal.description')}
                   </dd>
                 </div>
               </dl>
@@ -134,29 +158,34 @@ export function HomePage() {
           <Card>
             <CardHeader className='flex items-center gap-3'>
               <HardDrive className={ICON_STYLE} />
-              <CardTitle level='h3'>Back-End</CardTitle>
+              <CardTitle level='h3'>{t('motivation.backend.title')}</CardTitle>
             </CardHeader>
             <CardBody>
               <dl className='space-y-6'>
                 <div className='space-y-1'>
-                  <dt className='font-semibold'>문제점</dt>
+                  <dt className='font-semibold'>
+                    {t('motivation.backend.problem.label')}
+                  </dt>
                   <dd className='text-secondary-foreground'>
-                    API 스펙 변경 시 클라이언트 타입 불일치 및 수동 동기화 비용
-                    발생
+                    {t('motivation.backend.problem.description')}
                   </dd>
                 </div>
 
                 <div className='space-y-1'>
-                  <dt className='font-semibold'>해결 방식</dt>
+                  <dt className='font-semibold'>
+                    {t('motivation.backend.solution.label')}
+                  </dt>
                   <dd className='text-secondary-foreground'>
-                    OpenAPI 스펙 기반 Orval 코드 자동 생성 및 공유 패키지 구축
+                    {t('motivation.backend.solution.description')}
                   </dd>
                 </div>
 
                 <div className='space-y-1'>
-                  <dt className='font-semibold'>목표</dt>
+                  <dt className='font-semibold'>
+                    {t('motivation.backend.goal.label')}
+                  </dt>
                   <dd className='text-secondary-foreground'>
-                    타입 안정성 확보
+                    {t('motivation.backend.goal.description')}
                   </dd>
                 </div>
               </dl>
@@ -169,36 +198,42 @@ export function HomePage() {
 
       <section className='text-center'>
         <h2 className={HEAD_STYLE}>
-          <AppName />, 이렇게 만들었습니다.
+          <Trans
+            t={t}
+            i18n={i18n}
+            i18nKey={'technology.title'}
+            components={{
+              appName: <AppName />,
+            }}
+          />
         </h2>
 
-        <p className={DESCRIPTION_STYLE}>
-          앞서 정의한 문제를 해결하고, 개발 생산성과 타입 안정성을 위해 선택한
-          기술입니다.
-        </p>
+        <p className={DESCRIPTION_STYLE}>{t('technology.description')}</p>
 
         <div className='grid grid-cols-1 gap-4 text-start md:grid-cols-2'>
           {/* Front-End */}
           <Card>
             <CardHeader className='flex items-center gap-3'>
               <LayoutTemplate className={ICON_STYLE} />
-              <CardTitle level='h3'>Front-End</CardTitle>
+              <CardTitle level='h3'>{t('technology.frontend.title')}</CardTitle>
             </CardHeader>
             <CardBody>
               <dl className='space-y-6'>
                 <div className='space-y-1'>
-                  <dt className='font-semibold'>Next.js & TypeScript</dt>
+                  <dt className='font-semibold'>
+                    {t('technology.frontend.nextjs.title')}
+                  </dt>
                   <dd className='text-secondary-foreground'>
-                    FSD(Feature-Sliced Design) 아키텍처를 적용하여 레이어 간
-                    책임 분리와 예측 가능한 구조 구축
+                    {t('technology.frontend.nextjs.description')}
                   </dd>
                 </div>
 
                 <div className='space-y-1'>
-                  <dt className='font-semibold'>TanStack Query</dt>
+                  <dt className='font-semibold'>
+                    {t('technology.frontend.tanstackQuery.title')}
+                  </dt>
                   <dd className='text-secondary-foreground'>
-                    자동 생성된 API 클라이언트를 활용하여 서버 상태 관리 및 캐싱
-                    최적화
+                    {t('technology.frontend.tanstackQuery.description')}
                   </dd>
                 </div>
               </dl>
@@ -209,31 +244,34 @@ export function HomePage() {
           <Card>
             <CardHeader className='flex items-center gap-3'>
               <HardDrive className={ICON_STYLE} />
-              <CardTitle level='h3'>Back-End & Shared</CardTitle>
+              <CardTitle level='h3'>{t('technology.backend.title')}</CardTitle>
             </CardHeader>
             <CardBody>
               <dl className='space-y-6'>
                 <div className='space-y-1'>
-                  <dt className='font-semibold'>ElysiaJS & Bun & PostgreSQL</dt>
+                  <dt className='font-semibold'>
+                    {t('technology.backend.elysia.title')}
+                  </dt>
                   <dd className='text-secondary-foreground'>
-                    Bun의 빠른 런타임 환경과 TypeScript 지원에 뛰어난 Elysia를
-                    활용해 OpenAPI 명세 기반 백엔드 구축
+                    {t('technology.backend.elysia.description')}
                   </dd>
                 </div>
 
                 <div className='space-y-1'>
-                  <dt className='font-semibold'>DDD & CQRS (Architecture)</dt>
+                  <dt className='font-semibold'>
+                    {t('technology.backend.architecture.title')}
+                  </dt>
                   <dd className='text-secondary-foreground'>
-                    비즈니스 로직을 도메인 단위로 격리(DDD)하고, 조회와 상태
-                    변경 책임(CQRS)을 분리하여 확장성과 복잡도 관리 최적화
+                    {t('technology.backend.architecture.description')}
                   </dd>
                 </div>
 
                 <div className='space-y-1'>
-                  <dt className='font-semibold'>Shared Packages (Monorepo)</dt>
+                  <dt className='font-semibold'>
+                    {t('technology.backend.sharedPackages.title')}
+                  </dt>
                   <dd className='text-secondary-foreground'>
-                    공통 UI, Orval 생성 API 클라이언트, DB 설정, i18n을 독립
-                    패키지로 분리해 재사용성과 관리 효율성 증대
+                    {t('technology.backend.sharedPackages.description')}
                   </dd>
                 </div>
               </dl>

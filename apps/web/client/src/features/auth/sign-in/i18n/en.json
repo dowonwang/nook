@@ -1,0 +1,15 @@
+{
+  "email": {
+    "label": "Email"
+  },
+  "password": {
+    "label": "Password"
+  },
+  "message": {
+    "no_account": "Don't have an account?"
+  },
+  "button": {
+    "sign_in": "Sign In",
+    "sign_up": "Sign Up"
+  }
+}

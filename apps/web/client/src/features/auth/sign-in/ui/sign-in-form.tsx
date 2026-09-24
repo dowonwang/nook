@@ -11,7 +11,7 @@ import { Input } from '@packages/ui/components/input';
 import { Separator } from '@packages/ui/components/separator';
 import { WarningMessage } from '@packages/ui/components/warning-message';
 import Link from 'next/link';
-import { useTranslations } from 'next-intl';
+import { useT } from 'next-i18next/client';
 import { useActionState } from 'react';
 
 import {
@@ -20,6 +20,7 @@ import {
 } from '$shared/api/action';
 
 import { signInAction } from '../api/sign-in-action.server';
+import { FEAT_AUTH_SIGN_IN_I18N_NAMESPACE } from '../i18n';
 
 import type { ActionStateZodError } from '$shared/api/action';
 
@@ -28,7 +29,8 @@ interface Props {
 }
 
 export function SignInForm({ redirectTo }: Props) {
-  const t = useTranslations('validation');
+  const { t } = useT([FEAT_AUTH_SIGN_IN_I18N_NAMESPACE]);
+
   const redirectPath = typeof redirectTo === 'string' ? redirectTo : '/';
 
   const [actionState, formAction] = useActionState(signInAction, {
@@ -49,7 +51,9 @@ export function SignInForm({ redirectTo }: Props) {
     <form action={formAction} noValidate>
       <FieldGroup>
         <Field>
-          <FieldLabel htmlFor='email'>Email</FieldLabel>
+          <FieldLabel htmlFor='email'>
+            {t(`${FEAT_AUTH_SIGN_IN_I18N_NAMESPACE}:email.label`)}
+          </FieldLabel>
           <Input
             ref={register('email')}
             id='email'
@@ -68,7 +72,9 @@ export function SignInForm({ redirectTo }: Props) {
         </Field>
 
         <Field>
-          <FieldLabel htmlFor='password'>Password</FieldLabel>
+          <FieldLabel htmlFor='password'>
+            {t(`${FEAT_AUTH_SIGN_IN_I18N_NAMESPACE}:password.label`)}
+          </FieldLabel>
           <Input
             ref={register('password')}
             id='password'
@@ -87,13 +93,17 @@ export function SignInForm({ redirectTo }: Props) {
         {actionError && <WarningMessage>{actionError}</WarningMessage>}
 
         <Button type='submit' className='w-full'>
-          Log In
+          {t(`${FEAT_AUTH_SIGN_IN_I18N_NAMESPACE}:button.sign_in`)}
         </Button>
 
-        <Separator content={"Don't have an account?"} />
+        <Separator
+          content={t(`${FEAT_AUTH_SIGN_IN_I18N_NAMESPACE}:message.no_account`)}
+        />
 
         <Button variant='secondary' className='w-full' asChild>
-          <Link href={'/signup'}>Sign Up</Link>
+          <Link href={'/signup'}>
+            {t(`${FEAT_AUTH_SIGN_IN_I18N_NAMESPACE}:button.sign_up`)}
+          </Link>
         </Button>
       </FieldGroup>
     </form>

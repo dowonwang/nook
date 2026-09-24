@@ -1,0 +1,17 @@
+{
+  "name": {
+    "label": "이름"
+  },
+  "email": {
+    "label": "이메일"
+  },
+  "password": {
+    "label": "비밀번호"
+  },
+  "password_confirm": {
+    "label": "비밀번호 확인"
+  },
+  "button": {
+    "sign_up": "회원가입"
+  }
+}

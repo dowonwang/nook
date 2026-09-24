@@ -1,7 +1,9 @@
 import { SignInPage } from '$pages/sign-in';
 import { APP_CONSTANT } from '$shared/config';
 
-export default async function Page({ searchParams }: PageProps<'/signin'>) {
+export default async function Page({
+  searchParams,
+}: PageProps<'/[locale]/signin'>) {
   const data = await searchParams;
   const redirectTo = data[APP_CONSTANT.redirectQueryKey];
 
