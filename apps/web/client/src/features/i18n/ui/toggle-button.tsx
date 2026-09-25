@@ -8,13 +8,13 @@ import {
   removeLocaleFromPathname,
 } from '$shared/i18n';
 
-import type { I18nLanguagesType } from '$shared/config';
+import type { I18nLocale } from '$shared/config';
 
 export function I18nToggleButton() {
   const pathname = usePathname() || '/';
   const router = useRouter();
 
-  const handleChange = (locale: I18nLanguagesType) => {
+  const handleChange = (locale: I18nLocale) => {
     document.documentElement.lang = locale;
 
     const cleanPathname = removeLocaleFromPathname(pathname);

@@ -15,6 +15,7 @@ export async function handleProxy(request: NextRequest): Promise<NextResponse> {
   const pathname = request.nextUrl.pathname;
 
   const locale = getLocaleFromPathname(pathname);
+
   const normalizedPathname = removeLocaleFromPathname(pathname);
 
   const scope = resolveRouteScope(normalizedPathname);
@@ -22,7 +23,6 @@ export async function handleProxy(request: NextRequest): Promise<NextResponse> {
 
   if (scope === 'private') {
     // private route
-
     if (session.status === 'anonymous' || session.status === 'invalid') {
       return createSignInRedirect(request);
     }

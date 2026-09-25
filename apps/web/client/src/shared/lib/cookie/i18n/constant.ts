@@ -1,8 +1,8 @@
-export const FLASH_COOKIE_NAME = '_flash_' as const;
-export const FLASH_COOKIE_OPTIONS = {
-  httpOnly: true,
-  sameSite: 'lax',
+export const I18N_COOKIE_NAME = 'i18n-locale' as const;
+export const I18N_COOKIE_MAX_AGE = 60 * 60 * 24 * 365;
+
+export const I18N_COOKIE_OPTIONS = {
   path: '/',
-  secure: true,
-  maxAge: 10,
+  sameSite: 'lax',
+  maxAge: I18N_COOKIE_MAX_AGE,
 } as const;

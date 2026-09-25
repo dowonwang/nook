@@ -1,8 +1,8 @@
-import type { I18nLanguagesType } from '$shared/config';
+import type { I18nLocale } from '$shared/config';
 
 export function createLocalizedPathname(
   pathname: string,
-  locale: I18nLanguagesType,
+  locale: I18nLocale,
 ): string {
   if (pathname === '/') {
     return `/${locale}`;

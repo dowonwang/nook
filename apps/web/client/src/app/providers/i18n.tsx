@@ -8,14 +8,14 @@ import type { Resource } from 'i18next';
 
 interface Props {
   children: React.ReactNode;
-  language: string;
+  locale: string;
   resources: Resource;
 }
 
-export function I18nProvider({ children, language, resources }: Props) {
+export function I18nProvider({ children, locale, resources }: Props) {
   return (
     <I18NextProvider
-      language={language}
+      language={locale}
       resources={resources}
       use={[resourceBackend]}
       ssrBackend
