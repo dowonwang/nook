@@ -1,4 +1,4 @@
-import type { I18nLocale } from '$shared/config';
+import type { I18nLocale } from '../config/constant';
 
 export function createLocalizedPathname(
   pathname: string,

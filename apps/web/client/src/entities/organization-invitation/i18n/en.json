@@ -1,0 +1,9 @@
+{
+  "status": {
+    "accepted": "Accepted",
+    "canceled": "Canceled",
+    "rejected": "Rejected",
+    "expired": "Expired",
+    "pending": "Pending"
+  }
+}

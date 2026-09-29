@@ -1,0 +1,19 @@
+{
+  "Create i18n namespace file": {
+    "scope": "typescript",
+    "prefix": "i18nns",
+    "body": [
+      "import en from './en.json';",
+      "",
+      "import type { DeepStringify } from '\\$shared/i18n';",
+      "import type ko from './ko.json';",
+      "",
+      "type I18nKey = DeepStringify<typeof ko>;",
+      "",
+      "en satisfies I18nKey;",
+      "",
+      "export const ${1:I18N_NAMESPACE} = '${2:}';",
+    ],
+    "description": "Create i18n namespace definition",
+  },
+}

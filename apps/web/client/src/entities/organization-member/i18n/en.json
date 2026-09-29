@@ -1,0 +1,7 @@
+{
+  "role": {
+    "admin": "Admin",
+    "maintainer": "Maintainer",
+    "member": "Member"
+  }
+}

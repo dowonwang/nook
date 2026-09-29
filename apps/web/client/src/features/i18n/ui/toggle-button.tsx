@@ -1,51 +1,29 @@
 'use client';
 
 import { Button } from '@packages/ui/components/button';
-import { usePathname, useRouter } from 'next/navigation';
+import { useChangeLanguage } from 'next-i18next/client';
 
-import {
-  createLocalizedPathname,
-  removeLocaleFromPathname,
-} from '$shared/i18n';
-
-import type { I18nLocale } from '$shared/config';
+import { useLocale } from '$shared/i18n';
+import { I18N_COOKIE_NAME } from '$shared/lib/cookie';
 
 export function I18nToggleButton() {
-  const pathname = usePathname() || '/';
-  const router = useRouter();
+  const changeLocale = useChangeLanguage(I18N_COOKIE_NAME);
+  const currentLocale = useLocale();
+  const nextLocale = currentLocale === 'ko' ? 'en' : 'ko';
 
-  const handleChange = (locale: I18nLocale) => {
-    document.documentElement.lang = locale;
-
-    const cleanPathname = removeLocaleFromPathname(pathname);
-    const nextPathname = createLocalizedPathname(cleanPathname, locale);
-
-    router.replace(nextPathname);
+  const handleChange = async () => {
+    await changeLocale(nextLocale);
   };
 
   return (
-    <>
-      <Button
-        variant='secondary'
-        size='icon'
-        type='button'
-        onClick={() => {
-          handleChange('en');
-        }}
-      >
-        en
-      </Button>
-
-      <Button
-        variant='secondary'
-        size='icon'
-        type='button'
-        onClick={() => {
-          handleChange('ko');
-        }}
-      >
-        ko
-      </Button>
-    </>
+    <Button
+      variant='secondary'
+      size='icon'
+      type='button'
+      onClick={() => void handleChange()}
+      className='font-black'
+    >
+      {currentLocale.toUpperCase()}
+    </Button>
   );
 }

@@ -1,10 +1,9 @@
 import resourcesToBackend from 'i18next-resources-to-backend';
 
-import { I18N_LOCALE, I18N_NAMESPACE } from '$shared/config';
-
+import { I18N_LOCALE, I18N_NAMESPACE } from '../config/constant';
 import { defaultI18n } from '../config/default';
 
-import type { I18nLocale } from '$shared/config';
+import type { I18nLocale } from '../config/constant';
 import type { Module } from 'i18next';
 
 export const resourceBackend = resourcesToBackend(

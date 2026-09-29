@@ -1,4 +1,6 @@
-import { I18N_LOCALE, type I18nLocale } from '$shared/config';
+import { I18N_LOCALE } from '../config/constant';
+
+import type { I18nLocale } from '../config/constant';
 
 export function getLocaleFromPathname(pathname: string): I18nLocale | null {
   const locale = pathname.split('/')[1];

@@ -1,10 +1,10 @@
 import { cookies } from 'next/headers';
 
-import { I18N_FALLBACK_LOCALE } from '$shared/config';
+import { I18N_FALLBACK_LOCALE } from '$shared/i18n';
 
 import { I18N_COOKIE_NAME } from './constant';
 
-import type { I18nLocale } from '$shared/config';
+import type { I18nLocale } from '$shared/i18n';
 import type { NextRequest } from 'next/server';
 
 export function getI18nCookieFromRequest(
