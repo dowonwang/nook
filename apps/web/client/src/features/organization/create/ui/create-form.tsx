@@ -18,6 +18,7 @@ import {
 } from '$shared/api/action';
 
 import { createOrganizationAction } from '../api/create-organization-action.server';
+import { FEAT_ORGANIZATION_CREATE_I18N_NAMESPACE } from '../i18n';
 
 import type { ActionStateZodError } from '$shared/api/action';
 
@@ -26,7 +27,7 @@ interface Props {
 }
 
 export function CreateOrganizationForm({ onSuccess }: Props) {
-  const { t } = useT('validation');
+  const { t } = useT(FEAT_ORGANIZATION_CREATE_I18N_NAMESPACE);
   const [actionState, formAction] = useActionState(createOrganizationAction, {
     success: false,
     error: null,
@@ -61,7 +62,7 @@ export function CreateOrganizationForm({ onSuccess }: Props) {
     <form action={formAction} noValidate>
       <FieldGroup>
         <Field>
-          <FieldLabel htmlFor='title'>Title</FieldLabel>
+          <FieldLabel htmlFor='title'>{t('title.label')}</FieldLabel>
 
           <Input
             ref={register('title')}
@@ -90,7 +91,7 @@ export function CreateOrganizationForm({ onSuccess }: Props) {
           className='ml-auto block'
           disabled={actionState.success}
         >
-          Save
+          {t('button.save')}
         </Button>
       </FieldGroup>
     </form>

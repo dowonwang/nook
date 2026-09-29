@@ -1,0 +1,14 @@
+{
+  "title": {
+    "label": "Organization Name"
+  },
+  "user_email": {
+    "label": "User Email"
+  },
+  "role": {
+    "label": "Role"
+  },
+  "button": {
+    "save": "Invite"
+  }
+}

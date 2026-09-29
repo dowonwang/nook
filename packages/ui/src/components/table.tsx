@@ -48,7 +48,7 @@ export function TableHeader({
   children,
   ...rest
 }: React.HTMLAttributes<HTMLTableSectionElement>) {
-  const style = tw`bg-primary/30`;
+  const style = tw`bg-primary`;
 
   return (
     <thead {...rest} className={cn(style, className)}>

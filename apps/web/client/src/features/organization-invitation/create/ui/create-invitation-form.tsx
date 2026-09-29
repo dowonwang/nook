@@ -22,6 +22,7 @@ import {
 } from '$shared/api/action';
 
 import { createOrganizationInvitationAction } from '../api/create-invitation.server';
+import { FEAT_ORGANIZATION_INVITATION_CREATE_I18N_NAMESPACE } from '../i18n';
 import { INIT_DATA } from '../model/create-invitation';
 
 import type { Organization } from '$entities/organization';
@@ -36,7 +37,7 @@ export function CreateOrganizationInvitationForm({
   organization,
   disabled = false,
 }: Props) {
-  const { t } = useT('validation');
+  const { t } = useT(FEAT_ORGANIZATION_INVITATION_CREATE_I18N_NAMESPACE);
   const [actionState, formAction, isPending] = useActionState(
     createOrganizationInvitationAction,
     {
@@ -71,7 +72,7 @@ export function CreateOrganizationInvitationForm({
 
       <FieldGroup disabled={disabled}>
         <Field>
-          <FieldLabel htmlFor='organizationId'>조직명</FieldLabel>
+          <FieldLabel htmlFor='organizationId'>{t('title.label')}</FieldLabel>
           <Input
             id='organizationId'
             name='organizationId'
@@ -82,7 +83,7 @@ export function CreateOrganizationInvitationForm({
 
         <div className='grid grid-cols-2 gap-4'>
           <Field>
-            <FieldLabel>User email</FieldLabel>
+            <FieldLabel>{t('user_email.label')}</FieldLabel>
             <Input
               ref={register('email')}
               id='email'
@@ -101,7 +102,7 @@ export function CreateOrganizationInvitationForm({
           </Field>
 
           <Field>
-            <FieldLegend>Role</FieldLegend>
+            <FieldLegend>{t('role.label')}</FieldLegend>
             <OrganizationMemberRoleRadioGroup
               name='role'
               defaultChecked={actionState.state.role}
@@ -113,7 +114,7 @@ export function CreateOrganizationInvitationForm({
 
         {actionError && <WarningMessage>{actionError}</WarningMessage>}
 
-        <Button className='ml-auto block'>Invite</Button>
+        <Button className='ml-auto block'>{t('button.save')}</Button>
       </FieldGroup>
     </form>
   );

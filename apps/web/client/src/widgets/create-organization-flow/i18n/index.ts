@@ -1,0 +1,11 @@
+import en from './en.json';
+
+import type { DeepStringify } from '$shared/i18n';
+import type ko from './ko.json';
+
+type I18nKey = DeepStringify<typeof ko>;
+
+en satisfies I18nKey;
+
+export const WIDGET_CREATE_ORGANIZATION_FLOW_I18N_NAMESPACE =
+  'widgets/create-organization-flow';

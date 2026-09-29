@@ -1,0 +1,10 @@
+{
+  "step_1": {
+    "title": "Step 1: Create an Organization",
+    "description": "Create your organization"
+  },
+  "step_2": {
+    "title": "Step 2: Invite Members",
+    "description": "Invite members to your organization"
+  }
+}

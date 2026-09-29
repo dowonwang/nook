@@ -1,0 +1,15 @@
+{
+  "table": {
+    "header": {
+      "name": "Name",
+      "email": "Email",
+      "role": "Role",
+      "status": "Status",
+      "actions": "Actions"
+    },
+    "body": {
+      "name_fallback": "Deleted User",
+      "invitee_email_fallback": "-"
+    }
+  }
+}

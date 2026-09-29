@@ -1,4 +1,7 @@
 import { RadioButton } from '@packages/ui/components/radio';
+import { useT } from 'next-i18next/client';
+
+import { ENTITY_ORGANIZATION_MEMBER_I18N_NAMESPACE } from '../i18n';
 
 import type { OrganizationMemberRole } from '../model/organization-member';
 
@@ -13,15 +16,16 @@ interface RadioItem {
 }
 
 const RADIO_ITEMS: RadioItem[] = [
-  { id: 'ADMIN', label: 'Admin' },
-  { id: 'MAINTAINER', label: 'Maintainer' },
-  { id: 'MEMBER', label: 'Member' },
+  { id: 'ADMIN', label: 'role.admin' },
+  { id: 'MAINTAINER', label: 'role.maintainer' },
+  { id: 'MEMBER', label: 'role.member' },
 ];
 
 export function OrganizationMemberRoleRadioGroup({
   name = 'role',
   defaultChecked,
 }: Props) {
+  const { t } = useT(ENTITY_ORGANIZATION_MEMBER_I18N_NAMESPACE);
   const isDefaultChecked = (value: OrganizationMemberRole): boolean => {
     return value === defaultChecked;
   };
@@ -36,7 +40,7 @@ export function OrganizationMemberRoleRadioGroup({
           value={item.id}
           defaultChecked={isDefaultChecked(item.id)}
         >
-          {item.label}
+          {t(item.label)}
         </RadioButton>
       ))}
     </div>

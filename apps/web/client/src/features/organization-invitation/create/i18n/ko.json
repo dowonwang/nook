@@ -1,0 +1,14 @@
+{
+  "title": {
+    "label": "조직명"
+  },
+  "user_email": {
+    "label": "사용자 이메일"
+  },
+  "role": {
+    "label": "권한"
+  },
+  "button": {
+    "save": "초대하기"
+  }
+}
