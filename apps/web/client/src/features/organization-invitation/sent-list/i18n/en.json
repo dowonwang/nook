@@ -10,6 +10,7 @@
     "body": {
       "name_fallback": "Deleted User",
       "invitee_email_fallback": "-"
-    }
+    },
+    "empty": "There are no sent invitations yet"
   }
 }
