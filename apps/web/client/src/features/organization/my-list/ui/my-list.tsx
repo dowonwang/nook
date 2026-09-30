@@ -9,17 +9,20 @@ import {
 } from '@packages/ui/components/card';
 import { Separator } from '@packages/ui/components/separator';
 import { useQuery } from '@tanstack/react-query';
+import { useT } from 'next-i18next/client';
 
 import { OrganizationMemberRoleBadge } from '$entities/organization-member/ui/role-badge';
 
+import { FEAT_ORGANIZATION_MY_LIST_I18N_NAMESPACE } from '../i18n';
 import { myOrganizationListQueryOptions } from '../model/my-list-query';
 
 export function MyOrganizationList() {
+  const { t } = useT(FEAT_ORGANIZATION_MY_LIST_I18N_NAMESPACE);
   const { data: organizations } = useQuery(myOrganizationListQueryOptions);
 
   return (
     <section>
-      <h2 className='mb-4 text-lg font-semibold'>조직 리스트</h2>
+      <h2 className='mb-4 text-lg font-semibold'>{t('title')}</h2>
 
       <div className='grid grid-cols-3 gap-4'>
         {organizations?.map((organization) => (
@@ -30,12 +33,14 @@ export function MyOrganizationList() {
             </CardHeader>
 
             <CardBody>
-              <p>멤버 수: {organization.memberCount}</p>
+              <p>
+                {t('card.member_count')}: {organization.memberCount}
+              </p>
 
               <Separator className='my-4' />
 
               <Button size='small' className='ml-auto block'>
-                더보기
+                {t('button.detail')}
               </Button>
             </CardBody>
           </Card>

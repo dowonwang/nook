@@ -7,7 +7,6 @@ import {
 
 import type { NextResponse } from 'next/server';
 
-// TODO: 쿠키 삭제 고려해야함
 export async function setFlashCookie(message: string): Promise<void> {
   const cookieStore = await cookies();
 

@@ -1,0 +1,15 @@
+{
+  "title": "Pending Invitations",
+  "table": {
+    "header": {
+      "organization": "Organization",
+      "inviter": "Invited By",
+      "role": "Role",
+      "status": "Status",
+      "actions": "Actions"
+    },
+    "body": {
+      "email_fallback": "User information not found."
+    }
+  }
+}

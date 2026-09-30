@@ -1,0 +1,7 @@
+{
+  "role": {
+    "admin": "최고 관리자",
+    "maintainer": "메인테이너",
+    "member": "멤버"
+  }
+}

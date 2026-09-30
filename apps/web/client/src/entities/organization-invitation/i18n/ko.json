@@ -1,0 +1,9 @@
+{
+  "status": {
+    "accepted": "수락 완료",
+    "canceled": "초대 취소",
+    "rejected": "거절함",
+    "expired": "기간 만료",
+    "pending": "대기 중"
+  }
+}

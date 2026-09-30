@@ -1,0 +1,9 @@
+{
+  "hero": {
+    "title": "Organization Management",
+    "description": "Manage your organizations and team member permissions.",
+    "button": {
+      "create": "Create"
+    }
+  }
+}

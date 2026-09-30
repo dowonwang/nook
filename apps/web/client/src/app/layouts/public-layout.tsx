@@ -24,7 +24,7 @@ export async function PublicLayout({ children, locale }: Props) {
   await queryClient.prefetchQuery(serverSessionQueryOptions);
 
   return (
-    <I18nProvider language={locale} resources={{}}>
+    <I18nProvider locale={locale} resources={{}}>
       <div id='root' className='flex min-h-dvh flex-col'>
         <HydrationBoundary state={dehydrate(queryClient)}>
           <PublicHeader />

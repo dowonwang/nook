@@ -1,6 +1,7 @@
 'use client';
 
 import { clsx } from 'clsx';
+import Link from 'next/link';
 
 import { AppLogo, AppName } from '$shared/ui';
 
@@ -16,10 +17,13 @@ export function DefaultSidebar() {
         'scrollbar-thumb-primary scrollbar-thin overflow-y-auto',
       )}
     >
-      <div className='border-border min-h-header h-header bg-sidebar/80 sticky top-0 left-0 flex items-center gap-3 border-b px-5 backdrop-blur-md'>
+      <Link
+        href={'/dashboard'}
+        className='border-border min-h-header h-header bg-sidebar/80 sticky top-0 left-0 flex items-center gap-3 border-b px-5 backdrop-blur-md'
+      >
         <AppLogo height={36} width={36} />
         <AppName />
-      </div>
+      </Link>
 
       <Menu data={MENU_DATA} />
     </aside>

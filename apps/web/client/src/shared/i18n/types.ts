@@ -5,5 +5,3 @@ export type DeepStringify<T> = {
       ? DeepStringify<T[K]>
       : never;
 };
-
-export type Locale = 'ko' | 'en';

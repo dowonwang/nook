@@ -1,0 +1,9 @@
+{
+  "title": "조직 목록",
+  "card": {
+    "member_count": "멤버 수"
+  },
+  "button": {
+    "detail": "자세히"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "title": "초대 목록",
+  "table": {
+    "header": {
+      "organization": "조직명",
+      "inviter": "초대자",
+      "role": "권한",
+      "status": "상태",
+      "actions": "작업"
+    },
+    "body": {
+      "email_fallback": "사용자 정보를 찾을 수 없습니다."
+    }
+  }
+}

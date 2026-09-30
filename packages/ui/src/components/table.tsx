@@ -48,7 +48,7 @@ export function TableHeader({
   children,
   ...rest
 }: React.HTMLAttributes<HTMLTableSectionElement>) {
-  const style = tw`bg-primary/30`;
+  const style = tw`bg-primary`;
 
   return (
     <thead {...rest} className={cn(style, className)}>
@@ -62,7 +62,7 @@ export function TableHeaderCell({
   children,
   ...rest
 }: React.ComponentPropsWithoutRef<'th'>) {
-  const style = tw`p-2`;
+  const style = tw`text-primary-foreground p-2`;
 
   return (
     <th {...rest} className={cn(style, className)}>

@@ -1,0 +1,13 @@
+{
+  "hero": {
+    "title": "Dashboard",
+    "description": "Welcome back! Check out the latest updates in your workspace."
+  },
+  "todo": {
+    "title": "Task Progress",
+    "organization": {
+      "title": "Organization Management",
+      "description": "Create organizations and invite members to manage them."
+    }
+  }
+}

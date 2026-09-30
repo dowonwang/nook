@@ -5,3 +5,5 @@ export * from './auth/set-auth-cookie';
 export * from './flash/clear-flash-cookie';
 export * from './flash/get-flash-cookie';
 export * from './flash/set-flash-cookie';
+export * from './i18n/get-cookie';
+export * from './i18n/set-cookie';

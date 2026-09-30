@@ -1,4 +1,3 @@
-import { Button } from '@packages/ui/components/button';
 import {
   HeroSection,
   HeroSectionDescription,
@@ -9,14 +8,18 @@ import {
   HydrationBoundary,
   QueryClient,
 } from '@tanstack/react-query';
-import Link from 'next/link';
+import { getT } from 'next-i18next/server';
 
 import { MyOrganizationList } from '$features/organization/my-list';
 import { serverMyOrganizationListQueryOptions } from '$features/organization/my-list/server';
 import { ReceivedOrganizationInvitationList } from '$features/organization-invitation/received-list';
 import { serverReceivedOrganizationListQueryOptions } from '$features/organization-invitation/received-list/server';
 
+import { PAGES_ORGANIZATION_HOME_I18N_NAMESPACE } from '../i18n';
+import { CreateOrganizationNavigation } from './navigation/create';
+
 export async function OrganizationHomePage() {
+  const { t } = await getT(PAGES_ORGANIZATION_HOME_I18N_NAMESPACE);
   const queryClient = new QueryClient();
 
   await Promise.all([
@@ -26,18 +29,9 @@ export async function OrganizationHomePage() {
 
   return (
     <>
-      <HeroSection
-        className='mb-6'
-        action={
-          <Button asChild>
-            <Link href={'/org/create'}>Create</Link>
-          </Button>
-        }
-      >
-        <HeroSectionTitle>Organization</HeroSectionTitle>
-        <HeroSectionDescription>
-          Manage team members and their roles
-        </HeroSectionDescription>
+      <HeroSection className='mb-6' action={<CreateOrganizationNavigation />}>
+        <HeroSectionTitle>{t('hero.title')}</HeroSectionTitle>
+        <HeroSectionDescription>{t('hero.description')}</HeroSectionDescription>
       </HeroSection>
 
       <HydrationBoundary state={dehydrate(queryClient)}>
