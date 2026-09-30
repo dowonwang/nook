@@ -29,7 +29,7 @@ export function OrganizationInvitationSentList({ organizationId }: Props) {
   );
 
   if (!invitations || invitations.length === 0) {
-    return <p className='text-sm'>보낸 초대가 없습니다.</p>;
+    return <p className='text-center text-sm'>{t('table.empty')}</p>;
   }
 
   return (
@@ -47,7 +47,7 @@ export function OrganizationInvitationSentList({ organizationId }: Props) {
       </TableHeader>
       <TableBody>
         {invitations.map((invitation) => (
-          <TableRow>
+          <TableRow key={invitation.id}>
             <TableCell>
               {invitation.invitee?.name || t('table.body.name_fallback')}
             </TableCell>

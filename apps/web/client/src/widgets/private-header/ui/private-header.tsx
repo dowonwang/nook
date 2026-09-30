@@ -21,7 +21,7 @@ export function PrivateHeader() {
   }
 
   return (
-    <header className='bg-header/80 border-border h-header sticky top-0 flex items-center gap-4 border-b px-6 backdrop-blur-md'>
+    <header className='bg-header/80 border-border h-header sticky top-0 z-50 flex items-center gap-4 border-b px-6 backdrop-blur-md'>
       <div className='hidden md:block'>
         <span className='text-secondary-foreground'>{today}</span>
       </div>

@@ -62,7 +62,7 @@ export function TableHeaderCell({
   children,
   ...rest
 }: React.ComponentPropsWithoutRef<'th'>) {
-  const style = tw`p-2`;
+  const style = tw`text-primary-foreground p-2`;
 
   return (
     <th {...rest} className={cn(style, className)}>
