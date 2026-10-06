@@ -2,7 +2,7 @@ import { useT } from 'next-i18next/client';
 
 import { ENTITY_ORGANIZATION_MEMBER_I18N_NAMESPACE } from '../i18n';
 
-import type { OrganizationMemberRole } from '../model/organization-member';
+import type { OrganizationMemberRole } from '../model/types';
 
 interface Props {
   role: OrganizationMemberRole;

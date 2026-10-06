@@ -1,2 +1,2 @@
-export type * from './model/organization-invitation';
+export type * from './model/types';
 export { OrganizationInvitationStatusBadge } from './ui/status-badge';

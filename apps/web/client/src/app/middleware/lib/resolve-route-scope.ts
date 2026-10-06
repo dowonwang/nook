@@ -1,6 +1,6 @@
 import { PRIVATE_ROUTE_PREFIXES } from '../config/route-scope';
 
-import type { RouteScope } from '../model/type';
+import type { RouteScope } from '../model/types';
 
 export function resolveRouteScope(pathname: string): RouteScope {
   const isPrivate = PRIVATE_ROUTE_PREFIXES.some(

@@ -1,1 +1,1 @@
-export type * from './model/organization';
+export type * from './model/types';

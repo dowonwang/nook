@@ -1,2 +1,2 @@
-export { PublicHeader } from './ui/public-header';
+export { PublicHeader } from './ui/header';
 export * from './i18n';

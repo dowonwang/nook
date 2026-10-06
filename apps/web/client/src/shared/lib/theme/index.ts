@@ -1,3 +1,3 @@
-export * from './apply-theme';
-export * from './initialize-theme';
+export * from './apply';
+export * from './initialize';
 export { useBreakPoint } from './use-break-point';

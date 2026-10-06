@@ -1,1 +1,1 @@
-export { handleProxy } from './handle-proxy';
+export { proxyMiddleware } from './proxy';

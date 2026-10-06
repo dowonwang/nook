@@ -1,4 +1,4 @@
-import type { ActionStateZodError } from './type';
+import type { ActionStateZodError } from './types';
 import type { ZodError } from 'zod';
 
 export function createActionStateError(error: ZodError): ActionStateZodError {

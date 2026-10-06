@@ -1,1 +1,1 @@
-export * from './ui/create-form';
+export { CreateOrganizationForm } from './ui/form';

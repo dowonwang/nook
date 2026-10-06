@@ -27,6 +27,12 @@ export default defineConfig(
       ],
     },
     rules: {
+      'import-x/no-cycle': [
+        'error',
+        {
+          ignoreExternal: true,
+        },
+      ],
       'no-duplicate-imports': [
         'error',
         {

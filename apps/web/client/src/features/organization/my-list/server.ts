@@ -1,1 +1,1 @@
-export { serverMyOrganizationListQueryOptions } from './model/my-list-query.server';
+export { serverMyOrganizationListQueryOptions } from './model/query.server';

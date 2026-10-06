@@ -14,7 +14,7 @@ import { useT } from 'next-i18next/client';
 import { OrganizationMemberRoleBadge } from '$entities/organization-member/ui/role-badge';
 
 import { FEAT_ORGANIZATION_MY_LIST_I18N_NAMESPACE } from '../i18n';
-import { myOrganizationListQueryOptions } from '../model/my-list-query';
+import { myOrganizationListQueryOptions } from '../model/query';
 
 export function MyOrganizationList() {
   const { t } = useT(FEAT_ORGANIZATION_MY_LIST_I18N_NAMESPACE);

@@ -1,4 +1,4 @@
-import type { MenuData } from '../model/menu';
+import type { MenuData } from '../model/types';
 
 export const MENU_DATA: MenuData[] = [
   { href: '/dashboard', title: 'dashboard.title' },

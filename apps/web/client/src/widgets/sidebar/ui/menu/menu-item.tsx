@@ -9,7 +9,7 @@ import { useEffect } from 'react';
 import { WIDGET_SIDEBAR_I18N_NAMESPACE } from '$widgets/sidebar/i18n';
 import { useSidebarContext } from '$widgets/sidebar/model/context';
 
-import type { MenuData } from '../../model/menu';
+import type { MenuData } from '../../model/types';
 
 export function MenuItem({ href, title }: MenuData) {
   const pathname = usePathname();

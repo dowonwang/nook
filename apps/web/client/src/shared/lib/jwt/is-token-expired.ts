@@ -1,6 +1,6 @@
-import { decodeJwtPayload } from './decode-jwt-payload';
+import { decodeJwtPayload } from './decode-payload';
 
-import type { IsTokenExpiredOptions } from './jwt.types';
+import type { IsTokenExpiredOptions } from './types';
 
 export function isTokenExpired(token: string, options?: IsTokenExpiredOptions) {
   const { refreshBeforeSeconds = 0, now = Date.now() } = options || {};

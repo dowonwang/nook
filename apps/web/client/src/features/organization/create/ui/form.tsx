@@ -1,0 +1,99 @@
+'use client';
+
+import { Button } from '@packages/ui/components/button';
+import {
+  Field,
+  FieldDescription,
+  FieldGroup,
+  FieldLabel,
+} from '@packages/ui/components/field';
+import { Input } from '@packages/ui/components/input';
+import { WarningMessage } from '@packages/ui/components/warning-message';
+import { useT } from 'next-i18next/client';
+import { useActionState, useEffect } from 'react';
+
+import {
+  useActionErrorMessage,
+  useActionFieldErrors,
+} from '$shared/api/action';
+
+import { createOrganizationAction } from '../api/action.server';
+import { FEAT_ORGANIZATION_CREATE_I18N_NAMESPACE } from '../i18n';
+
+import type { ActionStateZodError } from '$shared/api/action';
+
+interface Props {
+  onSuccess: (organization: { id: string; title: string } | null) => void;
+}
+
+export function CreateOrganizationForm({ onSuccess }: Props) {
+  const { t } = useT(FEAT_ORGANIZATION_CREATE_I18N_NAMESPACE);
+  const [actionState, formAction] = useActionState(createOrganizationAction, {
+    success: false,
+    error: null,
+    state: { id: '', title: '' },
+  });
+
+  const { register, getFieldError } = useActionFieldErrors(
+    actionState.error as ActionStateZodError,
+  );
+
+  const actionError = useActionErrorMessage(actionState.error);
+  const titleError = getFieldError('title');
+
+  useEffect(() => {
+    if (actionState.success) {
+      onSuccess({
+        id: actionState.state.id,
+        title: actionState.state.title,
+      });
+
+      if (document.activeElement instanceof HTMLElement) {
+        document.activeElement.blur();
+      }
+
+      return;
+    } else {
+      onSuccess(null);
+    }
+  }, [actionState.success]);
+
+  return (
+    <form action={formAction} noValidate>
+      <FieldGroup>
+        <Field>
+          <FieldLabel htmlFor='title'>{t('title.label')}</FieldLabel>
+
+          <Input
+            ref={register('title')}
+            id='title'
+            name='title'
+            type='text'
+            defaultValue={actionState.state.title}
+            aria-invalid={!!titleError}
+            aria-describedby={titleError ? 'title-error' : undefined}
+            disabled={actionState.success}
+          />
+
+          {titleError && (
+            <FieldDescription id='title-error'>
+              {t(titleError)}
+            </FieldDescription>
+          )}
+        </Field>
+
+        {actionError && (
+          <WarningMessage className='-my-2'>{actionError}</WarningMessage>
+        )}
+
+        <Button
+          type='submit'
+          className='ml-auto block'
+          disabled={actionState.success}
+        >
+          {t('button.save')}
+        </Button>
+      </FieldGroup>
+    </form>
+  );
+}
