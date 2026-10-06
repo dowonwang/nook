@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef } from 'react';
 
-import type { ActionStateZodError } from './type';
+import type { ActionStateZodError } from './types';
 
 export function useActionFieldErrors(error: ActionStateZodError | null) {
   const fieldRefs = useRef<Record<string, HTMLElement | null>>({});

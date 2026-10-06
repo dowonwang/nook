@@ -1,1 +1,1 @@
-export { PrivateHeader } from './ui/private-header';
+export { PrivateHeader } from './ui/header';

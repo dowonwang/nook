@@ -1,9 +1,9 @@
-import { handleProxy } from '$app/middleware/server';
+import { proxyMiddleware } from '$app/middleware/server';
 
 import type { NextRequest } from 'next/server';
 
 export function proxy(request: NextRequest) {
-  return handleProxy(request);
+  return proxyMiddleware(request);
 }
 
 export const config = {

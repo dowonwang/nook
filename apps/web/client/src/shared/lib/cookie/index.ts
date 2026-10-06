@@ -1,4 +1,4 @@
-export * from './flash/use-consume-flash-cookie';
-export * from './auth/auth-cookie.constant';
-export * from './flash/flash-cookie-constant';
+export * from './flash/use-consume';
+export * from './auth/constant';
+export * from './flash/constant';
 export * from './i18n/constant';

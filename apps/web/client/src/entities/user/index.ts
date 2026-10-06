@@ -1,3 +1,3 @@
-export { UserAvatar } from './ui/user-avatar';
-export type * from './model/user';
-export { UserListItem } from './ui/user-list-item';
+export { UserAvatar } from './ui/avatar';
+export type * from './model/types';
+export { UserListItem } from './ui/list-item';

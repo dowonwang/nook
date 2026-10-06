@@ -111,6 +111,28 @@ Next.js route 자체와 화면의 구현 책임을 분리하기 위해 사용합
 
 범용 UI는 가능하면 `@packages/ui`를 우선 사용합니다.
 
+## Conventions
+
+자세한 명명 규칙 및 모듈 바운더리 컨벤션은 [Web FSD Architecture & Naming Convention](../docs/convention.md) 문서를 참고합니다.
+
+### 1. Naming Rules
+
+- **Directory**: 모든 디렉터리명은 `kebab-case`를 사용합니다.
+- **Component**: 컴포넌트 내부 및 파일명과 관계없이 `PascalCase`를 사용합니다. (예: `OrganizationCreateForm`)
+- **Custom Hook**: `camelCase`를 사용하며 `use` 접두사를 붙입니다. (예: `useOrganizationCreate`)
+- **Type File**: 슬라이스 내 타입 관리는 `types.ts`로 통일합니다.
+
+### 2. Server & Client Boundary
+
+- 별도의 `server/` 디렉터리를 두지 않으며, 서버 전용 로직 파일은 `*.server.ts` 접미사를 사용합니다.
+- **General Export**: 클라이언트 및 공통 모듈은 `index.ts`에서 내보냅니다.
+- **Server Export**: 서버 전용 모듈은 `server.ts`에서 내보냅니다.
+
+### 3. Import Rules
+
+- **동일 Slice 내부**: 상대 경로(`./`, `../`) 사용을 허용합니다.
+- **다른 Slice/Layer 참조**: Alias 경로(`$features/...`, `$entities/...` 등)만 사용해야 하며, 해당 모듈의 진입점(`index.ts` 또는 `server.js`)을 통해서만 참조합니다.
+
 ## Workspace Dependencies
 
 ### `@packages/api-client`

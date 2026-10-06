@@ -1,1 +1,1 @@
-export { serverReceivedOrganizationListQueryOptions } from './model/received-list-query.server';
+export { serverReceivedOrganizationListQueryOptions } from './model/query.server';

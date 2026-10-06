@@ -1,1 +1,1 @@
-export * from './ui/create-organization';
+export * from './ui/page';

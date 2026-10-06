@@ -2,7 +2,7 @@ import { useT } from 'next-i18next/client';
 
 import { ENTITY_ORGANIZATION_INVITATION_I18N_NAMESPACE } from '../i18n';
 
-import type { OrganizationInvitationStatus } from '../model/organization-invitation';
+import type { OrganizationInvitationStatus } from '../model/types';
 
 interface Props {
   status: OrganizationInvitationStatus;

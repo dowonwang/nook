@@ -1,1 +1,1 @@
-export { OrganizationInvitationSentList } from './ui/sent-list';
+export { OrganizationInvitationSentList } from './ui/list';

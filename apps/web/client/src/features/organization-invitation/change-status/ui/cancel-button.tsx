@@ -7,7 +7,7 @@ import { useTransition } from 'react';
 
 import { ORGANIZATION_INVITATION_SENT_LIST_QUERY_KEY } from '$features/organization-invitation/sent-list/config/query-key';
 
-import { changeOrganizationInvitationServerAction } from '../api/change-status-action.server';
+import { changeOrganizationInvitationServerAction } from '../api/action.server';
 import { FEAT_ORGANIZATION_CHANGE_STATUS_I18N_NAMESPACE } from '../i18n';
 
 interface Props {

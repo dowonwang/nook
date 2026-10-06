@@ -1,4 +1,4 @@
-import type { ActionState, ActionStateZodError } from './type';
+import type { ActionState, ActionStateZodError } from './types';
 
 export const actionStateBuilder = {
   success<TState, TResponseError = never>(

@@ -1,1 +1,1 @@
-export { CreateOrganizationInvitationForm } from './ui/create-invitation-form';
+export { CreateOrganizationInvitationForm } from './ui/form';

@@ -1,7 +1,7 @@
-import { handleProxyRequest } from '$app/proxy/server';
+import { handleBffRequest } from '$app/bff/server';
 
-export const GET = handleProxyRequest;
-export const POST = handleProxyRequest;
-export const PUT = handleProxyRequest;
-export const PATCH = handleProxyRequest;
-export const DELETE = handleProxyRequest;
+export const GET = handleBffRequest;
+export const POST = handleBffRequest;
+export const PUT = handleBffRequest;
+export const PATCH = handleBffRequest;
+export const DELETE = handleBffRequest;
