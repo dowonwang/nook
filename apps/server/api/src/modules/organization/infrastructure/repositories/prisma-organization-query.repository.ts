@@ -1,3 +1,9 @@
+import {
+  offsetPaginationResultBuilder,
+  type OffsetPagination,
+  type OffsetPaginationResult,
+} from '$shared/pagination';
+
 import { OrganizationPrismaMapper } from '../mappers/organization-prisma.mapper';
 
 import type { OrganizationReader } from '$modules/organization/application';
@@ -36,26 +42,48 @@ export class PrismaOrganizationQueryRepository
     return organization?.id ?? null;
   }
 
-  async findUserOrganizations(params: {
-    userId: UserUuid;
-  }): Promise<Organization[]> {
-    const records = await this.prisma.organization.findMany({
-      where: {
-        organizationMembers: {
-          some: {
-            userId: params.userId.getValue(),
+  async findUserOrganizations(
+    params: {
+      userId: UserUuid;
+    },
+    pagination: OffsetPagination,
+  ): Promise<{
+    organizations: Organization[];
+    paginationResult: OffsetPaginationResult;
+  }> {
+    const [records, count] = await this.prisma.$transaction([
+      this.prisma.organization.findMany({
+        where: {
+          organizationMembers: {
+            some: {
+              userId: params.userId.getValue(),
+            },
           },
         },
-      },
-      include: {
-        organizationMembers: true,
-      },
-    });
+        include: {
+          organizationMembers: true,
+        },
+        skip: pagination.skip,
+        take: pagination.limit,
+      }),
+      this.prisma.organization.count({
+        where: {
+          organizationMembers: {
+            some: {
+              userId: params.userId.getValue(),
+            },
+          },
+        },
+      }),
+    ]);
 
-    return records.map((record) => {
-      const members = record.organizationMembers;
-      return OrganizationPrismaMapper.toOrganizationDomain(record, members);
-    });
+    return {
+      organizations: records.map((record) => {
+        const members = record.organizationMembers;
+        return OrganizationPrismaMapper.toOrganizationDomain(record, members);
+      }),
+      paginationResult: offsetPaginationResultBuilder(pagination, count),
+    };
   }
 
   async findManyByIds(params: {
