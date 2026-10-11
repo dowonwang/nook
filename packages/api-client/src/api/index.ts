@@ -335,6 +335,20 @@ export type PostOrganization409 = {
   meta: PostOrganization409Meta;
 };
 
+export type GetOrganizationParams = {
+  /**
+   * The page number to retrieve.
+   * @minimum 1
+   */
+  page?: number;
+  /**
+   * The maximum number of items to return per page
+   * @minimum 1
+   * @maximum 100
+   */
+  limit?: number;
+};
+
 export type GetOrganization200DataItemUserRole =
   (typeof GetOrganization200DataItemUserRole)[keyof typeof GetOrganization200DataItemUserRole];
 
@@ -352,9 +366,18 @@ export type GetOrganization200DataItem = {
   memberCount: number;
 };
 
+export type GetOrganization200MetaPagination = {
+  page: number;
+  limit: number;
+  total: number;
+  totalPages: number;
+  hasNextPage: boolean;
+};
+
 export type GetOrganization200Meta = {
   unixTimestamp: number;
   requestId?: string;
+  pagination: GetOrganization200MetaPagination;
 };
 
 export type GetOrganization200 = {
@@ -491,6 +514,20 @@ export type PostOrganizationByOrganizationIdInvitations422 = {
   meta: PostOrganizationByOrganizationIdInvitations422Meta;
 };
 
+export type GetOrganizationByOrganizationIdInvitationsParams = {
+  /**
+   * The page number to retrieve.
+   * @minimum 1
+   */
+  page?: number;
+  /**
+   * The maximum number of items to return per page
+   * @minimum 1
+   * @maximum 100
+   */
+  limit?: number;
+};
+
 export type GetOrganizationByOrganizationIdInvitations200DataItemInvitee =
   | {
       /** @pattern ^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-7[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12})$ */
@@ -534,9 +571,18 @@ export type GetOrganizationByOrganizationIdInvitations200DataItem = {
   expiresAt: string;
 };
 
+export type GetOrganizationByOrganizationIdInvitations200MetaPagination = {
+  page: number;
+  limit: number;
+  total: number;
+  totalPages: number;
+  hasNextPage: boolean;
+};
+
 export type GetOrganizationByOrganizationIdInvitations200Meta = {
   unixTimestamp: number;
   requestId?: string;
+  pagination: GetOrganizationByOrganizationIdInvitations200MetaPagination;
 };
 
 export type GetOrganizationByOrganizationIdInvitations200 = {
@@ -674,6 +720,20 @@ export type PatchOrganizationInvitation422 = {
   meta: PatchOrganizationInvitation422Meta;
 };
 
+export type GetOrganizationInvitationsParams = {
+  /**
+   * The page number to retrieve.
+   * @minimum 1
+   */
+  page?: number;
+  /**
+   * The maximum number of items to return per page
+   * @minimum 1
+   * @maximum 100
+   */
+  limit?: number;
+};
+
 export type GetOrganizationInvitations200DataItemOrganization = {
   id: string;
   title: string;
@@ -721,9 +781,18 @@ export type GetOrganizationInvitations200DataItem = {
   expiresAt: string;
 };
 
+export type GetOrganizationInvitations200MetaPagination = {
+  page: number;
+  limit: number;
+  total: number;
+  totalPages: number;
+  hasNextPage: boolean;
+};
+
 export type GetOrganizationInvitations200Meta = {
   unixTimestamp: number;
   requestId?: string;
+  pagination: GetOrganizationInvitations200MetaPagination;
 };
 
 export type GetOrganizationInvitations200 = {
@@ -1204,17 +1273,30 @@ export type getOrganizationResponse =
   | getOrganizationResponseSuccess
   | getOrganizationResponseError;
 
-export const getGetOrganizationUrl = () => {
-  return `http://localhost:4000/organization/`;
+export const getGetOrganizationUrl = (params?: GetOrganizationParams) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value));
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0
+    ? `http://localhost:4000/organization/?${stringifiedParams}`
+    : `http://localhost:4000/organization/`;
 };
 
 /**
  * @summary Find User Organizations List
  */
 export const getOrganization = async (
+  params?: GetOrganizationParams,
   options?: RequestInit,
 ): Promise<getOrganizationResponse> => {
-  const res = await fetch(getGetOrganizationUrl(), {
+  const res = await fetch(getGetOrganizationUrl(params), {
     ...options,
     method: 'GET',
   });
@@ -1332,8 +1414,21 @@ export type getOrganizationByOrganizationIdInvitationsResponse =
 
 export const getGetOrganizationByOrganizationIdInvitationsUrl = (
   organizationId: string,
+  params?: GetOrganizationByOrganizationIdInvitationsParams,
 ) => {
-  return `http://localhost:4000/organization/${organizationId}/invitations`;
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value));
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0
+    ? `http://localhost:4000/organization/${organizationId}/invitations?${stringifiedParams}`
+    : `http://localhost:4000/organization/${organizationId}/invitations`;
 };
 
 /**
@@ -1341,10 +1436,11 @@ export const getGetOrganizationByOrganizationIdInvitationsUrl = (
  */
 export const getOrganizationByOrganizationIdInvitations = async (
   organizationId: string,
+  params?: GetOrganizationByOrganizationIdInvitationsParams,
   options?: RequestInit,
 ): Promise<getOrganizationByOrganizationIdInvitationsResponse> => {
   const res = await fetch(
-    getGetOrganizationByOrganizationIdInvitationsUrl(organizationId),
+    getGetOrganizationByOrganizationIdInvitationsUrl(organizationId, params),
     {
       ...options,
       method: 'GET',
@@ -1458,17 +1554,32 @@ export type getOrganizationInvitationsResponse =
   | getOrganizationInvitationsResponseSuccess
   | getOrganizationInvitationsResponseError;
 
-export const getGetOrganizationInvitationsUrl = () => {
-  return `http://localhost:4000/organization/invitations`;
+export const getGetOrganizationInvitationsUrl = (
+  params?: GetOrganizationInvitationsParams,
+) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value));
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0
+    ? `http://localhost:4000/organization/invitations?${stringifiedParams}`
+    : `http://localhost:4000/organization/invitations`;
 };
 
 /**
  * @summary Find Received Invitations
  */
 export const getOrganizationInvitations = async (
+  params?: GetOrganizationInvitationsParams,
   options?: RequestInit,
 ): Promise<getOrganizationInvitationsResponse> => {
-  const res = await fetch(getGetOrganizationInvitationsUrl(), {
+  const res = await fetch(getGetOrganizationInvitationsUrl(params), {
     ...options,
     method: 'GET',
   });

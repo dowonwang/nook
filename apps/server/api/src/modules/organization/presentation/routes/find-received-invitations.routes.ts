@@ -46,6 +46,7 @@ export function createFindReceivedInvitations({
         response: {
           200: createApiSuccessResponseSchema(
             OrganizationResponseSchemas['find-received-invitations'],
+            'offset',
           ),
         },
       },
