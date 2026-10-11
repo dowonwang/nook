@@ -2,6 +2,10 @@ import { FindReceivedInvitationsQuery } from './find-received-invitations.query'
 import { OrganizationInvitationDtoMapper } from '../../mappers/organization-invitation.mapper';
 
 import type { UserQueryRepository } from '$modules/user/domain';
+import type {
+  OffsetPagination,
+  OffsetPaginationResult,
+} from '$shared/pagination';
 import type { FindReceivedInvitationsInput } from './find-received-invitations.query';
 import type { OrganizationReceivedInvitationDto } from '../../dto/organization-invitation.dto';
 import type { OrganizationInvitationReader } from '../../ports/organization-invitation-reader.port';
@@ -16,13 +20,20 @@ export class FindReceivedInvitationsHandler {
 
   async execute(
     input: FindReceivedInvitationsInput,
-  ): Promise<OrganizationReceivedInvitationDto[]> {
+    pagination: OffsetPagination,
+  ): Promise<{
+    response: OrganizationReceivedInvitationDto[];
+    paginationResult: OffsetPaginationResult;
+  }> {
     const query = new FindReceivedInvitationsQuery(input);
 
-    const invitations =
-      await this.organizationInvitationReader.findReceivedInvitations({
-        userId: query.userId,
-      });
+    const { invitations, paginationResult } =
+      await this.organizationInvitationReader.findReceivedInvitations(
+        {
+          userId: query.userId,
+        },
+        pagination,
+      );
 
     const organizationIds = invitations.map(
       (invitation) => invitation.organizationId,
@@ -37,10 +48,13 @@ export class FindReceivedInvitationsHandler {
 
     const inviters = await this.userQueryRepository.findManyByIds(inviterIds);
 
-    return OrganizationInvitationDtoMapper.toReceivedList(
-      invitations,
-      organizations,
-      inviters,
-    );
+    return {
+      response: OrganizationInvitationDtoMapper.toReceivedList(
+        invitations,
+        organizations,
+        inviters,
+      ),
+      paginationResult,
+    };
   }
 }

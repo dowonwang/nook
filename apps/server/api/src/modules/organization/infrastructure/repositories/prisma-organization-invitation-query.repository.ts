@@ -1,4 +1,9 @@
 import { PrismaRepository } from '$shared/database';
+import {
+  offsetPaginationBuilder,
+  type OffsetPagination,
+  type OffsetPaginationResult,
+} from '$shared/pagination';
 
 import { OrganizationInvitationPrismaMapper } from '../mappers/organization-invitation-prisma.mapper';
 
@@ -13,40 +18,77 @@ export class PrismaOrganizationInvitationQueryRepository
   extends PrismaRepository
   implements OrganizationInvitationReader
 {
-  async findSentInvitations(params: {
-    organizationId: OrganizationUuid;
-    invitedByUserId: UserUuid;
-  }): Promise<OrganizationInvitation[]> {
-    const records = await this.client.organizationInvitation.findMany({
-      where: {
-        organizationId: params.organizationId.getValue(),
-        invitedByUserId: params.invitedByUserId.getValue(),
-      },
-      orderBy: {
-        createdAt: 'desc',
-      },
-    });
+  async findSentInvitations(
+    params: {
+      organizationId: OrganizationUuid;
+      invitedByUserId: UserUuid;
+    },
+    pagination: OffsetPagination,
+  ): Promise<{
+    invitations: OrganizationInvitation[];
+    paginationResult: OffsetPaginationResult;
+  }> {
+    const condition = {
+      organizationId: params.organizationId.getValue(),
+      invitedByUserId: params.invitedByUserId.getValue(),
+    };
 
-    return records.map((record) =>
-      OrganizationInvitationPrismaMapper.toInvitationDomain(record),
-    );
+    const [records, count] = await Promise.all([
+      this.client.organizationInvitation.findMany({
+        where: condition,
+        orderBy: {
+          createdAt: 'desc' as const,
+        },
+        ...offsetPaginationBuilder.toOptions(pagination),
+      }),
+      this.client.organizationInvitation.count({
+        where: condition,
+      }),
+    ]);
+
+    return {
+      invitations: records.map((record) =>
+        OrganizationInvitationPrismaMapper.toInvitationDomain(record),
+      ),
+      paginationResult: offsetPaginationBuilder.toResult(pagination, count),
+    };
   }
 
-  async findReceivedInvitations(params: {
-    userId: UserUuid;
-  }): Promise<OrganizationInvitation[]> {
-    const records = await this.client.organizationInvitation.findMany({
-      where: {
-        inviteeUserId: params.userId.getValue(),
-        status: 'PENDING',
-        expiresAt: {
-          gt: new Date(),
-        },
+  async findReceivedInvitations(
+    params: {
+      userId: UserUuid;
+    },
+    pagination: OffsetPagination,
+  ): Promise<{
+    invitations: OrganizationInvitation[];
+    paginationResult: OffsetPaginationResult;
+  }> {
+    const condition = {
+      inviteeUserId: params.userId.getValue(),
+      status: 'PENDING' as const,
+      expiresAt: {
+        gt: new Date(),
       },
-    });
+    };
 
-    return records.map((record) =>
-      OrganizationInvitationPrismaMapper.toInvitationDomain(record),
-    );
+    const [records, count] = await Promise.all([
+      this.client.organizationInvitation.findMany({
+        where: condition,
+        orderBy: {
+          createdAt: 'desc',
+        },
+        ...offsetPaginationBuilder.toOptions(pagination),
+      }),
+      this.client.organizationInvitation.count({
+        where: condition,
+      }),
+    ]);
+
+    return {
+      invitations: records.map((record) =>
+        OrganizationInvitationPrismaMapper.toInvitationDomain(record),
+      ),
+      paginationResult: offsetPaginationBuilder.toResult(pagination, count),
+    };
   }
 }

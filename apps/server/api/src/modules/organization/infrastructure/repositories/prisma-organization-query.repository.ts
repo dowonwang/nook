@@ -1,5 +1,6 @@
+import { PrismaRepository } from '$shared/database';
 import {
-  offsetPaginationResultBuilder,
+  offsetPaginationBuilder,
   type OffsetPagination,
   type OffsetPaginationResult,
 } from '$shared/pagination';
@@ -13,18 +14,16 @@ import type {
   OrganizationUuid,
 } from '$modules/organization/domain';
 import type { UserUuid } from '$modules/user/domain';
-import type { PrismaClient } from '@packages/api-db';
 
 export class PrismaOrganizationQueryRepository
+  extends PrismaRepository
   implements OrganizationQueryRepository, OrganizationReader
 {
-  constructor(private readonly prisma: PrismaClient) {}
-
   async findOrganizationIdByUserIdAndTitle(
     userId: string,
     title: string,
   ): Promise<string | null> {
-    const organization = await this.prisma.organization.findFirst({
+    const organization = await this.client.organization.findFirst({
       where: {
         title,
         organizationMembers: {
@@ -51,29 +50,24 @@ export class PrismaOrganizationQueryRepository
     organizations: Organization[];
     paginationResult: OffsetPaginationResult;
   }> {
-    const [records, count] = await this.prisma.$transaction([
-      this.prisma.organization.findMany({
-        where: {
-          organizationMembers: {
-            some: {
-              userId: params.userId.getValue(),
-            },
-          },
+    const condition = {
+      organizationMembers: {
+        some: {
+          userId: params.userId.getValue(),
         },
+      },
+    };
+
+    const [records, count] = await Promise.all([
+      this.client.organization.findMany({
+        where: condition,
         include: {
           organizationMembers: true,
         },
-        skip: pagination.skip,
-        take: pagination.limit,
+        ...offsetPaginationBuilder.toOptions(pagination),
       }),
-      this.prisma.organization.count({
-        where: {
-          organizationMembers: {
-            some: {
-              userId: params.userId.getValue(),
-            },
-          },
-        },
+      this.client.organization.count({
+        where: condition,
       }),
     ]);
 
@@ -82,14 +76,14 @@ export class PrismaOrganizationQueryRepository
         const members = record.organizationMembers;
         return OrganizationPrismaMapper.toOrganizationDomain(record, members);
       }),
-      paginationResult: offsetPaginationResultBuilder(pagination, count),
+      paginationResult: offsetPaginationBuilder.toResult(pagination, count),
     };
   }
 
   async findManyByIds(params: {
     organizationIds: OrganizationUuid[];
   }): Promise<Organization[]> {
-    const records = await this.prisma.organization.findMany({
+    const records = await this.client.organization.findMany({
       where: {
         id: {
           in: params.organizationIds.map((id) => id.getValue()),

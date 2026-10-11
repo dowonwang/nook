@@ -1,5 +1,6 @@
 import { Elysia } from 'elysia';
 
+import { offsetPaginationPlugin } from '$shared/pagination';
 import {
   ApiResponseBuilder,
   createApiSuccessResponseSchema,
@@ -21,16 +22,22 @@ export function createFindReceivedInvitations({
 }: Dependencies) {
   return new Elysia({ name: 'org.routes.find-received-invitations' })
     .use(authGuard)
+    .use(offsetPaginationPlugin)
     .get(
       '/invitations',
-      async ({ authUser, set }) => {
-        const response = await handler.execute({
-          userId: authUser.id,
-        });
+      async ({ authUser, set, pagination }) => {
+        const { response, paginationResult } = await handler.execute(
+          {
+            userId: authUser.id,
+          },
+          pagination,
+        );
 
         set.status = 200;
 
-        return ApiResponseBuilder.success(response);
+        return ApiResponseBuilder.success(response, {
+          pagination: paginationResult,
+        });
       },
       {
         detail: {
