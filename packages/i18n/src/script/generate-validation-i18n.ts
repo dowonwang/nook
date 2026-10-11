@@ -20,6 +20,8 @@ const propertyPattern = {
   validator: /validator:\s*['"]([^'"]+)['"]/,
 };
 
+const PAGINATION_FIELDS = new Set(['page', 'limit', 'cursor']);
+
 function parseFieldPath(rawFieldPath: string): string {
   return [...rawFieldPath.matchAll(/['"]([^'"]+)['"]/g)]
     .map((match) => match[1])
@@ -92,6 +94,13 @@ function collectValidationKeys(schemaSource: string) {
       !schemaName ||
       rawFieldPath === undefined ||
       !validator
+    ) {
+      continue;
+    }
+
+    if (
+      location === 'query' &&
+      PAGINATION_FIELDS.has(parseFieldPath(rawFieldPath))
     ) {
       continue;
     }

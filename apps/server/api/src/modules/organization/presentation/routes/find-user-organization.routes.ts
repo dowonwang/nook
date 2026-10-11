@@ -1,5 +1,6 @@
 import { Elysia } from 'elysia';
 
+import { offsetPaginationPlugin } from '$shared/pagination';
 import {
   ApiResponseBuilder,
   createApiSuccessResponseSchema,
@@ -21,16 +22,22 @@ export function createFindUserOrganizationsRoutes({
 }: Dependencies) {
   return new Elysia({ name: 'org.routes.find-user-organizations' })
     .use(authGuard)
+    .use(offsetPaginationPlugin)
     .get(
       '/',
-      async ({ authUser, set }) => {
-        const response = await handler.execute({
-          userId: authUser.id,
-        });
+      async ({ authUser, set, pagination }) => {
+        const { response, paginationResult } = await handler.execute(
+          {
+            userId: authUser.id,
+          },
+          pagination,
+        );
 
         set.status = 200;
 
-        return ApiResponseBuilder.success(response);
+        return ApiResponseBuilder.success(response, {
+          pagination: paginationResult,
+        });
       },
       {
         detail: {
@@ -39,6 +46,7 @@ export function createFindUserOrganizationsRoutes({
         response: {
           200: createApiSuccessResponseSchema(
             OrganizationResponseSchemas['find-user-organizations'],
+            'offset',
           ),
         },
       },

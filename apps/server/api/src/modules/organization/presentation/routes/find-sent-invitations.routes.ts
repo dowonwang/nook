@@ -1,6 +1,7 @@
 import { Elysia } from 'elysia';
 
 import { type AuthGuard } from '$modules/auth';
+import { offsetPaginationPlugin } from '$shared/pagination';
 import {
   ApiResponseBuilder,
   createApiSuccessResponseSchema,
@@ -21,17 +22,23 @@ export function createFindSentInvitationsRoutes({
 }: Dependencies) {
   return new Elysia({ name: 'org.routes.find-sent-invitations' })
     .use(authGuard)
+    .use(offsetPaginationPlugin)
     .get(
       '/:organizationId/invitations',
-      async ({ authUser, set, params: { organizationId } }) => {
-        const response = await handler.execute({
-          organizationId,
-          userId: authUser.id,
-        });
+      async ({ authUser, set, params: { organizationId }, pagination }) => {
+        const { response, paginationResult } = await handler.execute(
+          {
+            organizationId,
+            userId: authUser.id,
+          },
+          pagination,
+        );
 
         set.status = 200;
 
-        return ApiResponseBuilder.success(response);
+        return ApiResponseBuilder.success(response, {
+          pagination: paginationResult,
+        });
       },
       {
         detail: {
@@ -40,6 +47,7 @@ export function createFindSentInvitationsRoutes({
         response: {
           200: createApiSuccessResponseSchema(
             OrganizationResponseSchemas['find-sent-invitations'],
+            'offset',
           ),
         },
       },

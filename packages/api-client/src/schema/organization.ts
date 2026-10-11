@@ -121,6 +121,86 @@ export const PostOrganizationResponse = zod.object({
 /**
  * @summary Find User Organizations List
  */
+export const getOrganizationQueryPageMultipleOf = 1;
+
+export const getOrganizationQueryLimitMax = 100;
+export const getOrganizationQueryLimitMultipleOf = 1;
+
+export const GetOrganizationQueryParams = zod.object({
+  page: zod
+    .number(
+      zodParams({
+        operationId: 'getOrganization',
+        location: 'query',
+        schemaName: 'GetOrganizationQueryParams',
+        fieldPath: ['page'],
+        validator: 'number',
+      }),
+    )
+    .min(
+      1,
+      zodParams({
+        operationId: 'getOrganization',
+        location: 'query',
+        schemaName: 'GetOrganizationQueryParams',
+        fieldPath: ['page'],
+        validator: 'min',
+      }),
+    )
+    .multipleOf(
+      getOrganizationQueryPageMultipleOf,
+      zodParams({
+        operationId: 'getOrganization',
+        location: 'query',
+        schemaName: 'GetOrganizationQueryParams',
+        fieldPath: ['page'],
+        validator: 'multipleOf',
+      }),
+    )
+    .optional(),
+  limit: zod
+    .number(
+      zodParams({
+        operationId: 'getOrganization',
+        location: 'query',
+        schemaName: 'GetOrganizationQueryParams',
+        fieldPath: ['limit'],
+        validator: 'number',
+      }),
+    )
+    .min(
+      1,
+      zodParams({
+        operationId: 'getOrganization',
+        location: 'query',
+        schemaName: 'GetOrganizationQueryParams',
+        fieldPath: ['limit'],
+        validator: 'min',
+      }),
+    )
+    .max(
+      getOrganizationQueryLimitMax,
+      zodParams({
+        operationId: 'getOrganization',
+        location: 'query',
+        schemaName: 'GetOrganizationQueryParams',
+        fieldPath: ['limit'],
+        validator: 'max',
+      }),
+    )
+    .multipleOf(
+      getOrganizationQueryLimitMultipleOf,
+      zodParams({
+        operationId: 'getOrganization',
+        location: 'query',
+        schemaName: 'GetOrganizationQueryParams',
+        fieldPath: ['limit'],
+        validator: 'multipleOf',
+      }),
+    )
+    .optional(),
+});
+
 export const getOrganizationResponseDataItemIdRegExp = new RegExp(
   '^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-7[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12})$',
 );
@@ -210,6 +290,53 @@ export const GetOrganizationResponse = zod.object({
         }),
       )
       .optional(),
+    pagination: zod.object({
+      page: zod.number(
+        zodParams({
+          operationId: 'getOrganization',
+          location: 'response',
+          schemaName: 'GetOrganizationResponse',
+          fieldPath: ['meta', 'pagination', 'page'],
+          validator: 'number',
+        }),
+      ),
+      limit: zod.number(
+        zodParams({
+          operationId: 'getOrganization',
+          location: 'response',
+          schemaName: 'GetOrganizationResponse',
+          fieldPath: ['meta', 'pagination', 'limit'],
+          validator: 'number',
+        }),
+      ),
+      total: zod.number(
+        zodParams({
+          operationId: 'getOrganization',
+          location: 'response',
+          schemaName: 'GetOrganizationResponse',
+          fieldPath: ['meta', 'pagination', 'total'],
+          validator: 'number',
+        }),
+      ),
+      totalPages: zod.number(
+        zodParams({
+          operationId: 'getOrganization',
+          location: 'response',
+          schemaName: 'GetOrganizationResponse',
+          fieldPath: ['meta', 'pagination', 'totalPages'],
+          validator: 'number',
+        }),
+      ),
+      hasNextPage: zod.boolean(
+        zodParams({
+          operationId: 'getOrganization',
+          location: 'response',
+          schemaName: 'GetOrganizationResponse',
+          fieldPath: ['meta', 'pagination', 'hasNextPage'],
+          validator: 'boolean',
+        }),
+      ),
+    }),
   }),
 });
 
@@ -317,6 +444,88 @@ export const GetOrganizationByOrganizationIdInvitationsParams = zod.object({
     }),
   ),
 });
+
+export const getOrganizationByOrganizationIdInvitationsQueryPageMultipleOf = 1;
+
+export const getOrganizationByOrganizationIdInvitationsQueryLimitMax = 100;
+export const getOrganizationByOrganizationIdInvitationsQueryLimitMultipleOf = 1;
+
+export const GetOrganizationByOrganizationIdInvitationsQueryParams = zod.object(
+  {
+    page: zod
+      .number(
+        zodParams({
+          operationId: 'getOrganizationByOrganizationIdInvitations',
+          location: 'query',
+          schemaName: 'GetOrganizationByOrganizationIdInvitationsQueryParams',
+          fieldPath: ['page'],
+          validator: 'number',
+        }),
+      )
+      .min(
+        1,
+        zodParams({
+          operationId: 'getOrganizationByOrganizationIdInvitations',
+          location: 'query',
+          schemaName: 'GetOrganizationByOrganizationIdInvitationsQueryParams',
+          fieldPath: ['page'],
+          validator: 'min',
+        }),
+      )
+      .multipleOf(
+        getOrganizationByOrganizationIdInvitationsQueryPageMultipleOf,
+        zodParams({
+          operationId: 'getOrganizationByOrganizationIdInvitations',
+          location: 'query',
+          schemaName: 'GetOrganizationByOrganizationIdInvitationsQueryParams',
+          fieldPath: ['page'],
+          validator: 'multipleOf',
+        }),
+      )
+      .optional(),
+    limit: zod
+      .number(
+        zodParams({
+          operationId: 'getOrganizationByOrganizationIdInvitations',
+          location: 'query',
+          schemaName: 'GetOrganizationByOrganizationIdInvitationsQueryParams',
+          fieldPath: ['limit'],
+          validator: 'number',
+        }),
+      )
+      .min(
+        1,
+        zodParams({
+          operationId: 'getOrganizationByOrganizationIdInvitations',
+          location: 'query',
+          schemaName: 'GetOrganizationByOrganizationIdInvitationsQueryParams',
+          fieldPath: ['limit'],
+          validator: 'min',
+        }),
+      )
+      .max(
+        getOrganizationByOrganizationIdInvitationsQueryLimitMax,
+        zodParams({
+          operationId: 'getOrganizationByOrganizationIdInvitations',
+          location: 'query',
+          schemaName: 'GetOrganizationByOrganizationIdInvitationsQueryParams',
+          fieldPath: ['limit'],
+          validator: 'max',
+        }),
+      )
+      .multipleOf(
+        getOrganizationByOrganizationIdInvitationsQueryLimitMultipleOf,
+        zodParams({
+          operationId: 'getOrganizationByOrganizationIdInvitations',
+          location: 'query',
+          schemaName: 'GetOrganizationByOrganizationIdInvitationsQueryParams',
+          fieldPath: ['limit'],
+          validator: 'multipleOf',
+        }),
+      )
+      .optional(),
+  },
+);
 
 export const getOrganizationByOrganizationIdInvitationsResponseDataItemIdRegExp =
   new RegExp(
@@ -515,6 +724,53 @@ export const GetOrganizationByOrganizationIdInvitationsResponse = zod.object({
         }),
       )
       .optional(),
+    pagination: zod.object({
+      page: zod.number(
+        zodParams({
+          operationId: 'getOrganizationByOrganizationIdInvitations',
+          location: 'response',
+          schemaName: 'GetOrganizationByOrganizationIdInvitationsResponse',
+          fieldPath: ['meta', 'pagination', 'page'],
+          validator: 'number',
+        }),
+      ),
+      limit: zod.number(
+        zodParams({
+          operationId: 'getOrganizationByOrganizationIdInvitations',
+          location: 'response',
+          schemaName: 'GetOrganizationByOrganizationIdInvitationsResponse',
+          fieldPath: ['meta', 'pagination', 'limit'],
+          validator: 'number',
+        }),
+      ),
+      total: zod.number(
+        zodParams({
+          operationId: 'getOrganizationByOrganizationIdInvitations',
+          location: 'response',
+          schemaName: 'GetOrganizationByOrganizationIdInvitationsResponse',
+          fieldPath: ['meta', 'pagination', 'total'],
+          validator: 'number',
+        }),
+      ),
+      totalPages: zod.number(
+        zodParams({
+          operationId: 'getOrganizationByOrganizationIdInvitations',
+          location: 'response',
+          schemaName: 'GetOrganizationByOrganizationIdInvitationsResponse',
+          fieldPath: ['meta', 'pagination', 'totalPages'],
+          validator: 'number',
+        }),
+      ),
+      hasNextPage: zod.boolean(
+        zodParams({
+          operationId: 'getOrganizationByOrganizationIdInvitations',
+          location: 'response',
+          schemaName: 'GetOrganizationByOrganizationIdInvitationsResponse',
+          fieldPath: ['meta', 'pagination', 'hasNextPage'],
+          validator: 'boolean',
+        }),
+      ),
+    }),
   }),
 });
 
@@ -598,6 +854,86 @@ export const PatchOrganizationInvitationResponse = zod.object({
 /**
  * @summary Find Received Invitations
  */
+export const getOrganizationInvitationsQueryPageMultipleOf = 1;
+
+export const getOrganizationInvitationsQueryLimitMax = 100;
+export const getOrganizationInvitationsQueryLimitMultipleOf = 1;
+
+export const GetOrganizationInvitationsQueryParams = zod.object({
+  page: zod
+    .number(
+      zodParams({
+        operationId: 'getOrganizationInvitations',
+        location: 'query',
+        schemaName: 'GetOrganizationInvitationsQueryParams',
+        fieldPath: ['page'],
+        validator: 'number',
+      }),
+    )
+    .min(
+      1,
+      zodParams({
+        operationId: 'getOrganizationInvitations',
+        location: 'query',
+        schemaName: 'GetOrganizationInvitationsQueryParams',
+        fieldPath: ['page'],
+        validator: 'min',
+      }),
+    )
+    .multipleOf(
+      getOrganizationInvitationsQueryPageMultipleOf,
+      zodParams({
+        operationId: 'getOrganizationInvitations',
+        location: 'query',
+        schemaName: 'GetOrganizationInvitationsQueryParams',
+        fieldPath: ['page'],
+        validator: 'multipleOf',
+      }),
+    )
+    .optional(),
+  limit: zod
+    .number(
+      zodParams({
+        operationId: 'getOrganizationInvitations',
+        location: 'query',
+        schemaName: 'GetOrganizationInvitationsQueryParams',
+        fieldPath: ['limit'],
+        validator: 'number',
+      }),
+    )
+    .min(
+      1,
+      zodParams({
+        operationId: 'getOrganizationInvitations',
+        location: 'query',
+        schemaName: 'GetOrganizationInvitationsQueryParams',
+        fieldPath: ['limit'],
+        validator: 'min',
+      }),
+    )
+    .max(
+      getOrganizationInvitationsQueryLimitMax,
+      zodParams({
+        operationId: 'getOrganizationInvitations',
+        location: 'query',
+        schemaName: 'GetOrganizationInvitationsQueryParams',
+        fieldPath: ['limit'],
+        validator: 'max',
+      }),
+    )
+    .multipleOf(
+      getOrganizationInvitationsQueryLimitMultipleOf,
+      zodParams({
+        operationId: 'getOrganizationInvitations',
+        location: 'query',
+        schemaName: 'GetOrganizationInvitationsQueryParams',
+        fieldPath: ['limit'],
+        validator: 'multipleOf',
+      }),
+    )
+    .optional(),
+});
+
 export const getOrganizationInvitationsResponseDataItemIdRegExp = new RegExp(
   '^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-7[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12})$',
 );
@@ -786,5 +1122,52 @@ export const GetOrganizationInvitationsResponse = zod.object({
         }),
       )
       .optional(),
+    pagination: zod.object({
+      page: zod.number(
+        zodParams({
+          operationId: 'getOrganizationInvitations',
+          location: 'response',
+          schemaName: 'GetOrganizationInvitationsResponse',
+          fieldPath: ['meta', 'pagination', 'page'],
+          validator: 'number',
+        }),
+      ),
+      limit: zod.number(
+        zodParams({
+          operationId: 'getOrganizationInvitations',
+          location: 'response',
+          schemaName: 'GetOrganizationInvitationsResponse',
+          fieldPath: ['meta', 'pagination', 'limit'],
+          validator: 'number',
+        }),
+      ),
+      total: zod.number(
+        zodParams({
+          operationId: 'getOrganizationInvitations',
+          location: 'response',
+          schemaName: 'GetOrganizationInvitationsResponse',
+          fieldPath: ['meta', 'pagination', 'total'],
+          validator: 'number',
+        }),
+      ),
+      totalPages: zod.number(
+        zodParams({
+          operationId: 'getOrganizationInvitations',
+          location: 'response',
+          schemaName: 'GetOrganizationInvitationsResponse',
+          fieldPath: ['meta', 'pagination', 'totalPages'],
+          validator: 'number',
+        }),
+      ),
+      hasNextPage: zod.boolean(
+        zodParams({
+          operationId: 'getOrganizationInvitations',
+          location: 'response',
+          schemaName: 'GetOrganizationInvitationsResponse',
+          fieldPath: ['meta', 'pagination', 'hasNextPage'],
+          validator: 'boolean',
+        }),
+      ),
+    }),
   }),
 });

@@ -1,4 +1,8 @@
 import type {
+  CursorPaginationResult,
+  OffsetPaginationResult,
+} from '$shared/pagination';
+import type {
   ApiErrorDetail,
   ApiErrorResponse,
   ApiResponseMeta,
@@ -12,16 +16,46 @@ const createMeta = (
   ...(requestId ? { requestId } : {}),
 });
 
-export const ApiResponseBuilder = {
-  success<T>(data: T, requestId?: string): ApiSuccessResponse<T> {
-    return {
-      success: true,
-      data,
-      error: null,
-      meta: createMeta(requestId),
-    };
+function success<T>(
+  data: T,
+  options: {
+    requestId?: string;
+    pagination: OffsetPaginationResult;
   },
+): ApiSuccessResponse<T, 'offset'>;
+function success<T>(
+  data: T,
+  options: {
+    requestId?: string;
+    pagination: CursorPaginationResult;
+  },
+): ApiSuccessResponse<T, 'cursor'>;
+function success<T>(
+  data: T,
+  options?: {
+    requestId?: string;
+  },
+): ApiSuccessResponse<T>;
+function success<T>(
+  data: T,
+  options?: {
+    requestId?: string;
+    pagination?: CursorPaginationResult | OffsetPaginationResult;
+  },
+) {
+  return {
+    success: true,
+    data,
+    error: null,
+    meta: {
+      ...createMeta(options?.requestId),
+      ...(options?.pagination ? { pagination: options.pagination } : {}),
+    },
+  };
+}
 
+export const ApiResponseBuilder = {
+  success,
   error({
     code,
     requestId,
