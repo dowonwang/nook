@@ -1,19 +1,28 @@
 'use server';
 
 import { bffFetcher } from '$shared/api/bff/bff-fetcher';
+import { createSearchParams } from '$shared/lib/http';
 
+import type { OffsetPaginationQuery } from '$shared/types';
 import type { GetOrganization200 } from '@packages/api-client/api';
 
-export async function getMyOrganizationListServer() {
-  const response = await bffFetcher('/api/organization', {
-    method: 'GET',
-  });
+export async function getMyOrganizationListServer(
+  query?: OffsetPaginationQuery,
+) {
+  const searchParams = createSearchParams(query);
+
+  const response = await bffFetcher(
+    '/api/organization?' + searchParams.toString(),
+    {
+      method: 'GET',
+    },
+  );
 
   if (response.ok) {
-    const { data } = (await response.json()) as GetOrganization200;
+    const { data, meta } = (await response.json()) as GetOrganization200;
 
-    return data;
+    return { data, meta };
   }
 
-  return [];
+  return { data: [], meta: undefined };
 }
