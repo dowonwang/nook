@@ -1,6 +1,7 @@
 'use client';
 
 import { useSearchParams } from 'next/navigation';
+import { useMemo } from 'react';
 
 import { parseNumber } from './parse-number';
 
@@ -11,8 +12,11 @@ export function useOffsetQuery(): OffsetPaginationQuery {
   const page = searchParams?.get('page');
   const limit = searchParams?.get('limit');
 
-  return {
-    page: parseNumber(page),
-    limit: parseNumber(limit),
-  };
+  return useMemo(
+    () => ({
+      page: parseNumber(page),
+      limit: parseNumber(limit),
+    }),
+    [page, limit],
+  );
 }

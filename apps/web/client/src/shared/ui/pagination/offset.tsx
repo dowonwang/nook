@@ -49,7 +49,7 @@ export function OffsetPagination({ page, totalPages, hasNextPage }: Props) {
   return (
     <nav
       aria-label='pagination'
-      className='mt-auto flex items-center justify-center gap-3'
+      className='flex items-center justify-center gap-3'
     >
       <button
         className={clsx(

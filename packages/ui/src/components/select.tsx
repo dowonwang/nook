@@ -1,3 +1,4 @@
+import { ChevronDown, ChevronUp } from 'lucide-react';
 import {
   createContext,
   useCallback,
@@ -8,6 +9,8 @@ import {
   useRef,
   useState,
 } from 'react';
+
+import { cn } from '../lib/cn';
 
 import type {
   ComponentPropsWithoutRef,
@@ -39,6 +42,10 @@ interface SelectItemProps extends ComponentPropsWithoutRef<'div'> {
   value: string;
   disabled?: boolean;
   textValue?: string;
+}
+
+interface SelectInputProps extends ComponentPropsWithoutRef<'input'> {
+  name: string;
 }
 
 interface SelectItemData {
@@ -82,7 +89,7 @@ function useSelectContext() {
   return context;
 }
 
-export function SelectRoot({
+export function Select({
   value,
   onValueChange,
   disabled = false,
@@ -201,7 +208,7 @@ export function SelectRoot({
       <div
         {...props}
         ref={rootRef}
-        className={`relative w-fit min-w-28 ${className}`}
+        className={cn('relative w-fit min-w-28', className)}
       >
         {children}
       </div>
@@ -210,9 +217,8 @@ export function SelectRoot({
 }
 
 export function SelectTrigger({
-  placeholder = '선택하세요',
+  placeholder,
   className = '',
-  children,
   onClick,
   onKeyDown,
   ...props
@@ -287,12 +293,11 @@ export function SelectTrigger({
         break;
 
       case 'Home':
-      case 'End':
+      case 'End': {
         if (!open) break;
 
         event.preventDefault();
 
-        //  eslint-disable-next-line
         const enabled = getEnabledValues();
         setActiveValue(
           event.key === 'Home'
@@ -300,6 +305,7 @@ export function SelectTrigger({
             : (enabled[enabled.length - 1] ?? null),
         );
         break;
+      }
     }
   };
 
@@ -332,15 +338,15 @@ export function SelectTrigger({
           openMenu();
         }
       }}
-      className={[
+      className={cn(
         'bg-card border-border flex h-9 w-full items-center',
-        'justify-between gap-3 rounded-md border-2 px-3',
-        'text-sm disabled:opacity-50',
+        'justify-between gap-3 rounded-md border-2 shadow',
+        'text-end text-sm font-semibold disabled:opacity-50',
         className,
-      ].join(' ')}
+      )}
     >
-      <span>{selected?.label ?? placeholder}</span>
-      {children}
+      <span className='px-3'>{selected?.label ?? placeholder}</span>
+      {open ? <ChevronUp className='w-5' /> : <ChevronDown className='w-5' />}
     </button>
   );
 }
@@ -443,13 +449,13 @@ export function SelectContent({
         ...style,
         maxHeight: open ? maxHeight : undefined,
       }}
-      className={[
-        'absolute z-50 w-full overflow-y-auto',
-        'bg-card border-border rounded-md border p-1 shadow-lg',
+      className={cn(
+        'scrollbar-thin scrollbar-thumb-primary absolute z-50 w-full space-y-1 overflow-y-auto',
+        'border-border bg-card/20 rounded-md border-2 p-1 shadow-lg backdrop-blur-md',
         direction === 'top' ? 'bottom-full mb-1' : 'top-full mt-1',
         !open ? 'hidden' : '',
         className,
-      ].join(' ')}
+      )}
     >
       {children}
     </div>
@@ -514,18 +520,26 @@ export function SelectItem({
           selectValue(itemValue);
         }
       }}
-      className={[
-        'cursor-pointer rounded px-3 py-2 text-sm',
+      className={cn(
+        'cursor-pointer rounded px-3 py-2 text-sm font-semibold',
         disabled
           ? 'cursor-not-allowed opacity-40'
           : active
-            ? 'bg-card'
-            : 'hover:bg-gray-50',
-        selected ? 'font-semibold' : '',
+            ? 'ring-primary ring-2'
+            : '',
+        selected ? 'bg-primary/80 text-primary-foreground' : '',
         className,
-      ].join(' ')}
+      )}
     >
       {children}
     </div>
+  );
+}
+
+export function SelectInput({ name, ...props }: SelectInputProps) {
+  const { value } = useSelectContext();
+
+  return (
+    <input {...props} type='text' value={value} readOnly name={name} hidden />
   );
 }
