@@ -450,8 +450,8 @@ export function SelectContent({
         maxHeight: open ? maxHeight : undefined,
       }}
       className={cn(
-        'scrollbar-thin scrollbar-thumb-primary absolute z-50 w-full space-y-1 overflow-y-auto',
-        'border-border bg-card/20 rounded-md border-2 p-1 shadow-lg backdrop-blur-md',
+        'scrollbar-thin scrollbar-thumb-primary absolute z-50 w-full space-y-1 overflow-y-auto shadow',
+        'border-border bg-card/50 rounded-md border-2 p-1 shadow-lg backdrop-blur-md',
         direction === 'top' ? 'bottom-full mb-1' : 'top-full mt-1',
         !open ? 'hidden' : '',
         className,
