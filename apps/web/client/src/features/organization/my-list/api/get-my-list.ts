@@ -6,7 +6,7 @@ import type { GetOrganization200 } from '@packages/api-client/api';
 export async function getMyOrganizationList(query?: OffsetPaginationQuery) {
   const searchParams = createSearchParams(query);
 
-  const response = await fetch('/api/organization' + searchParams.toString(), {
+  const response = await fetch('/api/organization?' + searchParams.toString(), {
     method: 'GET',
   });
 
