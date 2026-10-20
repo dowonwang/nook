@@ -6,6 +6,15 @@ settings:
 
 catalogs:
   default:
+    bun-types:
+      specifier: ^1.3
+      version: 1.4.2
+    elysia:
+      specifier: ^1.4
+      version: 1.4.30
+    prisma:
+      specifier: ^7.4.2
+      version: 7.10.0
     typescript:
       specifier: ^5.9.3
       version: 5.9.3
@@ -153,10 +162,10 @@ importers:
         version: 1.14.0(react@19.3.0)
       next:
         specifier: catalog:next16
-        version: 16.3.5(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
+        version: 16.3.5(@types/node@26.5.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       next-i18next:
         specifier: ^16.3.1
-        version: 16.3.1(@types/react@19.3.0)(i18next@26.4.2(typescript@5.9.3))(next@16.3.5(react-dom@19.3.0(react@19.3.0))(react@19.3.0))(react-i18next@17.0.14(i18next@26.4.2(typescript@5.9.3))(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(typescript@5.9.3))(react@19.3.0)
+        version: 16.3.1(@types/react@19.3.0)(i18next@26.4.2(typescript@5.9.3))(next@16.3.5(@types/node@26.5.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0))(react-i18next@17.0.14(i18next@26.4.2(typescript@5.9.3))(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(typescript@5.9.3))(react@19.3.0)
       react:
         specifier: catalog:next16
         version: 19.3.0
@@ -253,6 +262,9 @@ importers:
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
+      lucide-react:
+        specifier: ^1.14.0
+        version: 1.14.0(react@19.3.0)
       next:
         specifier: catalog:next16
         version: 16.3.5(@types/node@26.5.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
@@ -5186,7 +5198,7 @@ snapshots:
 
   bun-types@1.4.2:
     dependencies:
-      '@types/node': 26.5.0
+      '@types/node': 25.3.5
 
   c12@3.3.4:
     dependencies:
@@ -6292,13 +6304,13 @@ snapshots:
 
   natural-compare@1.4.0: {}
 
-  next-i18next@16.3.1(@types/react@19.3.0)(i18next@26.4.2(typescript@5.9.3))(next@16.3.5(react-dom@19.3.0(react@19.3.0))(react@19.3.0))(react-i18next@17.0.14(i18next@26.4.2(typescript@5.9.3))(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(typescript@5.9.3))(react@19.3.0):
+  next-i18next@16.3.1(@types/react@19.3.0)(i18next@26.4.2(typescript@5.9.3))(next@16.3.5(@types/node@26.5.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0))(react-i18next@17.0.14(i18next@26.4.2(typescript@5.9.3))(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(typescript@5.9.3))(react@19.3.0):
     dependencies:
       '@types/hoist-non-react-statics': 3.3.7(@types/react@19.3.0)
       hoist-non-react-statics: 3.3.2
       i18next: 26.4.2(typescript@5.9.3)
       i18next-resources-to-backend: 1.2.3
-      next: 16.3.5(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
+      next: 16.3.5(@types/node@26.5.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       react: 19.3.0
       react-i18next: 17.0.14(i18next@26.4.2(typescript@5.9.3))(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(typescript@5.9.3)
     transitivePeerDependencies:
@@ -6324,31 +6336,6 @@ snapshots:
       '@next/swc-win32-arm64-msvc': 16.3.5
       '@next/swc-win32-x64-msvc': 16.3.5
       sharp: 0.35.4(@types/node@26.5.0)
-    transitivePeerDependencies:
-      - '@babel/core'
-      - '@types/node'
-      - babel-plugin-macros
-
-  next@16.3.5(react-dom@19.3.0(react@19.3.0))(react@19.3.0):
-    dependencies:
-      '@next/env': 16.3.5
-      '@swc/helpers': 0.5.23
-      baseline-browser-mapping: 2.11.24
-      caniuse-lite: 1.0.30001810
-      postcss: 8.5.23
-      react: 19.3.0
-      react-dom: 19.3.0(react@19.3.0)
-      styled-jsx: 5.1.6(react@19.3.0)
-    optionalDependencies:
-      '@next/swc-darwin-arm64': 16.3.5
-      '@next/swc-darwin-x64': 16.3.5
-      '@next/swc-linux-arm64-gnu': 16.3.5
-      '@next/swc-linux-arm64-musl': 16.3.5
-      '@next/swc-linux-x64-gnu': 16.3.5
-      '@next/swc-linux-x64-musl': 16.3.5
-      '@next/swc-win32-arm64-msvc': 16.3.5
-      '@next/swc-win32-x64-msvc': 16.3.5
-      sharp: 0.35.4
     transitivePeerDependencies:
       - '@babel/core'
       - '@types/node'
@@ -6753,39 +6740,6 @@ snapshots:
     optional: true
 
   seq-queue@0.0.5: {}
-
-  sharp@0.35.4:
-    dependencies:
-      '@img/colour': 1.1.0
-      detect-libc: 2.1.2
-      semver: 7.8.5
-    optionalDependencies:
-      '@img/sharp-darwin-arm64': 0.35.4
-      '@img/sharp-darwin-x64': 0.35.4
-      '@img/sharp-freebsd-wasm32': 0.35.4
-      '@img/sharp-libvips-darwin-arm64': 1.3.3
-      '@img/sharp-libvips-darwin-x64': 1.3.3
-      '@img/sharp-libvips-linux-arm': 1.3.3
-      '@img/sharp-libvips-linux-arm64': 1.3.3
-      '@img/sharp-libvips-linux-ppc64': 1.3.3
-      '@img/sharp-libvips-linux-riscv64': 1.3.3
-      '@img/sharp-libvips-linux-s390x': 1.3.3
-      '@img/sharp-libvips-linux-x64': 1.3.3
-      '@img/sharp-libvips-linuxmusl-arm64': 1.3.3
-      '@img/sharp-libvips-linuxmusl-x64': 1.3.3
-      '@img/sharp-linux-arm': 0.35.4
-      '@img/sharp-linux-arm64': 0.35.4
-      '@img/sharp-linux-ppc64': 0.35.4
-      '@img/sharp-linux-riscv64': 0.35.4
-      '@img/sharp-linux-s390x': 0.35.4
-      '@img/sharp-linux-x64': 0.35.4
-      '@img/sharp-linuxmusl-arm64': 0.35.4
-      '@img/sharp-linuxmusl-x64': 0.35.4
-      '@img/sharp-webcontainers-wasm32': 0.35.4
-      '@img/sharp-win32-arm64': 0.35.4
-      '@img/sharp-win32-ia32': 0.35.4
-      '@img/sharp-win32-x64': 0.35.4
-    optional: true
 
   sharp@0.35.4(@types/node@26.5.0):
     dependencies:

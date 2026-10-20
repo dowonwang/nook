@@ -1,21 +1,43 @@
 import { z } from 'zod';
 
+import { DEFAULT_LIMIT, DEFAULT_PAGE } from './constant';
+
 export const offsetPaginationQuerySchema = z.object({
-  page: z.number().min(1).multipleOf(1).optional().meta({
-    description: 'The page number to retrieve.',
-  }),
-  limit: z.number().min(1).max(100).multipleOf(1).optional().meta({
-    description: 'The maximum number of items to return per page',
-  }),
+  page: z.coerce
+    .number<string>()
+    .int()
+    .min(1)
+    .catch(DEFAULT_PAGE)
+    .optional()
+    .meta({
+      description: 'The page number to retrieve.',
+    }),
+  limit: z.coerce
+    .number<string>()
+    .int()
+    .min(1)
+    .max(100)
+    .catch(DEFAULT_LIMIT)
+    .optional()
+    .meta({
+      description: 'The maximum number of items to return per page',
+    }),
 });
 
 export const cursorPaginationQuerySchema = z.object({
   cursor: z.string().min(1).optional().meta({
     description: 'The cursor indicating where to start retrieving items',
   }),
-  limit: z.number().min(1).max(100).multipleOf(1).optional().meta({
-    description: 'The maximum number of items to return per page',
-  }),
+  limit: z.coerce
+    .number<string>()
+    .int()
+    .min(1)
+    .max(100)
+    .catch(DEFAULT_LIMIT)
+    .optional()
+    .meta({
+      description: 'The maximum number of items to return per page',
+    }),
 });
 
 export const offsetPaginationResultSchema = z.object({

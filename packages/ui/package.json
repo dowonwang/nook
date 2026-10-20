@@ -17,7 +17,8 @@
   "peerDependencies": {
     "next": "catalog:next16",
     "react": "catalog:next16",
-    "react-dom": "catalog:next16"
+    "react-dom": "catalog:next16",
+    "lucide-react": "^1.14.0"
   },
   "dependencies": {
     "class-variance-authority": "^0.7.1",
