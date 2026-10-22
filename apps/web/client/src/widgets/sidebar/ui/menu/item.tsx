@@ -23,11 +23,10 @@ export function MenuItem({ href, title }: MenuData) {
   return (
     <Link
       href={href}
-      className={cn('block rounded-xl p-3', {
-        'bg-primary/20 ring-primary/50 font-semibold ring':
+      className={cn('flex items-center gap-2 rounded-lg p-2', {
+        'bg-primary text-primary-foreground font-semibold':
           pathname?.startsWith(href),
-        'hover:bg-secondary ring-border hover:ring':
-          !pathname?.startsWith(href),
+        'hover:bg-secondary': !pathname?.startsWith(href),
       })}
     >
       {t(title)}

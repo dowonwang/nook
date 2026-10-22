@@ -1,5 +1,7 @@
 import { AppLayout } from '$app/layouts';
 
+export { metadata } from '$app/layouts';
+
 export default function RootLayout({
   children,
 }: {

@@ -1,12 +1,12 @@
 /* ui css */
 :root {
-  --ui-primary: #66bb6a;
-  --ui-primary-foreground: #fff;
+  --ui-primary: #2e7d32;
+  --ui-primary-foreground: #ffffff;
   --ui-primary-hover: #4caf50;
 
-  --ui-secondary: #faf9f6;
-  --ui-secondary-foreground: #6b7280;
-  --ui-secondary-hover: #f5f4f0;
+  --ui-secondary: #f3f2ee;
+  --ui-secondary-foreground: #4b5563;
+  --ui-secondary-hover: #e5e3dc;
 
   --ui-warning: #dc2626;
   --ui-warning-foreground: #fff;

@@ -7,15 +7,19 @@ export function Card({
   className,
   disabled = false,
   focus = false,
+  isArticle = false,
   ...rest
 }: {
   children: React.ReactNode;
   disabled?: boolean;
   focus?: boolean;
   className?: string;
+  isArticle?: boolean;
 } & React.HtmlHTMLAttributes<HTMLDivElement>) {
+  const Wrapper = isArticle ? 'article' : 'section';
+
   return (
-    <section
+    <Wrapper
       {...rest}
       aria-disabled={disabled}
       className={cn(
@@ -25,7 +29,7 @@ export function Card({
       )}
     >
       {children}
-    </section>
+    </Wrapper>
   );
 }
 

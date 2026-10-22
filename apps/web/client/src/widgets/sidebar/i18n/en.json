@@ -3,6 +3,15 @@
     "title": "Dashboard"
   },
   "org": {
-    "title": "Organization"
+    "title": "Organization",
+    "list": {
+      "title": "Organization List"
+    },
+    "receive": {
+      "title": "Received Invitations"
+    },
+    "sent": {
+      "title": "Sent Invitations"
+    }
   }
 }

@@ -10,10 +10,13 @@ import {
   QueryClientProvider,
   ThemeProvider,
 } from '$app/providers';
+import { CLIENT_ENV_CONFIG } from '$shared/config';
 import { i18nConfig } from '$shared/i18n/server';
 import { getFlashCookie, getI18nCookie } from '$shared/lib/cookie/server';
 import { initializeTheme } from '$shared/lib/theme';
 import { getTheme } from '$shared/lib/theme/get-cookie.server';
+
+import type { Metadata } from 'next';
 
 interface Props {
   children: React.ReactNode;
@@ -27,6 +30,10 @@ const noto = Noto_Sans({
 });
 
 initServerI18next(i18nConfig);
+
+export const metadata: Metadata = {
+  title: CLIENT_ENV_CONFIG.APP_NAME,
+};
 
 export async function AppLayout({ children }: Props) {
   const flashToken = await getFlashCookie();

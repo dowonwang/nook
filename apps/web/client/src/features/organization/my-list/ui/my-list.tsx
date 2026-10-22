@@ -33,9 +33,11 @@ export function MyOrganizationList() {
       <div className='flex-1'>
         <PaginationLimitSelector />
 
-        <div className='mb-6 grid grid-cols-3 gap-4'>
+        <section className='mb-6 grid grid-cols-3 gap-4'>
+          <h2 className='sr-only'>{t('title')}</h2>
+
           {organizations?.data.map((organization) => (
-            <Card key={organization.id}>
+            <Card key={organization.id} isArticle>
               <CardHeader className='flex items-center justify-between'>
                 <CardTitle level='h3'>{organization.title}</CardTitle>
                 <OrganizationMemberRoleBadge role={organization.userRole} />
@@ -54,7 +56,7 @@ export function MyOrganizationList() {
               </CardBody>
             </Card>
           ))}
-        </div>
+        </section>
       </div>
 
       {organizations?.meta?.pagination && (
