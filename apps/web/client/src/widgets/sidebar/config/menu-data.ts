@@ -15,7 +15,7 @@ export const MENU_DATA: MenuData[] = [
         title: 'org.receive.title',
       },
       {
-        href: 'org/sent',
+        href: '/org/sent',
         title: 'org.sent.title',
       },
     ],

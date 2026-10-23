@@ -1,3 +1,4 @@
+import { Badge } from '@packages/ui/components/badge';
 import {
   Card,
   CardBody,
@@ -56,9 +57,7 @@ export async function HomePage() {
             <CardBody className='space-y-4'>
               <div className='flex items-center justify-between'>
                 <Building className={ICON_STYLE} />
-                <span className='bg-primary text-primary-foreground rounded-full px-2 py-1 text-xs shadow'>
-                  {t('hero.features.organization.status')}
-                </span>
+                <Badge>{t('hero.features.organization.status')}</Badge>
               </div>
               <CardTitle>{t('hero.features.organization.title')}</CardTitle>
               <CardDescription>
@@ -71,9 +70,9 @@ export async function HomePage() {
             <CardBody className='space-y-4'>
               <div className='flex items-center justify-between'>
                 <Share2 className={ICON_STYLE} />
-                <span className='bg-secondary text-secondary-foreground rounded-full px-2 py-1 text-xs shadow'>
+                <Badge variant='secondary'>
                   {t('hero.features.fileShare.status')}
-                </span>
+                </Badge>
               </div>
               <CardTitle>{t('hero.features.fileShare.title')}</CardTitle>
               <CardDescription>
@@ -86,9 +85,9 @@ export async function HomePage() {
             <CardBody className='space-y-4'>
               <div className='flex items-center justify-between'>
                 <MessageCircle className={ICON_STYLE} />
-                <span className='bg-secondary text-secondary-foreground rounded-full px-2 py-1 text-xs shadow'>
+                <Badge variant='secondary'>
                   {t('hero.features.realtimeChat.status')}
-                </span>
+                </Badge>
               </div>
               <CardTitle>{t('hero.features.realtimeChat.title')}</CardTitle>
               <CardDescription>

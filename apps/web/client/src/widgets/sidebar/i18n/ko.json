@@ -8,10 +8,10 @@
       "title": "조직 목록"
     },
     "receive": {
-      "title": "받은 초대 목록"
+      "title": "받은 초대"
     },
     "sent": {
-      "title": "보낸 초대 목록"
+      "title": "보낸 초대"
     }
   }
 }

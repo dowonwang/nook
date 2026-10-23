@@ -24,20 +24,22 @@ export function SubMenuGroup({ href, title, sub = [] }: MenuData) {
     <>
       <Link
         href={href}
-        className={cn('flex items-center gap-2 rounded-lg p-2')}
+        className={cn('flex items-center gap-2 rounded-lg p-2', {
+          'bg-secondary': pathname?.startsWith(href),
+        })}
       >
         {t(title)}
       </Link>
 
-      <div className='border-border -mt-3 ml-2 space-y-2 border-l-2 p-2'>
+      <div className='-mt-3 ml-4 space-y-2 py-2'>
         {sub.map((item) => (
           <Link
             key={item.href}
             href={item.href}
             className={cn('block rounded-lg px-3 py-2', {
               'bg-primary text-primary-foreground font-semibold':
-                pathname?.startsWith(item.href),
-              'hover:bg-secondary': !pathname?.startsWith(item.href),
+                pathname === item.href,
+              'hover:bg-secondary': pathname !== item.href,
             })}
           >
             {t(item.title)}
