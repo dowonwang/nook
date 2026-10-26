@@ -6,14 +6,14 @@ import { PrismaTransactionManager } from '$shared/database';
 
 import {
   ChangeInvitationStatusHandler,
-  CreateHandler,
+  CreateOrganizationHandler,
   CreateInvitationHandler,
   FindReceivedInvitationsHandler,
   FindSentInvitationsHandler,
   FindUserOrganizationsHandler,
 } from './application';
 import {
-  OrganizationPolicyService,
+  PrismaOrganizationPolicyService,
   PrismaOrganizationCommandRepository,
   PrismaOrganizationInvitationCommandRepository,
   PrismaOrganizationInvitationQueryRepository,
@@ -35,13 +35,13 @@ const organizationInvitationQueryRepository =
 const userQueryRepository = new PrismaUserQueryRepository(prismaApiClient);
 
 // service
-const organizationPolicy = new OrganizationPolicyService(
+const organizationPolicy = new PrismaOrganizationPolicyService(
   organizationQueryRepository,
 );
 const transactionManager = new PrismaTransactionManager(prismaApiClient);
 
 // handler
-const createHandler = new CreateHandler(
+const createOrganizationHandler = new CreateOrganizationHandler(
   organizationPolicy,
   organizationCommandRepository,
 );
@@ -72,7 +72,7 @@ const findReceivedInvitationsHandler = new FindReceivedInvitationsHandler(
 // module
 const organizationModule = createOrganizationController({
   authGuard,
-  createHandler,
+  createOrganizationHandler,
   createInvitationHandler,
   findSentInvitationsHandler,
   findUserOrganizationsHandler,

@@ -2,7 +2,7 @@ import { prismaApiClient } from '@packages/api-db';
 
 import { authGuard } from '$modules/auth';
 
-import { FindByEmailUserHandler, MeHandler } from './application';
+import { FindUserByEmailHandler, FindMeHandler } from './application';
 import {
   PrismaUserCommandRepository,
   PrismaUserQueryRepository,
@@ -14,12 +14,12 @@ const userCommandRepository = new PrismaUserCommandRepository(prismaApiClient);
 const userQueryRepository = new PrismaUserQueryRepository(prismaApiClient);
 
 // handler
-const meHandler = new MeHandler(userCommandRepository);
-const findByEmailUserHandler = new FindByEmailUserHandler(userQueryRepository);
+const findMeHandler = new FindMeHandler(userCommandRepository);
+const findUserByEmailHandler = new FindUserByEmailHandler(userQueryRepository);
 
 const userModule = createUserController({
-  meHandler,
-  findByEmailUserHandler,
+  findMeHandler,
+  findUserByEmailHandler,
   authGuard,
 });
 

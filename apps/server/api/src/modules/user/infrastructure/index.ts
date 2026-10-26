@@ -1,3 +1,3 @@
-export * from './repositories/prisma-user-command.repository';
-export * from './repositories/prisma-user-query.repository';
-export * from './repositories/mappers/user-entity.mapper';
+export * from './repositories/command';
+export * from './repositories/query';
+export * from './mappers/user';

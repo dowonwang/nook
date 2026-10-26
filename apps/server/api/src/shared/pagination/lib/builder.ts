@@ -1,6 +1,6 @@
 import type { OffsetPagination } from '../types';
 
-export const offsetPaginationBuilder = {
+export const OffsetPaginationBuilder = {
   toResult: (pagination: OffsetPagination, count: number) => {
     const totalPages = Math.ceil(count / pagination.limit);
 

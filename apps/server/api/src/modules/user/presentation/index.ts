@@ -1,2 +1,2 @@
-export * from './user.controller';
-export * from './user.http-model';
+export * from './controller';
+export * from './http-model';

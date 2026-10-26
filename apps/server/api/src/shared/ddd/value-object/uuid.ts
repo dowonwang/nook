@@ -1,0 +1,23 @@
+import { z } from 'zod';
+
+import { PrimitiveValueObject } from './primitive';
+import { InvalidUuidError } from '../errors/invalid-uuid';
+
+const schema = z.uuidv7();
+
+export abstract class Uuid<T extends Uuid<T>> extends PrimitiveValueObject<
+  string,
+  T
+> {
+  protected constructor(value: string) {
+    super(value);
+  }
+
+  protected validation(input: string) {
+    const validation = schema.safeParse(input);
+
+    if (!validation.success) {
+      throw new InvalidUuidError(Uuid.name, { input });
+    }
+  }
+}
