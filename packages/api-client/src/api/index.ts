@@ -339,6 +339,7 @@ export type GetOrganizationParams = {
   /**
    * The page number to retrieve.
    * @minimum 1
+   * @maximum 9007199254740991
    */
   page?: number;
   /**
@@ -518,6 +519,7 @@ export type GetOrganizationByOrganizationIdInvitationsParams = {
   /**
    * The page number to retrieve.
    * @minimum 1
+   * @maximum 9007199254740991
    */
   page?: number;
   /**
@@ -724,6 +726,7 @@ export type GetOrganizationInvitationsParams = {
   /**
    * The page number to retrieve.
    * @minimum 1
+   * @maximum 9007199254740991
    */
   page?: number;
   /**

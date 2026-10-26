@@ -121,10 +121,11 @@ export const PostOrganizationResponse = zod.object({
 /**
  * @summary Find User Organizations List
  */
-export const getOrganizationQueryPageMultipleOf = 1;
+export const getOrganizationQueryPageDefault = 1;
+export const getOrganizationQueryPageMax = 9007199254740991;
 
+export const getOrganizationQueryLimitDefault = 10;
 export const getOrganizationQueryLimitMax = 100;
-export const getOrganizationQueryLimitMultipleOf = 1;
 
 export const GetOrganizationQueryParams = zod.object({
   page: zod
@@ -147,17 +148,17 @@ export const GetOrganizationQueryParams = zod.object({
         validator: 'min',
       }),
     )
-    .multipleOf(
-      getOrganizationQueryPageMultipleOf,
+    .max(
+      getOrganizationQueryPageMax,
       zodParams({
         operationId: 'getOrganization',
         location: 'query',
         schemaName: 'GetOrganizationQueryParams',
         fieldPath: ['page'],
-        validator: 'multipleOf',
+        validator: 'max',
       }),
     )
-    .optional(),
+    .default(getOrganizationQueryPageDefault),
   limit: zod
     .number(
       zodParams({
@@ -188,17 +189,7 @@ export const GetOrganizationQueryParams = zod.object({
         validator: 'max',
       }),
     )
-    .multipleOf(
-      getOrganizationQueryLimitMultipleOf,
-      zodParams({
-        operationId: 'getOrganization',
-        location: 'query',
-        schemaName: 'GetOrganizationQueryParams',
-        fieldPath: ['limit'],
-        validator: 'multipleOf',
-      }),
-    )
-    .optional(),
+    .default(getOrganizationQueryLimitDefault),
 });
 
 export const getOrganizationResponseDataItemIdRegExp = new RegExp(
@@ -445,10 +436,11 @@ export const GetOrganizationByOrganizationIdInvitationsParams = zod.object({
   ),
 });
 
-export const getOrganizationByOrganizationIdInvitationsQueryPageMultipleOf = 1;
+export const getOrganizationByOrganizationIdInvitationsQueryPageDefault = 1;
+export const getOrganizationByOrganizationIdInvitationsQueryPageMax = 9007199254740991;
 
+export const getOrganizationByOrganizationIdInvitationsQueryLimitDefault = 10;
 export const getOrganizationByOrganizationIdInvitationsQueryLimitMax = 100;
-export const getOrganizationByOrganizationIdInvitationsQueryLimitMultipleOf = 1;
 
 export const GetOrganizationByOrganizationIdInvitationsQueryParams = zod.object(
   {
@@ -472,17 +464,17 @@ export const GetOrganizationByOrganizationIdInvitationsQueryParams = zod.object(
           validator: 'min',
         }),
       )
-      .multipleOf(
-        getOrganizationByOrganizationIdInvitationsQueryPageMultipleOf,
+      .max(
+        getOrganizationByOrganizationIdInvitationsQueryPageMax,
         zodParams({
           operationId: 'getOrganizationByOrganizationIdInvitations',
           location: 'query',
           schemaName: 'GetOrganizationByOrganizationIdInvitationsQueryParams',
           fieldPath: ['page'],
-          validator: 'multipleOf',
+          validator: 'max',
         }),
       )
-      .optional(),
+      .default(getOrganizationByOrganizationIdInvitationsQueryPageDefault),
     limit: zod
       .number(
         zodParams({
@@ -513,17 +505,7 @@ export const GetOrganizationByOrganizationIdInvitationsQueryParams = zod.object(
           validator: 'max',
         }),
       )
-      .multipleOf(
-        getOrganizationByOrganizationIdInvitationsQueryLimitMultipleOf,
-        zodParams({
-          operationId: 'getOrganizationByOrganizationIdInvitations',
-          location: 'query',
-          schemaName: 'GetOrganizationByOrganizationIdInvitationsQueryParams',
-          fieldPath: ['limit'],
-          validator: 'multipleOf',
-        }),
-      )
-      .optional(),
+      .default(getOrganizationByOrganizationIdInvitationsQueryLimitDefault),
   },
 );
 
@@ -854,10 +836,11 @@ export const PatchOrganizationInvitationResponse = zod.object({
 /**
  * @summary Find Received Invitations
  */
-export const getOrganizationInvitationsQueryPageMultipleOf = 1;
+export const getOrganizationInvitationsQueryPageDefault = 1;
+export const getOrganizationInvitationsQueryPageMax = 9007199254740991;
 
+export const getOrganizationInvitationsQueryLimitDefault = 10;
 export const getOrganizationInvitationsQueryLimitMax = 100;
-export const getOrganizationInvitationsQueryLimitMultipleOf = 1;
 
 export const GetOrganizationInvitationsQueryParams = zod.object({
   page: zod
@@ -880,17 +863,17 @@ export const GetOrganizationInvitationsQueryParams = zod.object({
         validator: 'min',
       }),
     )
-    .multipleOf(
-      getOrganizationInvitationsQueryPageMultipleOf,
+    .max(
+      getOrganizationInvitationsQueryPageMax,
       zodParams({
         operationId: 'getOrganizationInvitations',
         location: 'query',
         schemaName: 'GetOrganizationInvitationsQueryParams',
         fieldPath: ['page'],
-        validator: 'multipleOf',
+        validator: 'max',
       }),
     )
-    .optional(),
+    .default(getOrganizationInvitationsQueryPageDefault),
   limit: zod
     .number(
       zodParams({
@@ -921,17 +904,7 @@ export const GetOrganizationInvitationsQueryParams = zod.object({
         validator: 'max',
       }),
     )
-    .multipleOf(
-      getOrganizationInvitationsQueryLimitMultipleOf,
-      zodParams({
-        operationId: 'getOrganizationInvitations',
-        location: 'query',
-        schemaName: 'GetOrganizationInvitationsQueryParams',
-        fieldPath: ['limit'],
-        validator: 'multipleOf',
-      }),
-    )
-    .optional(),
+    .default(getOrganizationInvitationsQueryLimitDefault),
 });
 
 export const getOrganizationInvitationsResponseDataItemIdRegExp = new RegExp(
