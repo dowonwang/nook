@@ -72,15 +72,15 @@ Never hand-edit `packages/api-client/src/api` or `src/schema`; change the server
 
 ## Server architecture (`apps/server/api`)
 
-Path aliases: `$modules/*`, `$shared/*`, `$/*`.
+Path aliases: `$modules/*`, `$shared/*`, `$/*`. File/symbol naming, import boundaries, and a list of known deviations are in `apps/server/docs/convention.md` — follow it for new code and when renaming. Key naming rule: file names are short and carry no role suffix (the role folder identifies it; words already in the path such as the module name are dropped), while class/function names carry full context plus a role suffix (`Aggregate`, `Entity`, `Vo`, `Port`, `Adapter`, `Service`, `Error`, ...) — e.g. `organization/application/commands/create-organization/handler.ts` exports `CreateOrganizationHandler`, `organization/domain/entities/member.ts` exports `OrganizationMemberEntity`, `organization/error/not-found.ts` exports `OrganizationNotFoundError`. Log event values are `snake_case` with `_` only (`org_invitation_expired`).
 
 Each module under `src/modules/<name>/` (auth, user, organization) follows DDD/hexagonal + CQRS layering:
 
-- `domain/` — entities, aggregate roots, value objects (base classes in `$shared/ddd`)
-- `application/` — `commands/<action>/` and `queries/<action>/` each with a `*.command|query.ts` + `*.handler.ts`; `ports/` (interfaces), `dto/`, `mappers/`, `services/`
-- `infrastructure/` — Prisma repositories split into `*CommandRepository` / `*QueryRepository`, port adapters
-- `presentation/` — `*.controller.ts` (Elysia plugin factory), `*.http-model.ts` (request Zod), `*.response.ts`
-- `error/` — one `AppError` subclass per file
+- `domain/` — `aggregates/`, `entities/`, `value-objects/`, `events/`, `repositories/` (interfaces), `services/`, `policies/` (base classes in `$shared/ddd`)
+- `application/` — `commands/<use-case>/` and `queries/<use-case>/` each with `command.ts|query.ts` + `handler.ts`; `ports/` (interfaces), `dto/`, `mappers/`, `services/`
+- `infrastructure/` — Prisma repositories split into `*CommandRepository` / `*QueryRepository`, `mappers/`, `adapters/` (port implementations), `services/`
+- `presentation/` — `controller.ts` (Elysia plugin factory), `http-model.ts` (request Zod), `response.ts`, `routes/<use-case>.ts`
+- `error/` — one `AppError` subclass per file, log constants in `error/constants/`
 
 Dependency wiring is manual constructor injection in the module's `index.ts`, which default-exports the controller plugin; `src/index.ts` `.use()`s each module after `errorPlugin`. Other modules are imported through their barrel (e.g. `authGuard` from `$modules/auth`).
 

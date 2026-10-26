@@ -37,6 +37,10 @@ src/
 
 특정 도메인에 종속되는 코드는 `shared`에 두지 않습니다.
 
+## Conventions
+
+디렉터리 구조, 파일 및 심볼 명명 규칙, 모듈 간 import 규칙은 [Server Architecture & Naming Convention](../docs/convention.md) 문서를 참고합니다.
+
 ## Environment Variables
 
 `.env.example`을 복사해 `.env`를 생성합니다.
