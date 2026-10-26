@@ -2,6 +2,7 @@ import {
   OrganizationCreatedEvent,
   OrganizationMembersAddedEvent,
 } from '$modules/organization/domain';
+import { PrismaRepository } from '$shared/database';
 import { createLogger } from '$shared/logger';
 
 import { OrganizationPrismaMapper } from '../mappers/organization-prisma.mapper';
@@ -11,21 +12,21 @@ import type {
   OrganizationCommandRepository,
   OrganizationUuid,
 } from '$modules/organization/domain';
-import type { PrismaClient } from '@packages/api-db';
 import type { OrganizationMemberCreateManyAndReturnArgs } from '@packages/api-db/generated/prisma/models';
 
-export class PrismaOrganizationCommandRepository implements OrganizationCommandRepository {
+export class PrismaOrganizationCommandRepository
+  extends PrismaRepository
+  implements OrganizationCommandRepository
+{
   private readonly logger = createLogger(
     PrismaOrganizationCommandRepository.name,
   );
 
-  constructor(private readonly prisma: PrismaClient) {}
-
   async save(organization: Organization): Promise<void> {
-    await this.prisma.$transaction(async (tx) => {
+    await this.transaction(async () => {
       for (const event of organization.pullDomainEvents()) {
         if (event instanceof OrganizationCreatedEvent) {
-          await tx.organization.create({
+          await this.client.organization.create({
             data: {
               id: event.id.getValue(),
               title: event.title,
@@ -42,7 +43,7 @@ export class PrismaOrganizationCommandRepository implements OrganizationCommandR
               role: member.role.getValue(),
             }));
 
-          await tx.organizationMember.createMany({
+          await this.client.organizationMember.createMany({
             data: membersRecord,
           });
         }
@@ -55,7 +56,7 @@ export class PrismaOrganizationCommandRepository implements OrganizationCommandR
   async findOrganizationById(
     id: OrganizationUuid,
   ): Promise<Organization | null> {
-    const organization = await this.prisma.organization.findUnique({
+    const organization = await this.client.organization.findUnique({
       where: { id: id.getValue() },
       include: { organizationMembers: true },
     });
