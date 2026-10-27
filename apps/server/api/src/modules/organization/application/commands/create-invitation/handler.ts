@@ -65,15 +65,15 @@ export class CreateInvitationHandler {
       );
     }
 
-    const existsPendingInvitation =
-      await this.organizationInvitationCommandRepository.existsPendingInvitation(
+    const existsActiveInvitation =
+      await this.organizationInvitationCommandRepository.existsActiveInvitation(
         {
           organizationId: command.organizationId,
           inviteeUserId: inviteeUser.id,
         },
       );
 
-    if (existsPendingInvitation) {
+    if (existsActiveInvitation) {
       throw new OrganizationPendingInvitationExistError(
         CreateInvitationHandler.name,
       );

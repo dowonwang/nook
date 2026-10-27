@@ -8,7 +8,8 @@ export interface OrganizationInvitationCommandRepository {
   findById(
     id: OrganizationInvitationUuidVo,
   ): Promise<OrganizationInvitationAggregate | null>;
-  existsPendingInvitation(input: {
+  // 대기 중이면서 아직 만료되지 않은 초대가 있는지 확인
+  existsActiveInvitation(input: {
     organizationId: OrganizationUuidVo;
     inviteeUserId: UserUuidVo;
   }): Promise<boolean>;

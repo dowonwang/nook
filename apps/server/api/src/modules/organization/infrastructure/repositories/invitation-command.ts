@@ -24,7 +24,7 @@ export class PrismaOrganizationInvitationCommandRepository
     });
   }
 
-  async existsPendingInvitation(input: {
+  async existsActiveInvitation(input: {
     organizationId: OrganizationUuidVo;
     inviteeUserId: UserUuidVo;
   }): Promise<boolean> {
@@ -33,6 +33,9 @@ export class PrismaOrganizationInvitationCommandRepository
         organizationId: input.organizationId.getValue(),
         inviteeUserId: input.inviteeUserId.getValue(),
         status: 'PENDING',
+        expiresAt: {
+          gt: new Date(),
+        },
       },
     });
 
