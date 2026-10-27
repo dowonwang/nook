@@ -5,6 +5,10 @@ import type { OrganizationUuidVo } from '../value-objects/uuid';
 
 export interface OrganizationInvitationCommandRepository {
   save(invitation: OrganizationInvitationAggregate): Promise<void>;
+  // 저장소의 초대가 아직 PENDING일 때만 상태를 반영하고, 반영 여부를 반환
+  updateStatusIfPending(
+    invitation: OrganizationInvitationAggregate,
+  ): Promise<boolean>;
   findById(
     id: OrganizationInvitationUuidVo,
   ): Promise<OrganizationInvitationAggregate | null>;

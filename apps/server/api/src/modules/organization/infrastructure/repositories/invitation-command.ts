@@ -24,6 +24,19 @@ export class PrismaOrganizationInvitationCommandRepository
     });
   }
 
+  async updateStatusIfPending(
+    invitation: OrganizationInvitationAggregate,
+  ): Promise<boolean> {
+    const { id, status } = invitation.toSnapshot();
+
+    const { count } = await this.client.organizationInvitation.updateMany({
+      where: { id, status: 'PENDING' },
+      data: { status },
+    });
+
+    return count > 0;
+  }
+
   async existsActiveInvitation(input: {
     organizationId: OrganizationUuidVo;
     inviteeUserId: UserUuidVo;
