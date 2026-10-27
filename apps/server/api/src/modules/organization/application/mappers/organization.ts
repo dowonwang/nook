@@ -9,7 +9,7 @@ export const OrganizationDtoMapper = {
   ): UserOrganizationDto[] {
     return organizations
       .map((organization) => {
-        const member = organization.getMember(userId);
+        const member = organization.getMemberByUserId(userId);
 
         if (!member) {
           return null;

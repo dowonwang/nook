@@ -31,7 +31,7 @@ export class FindSentInvitationsHandler {
       throw new OrganizationNotFoundError(FindSentInvitationsHandler.name);
     }
 
-    const requester = organization.getMember(query.userId);
+    const requester = organization.getMemberByUserId(query.userId);
 
     if (!requester || !requester.canAddMember()) {
       throw new OrganizationAccessDeniedError(FindSentInvitationsHandler.name);

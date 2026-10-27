@@ -39,7 +39,7 @@ export class CreateInvitationHandler {
       throw new OrganizationNotFoundError(CreateInvitationHandler.name);
     }
 
-    const inviter = organization.getMember(command.inviterUserId);
+    const inviter = organization.getMemberByUserId(command.inviterUserId);
 
     if (!inviter || !inviter.canInviteAs(command.invitee.role)) {
       throw new OrganizationAccessDeniedError(CreateInvitationHandler.name);

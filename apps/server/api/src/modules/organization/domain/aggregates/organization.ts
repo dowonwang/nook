@@ -145,8 +145,8 @@ export class OrganizationAggregate extends AggregateRoot<
     return this.members.some((member) => member.userId.equals(userId));
   }
 
-  getMember(id: OrganizationMemberUuidVo): OrganizationMemberEntity | null {
-    return this.members.find((member) => member.userId.equals(id)) || null;
+  getMemberByUserId(userId: UserUuidVo): OrganizationMemberEntity | null {
+    return this.members.find((member) => member.userId.equals(userId)) ?? null;
   }
 
   getMemberCount(): number {
