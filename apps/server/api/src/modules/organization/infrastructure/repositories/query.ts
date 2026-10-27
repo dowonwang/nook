@@ -64,6 +64,9 @@ export class PrismaOrganizationQueryRepository
         include: {
           organizationMembers: true,
         },
+        orderBy: {
+          id: 'desc',
+        },
         ...OffsetPaginationBuilder.toOptions(pagination),
       }),
       this.client.organization.count({
