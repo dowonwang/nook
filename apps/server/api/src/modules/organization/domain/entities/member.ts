@@ -49,6 +49,10 @@ export class OrganizationMemberEntity extends Entity<
     return this.props.role.canAddMember();
   }
 
+  canInviteAs(role: OrganizationMemberRoleVo): boolean {
+    return this.canAddMember() && this.props.role.canGrant(role);
+  }
+
   get userId() {
     return this.props.userId;
   }

@@ -41,7 +41,7 @@ export class CreateInvitationHandler {
 
     const inviter = organization.getMember(command.inviterUserId);
 
-    if (!inviter || !inviter.canAddMember()) {
+    if (!inviter || !inviter.canInviteAs(command.invitee.role)) {
       throw new OrganizationAccessDeniedError(CreateInvitationHandler.name);
     }
 
