@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 export const UserHttpModel = {
   'get-user': z.object({
-    email: z.email(),
+    email: z.string().trim().toLowerCase().pipe(z.email()),
   }),
 };
 

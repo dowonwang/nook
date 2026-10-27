@@ -10,8 +10,9 @@ export class UserEmailVo extends PrimitiveValueObject<string, UserEmailVo> {
     super(value);
   }
 
+  // 대소문자·공백 차이로 같은 이메일이 다르게 조회되지 않도록 정규화
   static create(input: string): UserEmailVo {
-    return new UserEmailVo(input);
+    return new UserEmailVo(input.trim().toLowerCase());
   }
 
   protected validation(input: string): void {

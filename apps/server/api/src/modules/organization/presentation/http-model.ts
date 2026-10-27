@@ -6,7 +6,7 @@ export const OrganizationHttpModel = {
   }),
 
   'create-invitation': z.object({
-    email: z.email(),
+    email: z.string().trim().toLowerCase().pipe(z.email()),
     role: z.enum(['ADMIN', 'MAINTAINER', 'MEMBER']),
   }),
 
