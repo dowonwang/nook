@@ -39,7 +39,9 @@ src/
 
 ## Conventions
 
-디렉터리 구조, 파일 및 심볼 명명 규칙, 모듈 간 import 규칙은 [Server Architecture & Naming Convention](../docs/convention.md) 문서를 참고합니다.
+- [Server Architecture & Naming Convention](../docs/convention.md): 모든 서버 앱 공통 아키텍처, 명명 규칙, 모듈 간 참조·CQRS 규칙
+- [API Server Convention](docs/convention.md): 이 앱의 디렉터리 구조, Elysia·Prisma 관련 규칙, DI, 트랜잭션
+- [Organization Domain Rules](docs/organization.md): 조직 도메인 규칙(식별자, slug, 권한, 초대)
 
 ## Environment Variables
 
