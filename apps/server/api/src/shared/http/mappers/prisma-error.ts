@@ -54,7 +54,7 @@ export function mapPrismaError(error: unknown): AppError | null {
   if (error instanceof Prisma.PrismaClientValidationError) {
     return new BadRequestError({
       scope: SCOPE,
-      event: LOG_MESSAGE.PRISMA_CLIENT_VALIDATION,
+      event: LOG_EVENT.PRISMA_CLIENT_VALIDATION,
       message: LOG_MESSAGE.PRISMA_CLIENT_VALIDATION,
       cause: error.message,
     });
