@@ -1,5 +1,6 @@
 import { PostOrganizationBody } from '@packages/api-client/schema/organization';
 
+import type { Organization } from '$entities/organization';
 import type { ActionState } from '$shared/api/action';
 import type {
   PostOrganization201,
@@ -8,10 +9,7 @@ import type {
 
 export const createOrganizationSchema = PostOrganizationBody;
 
-export type CreateOrganizationState = {
-  id: string;
-  title: string;
-};
+export type CreateOrganizationState = Organization;
 export type CreateOrganizationResponseError =
   postOrganizationResponseError['data'];
 export type CreateOrganizationResponseSuccess = PostOrganization201;

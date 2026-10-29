@@ -10,6 +10,7 @@ import {
 } from '@packages/ui/components/card';
 import { useQuery } from '@tanstack/react-query';
 import { Users2 } from 'lucide-react';
+import Link from 'next/link';
 import { useT } from 'next-i18next/client';
 
 import { OrganizationMemberRoleBadge } from '$entities/organization-member';
@@ -69,11 +70,14 @@ export function MyOrganizationList() {
 
               <CardFooter>
                 <Button
+                  asChild
                   size='small'
                   variant='secondary'
-                  className='block w-full'
+                  className='w-full'
                 >
-                  {t('button.detail')}
+                  <Link href={`/org/detail/${organization.slug}`}>
+                    {t('button.detail')}
+                  </Link>
                 </Button>
               </CardFooter>
             </Card>

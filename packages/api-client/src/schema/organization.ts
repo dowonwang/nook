@@ -92,6 +92,15 @@ export const PostOrganizationResponse = zod.object({
         validator: 'string',
       }),
     ),
+    slug: zod.string(
+      zodParams({
+        operationId: 'postOrganization',
+        location: 'response',
+        schemaName: 'PostOrganizationResponse',
+        fieldPath: ['data', 'slug'],
+        validator: 'string',
+      }),
+    ),
   }),
   error: zod.unknown().nullable(),
   meta: zod.object({
@@ -235,6 +244,15 @@ export const GetOrganizationResponse = zod.object({
           location: 'response',
           schemaName: 'GetOrganizationResponse',
           fieldPath: ['data', 'title'],
+          validator: 'string',
+        }),
+      ),
+      slug: zod.string(
+        zodParams({
+          operationId: 'getOrganization',
+          location: 'response',
+          schemaName: 'GetOrganizationResponse',
+          fieldPath: ['data', 'slug'],
           validator: 'string',
         }),
       ),
@@ -1142,5 +1160,119 @@ export const GetOrganizationInvitationsResponse = zod.object({
         }),
       ),
     }),
+  }),
+});
+
+/**
+ * @summary Find Organization By Slug
+ */
+export const GetOrganizationSlugBySlugParams = zod.object({
+  slug: zod.string(
+    zodParams({
+      operationId: 'getOrganizationSlugBySlug',
+      location: 'param',
+      schemaName: 'GetOrganizationSlugBySlugParams',
+      fieldPath: ['slug'],
+      validator: 'string',
+    }),
+  ),
+});
+
+export const getOrganizationSlugBySlugResponseDataIdRegExp = new RegExp(
+  '^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-7[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12})$',
+);
+
+export const GetOrganizationSlugBySlugResponse = zod.object({
+  success: zod.literal(
+    true,
+    zodParams({
+      operationId: 'getOrganizationSlugBySlug',
+      location: 'response',
+      schemaName: 'GetOrganizationSlugBySlugResponse',
+      fieldPath: ['success'],
+      validator: 'literal',
+    }),
+  ),
+  data: zod.object({
+    id: zod
+      .uuid(
+        zodParams({
+          operationId: 'getOrganizationSlugBySlug',
+          location: 'response',
+          schemaName: 'GetOrganizationSlugBySlugResponse',
+          fieldPath: ['data', 'id'],
+          validator: 'uuid',
+        }),
+      )
+      .regex(
+        getOrganizationSlugBySlugResponseDataIdRegExp,
+        zodParams({
+          operationId: 'getOrganizationSlugBySlug',
+          location: 'response',
+          schemaName: 'GetOrganizationSlugBySlugResponse',
+          fieldPath: ['data', 'id'],
+          validator: 'regex',
+        }),
+      ),
+    title: zod.string(
+      zodParams({
+        operationId: 'getOrganizationSlugBySlug',
+        location: 'response',
+        schemaName: 'GetOrganizationSlugBySlugResponse',
+        fieldPath: ['data', 'title'],
+        validator: 'string',
+      }),
+    ),
+    slug: zod.string(
+      zodParams({
+        operationId: 'getOrganizationSlugBySlug',
+        location: 'response',
+        schemaName: 'GetOrganizationSlugBySlugResponse',
+        fieldPath: ['data', 'slug'],
+        validator: 'string',
+      }),
+    ),
+    userRole: zod.enum(
+      ['ADMIN', 'MAINTAINER', 'MEMBER'],
+      zodParams({
+        operationId: 'getOrganizationSlugBySlug',
+        location: 'response',
+        schemaName: 'GetOrganizationSlugBySlugResponse',
+        fieldPath: ['data', 'userRole'],
+        validator: 'enum',
+      }),
+    ),
+    memberCount: zod.number(
+      zodParams({
+        operationId: 'getOrganizationSlugBySlug',
+        location: 'response',
+        schemaName: 'GetOrganizationSlugBySlugResponse',
+        fieldPath: ['data', 'memberCount'],
+        validator: 'number',
+      }),
+    ),
+  }),
+  error: zod.unknown().nullable(),
+  meta: zod.object({
+    unixTimestamp: zod.number(
+      zodParams({
+        operationId: 'getOrganizationSlugBySlug',
+        location: 'response',
+        schemaName: 'GetOrganizationSlugBySlugResponse',
+        fieldPath: ['meta', 'unixTimestamp'],
+        validator: 'number',
+      }),
+    ),
+    requestId: zod
+      .string(
+        zodParams({
+          operationId: 'getOrganizationSlugBySlug',
+          location: 'response',
+          schemaName: 'GetOrganizationSlugBySlugResponse',
+          fieldPath: ['meta', 'requestId'],
+          validator: 'string',
+        }),
+      )
+      .optional(),
   }),
 });

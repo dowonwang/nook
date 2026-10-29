@@ -1,0 +1,11 @@
+{
+  "hero": {
+    "description": "조직 정보와 내 역할을 확인하세요."
+  },
+  "info": {
+    "title": "조직 정보",
+    "role": "내 역할",
+    "member_count": "멤버 수",
+    "address": "조직 주소"
+  }
+}

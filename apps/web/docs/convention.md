@@ -1,4 +1,4 @@
-# 📄 Web FSD Architecture & Naming Convention
+# Web FSD Architecture & Naming Convention
 
 본 문서는 웹 프로젝트의 디렉토리 구조, 파일 및 함수 명명 규칙, 그리고 FSD(Feature-Sliced Design) 아키텍처 내 서버/클라이언트 모듈 분리 규칙을 정의합니다.
 
@@ -14,6 +14,7 @@
 - **Import / Export 바운더리 규칙**:
 - **동일 슬라이스(Slice) 내부**: 상대 경로 (`./`, `../`) 참조를 허용합니다.
 - **타 슬라이스 및 외부 참조**: 사전 정의된 Alias 경로(`$features/...`)로만 접근해야 하며, 반드시 해당 슬라이스의 진입점(`index.ts` 또는 `server.js`)을 통해서만 참조합니다.
+- **같은 레이어 교차 참조**: 같은 레이어의 다른 슬라이스는 원칙적으로 참조하지 않습니다. 엔티티 간 관계처럼 꼭 필요한 경우에만, 참조되는 슬라이스에 `@x/<참조하는 슬라이스>.ts` 교차 참조 진입점을 만들어 필요한 것만 공개하고 그 진입점으로만 참조합니다. ([4.3 교차 참조 예시](#43-같은-레이어-교차-참조-x))
 
 - **서버/클라이언트 분리**: 별도의 `server/` 디렉터리를 두지 않고, 서버 전용 로직 파일명에 `*.server.ts` 접미사를 붙여 구분합니다.
 
@@ -71,19 +72,19 @@ FSD 특성상 폴더 깊이가 깊어지므로 **파일명은 `kebab-case`로 �
 
 ```typescript
 // features/organization/create/ui/form.tsx
-// ✅ 컴포넌트: PascalCase (맥락을 포함한 완전한 이름)
+// 컴포넌트: PascalCase (맥락을 포함한 완전한 이름)
 export function OrganizationCreateForm() {
   // ...
 }
 
 // features/organization/create/api/use-create-org.ts
-// ✅ Hook: camelCase (use 접두사)
+// Hook: camelCase (use 접두사)
 export function useOrganizationCreate() {
   // ...
 }
 
 // features/organization/create/api/create-org.server.ts
-// ✅ 서버 전용 함수: camelCase (동사 + 명사)
+// 서버 전용 함수: camelCase (동사 + 명사)
 export async function createOrganizationServer(data: CreateOrgDto) {
   // ...
 }
@@ -129,24 +130,53 @@ export { createOrganizationServer } from './api/create-org.server';
 ### 4.2 Import 경로 규칙 예시
 
 ```typescript
-// ✅ Good: 동일 슬라이스 내부 참조 (상대 경로 허용)
+// Good: 동일 슬라이스 내부 참조 (상대 경로 허용)
 // features/organization/create/ui/form.tsx
 import { OrganizationCreateRequest } from '../model/types';
 import { useOrganizationCreate } from '../api/use-create-org';
 
-// ✅ Good: 타 슬라이스 참조 - 클라이언트/공통 (index.ts 바운더리 참조)
-// features/user/profile/ui/card.tsx
+// Good: 상위 레이어에서 하위 레이어 참조 - 클라이언트/공통 (index.ts 바운더리 참조)
+// widgets/create-organization-flow/ui/content.tsx
 import { OrganizationCreateForm } from '$features/organization/create';
 
-// ✅ Good: 타 슬라이스 참조 - 서버 전용 (server.js 바운더리 참조)
+// Good: 타 슬라이스 참조 - 서버 전용 (server.js 바운더리 참조)
 // app/api/org/route.ts
 import { createOrganizationServer } from '$features/organization/create/server';
 
-// ❌ Bad: 타 슬라이스를 상대 경로로 참조 금지
+// Bad: 타 슬라이스를 상대 경로로 참조 금지
 import { OrganizationCreateForm } from '../../../organization/create/ui/form';
 
-// ❌ Bad: Barrel File을 거치지 않고 내부 파일 직접 참조 금지
+// Bad: Barrel File을 거치지 않고 내부 파일 직접 참조 금지
 import { createOrganizationServer } from '$features/organization/create/api/create-org.server';
 ```
+
+### 4.3 같은 레이어 교차 참조 (`@x`)
+
+같은 레이어의 슬라이스끼리는 참조하지 않는 것이 원칙입니다. 엔티티 간 관계(예: 조직이 멤버 역할을 참조)처럼 꼭 필요한 경우에만, **참조되는 슬라이스**에 `@x/<참조하는 슬라이스>.ts` 파일을 만들어 그 슬라이스에 필요한 것만 공개합니다.
+
+```text
+entities/
+├── organization/
+│   └── model/types.ts              # organization-member의 @x 진입점으로만 참조
+└── organization-member/
+    ├── @x/
+    │   └── organization.ts         # entities/organization 전용 교차 참조 진입점
+    ├── model/types.ts
+    └── index.ts
+```
+
+```typescript
+// entities/organization-member/@x/organization.ts
+export type { OrganizationMemberRole } from '../model/types';
+
+// Good: entities/organization/model/types.ts
+import type { OrganizationMemberRole } from '$entities/organization-member/@x/organization';
+
+// Bad: 같은 레이어 슬라이스의 일반 진입점(index.ts)을 직접 참조
+import type { OrganizationMemberRole } from '$entities/organization-member';
+```
+
+- `@x` 진입점에는 해당 슬라이스가 실제로 쓰는 것만 공개합니다.
+- 교차 참조가 많아지면 두 슬라이스를 하나로 합치는 것을 검토합니다.
 
 ---
