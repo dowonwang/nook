@@ -14,7 +14,10 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useT } from 'next-i18next/client';
 import { useActionState, useEffect } from 'react';
 
-import { OrganizationMemberRoleRadioGroup } from '$entities/organization-member';
+import {
+  getGrantableOrganizationMemberRoles,
+  OrganizationMemberRoleRadioGroup,
+} from '$entities/organization-member';
 import { ORGANIZATION_INVITATION_SENT_LIST_QUERY_KEY } from '$features/organization-invitation/sent-list/config/query-key';
 import {
   useActionErrorMessage,
@@ -26,15 +29,19 @@ import { FEAT_ORGANIZATION_INVITATION_CREATE_I18N_NAMESPACE } from '../i18n';
 import { INIT_DATA } from '../model/types';
 
 import type { Organization } from '$entities/organization';
+import type { OrganizationMemberRole } from '$entities/organization-member';
 import type { ActionStateZodError } from '$shared/api/action';
 
 interface Props {
   organization: Organization | null;
+  // 초대하는 사람의 역할. 이 역할 이하만 선택지로 보여줌
+  inviterRole: OrganizationMemberRole;
   disabled?: boolean;
 }
 
 export function CreateOrganizationInvitationForm({
   organization,
+  inviterRole,
   disabled = false,
 }: Props) {
   const { t } = useT(FEAT_ORGANIZATION_INVITATION_CREATE_I18N_NAMESPACE);
@@ -106,6 +113,7 @@ export function CreateOrganizationInvitationForm({
             <OrganizationMemberRoleRadioGroup
               name='role'
               defaultChecked={actionState.state.role}
+              roles={getGrantableOrganizationMemberRoles(inviterRole)}
             />
 
             {roleError && <FieldDescription>{t(roleError)}</FieldDescription>}

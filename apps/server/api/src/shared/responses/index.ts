@@ -1,3 +1,3 @@
-export * from './api-openapi';
-export * from './api-response-builder';
-export * from './api-response';
+export * from './openapi';
+export * from './builder';
+export * from './response';

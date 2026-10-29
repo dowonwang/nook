@@ -5,27 +5,29 @@ const tw = String.raw;
 export function Card({
   children,
   className,
-  disabled = false,
-  focus = false,
+  disabled,
+  isArticle = false,
   ...rest
 }: {
   children: React.ReactNode;
   disabled?: boolean;
-  focus?: boolean;
   className?: string;
+  isArticle?: boolean;
 } & React.HtmlHTMLAttributes<HTMLDivElement>) {
+  const Wrapper = isArticle ? 'article' : 'section';
+
   return (
-    <section
+    <Wrapper
       {...rest}
-      aria-disabled={disabled}
+      aria-disabled={disabled || undefined}
       className={cn(
-        'bg-card border-border shadow-soft group transition-ring rounded-xl border duration-200',
-        { 'ring-primary ring-2': focus },
+        'bg-card border-border group transition-ring rounded-xl border shadow duration-200',
+        'focus-within:ring-primary focus-within:ring-2',
         className,
       )}
     >
       {children}
-    </section>
+    </Wrapper>
   );
 }
 
@@ -98,5 +100,19 @@ export function CardDescription({
     <p {...rest} className={cn(style, className)}>
       {children}
     </p>
+  );
+}
+
+export function CardFooter({
+  children,
+  className,
+  ...rest
+}: React.HTMLAttributes<HTMLDivElement>) {
+  const style = tw`border-border border-t p-2`;
+
+  return (
+    <div {...rest} className={cn(style, className)}>
+      {children}
+    </div>
   );
 }

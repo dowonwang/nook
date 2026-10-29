@@ -6,14 +6,14 @@ import { PrismaTransactionManager } from '$shared/database';
 
 import {
   ChangeInvitationStatusHandler,
-  CreateHandler,
+  CreateOrganizationHandler,
   CreateInvitationHandler,
+  FindOrganizationBySlugHandler,
   FindReceivedInvitationsHandler,
   FindSentInvitationsHandler,
   FindUserOrganizationsHandler,
 } from './application';
 import {
-  OrganizationPolicyService,
   PrismaOrganizationCommandRepository,
   PrismaOrganizationInvitationCommandRepository,
   PrismaOrganizationInvitationQueryRepository,
@@ -35,14 +35,10 @@ const organizationInvitationQueryRepository =
 const userQueryRepository = new PrismaUserQueryRepository(prismaApiClient);
 
 // service
-const organizationPolicy = new OrganizationPolicyService(
-  organizationQueryRepository,
-);
 const transactionManager = new PrismaTransactionManager(prismaApiClient);
 
 // handler
-const createHandler = new CreateHandler(
-  organizationPolicy,
+const createOrganizationHandler = new CreateOrganizationHandler(
   organizationCommandRepository,
 );
 const createInvitationHandler = new CreateInvitationHandler(
@@ -68,16 +64,20 @@ const findReceivedInvitationsHandler = new FindReceivedInvitationsHandler(
   organizationQueryRepository,
   userQueryRepository,
 );
+const findOrganizationBySlugHandler = new FindOrganizationBySlugHandler(
+  organizationQueryRepository,
+);
 
 // module
 const organizationModule = createOrganizationController({
   authGuard,
-  createHandler,
+  createOrganizationHandler,
   createInvitationHandler,
   findSentInvitationsHandler,
   findUserOrganizationsHandler,
   changeInvitationStatusHandler,
   findReceivedInvitationsHandler,
+  findOrganizationBySlugHandler,
 });
 
 export default organizationModule;

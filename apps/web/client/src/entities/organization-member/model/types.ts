@@ -1,4 +1,7 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const role = ['ADMIN', 'MAINTAINER', 'MEMBER'] as const;
+export const ORGANIZATION_MEMBER_ROLE = [
+  'ADMIN',
+  'MAINTAINER',
+  'MEMBER',
+] as const;
 
-export type OrganizationMemberRole = (typeof role)[number];
+export type OrganizationMemberRole = (typeof ORGANIZATION_MEMBER_ROLE)[number];

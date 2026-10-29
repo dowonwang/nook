@@ -37,6 +37,12 @@ src/
 
 특정 도메인에 종속되는 코드는 `shared`에 두지 않습니다.
 
+## Conventions
+
+- [Server Architecture & Naming Convention](../docs/convention.md): 모든 서버 앱 공통 아키텍처, 명명 규칙, 모듈 간 참조·CQRS 규칙
+- [API Server Convention](docs/convention.md): 이 앱의 디렉터리 구조, Elysia·Prisma 관련 규칙, DI, 트랜잭션
+- [Organization Domain Rules](docs/organization.md): 조직 도메인 규칙(식별자, slug, 권한, 초대)
+
 ## Environment Variables
 
 `.env.example`을 복사해 `.env`를 생성합니다.

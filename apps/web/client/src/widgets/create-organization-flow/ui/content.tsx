@@ -24,7 +24,7 @@ export function CreateOrganizationFlowContent() {
 
   return (
     <div className='space-y-6'>
-      <Card focus={!isOrganizationCreated} disabled={isOrganizationCreated}>
+      <Card disabled={isOrganizationCreated}>
         <CardHeader>
           <CardTitle>{t('step_1.title')}</CardTitle>
 
@@ -35,15 +35,17 @@ export function CreateOrganizationFlowContent() {
         </CardBody>
       </Card>
 
-      <Card disabled={!isOrganizationCreated} focus={isOrganizationCreated}>
+      <Card disabled={!isOrganizationCreated}>
         <CardHeader>
           <CardTitle>{t('step_2.title')}</CardTitle>
           <CardDescription>{t('step_2.description')}</CardDescription>
         </CardHeader>
 
         <CardBody>
+          {/* 조직을 만든 사람은 ADMIN */}
           <CreateOrganizationInvitationForm
             organization={organization}
+            inviterRole='ADMIN'
             disabled={!isOrganizationCreated}
           />
           <Separator className='my-6' />

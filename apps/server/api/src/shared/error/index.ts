@@ -1,2 +1,2 @@
-export * from './app.error';
-export * from './common.error';
+export * from './app';
+export * from './common';

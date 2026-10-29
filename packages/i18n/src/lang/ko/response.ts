@@ -29,11 +29,10 @@ export const i18nResponseKo = {
     '해당 조직에 대한 접근 권한이 없습니다.',
   organization_error_DuplicateOrganizationMember:
     '이미 조직에 등록된 멤버입니다.',
-  organization_error_DuplicateOrganizationTitle:
-    '이미 사용 중인 조직 이름입니다.',
+  organization_error_InvalidOrganizationSlug: '올바르지 않은 조직 주소입니다.',
+  organization_error_DuplicateOrganizationSlug:
+    '조직 주소를 만드는 중 문제가 발생했습니다. 잠시 후 다시 시도해주세요.',
   organization_error_MinMemberConstraint: '사용할 수 없는 조직 이름입니다.',
-  organization_error_OrganizationAdminLimitExceeded:
-    '조직 관리자 최대 지정 인원을 초과했습니다.',
   organization_error_OrganizationAdminRequirement:
     '조직에는 최소 한 명의 관리자가 있어야 합니다.',
   organization_error_OrganizationNotFound:

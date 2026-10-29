@@ -1,28 +1,40 @@
-import type {
-  OrganizationInvitationInvitedBy,
-  OrganizationReceivedInvitation,
-} from '$entities/organization-invitation';
+import { createSearchParams } from '$shared/lib/http';
+
+import type { OrganizationInvitationInvitedBy } from '$entities/organization-invitation';
+import type { OffsetPaginationQuery } from '$shared/types';
 import type { GetOrganizationInvitations200 } from '@packages/api-client/api';
 
-export async function getReceivedOrganizationInvitations(): Promise<
-  OrganizationReceivedInvitation[]
-> {
-  const response = await fetch('/api/organization/invitations', {
-    method: 'GET',
-  });
+export async function getReceivedOrganizationInvitations(
+  query?: OffsetPaginationQuery,
+) {
+  const searchParams = createSearchParams(query);
+
+  const response = await fetch(
+    '/api/organization/invitations?' + searchParams.toString(),
+    {
+      method: 'GET',
+    },
+  );
 
   if (response.ok) {
-    const { data } = (await response.json()) as GetOrganizationInvitations200;
+    const { data, meta } =
+      (await response.json()) as GetOrganizationInvitations200;
 
-    return data.map((item) => ({
-      id: item.id,
-      organization: item.organization,
-      invitedBy: item.invitedBy as OrganizationInvitationInvitedBy | null,
-      role: item.role,
-      status: item.status,
-      expiresAt: item.expiresAt,
-    }));
+    return {
+      data: data.map((item) => ({
+        id: item.id,
+        organization: item.organization,
+        invitedBy: item.invitedBy as OrganizationInvitationInvitedBy | null,
+        role: item.role,
+        status: item.status,
+        expiresAt: item.expiresAt,
+      })),
+      meta,
+    };
   }
 
-  return [];
+  return {
+    data: [],
+    meta: undefined,
+  };
 }

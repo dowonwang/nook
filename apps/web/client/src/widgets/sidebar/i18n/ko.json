@@ -3,6 +3,15 @@
     "title": "대시보드"
   },
   "org": {
-    "title": "조직 관리"
+    "title": "조직 관리",
+    "list": {
+      "title": "조직 목록"
+    },
+    "receive": {
+      "title": "받은 초대"
+    },
+    "sent": {
+      "title": "보낸 초대"
+    }
   }
 }

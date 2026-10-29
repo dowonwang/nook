@@ -21,7 +21,7 @@ const variants: Record<ButtonVariant, string> = {
 const sizeVariants: Record<ButtonSize, string> = {
   default: tw`h-10 rounded-xl px-4`,
   icon: tw`h-10 w-10 rounded-xl px-2.5`,
-  small: tw`h-9 rounded-xl px-3`,
+  small: tw`h-9 rounded-xl px-3 text-sm`,
 };
 
 export function Button({

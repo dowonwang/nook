@@ -32,6 +32,7 @@ export async function createOrganizationAction(
       {
         id: '',
         title,
+        slug: '',
       },
       createActionStateError(body.error),
     );
@@ -48,11 +49,15 @@ export async function createOrganizationAction(
   if (response.ok) {
     const { data } =
       (await response.json()) as CreateOrganizationResponseSuccess;
-    return actionStateBuilder.success({ title, id: data.id });
+    return actionStateBuilder.success({
+      id: data.id,
+      title: data.title,
+      slug: data.slug,
+    });
   }
 
   return actionStateBuilder.error(
-    { id: '', title },
+    { id: '', title, slug: '' },
     ((await response.json()) as CreateOrganizationResponseError).error,
   );
 }

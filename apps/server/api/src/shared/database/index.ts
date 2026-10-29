@@ -1,3 +1,3 @@
 export * from './als';
-export * from './repository.abstract';
+export * from './repository';
 export * from './transaction-manager';

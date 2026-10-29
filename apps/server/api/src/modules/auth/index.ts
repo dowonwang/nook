@@ -4,23 +4,22 @@ import 'dotenv/config';
 import { PrismaUserCommandRepository } from '$modules/user/infrastructure';
 
 import {
-  RefreshTokenValidator,
+  RefreshTokenValidatorService,
   RefreshHandler,
   SignInHandler,
   SignOutHandler,
   SignUpHandler,
-  AuthTokenIssuer,
-  CredentialAuthenticator,
+  AuthTokenIssuerService,
+  CredentialAuthenticatorService,
 } from './application';
 import {
-  BcryptPasswordHasher,
-  JwtTokenHasher,
-  JwtTokenIssuer,
-  JwtTokenVerifier,
+  BcryptPasswordHasherAdapter,
+  JwtTokenHasherAdapter,
+  JwtTokenIssuerAdapter,
+  JwtTokenVerifierAdapter,
   PrismaAuthSessionCommandRepository,
 } from './infrastructure';
-import { createAuthController } from './presentation';
-import { createAuthGuard } from './presentation/guard/auth.guard';
+import { createAuthController, createAuthGuard } from './presentation';
 
 // repository
 const userCommandRepository = new PrismaUserCommandRepository(prismaApiClient);
@@ -29,27 +28,27 @@ const authSessionCommandRepository = new PrismaAuthSessionCommandRepository(
 );
 
 // service
-const passwordHasher = new BcryptPasswordHasher();
-const tokenVerifier = new JwtTokenVerifier(
+const passwordHasher = new BcryptPasswordHasherAdapter();
+const tokenVerifier = new JwtTokenVerifierAdapter(
   process.env.ACCESS_TOKEN_SECRET,
   process.env.REFRESH_TOKEN_SECRET,
 );
-const accessTokenIssuer = new JwtTokenIssuer(
+const accessTokenIssuer = new JwtTokenIssuerAdapter(
   process.env.ACCESS_TOKEN_SECRET,
   process.env.ACCESS_TOKEN_EXPIRES,
 );
-const refreshTokenIssuer = new JwtTokenIssuer(
+const refreshTokenIssuer = new JwtTokenIssuerAdapter(
   process.env.REFRESH_TOKEN_SECRET,
   process.env.REFRESH_TOKEN_EXPIRES,
 );
-const tokenHasher = new JwtTokenHasher(process.env.HASH_TOKEN_SECRET);
-const refreshTokenValidator = new RefreshTokenValidator(tokenHasher);
-const authTokenIssuer = new AuthTokenIssuer(
+const tokenHasher = new JwtTokenHasherAdapter(process.env.HASH_TOKEN_SECRET);
+const refreshTokenValidator = new RefreshTokenValidatorService(tokenHasher);
+const authTokenIssuer = new AuthTokenIssuerService(
   accessTokenIssuer,
   refreshTokenIssuer,
   tokenHasher,
 );
-const credentialAuthenticator = new CredentialAuthenticator(
+const credentialAuthenticator = new CredentialAuthenticatorService(
   userCommandRepository,
   passwordHasher,
 );
@@ -82,6 +81,6 @@ const authModule = createAuthController({
 
 // guard
 export const authGuard = createAuthGuard(tokenVerifier);
-export type { AuthGuard } from './presentation/guard/auth.guard';
+export type { AuthGuard } from './presentation';
 
 export default authModule;

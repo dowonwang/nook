@@ -261,6 +261,7 @@ export type PostOrganization201Data = {
   /** @pattern ^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-7[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12})$ */
   id: string;
   title: string;
+  slug: string;
 };
 
 export type PostOrganization201Meta = {
@@ -326,7 +327,7 @@ export type PostOrganization409Meta = {
 };
 
 /**
- * Organization name already exists
+ * Failed to generate a unique organization slug
  */
 export type PostOrganization409 = {
   success: false;
@@ -339,6 +340,7 @@ export type GetOrganizationParams = {
   /**
    * The page number to retrieve.
    * @minimum 1
+   * @maximum 9007199254740991
    */
   page?: number;
   /**
@@ -362,6 +364,7 @@ export type GetOrganization200DataItem = {
   /** @pattern ^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-7[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12})$ */
   id: string;
   title: string;
+  slug: string;
   userRole: GetOrganization200DataItemUserRole;
   memberCount: number;
 };
@@ -518,6 +521,7 @@ export type GetOrganizationByOrganizationIdInvitationsParams = {
   /**
    * The page number to retrieve.
    * @minimum 1
+   * @maximum 9007199254740991
    */
   page?: number;
   /**
@@ -671,7 +675,7 @@ export type PatchOrganizationInvitation403Meta = {
 };
 
 /**
- * Wrong Invitee or Invited User
+ * Participant is not allowed to perform this transition (accept/reject: invitee, cancel: inviter)
  */
 export type PatchOrganizationInvitation403 = {
   success: false;
@@ -691,7 +695,7 @@ export type PatchOrganizationInvitation404Meta = {
 };
 
 /**
- * Invalid data or missing required fields
+ * Invitation not found, or the requester is neither the invitee nor the inviter
  */
 export type PatchOrganizationInvitation404 = {
   success: false;
@@ -724,6 +728,7 @@ export type GetOrganizationInvitationsParams = {
   /**
    * The page number to retrieve.
    * @minimum 1
+   * @maximum 9007199254740991
    */
   page?: number;
   /**
@@ -820,6 +825,76 @@ export type GetOrganizationInvitations401 = {
   data: unknown | null;
   error: GetOrganizationInvitations401Error;
   meta: GetOrganizationInvitations401Meta;
+};
+
+export type GetOrganizationSlugBySlug200DataUserRole =
+  (typeof GetOrganizationSlugBySlug200DataUserRole)[keyof typeof GetOrganizationSlugBySlug200DataUserRole];
+
+export const GetOrganizationSlugBySlug200DataUserRole = {
+  ADMIN: 'ADMIN',
+  MAINTAINER: 'MAINTAINER',
+  MEMBER: 'MEMBER',
+} as const;
+
+export type GetOrganizationSlugBySlug200Data = {
+  /** @pattern ^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-7[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12})$ */
+  id: string;
+  title: string;
+  slug: string;
+  userRole: GetOrganizationSlugBySlug200DataUserRole;
+  memberCount: number;
+};
+
+export type GetOrganizationSlugBySlug200Meta = {
+  unixTimestamp: number;
+  requestId?: string;
+};
+
+export type GetOrganizationSlugBySlug200 = {
+  success: true;
+  data: GetOrganizationSlugBySlug200Data;
+  error: unknown | null;
+  meta: GetOrganizationSlugBySlug200Meta;
+};
+
+export type GetOrganizationSlugBySlug401Error = {
+  code: string;
+  details?: unknown;
+};
+
+export type GetOrganizationSlugBySlug401Meta = {
+  unixTimestamp: number;
+  requestId?: string;
+};
+
+/**
+ * Access token verification failed.
+ */
+export type GetOrganizationSlugBySlug401 = {
+  success: false;
+  data: unknown | null;
+  error: GetOrganizationSlugBySlug401Error;
+  meta: GetOrganizationSlugBySlug401Meta;
+};
+
+export type GetOrganizationSlugBySlug404Error = {
+  code: string;
+  details?: unknown;
+};
+
+export type GetOrganizationSlugBySlug404Meta = {
+  unixTimestamp: number;
+  requestId?: string;
+};
+
+/**
+ * Organization not found or not a member
+ */
+export type GetOrganizationSlugBySlug404 = {
+  success: false;
+  data: unknown | null;
+  error: GetOrganizationSlugBySlug404Error;
+  meta: GetOrganizationSlugBySlug404Meta;
 };
 
 export type GetUserMe200Data = {
@@ -1594,6 +1669,64 @@ export const getOrganizationInvitations = async (
     status: res.status,
     headers: res.headers,
   } as getOrganizationInvitationsResponse;
+};
+
+export type getOrganizationSlugBySlugResponse200 = {
+  data: GetOrganizationSlugBySlug200;
+  status: 200;
+};
+
+export type getOrganizationSlugBySlugResponse401 = {
+  data: GetOrganizationSlugBySlug401;
+  status: 401;
+};
+
+export type getOrganizationSlugBySlugResponse404 = {
+  data: GetOrganizationSlugBySlug404;
+  status: 404;
+};
+
+export type getOrganizationSlugBySlugResponseSuccess =
+  getOrganizationSlugBySlugResponse200 & {
+    headers: Headers;
+  };
+export type getOrganizationSlugBySlugResponseError = (
+  | getOrganizationSlugBySlugResponse401
+  | getOrganizationSlugBySlugResponse404
+) & {
+  headers: Headers;
+};
+
+export type getOrganizationSlugBySlugResponse =
+  | getOrganizationSlugBySlugResponseSuccess
+  | getOrganizationSlugBySlugResponseError;
+
+export const getGetOrganizationSlugBySlugUrl = (slug: string) => {
+  return `http://localhost:4000/organization/slug/${slug}`;
+};
+
+/**
+ * @summary Find Organization By Slug
+ */
+export const getOrganizationSlugBySlug = async (
+  slug: string,
+  options?: RequestInit,
+): Promise<getOrganizationSlugBySlugResponse> => {
+  const res = await fetch(getGetOrganizationSlugBySlugUrl(slug), {
+    ...options,
+    method: 'GET',
+  });
+
+  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
+
+  const data: getOrganizationSlugBySlugResponse['data'] = body
+    ? JSON.parse(body)
+    : {};
+  return {
+    data,
+    status: res.status,
+    headers: res.headers,
+  } as getOrganizationSlugBySlugResponse;
 };
 
 export type getUserMeResponse200 = {

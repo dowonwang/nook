@@ -32,7 +32,7 @@ export function AcceptOrganizationInvitationButton({ invitationId }: Props) {
 
       await Promise.all([
         queryClient.invalidateQueries({
-          queryKey: RECEIVED_ORGANIZATION_INVITATION_LIST_QUERY_KEY,
+          queryKey: RECEIVED_ORGANIZATION_INVITATION_LIST_QUERY_KEY(pagination),
         }),
         queryClient.invalidateQueries({
           queryKey: MY_ORGANIZATION_LIST_QUERY_KEY(pagination),

@@ -13,7 +13,6 @@ import { getT } from 'next-i18next/server';
 
 import { MyOrganizationList } from '$features/organization/my-list';
 import { createServerMyOrganizationListQueryOptions } from '$features/organization/my-list/server';
-import { serverReceivedOrganizationListQueryOptions } from '$features/organization-invitation/received-list/server';
 import { getOffsetPaginationQuery } from '$shared/lib/pagination/get-query.server';
 
 import { PAGES_ORGANIZATION_HOME_I18N_NAMESPACE } from '../i18n';
@@ -30,21 +29,21 @@ export async function OrganizationHomePage({ searchParams }: Props) {
   const queryClient = new QueryClient();
   const pagination = await getOffsetPaginationQuery(searchParams);
 
-  await Promise.all([
-    queryClient.prefetchQuery(
-      createServerMyOrganizationListQueryOptions(pagination),
-    ),
-    queryClient.prefetchQuery(serverReceivedOrganizationListQueryOptions),
-  ]);
+  await queryClient.prefetchQuery(
+    createServerMyOrganizationListQueryOptions(pagination),
+  );
 
   return (
     <>
-      <HeroSection className='mb-6' action={<CreateOrganizationNavigation />}>
+      <HeroSection
+        className='mb-page'
+        action={<CreateOrganizationNavigation />}
+      >
         <HeroSectionTitle>{t('hero.title')}</HeroSectionTitle>
         <HeroSectionDescription>{t('hero.description')}</HeroSectionDescription>
       </HeroSection>
 
-      <Separator className='mb-6' />
+      <Separator className='mb-page' />
 
       <HydrationBoundary state={dehydrate(queryClient)}>
         <MyOrganizationList />

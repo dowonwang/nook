@@ -1,3 +1,5 @@
+import { Badge } from '@packages/ui/components/badge';
+import { cn } from '@packages/ui/lib/cn';
 import { useT } from 'next-i18next/client';
 
 import { ENTITY_ORGANIZATION_INVITATION_I18N_NAMESPACE } from '../i18n';
@@ -41,11 +43,5 @@ export function OrganizationInvitationStatusBadge({ status }: Props) {
   const { t } = useT(ENTITY_ORGANIZATION_INVITATION_I18N_NAMESPACE);
   const { label, style } = STATUS_CONFIG[status];
 
-  return (
-    <span
-      className={`${style} rounded-full px-3 py-1 text-sm font-semibold ring-2`}
-    >
-      {t(label)}
-    </span>
-  );
+  return <Badge className={cn('ring-2', style)}>{t(label)}</Badge>;
 }

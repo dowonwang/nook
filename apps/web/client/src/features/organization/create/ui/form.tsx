@@ -20,10 +20,11 @@ import {
 import { createOrganizationAction } from '../api/action.server';
 import { FEAT_ORGANIZATION_CREATE_I18N_NAMESPACE } from '../i18n';
 
+import type { Organization } from '$entities/organization';
 import type { ActionStateZodError } from '$shared/api/action';
 
 interface Props {
-  onSuccess: (organization: { id: string; title: string } | null) => void;
+  onSuccess: (organization: Organization | null) => void;
 }
 
 export function CreateOrganizationForm({ onSuccess }: Props) {
@@ -31,7 +32,7 @@ export function CreateOrganizationForm({ onSuccess }: Props) {
   const [actionState, formAction] = useActionState(createOrganizationAction, {
     success: false,
     error: null,
-    state: { id: '', title: '' },
+    state: { id: '', title: '', slug: '' },
   });
 
   const { register, getFieldError } = useActionFieldErrors(
@@ -43,10 +44,7 @@ export function CreateOrganizationForm({ onSuccess }: Props) {
 
   useEffect(() => {
     if (actionState.success) {
-      onSuccess({
-        id: actionState.state.id,
-        title: actionState.state.title,
-      });
+      onSuccess(actionState.state);
 
       if (document.activeElement instanceof HTMLElement) {
         document.activeElement.blur();

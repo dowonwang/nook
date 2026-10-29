@@ -8,6 +8,8 @@ import type { OrganizationMemberRole } from '../model/types';
 interface Props {
   name?: string;
   defaultChecked?: OrganizationMemberRole;
+  // 선택지로 보여줄 역할 (기본: 전체)
+  roles?: readonly OrganizationMemberRole[];
 }
 
 interface RadioItem {
@@ -24,6 +26,7 @@ const RADIO_ITEMS: RadioItem[] = [
 export function OrganizationMemberRoleRadioGroup({
   name = 'role',
   defaultChecked,
+  roles,
 }: Props) {
   const { t } = useT(ENTITY_ORGANIZATION_MEMBER_I18N_NAMESPACE);
   const isDefaultChecked = (value: OrganizationMemberRole): boolean => {
@@ -32,17 +35,19 @@ export function OrganizationMemberRoleRadioGroup({
 
   return (
     <div className='flex flex-wrap items-center gap-2'>
-      {RADIO_ITEMS.map((item) => (
-        <RadioButton
-          key={item.id}
-          id={item.id}
-          name={name}
-          value={item.id}
-          defaultChecked={isDefaultChecked(item.id)}
-        >
-          {t(item.label)}
-        </RadioButton>
-      ))}
+      {RADIO_ITEMS.filter((item) => !roles || roles.includes(item.id)).map(
+        (item) => (
+          <RadioButton
+            key={item.id}
+            id={item.id}
+            name={name}
+            value={item.id}
+            defaultChecked={isDefaultChecked(item.id)}
+          >
+            {t(item.label)}
+          </RadioButton>
+        ),
+      )}
     </div>
   );
 }

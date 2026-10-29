@@ -1,3 +1,7 @@
+'use client';
+
+import { Badge } from '@packages/ui/components/badge';
+import { cn } from '@packages/ui/lib/cn';
 import { useT } from 'next-i18next/client';
 
 import { ENTITY_ORGANIZATION_MEMBER_I18N_NAMESPACE } from '../i18n';
@@ -33,11 +37,5 @@ export function OrganizationMemberRoleBadge({ role }: Props) {
   const { t } = useT(ENTITY_ORGANIZATION_MEMBER_I18N_NAMESPACE);
   const { label, style } = STATUS_CONFIG[role];
 
-  return (
-    <span
-      className={`${style} rounded-full px-3 py-1 text-sm font-semibold ring-2`}
-    >
-      {t(label)}
-    </span>
-  );
+  return <Badge className={cn('ring-2', style)}>{t(label)}</Badge>;
 }

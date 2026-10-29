@@ -1,0 +1,11 @@
+{
+  "hero": {
+    "description": "Check the organization details and your role."
+  },
+  "info": {
+    "title": "Organization Info",
+    "role": "My Role",
+    "member_count": "Members",
+    "address": "Organization Address"
+  }
+}

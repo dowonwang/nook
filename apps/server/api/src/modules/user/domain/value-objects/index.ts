@@ -1,4 +1,4 @@
-export { UserEmail } from './email.vo';
-export { UserName } from './name.vo';
-export { UserPassword } from './password.vo';
-export { UserUuid } from './uuid.vo';
+export { UserEmailVo } from './email';
+export { UserNameVo } from './name';
+export { UserPasswordVo } from './password';
+export { UserUuidVo } from './uuid';
