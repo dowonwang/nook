@@ -42,8 +42,10 @@ export function CreateOrganizationFlowContent() {
         </CardHeader>
 
         <CardBody>
+          {/* 조직을 만든 사람은 ADMIN */}
           <CreateOrganizationInvitationForm
             organization={organization}
+            inviterRole='ADMIN'
             disabled={!isOrganizationCreated}
           />
           <Separator className='my-6' />
