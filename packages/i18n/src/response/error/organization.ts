@@ -4,7 +4,6 @@ export const ORGANIZATION_ERROR = [
   'organization_error_InvalidOrganizationSlug',
   'organization_error_DuplicateOrganizationSlug',
   'organization_error_MinMemberConstraint',
-  'organization_error_OrganizationAdminLimitExceeded',
   'organization_error_OrganizationAdminRequirement',
   'organization_error_OrganizationNotFound',
   'organization_error_UnaffiliatedMember',

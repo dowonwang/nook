@@ -55,9 +55,6 @@ export const i18nResponseEn = {
   organization_error_MinMemberConstraint:
     'This organization name cannot be used.',
 
-  organization_error_OrganizationAdminLimitExceeded:
-    'The maximum number of organization administrators has been exceeded.',
-
   organization_error_OrganizationAdminRequirement:
     'The organization must have at least one administrator.',
 

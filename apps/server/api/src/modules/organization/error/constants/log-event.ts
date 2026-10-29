@@ -7,7 +7,6 @@ export const ORGANIZATION_LOG_EVENT = {
   ORG_MEMBER_UNAFFILIATED_ACCESS: 'org_member_unaffiliated_access',
   ORG_MEMBER_DUPLICATE_ENTRY: 'org_member_duplicate_entry',
   ORG_ADMIN_REQUIREMENT: 'org_admin_requirement',
-  ORG_ADMIN_LIMIT_EXCEED: 'org_admin_limit_exceed',
   ORG_INSUFFICIENT_PERMISSION: 'org_insufficient_permission',
   ORG_INVALID_MEMBER_ROLE: 'org_invalid_member_role',
   ORG_INVALID_INVITATION_STATUS: 'org_invalid_invitation_status',

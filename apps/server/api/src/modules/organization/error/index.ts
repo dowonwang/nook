@@ -7,7 +7,6 @@ export * from './invitation-access-denied';
 export * from './invitation-expired';
 export * from './invitee-user-not-found';
 export * from './min-member-constraint';
-export * from './admin-limit-exceeded';
 export * from './admin-requirement';
 export * from './invitation-not-found';
 export * from './not-found';
