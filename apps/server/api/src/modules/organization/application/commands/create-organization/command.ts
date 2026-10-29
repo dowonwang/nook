@@ -8,6 +8,7 @@ export interface CreateOrganizationInput {
 export interface CreateOrganizationResult {
   id: string;
   title: string;
+  slug: string;
 }
 
 export class CreateOrganizationCommand {

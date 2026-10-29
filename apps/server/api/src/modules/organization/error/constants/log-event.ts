@@ -1,6 +1,7 @@
 export const ORGANIZATION_LOG_EVENT = {
-  ORG_DUPLICATE_TITLE: 'org_duplicate_title',
   ORG_TITLE_EMPTY: 'org_title_empty',
+  ORG_INVALID_SLUG: 'org_invalid_slug',
+  ORG_DUPLICATE_SLUG: 'org_duplicate_slug',
   ORG_NOT_FOUND: 'org_not_found',
   ORG_MIN_MEMBER_VIOLATION: 'org_min_member_violation',
   ORG_MEMBER_UNAFFILIATED_ACCESS: 'org_member_unaffiliated_access',

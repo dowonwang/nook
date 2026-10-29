@@ -26,17 +26,14 @@ export function createCreateOrganizationRoutes({
     .post(
       '/',
       async ({ body, set, authUser }) => {
-        const { id, title } = await createOrganizationHandler.execute({
+        const result = await createOrganizationHandler.execute({
           userId: authUser.id,
           ...body,
         });
 
         set.status = 201;
 
-        return ApiResponseBuilder.success({
-          id,
-          title,
-        });
+        return ApiResponseBuilder.success(result);
       },
       {
         parse: 'application/json',
@@ -52,7 +49,7 @@ export function createCreateOrganizationRoutes({
             description: 'Invalid data or missing required fields',
           }),
           409: ApiErrorResponseSchema.meta({
-            description: 'Organization name already exists',
+            description: 'Failed to generate a unique organization slug',
           }),
         },
       },

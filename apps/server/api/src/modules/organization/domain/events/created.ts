@@ -1,4 +1,5 @@
 import type { DomainEvent } from '$shared/ddd';
+import type { OrganizationSlugVo } from '../value-objects/slug';
 import type { OrganizationUuidVo } from '../value-objects/uuid';
 
 export class OrganizationCreatedEvent implements DomainEvent {
@@ -7,5 +8,6 @@ export class OrganizationCreatedEvent implements DomainEvent {
   constructor(
     public readonly id: OrganizationUuidVo,
     public readonly title: string,
+    public readonly slug: OrganizationSlugVo,
   ) {}
 }

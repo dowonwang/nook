@@ -1,8 +1,9 @@
 import type { OrganizationLogEventMessage } from './log-event';
 
 export const ORGANIZATION_LOG_MESSAGE: OrganizationLogEventMessage = {
-  ORG_DUPLICATE_TITLE: 'Duplicate organization title detected',
   ORG_TITLE_EMPTY: 'Organization title cannot be empty or null',
+  ORG_INVALID_SLUG: 'Organization slug format is invalid',
+  ORG_DUPLICATE_SLUG: 'Organization slug is already in use',
   ORG_NOT_FOUND: 'Organization not found for the given identifier',
   ORG_MIN_MEMBER_VIOLATION: 'At least one member required for initialization',
   ORG_MEMBER_UNAFFILIATED_ACCESS:

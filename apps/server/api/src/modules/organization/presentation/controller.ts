@@ -5,6 +5,7 @@ import { type AuthGuard } from '$modules/auth';
 import { createChangeInvitationStatusRoutes } from './routes/change-invitation-status';
 import { createCreateInvitationRoutes } from './routes/create-invitation';
 import { createCreateOrganizationRoutes } from './routes/create-organization';
+import { createFindOrganizationBySlugRoutes } from './routes/find-organization-by-slug';
 import { createFindReceivedInvitationsRoutes } from './routes/find-received-invitations';
 import { createFindSentInvitationsRoutes } from './routes/find-sent-invitations';
 import { createFindUserOrganizationsRoutes } from './routes/find-user-organizations';
@@ -13,6 +14,7 @@ import type {
   ChangeInvitationStatusHandler,
   CreateOrganizationHandler,
   CreateInvitationHandler,
+  FindOrganizationBySlugHandler,
   FindReceivedInvitationsHandler,
   FindSentInvitationsHandler,
   FindUserOrganizationsHandler,
@@ -25,6 +27,7 @@ interface OrganizationDependencies {
   findUserOrganizationsHandler: FindUserOrganizationsHandler;
   changeInvitationStatusHandler: ChangeInvitationStatusHandler;
   findReceivedInvitationsHandler: FindReceivedInvitationsHandler;
+  findOrganizationBySlugHandler: FindOrganizationBySlugHandler;
   authGuard: AuthGuard;
 }
 
@@ -70,6 +73,12 @@ export function createOrganizationController(deps: OrganizationDependencies) {
       createFindReceivedInvitationsRoutes({
         authGuard: deps.authGuard,
         handler: deps.findReceivedInvitationsHandler,
+      }),
+    )
+    .use(
+      createFindOrganizationBySlugRoutes({
+        authGuard: deps.authGuard,
+        handler: deps.findOrganizationBySlugHandler,
       }),
     );
 }

@@ -180,7 +180,7 @@ infrastructure/repositories/prisma-organization-command.repository.ts → infras
 | Adapter (Port 구현체) | `Adapter`                    | `JwtTokenIssuerAdapter`, `BcryptPasswordHasherAdapter`        |
 | Error                 | `Error`                      | `OrganizationNotFoundError`                                   |
 
-- 구현체 클래스는 `<기술> + <인터페이스명>`으로 작성합니다. (`PrismaOrganizationCommandRepository`, `PrismaOrganizationPolicyService`)
+- 구현체 클래스는 `<기술> + <인터페이스명>`으로 작성합니다. (`PrismaOrganizationCommandRepository`, `PrismaUserQueryRepository`)
 - `shared/ddd`의 베이스 클래스(`Entity`, `AggregateRoot`, `PrimitiveValueObject` 등)는 그 자체가 역할 이름이므로 예외로 둡니다.
 - presentation 진입점(컨트롤러, 라우트, 플러그인 등)의 심볼 규칙은 각 앱 문서에서 정의합니다.
 

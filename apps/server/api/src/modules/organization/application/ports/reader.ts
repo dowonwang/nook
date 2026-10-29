@@ -1,5 +1,6 @@
 import type {
   OrganizationAggregate,
+  OrganizationSlugVo,
   OrganizationUuidVo,
 } from '$modules/organization/domain';
 import type { UserUuidVo } from '$modules/user/domain';
@@ -19,4 +20,5 @@ export interface OrganizationReaderPort {
   findManyByIds(params: {
     organizationIds: OrganizationUuidVo[];
   }): Promise<OrganizationAggregate[]>;
+  findBySlug(slug: OrganizationSlugVo): Promise<OrganizationAggregate | null>;
 }

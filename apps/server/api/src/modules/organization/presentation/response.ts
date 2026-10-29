@@ -4,6 +4,15 @@ export const OrganizationResponseSchemas = {
   create: z.object({
     id: z.uuidv7(),
     title: z.string(),
+    slug: z.string(),
+  }),
+
+  'find-organization-by-slug': z.object({
+    id: z.uuidv7(),
+    title: z.string(),
+    slug: z.string(),
+    userRole: z.enum(['ADMIN', 'MAINTAINER', 'MEMBER']),
+    memberCount: z.number(),
   }),
   'create-invitation': z.null(),
 
@@ -34,6 +43,7 @@ export const OrganizationResponseSchemas = {
     z.object({
       id: z.uuidv7(),
       title: z.string(),
+      slug: z.string(),
       userRole: z.enum(['ADMIN', 'MAINTAINER', 'MEMBER']),
       memberCount: z.number(),
     }),

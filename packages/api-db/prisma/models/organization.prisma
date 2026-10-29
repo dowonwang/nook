@@ -1,6 +1,7 @@
 model Organization {
     id    String @id @default(uuid()) @db.Uuid
     title String
+    slug  String @unique
 
     organizationMembers     OrganizationMember[]
     organizationInvitations OrganizationInvitation[]

@@ -27,7 +27,7 @@ export interface OrganizationSentInvitationDto {
 
 export interface OrganizationReceivedInvitationDto {
   id: string;
-  organization: OrganizationDto;
+  organization: Pick<OrganizationDto, 'id' | 'title'>;
   invitedBy: Inviter | null;
   role: OrganizationMemberRoleValue;
   status: OrganizationInvitationStatusValue;

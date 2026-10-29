@@ -10,37 +10,15 @@ import { OrganizationPrismaMapper } from '../mappers/organization';
 import type { OrganizationReaderPort } from '$modules/organization/application';
 import type {
   OrganizationAggregate,
-  OrganizationQueryRepository,
+  OrganizationSlugVo,
   OrganizationUuidVo,
 } from '$modules/organization/domain';
 import type { UserUuidVo } from '$modules/user/domain';
 
 export class PrismaOrganizationQueryRepository
   extends PrismaRepository
-  implements OrganizationQueryRepository, OrganizationReaderPort
+  implements OrganizationReaderPort
 {
-  async findOrganizationIdByUserIdAndTitle(
-    userId: string,
-    title: string,
-  ): Promise<string | null> {
-    const organization = await this.client.organization.findFirst({
-      where: {
-        title,
-        organizationMembers: {
-          some: {
-            userId,
-            role: 'ADMIN',
-          },
-        },
-      },
-      select: {
-        id: true,
-      },
-    });
-
-    return organization?.id ?? null;
-  }
-
   async findUserOrganizations(
     params: {
       userId: UserUuidVo;
@@ -101,5 +79,23 @@ export class PrismaOrganizationQueryRepository
       const members = record.organizationMembers;
       return OrganizationPrismaMapper.toOrganizationDomain(record, members);
     });
+  }
+
+  async findBySlug(
+    slug: OrganizationSlugVo,
+  ): Promise<OrganizationAggregate | null> {
+    const record = await this.client.organization.findUnique({
+      where: { slug: slug.getValue() },
+      include: {
+        organizationMembers: true,
+      },
+    });
+
+    return record
+      ? OrganizationPrismaMapper.toOrganizationDomain(
+          record,
+          record.organizationMembers,
+        )
+      : null;
   }
 }

@@ -14,15 +14,18 @@ import { OrganizationMemberUuidVo } from '../value-objects/member-uuid';
 
 import type { UserUuidVo } from '$modules/user/domain';
 import type { OrganizationMemberRoleVo } from '../value-objects/member-role';
+import type { OrganizationSlugVo } from '../value-objects/slug';
 import type { OrganizationUuidVo } from '../value-objects/uuid';
 
 interface Props {
   title: string;
+  slug: OrganizationSlugVo;
 }
 
 interface Snapshot {
   id: string;
   title: string;
+  slug: string;
 }
 
 export class OrganizationAggregate extends AggregateRoot<
@@ -54,7 +57,11 @@ export class OrganizationAggregate extends AggregateRoot<
     const organization = new OrganizationAggregate(id, props, members);
 
     organization.addDomainEvent(
-      new OrganizationCreatedEvent(organization.id, organization.title),
+      new OrganizationCreatedEvent(
+        organization.id,
+        organization.title,
+        organization.slug,
+      ),
     );
     organization.addDomainEvent(
       new OrganizationMembersAddedEvent(organization.id, organization.members),
@@ -75,6 +82,7 @@ export class OrganizationAggregate extends AggregateRoot<
     return Object.freeze({
       id: this.id.getValue(),
       title: this.props.title,
+      slug: this.props.slug.getValue(),
     });
   }
 
@@ -155,5 +163,9 @@ export class OrganizationAggregate extends AggregateRoot<
 
   get title() {
     return this.props.title;
+  }
+
+  get slug(): OrganizationSlugVo {
+    return this.props.slug;
   }
 }

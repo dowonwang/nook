@@ -1,7 +1,10 @@
+import { Prisma } from '@packages/api-db';
+
 import {
   OrganizationCreatedEvent,
   OrganizationMembersAddedEvent,
 } from '$modules/organization/domain';
+import { DuplicateOrganizationSlugError } from '$modules/organization/error';
 import { PrismaRepository } from '$shared/database';
 import { createLogger } from '$shared/logger';
 
@@ -26,12 +29,7 @@ export class PrismaOrganizationCommandRepository
     await this.transaction(async () => {
       for (const event of organization.pullDomainEvents()) {
         if (event instanceof OrganizationCreatedEvent) {
-          await this.client.organization.create({
-            data: {
-              id: event.id.getValue(),
-              title: event.title,
-            },
-          });
+          await this.createOrganization(event);
         }
 
         if (event instanceof OrganizationMembersAddedEvent) {
@@ -51,6 +49,32 @@ export class PrismaOrganizationCommandRepository
     });
 
     this.logger.debug({ details: organization }, 'Organization Save');
+  }
+
+  private async createOrganization(
+    event: OrganizationCreatedEvent,
+  ): Promise<void> {
+    try {
+      await this.client.organization.create({
+        data: {
+          id: event.id.getValue(),
+          title: event.title,
+          slug: event.slug.getValue(),
+        },
+      });
+    } catch (error) {
+      // organization의 unique는 id(UUIDv7, 충돌 없음)와 slug뿐이므로 P2002는 slug 충돌
+      if (
+        error instanceof Prisma.PrismaClientKnownRequestError &&
+        error.code === 'P2002'
+      ) {
+        throw new DuplicateOrganizationSlugError(
+          PrismaOrganizationCommandRepository.name,
+        );
+      }
+
+      throw error;
+    }
   }
 
   async findOrganizationById(

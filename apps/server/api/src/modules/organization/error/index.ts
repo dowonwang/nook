@@ -1,7 +1,6 @@
 export * from './access-denied';
 export * from './duplicate-invitee-user';
 export * from './duplicate-member';
-export * from './duplicate-title';
 export * from './invalid-invitation-status';
 export * from './invalid-member-role';
 export * from './invitation-access-denied';
@@ -18,3 +17,5 @@ export * from './self-invitation';
 export * from './unaffiliated-member';
 export * from './constants/log-event';
 export * from './constants/log-message';
+export * from './invalid-slug';
+export * from './duplicate-slug';

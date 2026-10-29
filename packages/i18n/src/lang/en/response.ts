@@ -47,9 +47,10 @@ export const i18nResponseEn = {
 
   organization_error_DuplicateOrganizationMember:
     'This member is already registered in the organization.',
-
-  organization_error_DuplicateOrganizationTitle:
-    'This organization name is already in use.',
+  organization_error_InvalidOrganizationSlug:
+    'The organization address is invalid.',
+  organization_error_DuplicateOrganizationSlug:
+    'Failed to create the organization address. Please try again later.',
 
   organization_error_MinMemberConstraint:
     'This organization name cannot be used.',

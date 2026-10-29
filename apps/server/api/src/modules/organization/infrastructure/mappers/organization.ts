@@ -3,6 +3,7 @@ import {
   OrganizationMemberEntity,
   OrganizationMemberRoleVo,
   OrganizationMemberUuidVo,
+  OrganizationSlugVo,
   OrganizationUuidVo,
 } from '$modules/organization/domain';
 import { UserUuidVo } from '$modules/user/domain';
@@ -25,6 +26,7 @@ export const OrganizationPrismaMapper = {
       OrganizationUuidVo.create(organizationRecord.id),
       {
         title: organizationRecord.title,
+        slug: OrganizationSlugVo.create(organizationRecord.slug),
       },
       members,
     );

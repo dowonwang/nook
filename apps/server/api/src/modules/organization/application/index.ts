@@ -16,3 +16,5 @@ export * from './queries/find-received-invitations/handler';
 export * from './queries/find-received-invitations/query';
 export * from './queries/find-user-organizations/handler';
 export * from './queries/find-user-organizations/query';
+export * from './queries/find-organization-by-slug/handler';
+export * from './queries/find-organization-by-slug/query';
