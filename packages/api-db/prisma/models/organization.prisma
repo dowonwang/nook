@@ -1,5 +1,5 @@
 model Organization {
-    id    String @id @default(uuid()) @db.Uuid
+    id    String @id @default(uuid(7)) @db.Uuid
     title String
     slug  String @unique
 
@@ -10,7 +10,7 @@ model Organization {
 }
 
 model OrganizationMember {
-    id String @id @default(uuid()) @db.Uuid
+    id String @id @default(uuid(7)) @db.Uuid
 
     organizationId String                 @db.Uuid
     userId         String                 @db.Uuid
@@ -29,7 +29,7 @@ model OrganizationMember {
 }
 
 model OrganizationInvitation {
-    id String @id @default(uuid()) @db.Uuid
+    id String @id @default(uuid(7)) @db.Uuid
 
     organizationId  String                       @db.Uuid
     inviteeUserId   String                       @db.Uuid
