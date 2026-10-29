@@ -11,6 +11,7 @@ import type {
   OrganizationInvitationAggregate,
   OrganizationInvitationCommandRepository,
 } from '$modules/organization/domain';
+import type { UserUuidVo } from '$modules/user/domain';
 import type { TransactionManager } from '$shared/database';
 import type { ChangeInvitationStatusInput } from './command';
 
@@ -34,6 +35,8 @@ export class ChangeInvitationStatusHandler {
         ChangeInvitationStatusHandler.name,
       );
     }
+
+    this.assertParticipant(invitation, command.userId);
 
     const organization =
       await this.organizationCommandRepository.findOrganizationById(
@@ -69,14 +72,26 @@ export class ChangeInvitationStatusHandler {
         await this.updateStatusIfPending(invitation);
         break;
 
-      case 'PENDING':
-        invitation.assertPending();
-        break;
-
+      // PENDING으로 되돌리는 전이는 없으므로, 초대 상태와 관계없이 항상 거절해 상태를 노출하지 않음
       default:
         throw new InvalidOrganizationInvitationStatusError(
           ChangeInvitationStatusHandler.name,
         );
+    }
+  }
+
+  // 당사자(초대받은 사람·초대한 사람)가 아니면 어떤 요청이든 없는 초대와 같은 404로 응답해 존재 여부를 숨김
+  private assertParticipant(
+    invitation: OrganizationInvitationAggregate,
+    userId: UserUuidVo,
+  ): void {
+    if (
+      !invitation.inviteeUserId.equals(userId) &&
+      !invitation.invitedByUserId.equals(userId)
+    ) {
+      throw new OrganizationInvitationNotFoundError(
+        ChangeInvitationStatusHandler.name,
+      );
     }
   }
 

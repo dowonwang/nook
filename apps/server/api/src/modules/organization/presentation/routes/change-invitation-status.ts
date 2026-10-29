@@ -50,10 +50,12 @@ export function createChangeInvitationStatusRoutes({
             description: 'Invalid data',
           }),
           404: ApiErrorResponseSchema.meta({
-            description: 'Invalid data or missing required fields',
+            description:
+              'Invitation not found, or the requester is neither the invitee nor the inviter',
           }),
           403: ApiErrorResponseSchema.meta({
-            description: 'Wrong Invitee or Invited User',
+            description:
+              'Participant is not allowed to perform this transition (accept/reject: invitee, cancel: inviter)',
           }),
         },
       },

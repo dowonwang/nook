@@ -93,6 +93,11 @@
 - 같은 조직·같은 사용자에게 **대기 중이면서 만료되지 않은** 초대가 있으면 새 초대를 만들 수 없습니다. (`existsActiveInvitation`)
 - 초대 상태 변경(수락·취소·거절)은 저장소의 초대가 아직 `PENDING`일 때만 반영됩니다. 동시 요청 중 하나만 성공하고, 나머지는 `InvalidOrganizationInvitationStatusError`를 받습니다.
 - 수락 시 상태 변경과 멤버 추가는 하나의 트랜잭션으로 처리합니다.
+- 초대 상태 변경은 **권한을 상태·만료보다 먼저** 확인해, 권한 없는 사용자에게 초대 상태가 드러나지 않게 합니다.
+  - 초대받은 사람도 초대한 사람도 아니면, 요청한 상태와 초대 상태에 관계없이 `OrganizationInvitationNotFoundError`(404)로 응답합니다. (없는 초대와 같은 응답)
+  - 당사자지만 해당 동작의 권한이 없으면 `OrganizationInvitationAccessDeniedError`(403)로 응답합니다. (수락·거절은 초대받은 사람, 취소는 초대한 사람만 가능)
+  - 권한이 있는 당사자에게만 상태 오류(`InvalidOrganizationInvitationStatusError`)와 만료 오류(`OrganizationInvitationExpiredError`)를 알려줍니다.
+- `PENDING`으로 되돌리는 전이는 없습니다. 당사자의 `PENDING` 요청은 초대 상태와 관계없이 항상 `InvalidOrganizationInvitationStatusError`(422)로 거절합니다.
 
 ---
 

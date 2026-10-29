@@ -83,26 +83,27 @@ export class OrganizationInvitationAggregate extends AggregateRoot<
     });
   }
 
+  // 권한을 상태·만료보다 먼저 확인해, 권한 없는 사용자에게 초대 상태가 드러나지 않게 함
   accept(userId: UserUuidVo) {
+    this.assertInvitee(userId);
     this.assertPending();
     this.assertExpired();
-    this.assertInvitee(userId);
 
     this.props.status = OrganizationInvitationStatusVo.create('ACCEPTED');
   }
 
   cancel(userId: UserUuidVo) {
+    this.assertInvitedUser(userId);
     this.assertPending();
     this.assertExpired();
-    this.assertInvitedUser(userId);
 
     this.props.status = OrganizationInvitationStatusVo.create('CANCELED');
   }
 
   reject(userId: UserUuidVo) {
+    this.assertInvitee(userId);
     this.assertPending();
     this.assertExpired();
-    this.assertInvitee(userId);
 
     this.props.status = OrganizationInvitationStatusVo.create('REJECTED');
   }
