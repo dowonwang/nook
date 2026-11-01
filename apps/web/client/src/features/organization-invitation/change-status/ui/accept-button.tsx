@@ -5,8 +5,8 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useT } from 'next-i18next/client';
 import { useTransition } from 'react';
 
-import { MY_ORGANIZATION_LIST_QUERY_KEY } from '$features/organization/my-list/config/query-key';
-import { RECEIVED_ORGANIZATION_INVITATION_LIST_QUERY_KEY } from '$features/organization-invitation/received-list/config/query-key';
+import { MY_ORGANIZATION_LIST_QUERY_KEY } from '$entities/organization';
+import { RECEIVED_ORGANIZATION_INVITATION_LIST_QUERY_KEY } from '$entities/organization-invitation';
 import { useOffsetQuery } from '$shared/lib/pagination';
 
 import { changeOrganizationInvitationServerAction } from '../api/action.server';

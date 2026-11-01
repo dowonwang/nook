@@ -1,7 +1,7 @@
 import { createSearchParams } from '$shared/lib/http';
 
-import type { OrganizationInvitationInvitedBy } from '$entities/organization-invitation';
 import type { OffsetPaginationQuery } from '$shared/types';
+import type { OrganizationInvitationInvitedBy } from '../model/types';
 import type { GetOrganizationInvitations200 } from '@packages/api-client/api';
 
 export async function getReceivedOrganizationInvitations(

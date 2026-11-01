@@ -13,6 +13,7 @@ import { Users2 } from 'lucide-react';
 import Link from 'next/link';
 import { useT } from 'next-i18next/client';
 
+import { createMyOrganizationListQueryOptions } from '$entities/organization';
 import { OrganizationMemberRoleBadge } from '$entities/organization-member';
 import { useOffsetQuery } from '$shared/lib/pagination';
 import {
@@ -20,15 +21,14 @@ import {
   PaginationLimitSelector,
 } from '$shared/ui/pagination';
 
-import { FEAT_ORGANIZATION_MY_LIST_I18N_NAMESPACE } from '../i18n';
-import { createMyOrganizationListQueryOptions } from '../model/query';
+import { PAGES_ORGANIZATION_HOME_I18N_NAMESPACE } from '../i18n';
 
 const tw = String.raw;
 const CARD_DL_STYLE = tw`[&>dt]:text-secondary-foreground space-y-4 [&>dt]:text-sm [&>dt]:font-semibold`;
 
 export function MyOrganizationList() {
   const pagination = useOffsetQuery();
-  const { t } = useT(FEAT_ORGANIZATION_MY_LIST_I18N_NAMESPACE);
+  const { t } = useT(PAGES_ORGANIZATION_HOME_I18N_NAMESPACE);
   const { data: organizations } = useQuery(
     createMyOrganizationListQueryOptions(pagination),
   );
@@ -39,7 +39,7 @@ export function MyOrganizationList() {
 
       <div className='flex-1'>
         <section className='mb-page grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3'>
-          <h2 className='sr-only'>{t('title')}</h2>
+          <h2 className='sr-only'>{t('list.title')}</h2>
 
           {organizations?.data.map((organization) => (
             <Card key={organization.id} isArticle>
@@ -50,7 +50,7 @@ export function MyOrganizationList() {
               <CardBody>
                 <dl className='grid grid-cols-2'>
                   <div className={CARD_DL_STYLE}>
-                    <dt>내 역할</dt>
+                    <dt>{t('list.card.role')}</dt>
                     <dd>
                       <OrganizationMemberRoleBadge
                         role={organization.userRole}
@@ -59,7 +59,7 @@ export function MyOrganizationList() {
                   </div>
 
                   <div className={CARD_DL_STYLE}>
-                    <dt>{t('card.member_count')}</dt>
+                    <dt>{t('list.card.member_count')}</dt>
                     <dd className='flex items-center gap-2'>
                       <Users2 className='w-5' />
                       {organization.memberCount}
@@ -76,7 +76,7 @@ export function MyOrganizationList() {
                   className='w-full'
                 >
                   <Link href={`/org/detail/${organization.slug}`}>
-                    {t('button.detail')}
+                    {t('list.button.detail')}
                   </Link>
                 </Button>
               </CardFooter>

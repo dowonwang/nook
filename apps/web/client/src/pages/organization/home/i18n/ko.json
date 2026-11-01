@@ -5,5 +5,15 @@
     "button": {
       "create": "조직 생성"
     }
+  },
+  "list": {
+    "title": "조직 목록",
+    "card": {
+      "role": "내 역할",
+      "member_count": "멤버 수"
+    },
+    "button": {
+      "detail": "자세히"
+    }
   }
 }

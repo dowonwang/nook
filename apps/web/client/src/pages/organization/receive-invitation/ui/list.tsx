@@ -4,7 +4,10 @@ import { Card, CardBody, CardFooter } from '@packages/ui/components/card';
 import { useQuery } from '@tanstack/react-query';
 import { useT } from 'next-i18next/client';
 
-import { OrganizationInvitationStatusBadge } from '$entities/organization-invitation';
+import {
+  OrganizationInvitationStatusBadge,
+  receivedOrganizationInvitationListQueryOptions,
+} from '$entities/organization-invitation';
 import { OrganizationMemberRoleBadge } from '$entities/organization-member';
 import {
   AcceptOrganizationInvitationButton,
@@ -16,12 +19,11 @@ import {
   PaginationLimitSelector,
 } from '$shared/ui/pagination';
 
-import { FEAT_ORGANIZATION_INVITATION_RECEIVED_LIST_I18N_NAMESPACE } from '../i18n';
-import { receivedOrganizationInvitationListQueryOptions } from '../model/query';
+import { PAGES_ORGANIZATION_RECEIVE_INVITATION_I18N_NAMESPACE } from '../i18n';
 
 export function ReceivedOrganizationInvitationList() {
   const pagination = useOffsetQuery();
-  const { t } = useT(FEAT_ORGANIZATION_INVITATION_RECEIVED_LIST_I18N_NAMESPACE);
+  const { t } = useT(PAGES_ORGANIZATION_RECEIVE_INVITATION_I18N_NAMESPACE);
 
   const { data: invitations } = useQuery(
     receivedOrganizationInvitationListQueryOptions(pagination),

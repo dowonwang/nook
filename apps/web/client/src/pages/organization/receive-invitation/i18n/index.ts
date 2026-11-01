@@ -7,5 +7,5 @@ type I18nKey = DeepStringify<typeof ko>;
 
 en satisfies I18nKey;
 
-export const FEAT_ORGANIZATION_INVITATION_SENT_LIST_I18N_NAMESPACE =
-  'features/organization-invitation/sent-list';
+export const PAGES_ORGANIZATION_RECEIVE_INVITATION_I18N_NAMESPACE =
+  'pages/organization/receive-invitation';

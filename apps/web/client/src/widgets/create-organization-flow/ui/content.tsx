@@ -12,9 +12,9 @@ import { useT } from 'next-i18next/client';
 
 import { CreateOrganizationForm } from '$features/organization/create';
 import { CreateOrganizationInvitationForm } from '$features/organization-invitation/create';
-import { OrganizationInvitationSentList } from '$features/organization-invitation/sent-list';
 
 import { WIDGET_CREATE_ORGANIZATION_FLOW_I18N_NAMESPACE } from '../i18n';
+import { OrganizationInvitationSentList } from './sent-list';
 import { useCreateOrganizationFlow } from '../model/provider';
 
 export function CreateOrganizationFlowContent() {

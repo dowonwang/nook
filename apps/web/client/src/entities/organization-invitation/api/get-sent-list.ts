@@ -1,7 +1,7 @@
 import type {
   OrganizationInvitationInvitee,
   OrganizationSentInvitation,
-} from '$entities/organization-invitation';
+} from '../model/types';
 import type { GetOrganizationByOrganizationIdInvitations200 } from '@packages/api-client/api';
 
 export async function getOrganizationInvitationSentList(

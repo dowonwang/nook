@@ -6,5 +6,21 @@
   "step_2": {
     "title": "Step 2: Invite Members",
     "description": "Invite members to your organization"
+  },
+  "sent_list": {
+    "table": {
+      "header": {
+        "name": "Name",
+        "email": "Email",
+        "role": "Role",
+        "status": "Status",
+        "actions": "Actions"
+      },
+      "body": {
+        "name_fallback": "Deleted User",
+        "invitee_email_fallback": "-"
+      },
+      "empty": "There are no sent invitations yet"
+    }
   }
 }

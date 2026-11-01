@@ -6,5 +6,21 @@
   "step_2": {
     "title": "2단계: 멤버 초대하기",
     "description": "조직에 함께할 멤버를 초대해 주세요"
+  },
+  "sent_list": {
+    "table": {
+      "header": {
+        "name": "이름",
+        "email": "이메일",
+        "role": "권한",
+        "status": "상태",
+        "actions": "작업"
+      },
+      "body": {
+        "name_fallback": "삭제된 사용자",
+        "invitee_email_fallback": "-"
+      },
+      "empty": "아직 보낸 초대가 없습니다."
+    }
   }
 }

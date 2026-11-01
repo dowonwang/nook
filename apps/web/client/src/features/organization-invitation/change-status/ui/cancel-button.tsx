@@ -5,7 +5,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useT } from 'next-i18next/client';
 import { useTransition } from 'react';
 
-import { ORGANIZATION_INVITATION_SENT_LIST_QUERY_KEY } from '$features/organization-invitation/sent-list/config/query-key';
+import { ORGANIZATION_INVITATION_SENT_LIST_QUERY_KEY } from '$entities/organization-invitation';
 
 import { changeOrganizationInvitationServerAction } from '../api/action.server';
 import { FEAT_ORGANIZATION_CHANGE_STATUS_I18N_NAMESPACE } from '../i18n';

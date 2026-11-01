@@ -10,9 +10,10 @@ import {
   QueryClient,
 } from '@tanstack/react-query';
 
-import { ReceivedOrganizationInvitationList } from '$features/organization-invitation/received-list';
-import { serverReceivedOrganizationListQueryOptions } from '$features/organization-invitation/received-list/server';
+import { serverReceivedOrganizationListQueryOptions } from '$entities/organization-invitation/server';
 import { getOffsetPaginationQuery } from '$shared/lib/pagination/server';
+
+import { ReceivedOrganizationInvitationList } from './list';
 
 import type { SearchParams } from '$shared/types';
 

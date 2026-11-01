@@ -11,11 +11,11 @@ import {
 } from '@tanstack/react-query';
 import { getT } from 'next-i18next/server';
 
-import { MyOrganizationList } from '$features/organization/my-list';
-import { createServerMyOrganizationListQueryOptions } from '$features/organization/my-list/server';
+import { createServerMyOrganizationListQueryOptions } from '$entities/organization/server';
 import { getOffsetPaginationQuery } from '$shared/lib/pagination/server';
 
 import { PAGES_ORGANIZATION_HOME_I18N_NAMESPACE } from '../i18n';
+import { MyOrganizationList } from './list';
 import { CreateOrganizationNavigation } from './navigation/create';
 
 import type { SearchParams } from '$shared/types';

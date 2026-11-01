@@ -11,37 +11,41 @@ import {
 import { useQuery } from '@tanstack/react-query';
 import { useT } from 'next-i18next/client';
 
-import { OrganizationInvitationStatusBadge } from '$entities/organization-invitation';
+import {
+  organizationInvitationSentListQueryOptions,
+  OrganizationInvitationStatusBadge,
+} from '$entities/organization-invitation';
 import { OrganizationMemberRoleBadge } from '$entities/organization-member';
 import { CancelOrganizationInvitationButton } from '$features/organization-invitation/change-status';
 
-import { FEAT_ORGANIZATION_INVITATION_SENT_LIST_I18N_NAMESPACE } from '../i18n';
-import { organizationInvitationSentListQueryOptions } from '../model/query';
+import { WIDGET_CREATE_ORGANIZATION_FLOW_I18N_NAMESPACE } from '../i18n';
 
 interface Props {
   organizationId: string | undefined;
 }
 
 export function OrganizationInvitationSentList({ organizationId }: Props) {
-  const { t } = useT(FEAT_ORGANIZATION_INVITATION_SENT_LIST_I18N_NAMESPACE);
+  const { t } = useT(WIDGET_CREATE_ORGANIZATION_FLOW_I18N_NAMESPACE);
   const { data: invitations } = useQuery(
     organizationInvitationSentListQueryOptions(organizationId),
   );
 
   if (!invitations || invitations.length === 0) {
-    return <p className='text-center text-sm'>{t('table.empty')}</p>;
+    return <p className='text-center text-sm'>{t('sent_list.table.empty')}</p>;
   }
 
   return (
     <Table>
       <TableHeader>
         <TableRow>
-          <TableHeaderCell>{t('table.header.name')}</TableHeaderCell>
-          <TableHeaderCell>{t('table.header.email')}</TableHeaderCell>
-          <TableHeaderCell>{t('table.header.role')}</TableHeaderCell>
-          <TableHeaderCell>{t('table.header.status')}</TableHeaderCell>
+          <TableHeaderCell>{t('sent_list.table.header.name')}</TableHeaderCell>
+          <TableHeaderCell>{t('sent_list.table.header.email')}</TableHeaderCell>
+          <TableHeaderCell>{t('sent_list.table.header.role')}</TableHeaderCell>
+          <TableHeaderCell>
+            {t('sent_list.table.header.status')}
+          </TableHeaderCell>
           <TableHeaderCell className='w-0 whitespace-nowrap'>
-            {t('table.header.actions')}
+            {t('sent_list.table.header.actions')}
           </TableHeaderCell>
         </TableRow>
       </TableHeader>
@@ -49,11 +53,12 @@ export function OrganizationInvitationSentList({ organizationId }: Props) {
         {invitations.map((invitation) => (
           <TableRow key={invitation.id}>
             <TableCell>
-              {invitation.invitee?.name || t('table.body.name_fallback')}
+              {invitation.invitee?.name ||
+                t('sent_list.table.body.name_fallback')}
             </TableCell>
             <TableCell>
               {invitation.invitee?.email ||
-                t('table.body.invitee_email_fallback')}
+                t('sent_list.table.body.invitee_email_fallback')}
             </TableCell>
             <TableCell>
               <OrganizationMemberRoleBadge role={invitation.role} />
