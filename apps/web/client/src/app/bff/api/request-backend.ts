@@ -1,7 +1,8 @@
 import { NextResponse } from 'next/server';
 
-import { createBackendUrl } from '$app/bff/lib/create-backend-url';
 import { createForwardedHeaders } from '$shared/api/bff/server';
+
+import { createBackendUrl } from '../lib/create-backend-url';
 
 import type { NextRequest } from 'next/server';
 

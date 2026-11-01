@@ -6,8 +6,8 @@ import { usePathname } from 'next/navigation';
 import { useT } from 'next-i18next/client';
 import { useEffect } from 'react';
 
-import { WIDGET_SIDEBAR_I18N_NAMESPACE } from '$widgets/sidebar/i18n';
-import { useSidebarContext } from '$widgets/sidebar/model/context';
+import { WIDGET_SIDEBAR_I18N_NAMESPACE } from '../../i18n';
+import { useSidebarContext } from '../../model/context';
 
 import type { MenuData } from '../../model/types';
 

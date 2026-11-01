@@ -3,7 +3,6 @@ import { z } from 'zod';
 
 import { CREATE_INVITATION_REQUIRED_ORGANIZATION_ID_ERROR } from '../config/i18n.key';
 
-import type { CreateOrganizationResponseError } from '$features/organization/create/model/types';
 import type { ActionState } from '$shared/api/action';
 import type {
   PostOrganizationByOrganizationIdInvitations201,
@@ -33,5 +32,5 @@ export type CreateOrganizationInvitationResponseSuccess =
 
 export type CreateOrganizationInvitationActionState = ActionState<
   CreateOrganizationInvitationState,
-  CreateOrganizationResponseError['error']
+  CreateOrganizationInvitationResponseError['error']
 >;

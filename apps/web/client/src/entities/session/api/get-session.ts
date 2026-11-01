@@ -1,4 +1,4 @@
-import type { Session } from '$entities/session';
+import type { Session } from '../model/types';
 import type { GetUserMe200 } from '@packages/api-client/api';
 
 export async function getSession(): Promise<Session> {

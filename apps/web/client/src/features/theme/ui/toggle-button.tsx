@@ -3,8 +3,7 @@
 import { Button } from '@packages/ui/components/button';
 import { Moon, Sun } from 'lucide-react';
 
-import { useThemeContext } from '$app/providers';
-import { applyTheme } from '$shared/lib/theme';
+import { applyTheme, useThemeContext } from '$shared/lib/theme';
 
 import type { Theme } from '$shared/config';
 

@@ -9,7 +9,11 @@ import { serverSessionQueryOptions } from '$entities/session/server';
 import { getI18nCookie } from '$shared/lib/cookie/server';
 import { Footer } from '$widgets/footer';
 import { PrivateHeader } from '$widgets/private-header';
-import { Sidebar, SidebarProvider } from '$widgets/sidebar';
+import {
+  Sidebar,
+  SidebarProvider,
+  SidebarToggleButton,
+} from '$widgets/sidebar';
 
 interface Props {
   children: React.ReactNode;
@@ -28,7 +32,11 @@ export async function PrivateLayout({ children }: Props) {
           <Sidebar />
           <div className='flex min-w-0 flex-1 flex-col'>
             <HydrationBoundary state={dehydrate(queryClient)}>
-              <PrivateHeader />
+              <PrivateHeader
+                sidebarToggle={
+                  <SidebarToggleButton className='md:hidden' type='OPEN' />
+                }
+              />
             </HydrationBoundary>
             <main className='flex flex-1 flex-col p-4 md:p-6 lg:p-8'>
               {children}

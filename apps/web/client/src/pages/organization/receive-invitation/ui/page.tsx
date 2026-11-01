@@ -12,7 +12,7 @@ import {
 
 import { ReceivedOrganizationInvitationList } from '$features/organization-invitation/received-list';
 import { serverReceivedOrganizationListQueryOptions } from '$features/organization-invitation/received-list/server';
-import { getOffsetPaginationQuery } from '$shared/lib/pagination/get-query.server';
+import { getOffsetPaginationQuery } from '$shared/lib/pagination/server';
 
 import type { SearchParams } from '$shared/types';
 

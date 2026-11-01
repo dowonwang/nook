@@ -5,16 +5,12 @@ import '$app/styles/global.css';
 import { Noto_Sans, Noto_Sans_KR } from 'next/font/google';
 import { initServerI18next } from 'next-i18next/server';
 
-import {
-  FlashCookieConsumer,
-  QueryClientProvider,
-  ThemeProvider,
-} from '$app/providers';
+import { FlashCookieConsumer, QueryClientProvider } from '$app/providers';
 import { CLIENT_ENV_CONFIG } from '$shared/config';
 import { i18nConfig } from '$shared/i18n/server';
 import { getFlashCookie, getI18nCookie } from '$shared/lib/cookie/server';
-import { initializeTheme } from '$shared/lib/theme';
-import { getTheme } from '$shared/lib/theme/get-cookie.server';
+import { initializeTheme, ThemeProvider } from '$shared/lib/theme';
+import { getTheme } from '$shared/lib/theme/server';
 
 import type { Metadata } from 'next';
 

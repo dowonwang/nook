@@ -1,4 +1,4 @@
-import { bffFetcher } from '$shared/api/bff/bff-fetcher';
+import { bffFetcher } from '$shared/api/bff/server';
 import { createSearchParams } from '$shared/lib/http';
 
 import type { OffsetPaginationQuery } from '$shared/types';

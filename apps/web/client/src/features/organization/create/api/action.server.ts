@@ -1,7 +1,7 @@
 'use server';
 
 import { actionStateBuilder, createActionStateError } from '$shared/api/action';
-import { bffFetcher } from '$shared/api/bff/bff-fetcher';
+import { bffFetcher } from '$shared/api/bff/server';
 
 import { createOrganizationSchema } from '../model/types';
 
