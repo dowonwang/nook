@@ -1,5 +1,9 @@
 {
   "title": "받은 초대 목록",
+  "hero": {
+    "title": "받은 초대",
+    "description": "다른 조직에서 받은 초대를 확인하고, 참여 여부를 선택하세요."
+  },
   "card": {
     "body": {
       "email_fallback": "사용자 정보를 찾을 수 없습니다.",

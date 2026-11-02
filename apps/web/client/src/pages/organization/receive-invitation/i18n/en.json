@@ -1,5 +1,9 @@
 {
   "title": "Received Invitations",
+  "hero": {
+    "title": "Received Invitations",
+    "description": "Review invitations from other organizations and choose whether to join."
+  },
   "card": {
     "body": {
       "email_fallback": "User information not found.",

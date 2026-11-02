@@ -4,6 +4,9 @@ import {
   HeroSectionTitle,
 } from '@packages/ui/components/hero-section';
 import { Separator } from '@packages/ui/components/separator';
+import { getT } from 'next-i18next/server';
+
+import { PAGES_ORGANIZATION_SENT_INVITATION_I18N_NAMESPACE } from '../i18n';
 
 import type { SearchParams } from '$shared/types';
 
@@ -11,8 +14,10 @@ interface Props {
   searchParams: Promise<SearchParams>;
 }
 
-export function OrganizationSentInvitationPage(props: Props) {
+export async function OrganizationSentInvitationPage(props: Props) {
   console.log(props);
+
+  const { t } = await getT(PAGES_ORGANIZATION_SENT_INVITATION_I18N_NAMESPACE);
 
   // const queryClient = new QueryClient();
   // const pagination = await getOffsetPaginationQuery(searchParams);
@@ -20,8 +25,8 @@ export function OrganizationSentInvitationPage(props: Props) {
   return (
     <>
       <HeroSection className='mb-page'>
-        <HeroSectionTitle>보낸 초대 목록</HeroSectionTitle>
-        <HeroSectionDescription>보낸 초대 목록입니다.</HeroSectionDescription>
+        <HeroSectionTitle>{t('hero.title')}</HeroSectionTitle>
+        <HeroSectionDescription>{t('hero.description')}</HeroSectionDescription>
       </HeroSection>
 
       <Separator className='mb-page' />

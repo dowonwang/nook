@@ -9,11 +9,13 @@ import {
   HydrationBoundary,
   QueryClient,
 } from '@tanstack/react-query';
+import { getT } from 'next-i18next/server';
 
 import { serverReceivedOrganizationListQueryOptions } from '$entities/organization-invitation/server';
 import { getOffsetPaginationQuery } from '$shared/lib/pagination/server';
 
 import { ReceivedOrganizationInvitationList } from './list';
+import { PAGES_ORGANIZATION_RECEIVE_INVITATION_I18N_NAMESPACE } from '../i18n';
 
 import type { SearchParams } from '$shared/types';
 
@@ -26,6 +28,9 @@ export async function OrganizationReceiveInvitationPage({
 }: Props) {
   const queryClient = new QueryClient();
   const pagination = await getOffsetPaginationQuery(searchParams);
+  const { t } = await getT(
+    PAGES_ORGANIZATION_RECEIVE_INVITATION_I18N_NAMESPACE,
+  );
 
   await queryClient.prefetchQuery(
     serverReceivedOrganizationListQueryOptions(pagination),
@@ -34,8 +39,8 @@ export async function OrganizationReceiveInvitationPage({
   return (
     <>
       <HeroSection className='mb-page'>
-        <HeroSectionTitle>받은 초대 목록</HeroSectionTitle>
-        <HeroSectionDescription>받은 초대 목록입니다.</HeroSectionDescription>
+        <HeroSectionTitle>{t('hero.title')}</HeroSectionTitle>
+        <HeroSectionDescription>{t('hero.description')}</HeroSectionDescription>
       </HeroSection>
 
       <Separator className='mb-page' />
