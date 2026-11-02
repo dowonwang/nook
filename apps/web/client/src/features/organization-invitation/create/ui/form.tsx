@@ -71,7 +71,7 @@ export function CreateOrganizationInvitationForm({
     void queryClient.invalidateQueries({
       queryKey: ORGANIZATION_INVITATION_SENT_LIST_QUERY_KEY(organization.id),
     });
-  }, [actionState.success, organization?.id, isPending]);
+  }, [actionState.success, organization?.id, isPending, queryClient]);
 
   return (
     <form action={formAction} noValidate>

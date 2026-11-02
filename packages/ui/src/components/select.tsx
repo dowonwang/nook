@@ -104,6 +104,13 @@ export function Select({
   const contentRef = useRef<HTMLDivElement>(null);
 
   const [open, setOpen] = useState(false);
+  const [prevDisabled, setPrevDisabled] = useState(disabled);
+
+  // 비활성화되면 닫음. effect 대신 렌더 중에 이전 값과 비교해 조정
+  if (disabled !== prevDisabled) {
+    setPrevDisabled(disabled);
+    if (disabled) setOpen(false);
+  }
   const [activeValue, setActiveValue] = useState<string | null>(null);
   const [items, setItems] = useState(() => new Map<string, SelectItemData>());
 
@@ -179,10 +186,6 @@ export function Select({
       document.removeEventListener('pointerdown', handleOutsideClick);
     };
   }, [open]);
-
-  useEffect(() => {
-    if (disabled) setOpen(false);
-  }, [disabled]);
 
   return (
     <SelectContext.Provider

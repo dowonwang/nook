@@ -12,5 +12,5 @@ export function useConsumeFlashCookie(shouldConsume: boolean): void {
       method: 'POST',
       credentials: 'same-origin',
     });
-  }, []);
+  }, [shouldConsume]);
 }

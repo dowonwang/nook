@@ -6,6 +6,7 @@
   "exports": {
     "./base": "./src/base.mjs",
     "./next": "./src/next.mjs",
+    "./react": "./src/react.mjs",
     "./fsd": "./src/fsd.mjs",
     "./server": "./src/server.mjs"
   },
@@ -14,6 +15,7 @@
     "@next/eslint-plugin-next": "^16.2.4",
     "eslint-import-resolver-typescript": "^4.4.4",
     "eslint-plugin-import-x": "^4.16.2",
+    "eslint-plugin-react-hooks": "^7.1.1",
     "typescript-eslint": "^8.58.0"
   },
   "peerDependencies": {

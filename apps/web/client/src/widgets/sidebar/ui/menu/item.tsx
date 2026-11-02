@@ -18,7 +18,7 @@ export function MenuItem({ href, title }: MenuData) {
 
   useEffect(() => {
     setIsOpen(false);
-  }, [pathname]);
+  }, [pathname, setIsOpen]);
 
   return (
     <Link

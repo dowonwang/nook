@@ -54,7 +54,7 @@ export function CreateOrganizationForm({ onSuccess }: Props) {
     } else {
       onSuccess(null);
     }
-  }, [actionState.success]);
+  }, [actionState.success, actionState.state, onSuccess]);
 
   return (
     <form action={formAction} noValidate>

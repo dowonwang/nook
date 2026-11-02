@@ -18,7 +18,7 @@ export function SubMenuGroup({ href, title, sub = [] }: MenuData) {
 
   useEffect(() => {
     setIsOpen(false);
-  }, [pathname]);
+  }, [pathname, setIsOpen]);
 
   return (
     <>
