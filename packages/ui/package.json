@@ -28,7 +28,8 @@
   "devDependencies": {
     "typescript": "catalog:",
     "@types/react": "catalog:next16",
-    "@types/react-dom": "catalog:next16"
+    "@types/react-dom": "catalog:next16",
+    "@packages/eslint-config": "workspace:*"
   },
   "keywords": [],
   "author": "",

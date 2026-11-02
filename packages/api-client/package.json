@@ -18,7 +18,8 @@
   "devDependencies": {
     "@types/node": "^25.3.5",
     "orval": "^8.16.0",
-    "typescript": "catalog:"
+    "typescript": "catalog:",
+    "@packages/eslint-config": "workspace:*"
   },
   "packageManager": "pnpm@10.30.3"
 }

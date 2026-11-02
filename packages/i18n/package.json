@@ -15,7 +15,8 @@
   "devDependencies": {
     "@types/node": "^25.3.5",
     "tsx": "^4.21.0",
-    "typescript": "catalog:"
+    "typescript": "catalog:",
+    "@packages/eslint-config": "workspace:*"
   },
   "keywords": [],
   "author": "",

@@ -19,7 +19,8 @@
     "@types/pg": "^8.18.0",
     "prisma": "catalog:",
     "tsx": "^4.21.0",
-    "typescript": "catalog:"
+    "typescript": "catalog:",
+    "@packages/eslint-config": "workspace:*"
   },
   "dependencies": {
     "@prisma/adapter-pg": "^7.4.2",
