@@ -36,9 +36,9 @@ export function ReceivedOrganizationInvitationList() {
 
   return (
     <>
-      {(invitations.meta?.pagination.total || 0) > 10 && (
-        <PaginationLimitSelector />
-      )}
+      <PaginationLimitSelector
+        total={invitations.meta?.pagination.total || 0}
+      />
 
       <section className='mb-page grid flex-1 grid-cols-1 gap-4 md:grid-cols-2'>
         {invitations.data.map((invitation) => (

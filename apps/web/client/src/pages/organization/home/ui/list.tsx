@@ -35,7 +35,9 @@ export function MyOrganizationList() {
 
   return (
     <>
-      <PaginationLimitSelector />
+      <PaginationLimitSelector
+        total={organizations?.meta?.pagination.total || 0}
+      />
 
       <div className='flex-1'>
         <section className='mb-page grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3'>
