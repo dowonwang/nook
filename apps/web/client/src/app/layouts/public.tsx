@@ -3,12 +3,16 @@ import {
   HydrationBoundary,
   QueryClient,
 } from '@tanstack/react-query';
+import { redirect } from 'next/navigation';
 import { generateI18nStaticParams } from 'next-i18next/server';
 
 import { I18nProvider } from '$app/providers';
 import { serverSessionQueryOptions } from '$entities/session/server';
+import { I18N_LOCALE } from '$shared/i18n';
 import { Footer } from '$widgets/footer';
 import { PublicHeader } from '$widgets/public-header';
+
+import type { I18nLocale } from '$shared/i18n';
 
 interface Props {
   children: React.ReactNode;
@@ -20,6 +24,10 @@ export function generateStaticParams() {
 }
 
 export async function PublicLayout({ children, locale }: Props) {
+  if (!I18N_LOCALE.includes(locale as I18nLocale)) {
+    redirect('/');
+  }
+
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery(serverSessionQueryOptions);
 
