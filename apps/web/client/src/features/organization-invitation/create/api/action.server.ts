@@ -1,7 +1,7 @@
 'use server';
 
 import { actionStateBuilder, createActionStateError } from '$shared/api/action';
-import { bffFetcher } from '$shared/api/bff/server';
+import { serverFetcher } from '$shared/api/bff/server';
 
 import { createOrganizationInvitationSchema, INIT_DATA } from '../model/types';
 
@@ -37,7 +37,7 @@ export async function createOrganizationInvitationAction(
     >(INIT_DATA, createActionStateError(body.error));
   }
 
-  const response = await bffFetcher(
+  const response = await serverFetcher(
     `/api/organization/${organizationId}/invitations`,
     {
       method: 'POST',

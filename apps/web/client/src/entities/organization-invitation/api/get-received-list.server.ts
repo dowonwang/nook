@@ -1,4 +1,4 @@
-import { bffFetcher } from '$shared/api/bff/server';
+import { serverFetcher } from '$shared/api/bff/server';
 import { createSearchParams } from '$shared/lib/http';
 
 import type { OffsetPaginationQuery } from '$shared/types';
@@ -9,7 +9,7 @@ export async function getReceivedOrganizationInvitationsServer(
 ) {
   const searchParams = createSearchParams(query);
 
-  const response = await bffFetcher(
+  const response = await serverFetcher(
     '/api/organization/invitations?' + searchParams.toString(),
     {
       method: 'GET',

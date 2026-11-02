@@ -1,4 +1,4 @@
-import { bffFetcher } from '$shared/api/bff/server';
+import { serverFetcher } from '$shared/api/bff/server';
 import { getAuthAccessFromCookie } from '$shared/lib/cookie/server';
 
 import type { Session } from '../model/types';
@@ -14,7 +14,7 @@ export async function getServerSession(): Promise<Session> {
     };
   }
 
-  const response = await bffFetcher('/api/user/me', {
+  const response = await serverFetcher('/api/user/me', {
     method: 'GET',
     headers: {
       'content-type': 'application/json',

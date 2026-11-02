@@ -1,7 +1,7 @@
 'use server';
 
 import { actionStateBuilder, createActionStateError } from '$shared/api/action';
-import { bffFetcher } from '$shared/api/bff/server';
+import { serverFetcher } from '$shared/api/bff/server';
 
 import { changeOrganizationInvitationStatusSchema } from '../model/types';
 
@@ -26,7 +26,7 @@ export async function changeOrganizationInvitationServerAction({
     >(null, createActionStateError(body.error));
   }
 
-  const response = await bffFetcher(`/api/organization/invitation`, {
+  const response = await serverFetcher(`/api/organization/invitation`, {
     method: 'PATCH',
     headers: {
       'content-type': 'application/json',

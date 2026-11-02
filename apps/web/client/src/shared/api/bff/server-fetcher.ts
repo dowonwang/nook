@@ -9,7 +9,7 @@ function getClientIp(headers: Headers): string | null {
   return forwardedFor?.split(',')[0]?.trim() || realIp || null;
 }
 
-export async function bffFetcher(
+export async function serverFetcher(
   url: string,
   options: RequestInit,
 ): Promise<Response> {

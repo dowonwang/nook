@@ -3,7 +3,7 @@
 import { redirect } from 'next/navigation';
 
 import { actionStateBuilder, createActionStateError } from '$shared/api/action';
-import { bffFetcher } from '$shared/api/bff/server';
+import { serverFetcher } from '$shared/api/bff/server';
 import { setFlashCookie } from '$shared/lib/cookie/server';
 
 import { SIGN_UP_SUCCESS_SIGNIN_REQUIRED } from '../config/i18n.key';
@@ -49,7 +49,7 @@ export async function signUpAction(
     );
   }
 
-  const response = await bffFetcher('/api/auth/sign-up', {
+  const response = await serverFetcher('/api/auth/sign-up', {
     method: 'POST',
     headers: {
       'content-type': 'application/json',

@@ -1,4 +1,4 @@
-import { bffFetcher } from '$shared/api/bff/server';
+import { serverFetcher } from '$shared/api/bff/server';
 
 import type { UserOrganization } from '$entities/organization';
 import type { GetOrganizationSlugBySlug200 } from '@packages/api-client/api';
@@ -7,7 +7,7 @@ import type { GetOrganizationSlugBySlug200 } from '@packages/api-client/api';
 export async function getOrganizationBySlugServer(
   slug: string,
 ): Promise<UserOrganization | null> {
-  const response = await bffFetcher(
+  const response = await serverFetcher(
     `/api/organization/slug/${encodeURIComponent(slug)}`,
     {
       method: 'GET',
