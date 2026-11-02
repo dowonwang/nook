@@ -58,12 +58,12 @@ feature 슬라이스는 **사용자가 하는 행동 하나**(생성, 수정, �
 
 ### 0.5 API 요청을 두는 위치
 
-| 위치                    | 두는 요청                                             | 예시                                          |
-| ----------------------- | ----------------------------------------------------- | --------------------------------------------- |
-| `entities/<entity>/api` | 여러 곳에서 재사용하는 조회와 그 쿼리 키, 쿼리 옵션   | 세션 조회(`entities/session`)                 |
-| `features/<action>/api` | 그 행동에 해당하는 변경 요청(Server Action, mutation) | 조직 생성, 초대 상태 변경                     |
-| `pages/<page>/api`      | 그 페이지에서만 쓰는 조회                             | slug로 조직 조회(`pages/organization/detail`) |
-| `shared/api`            | 도메인과 무관한 요청 도구                             | `serverFetcher`, Server Action 빌더           |
+| 위치                    | 두는 요청                                             | 예시                                                 |
+| ----------------------- | ----------------------------------------------------- | ---------------------------------------------------- |
+| `entities/<entity>/api` | 여러 곳에서 재사용하는 조회와 그 쿼리 키, 쿼리 옵션   | 세션 조회(`entities/session`)                        |
+| `features/<action>/api` | 그 행동에 해당하는 변경 요청(Server Action, mutation) | 조직 생성, 초대 상태 변경                            |
+| `pages/<page>/api`      | 그 페이지에서만 쓰는 조회                             | slug로 조직 조회(`pages/organization/detail`)        |
+| `shared/api`            | 도메인과 무관한 요청 도구                             | `clientFetcher`, `serverFetcher`, Server Action 빌더 |
 
 - 처음에는 `pages/<page>/api`에 두고, 다른 페이지나 feature에서도 필요해지면 `entities/<entity>/api`로 내립니다.
 - 쿼리 키는 그 쿼리 옵션과 같은 슬라이스에 둡니다. 다른 슬라이스가 무효화에 쓰려면 해당 슬라이스 진입점에서 공개합니다.

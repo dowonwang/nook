@@ -2,6 +2,8 @@ import { headers } from 'next/headers';
 
 import { SERVER_ENV_CONFIG } from '$shared/config/server';
 
+import { BFF_REQUEST_HEADER } from './config/header';
+
 function getClientIp(headers: Headers): string | null {
   const forwardedFor = headers.get('x-forwarded-for');
   const realIp = headers.get('x-real-ip');
@@ -33,6 +35,8 @@ export async function serverFetcher(
   if (userAgent) {
     requestHeaders.set('x-origin-client-user-agent', userAgent);
   }
+
+  requestHeaders.set(BFF_REQUEST_HEADER.name, BFF_REQUEST_HEADER.value);
 
   return fetch(`${SERVER_ENV_CONFIG.APP_BASE_URL}${url}`, {
     ...options,

@@ -1,11 +1,20 @@
 import { NextResponse } from 'next/server';
 
+import { isBffRequest } from '$shared/api/bff/server';
 import {
   clearFlashCookieToResponse,
   getFlashCookie,
 } from '$shared/lib/cookie/server';
 
-export async function handleFlashToken(): Promise<NextResponse> {
+import type { NextRequest } from 'next/server';
+
+export async function handleFlashToken(
+  request: NextRequest,
+): Promise<NextResponse> {
+  if (!isBffRequest(request)) {
+    return new NextResponse(null, { status: 404 });
+  }
+
   const flashToken = await getFlashCookie();
   const response = new NextResponse(null, {
     status: 204,

@@ -1,3 +1,5 @@
+import { clientFetcher } from '$shared/api/bff';
+
 import type {
   OrganizationInvitationInvitee,
   OrganizationSentInvitation,
@@ -9,7 +11,7 @@ export async function getOrganizationInvitationSentList(
 ): Promise<OrganizationSentInvitation[]> {
   if (!organizationId) return [];
 
-  const response = await fetch(
+  const response = await clientFetcher(
     `/api/organization/${organizationId}/invitations`,
     {
       method: 'GET',
