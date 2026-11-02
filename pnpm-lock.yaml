@@ -21,6 +21,28 @@ catalogs:
     zod:
       specifier: ^4.3.6
       version: 4.3.6
+  eslint:
+    '@eslint/js':
+      specifier: ^10.0.1
+      version: 10.0.1
+    '@next/eslint-plugin-next':
+      specifier: ^16.2.4
+      version: 16.2.4
+    eslint:
+      specifier: ^10.2.0
+      version: 10.2.0
+    eslint-import-resolver-typescript:
+      specifier: ^4.4.4
+      version: 4.4.4
+    eslint-plugin-import-x:
+      specifier: ^4.16.2
+      version: 4.16.2
+    eslint-plugin-react-hooks:
+      specifier: ^7.1.1
+      version: 7.1.1
+    typescript-eslint:
+      specifier: ^8.58.0
+      version: 8.58.0
   next16:
     '@types/react':
       specifier: 19.3.0
@@ -58,7 +80,7 @@ importers:
         specifier: ^4.3.1
         version: 4.3.1(@types/node@26.5.0)(typescript@5.9.3)
       eslint:
-        specifier: ^10.2.0
+        specifier: catalog:eslint
         version: 10.2.0(jiti@2.7.0)
       husky:
         specifier: ^9.1.7
@@ -245,28 +267,28 @@ importers:
   packages/eslint-config:
     dependencies:
       '@eslint/js':
-        specifier: ^10.0.1
+        specifier: catalog:eslint
         version: 10.0.1(eslint@10.2.0(jiti@2.7.0))
       '@next/eslint-plugin-next':
-        specifier: ^16.2.4
+        specifier: catalog:eslint
         version: 16.2.4
       eslint:
-        specifier: ^10.2.0
+        specifier: catalog:eslint
         version: 10.2.0(jiti@2.7.0)
       eslint-import-resolver-typescript:
-        specifier: ^4.4.4
+        specifier: catalog:eslint
         version: 4.4.4(eslint-plugin-import-x@4.16.2(@typescript-eslint/utils@8.58.0(eslint@10.2.0(jiti@2.7.0))(typescript@5.9.3))(eslint@10.2.0(jiti@2.7.0)))(eslint@10.2.0(jiti@2.7.0))
       eslint-plugin-import-x:
-        specifier: ^4.16.2
+        specifier: catalog:eslint
         version: 4.16.2(@typescript-eslint/utils@8.58.0(eslint@10.2.0(jiti@2.7.0))(typescript@5.9.3))(eslint@10.2.0(jiti@2.7.0))
       eslint-plugin-react-hooks:
-        specifier: ^7.1.1
+        specifier: catalog:eslint
         version: 7.1.1(eslint@10.2.0(jiti@2.7.0))
       typescript:
         specifier: 'catalog:'
         version: 5.9.3
       typescript-eslint:
-        specifier: ^8.58.0
+        specifier: catalog:eslint
         version: 8.58.0(eslint@10.2.0(jiti@2.7.0))(typescript@5.9.3)
 
   packages/i18n:

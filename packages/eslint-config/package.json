@@ -11,15 +11,15 @@
     "./server": "./src/server.mjs"
   },
   "dependencies": {
-    "@eslint/js": "^10.0.1",
-    "@next/eslint-plugin-next": "^16.2.4",
-    "eslint-import-resolver-typescript": "^4.4.4",
-    "eslint-plugin-import-x": "^4.16.2",
-    "eslint-plugin-react-hooks": "^7.1.1",
-    "typescript-eslint": "^8.58.0"
+    "@eslint/js": "catalog:eslint",
+    "@next/eslint-plugin-next": "catalog:eslint",
+    "eslint-import-resolver-typescript": "catalog:eslint",
+    "eslint-plugin-import-x": "catalog:eslint",
+    "eslint-plugin-react-hooks": "catalog:eslint",
+    "typescript-eslint": "catalog:eslint"
   },
   "peerDependencies": {
-    "eslint": "^10.2.0",
+    "eslint": "catalog:eslint",
     "typescript": "catalog:"
   }
 }
