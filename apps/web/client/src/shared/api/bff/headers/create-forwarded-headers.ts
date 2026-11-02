@@ -1,3 +1,4 @@
+import { SERVER_ENV_CONFIG } from '$shared/config/server';
 import { getClientIp } from '$shared/lib/http';
 
 const HEADER_ALLOW_LIST = ['content-type', 'authorization'] as const;
@@ -36,6 +37,9 @@ export function createForwardedHeaders(
   if (userAgent) {
     headers.set('x-client-user-agent', userAgent);
   }
+
+  // API 서버는 이 값이 있는 요청만 처리. 브라우저로는 전달되지 않음
+  headers.set('x-internal-secret', SERVER_ENV_CONFIG.INTERNAL_API_SECRET);
 
   if (authorization && !headers.has('authorization')) {
     headers.set('authorization', `Bearer ${authorization}`);

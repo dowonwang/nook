@@ -5,7 +5,7 @@ import { Elysia } from 'elysia';
 import authModule from '$modules/auth';
 import organizationModule from '$modules/organization';
 import userModule from '$modules/user';
-import { errorPlugin } from '$shared/http';
+import { errorPlugin, internalRequestPlugin } from '$shared/http';
 import { LOG_EVENT, LOG_MESSAGE, logger } from '$shared/logger';
 import { zodToOpenApiSchema } from '$shared/responses';
 
@@ -37,6 +37,7 @@ const app = new Elysia()
     }),
   )
   .use(errorPlugin)
+  .use(internalRequestPlugin)
   .use(authModule)
   .use(organizationModule)
   .use(userModule)
