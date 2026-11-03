@@ -18,8 +18,8 @@ catalogs:
     dotenv: 17.3.1
   prisma7:
     prisma: 7.10.0
-    '@prisma/adapter-pg': 7.4.2
-    '@prisma/client': 7.4.2
+    '@prisma/adapter-pg': 7.10.0
+    '@prisma/client': 7.10.0
   postgres8:
     '@types/pg': 8.18.0
     'pg': 8.20.0
