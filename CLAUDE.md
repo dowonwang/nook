@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Overview
 
-"Nook" — a pnpm workspace monorepo (pnpm `10.30.3`) with a Bun/Elysia API server, a Next.js 16 / React 19 web client, and shared packages. Docs, commit messages, and comments are written in Korean.
+"Nook" — a pnpm workspace monorepo (pnpm `10.30.3`) with a Bun/Elysia API server, a Next.js 16 / React 19 web client, and shared packages. Docs, commit messages, and comments are written in Korean. Docs, scripts, and editor config (e.g. `.vscode` snippets) assume a macOS development environment; Windows is not supported as-is (path separators, shell commands).
 
 | Workspace                 | Path                     | Role                                                        |
 | ------------------------- | ------------------------ | ----------------------------------------------------------- |

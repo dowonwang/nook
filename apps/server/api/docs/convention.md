@@ -2,6 +2,8 @@
 
 본 문서는 `@server/api`(Bun · Elysia · Prisma)에만 적용되는 구조와 규칙을 정의합니다.
 
+> 이 저장소의 문서, 스크립트, 개발 도구 설정(`.vscode` 스니펫 등)은 **macOS 개발 환경**을 기준으로 작성했습니다. Windows에서는 경로 구분자(`\`), 셸 명령, 일부 설정이 그대로 동작하지 않을 수 있습니다.
+
 - 모든 서버 앱에 공통으로 적용되는 아키텍처·명명·모듈 간 참조 규칙은 [Server Architecture & Naming Convention](../../docs/convention.md)을 따릅니다. 본 문서는 그 규칙을 이 앱의 기술 스택에 맞게 구체화한 내용입니다.
 - 도메인별 규칙은 도메인 문서를 따릅니다.
   - [Organization Domain Rules](./organization.md)
