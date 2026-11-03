@@ -5,6 +5,7 @@ import { redirect } from 'next/navigation';
 import { actionStateBuilder, createActionStateError } from '$shared/api/action';
 import { serverFetcher } from '$shared/api/bff/server';
 import { setAuthCookie } from '$shared/lib/cookie/server';
+import { getSafeRedirectPath } from '$shared/lib/http/server';
 
 import { signInSchema } from '../model/types';
 
@@ -54,7 +55,8 @@ export async function signInAction(
     const { data } = (await response.json()) as SignInResponseSuccess;
     await setAuthCookie(data.accessToken, data.refreshToken);
 
-    redirect(previousState.state['redirect-to']);
+    // 이전 상태는 클라이언트가 조작할 수 있으므로 서버에서 다시 검증
+    redirect(getSafeRedirectPath(previousState.state['redirect-to']));
   }
 
   return actionStateBuilder.error(
