@@ -24,12 +24,12 @@ export async function OrganizationSentInvitationPage(props: Props) {
 
   return (
     <>
-      <HeroSection className='mb-page'>
+      <HeroSection>
         <HeroSectionTitle>{t('hero.title')}</HeroSectionTitle>
         <HeroSectionDescription>{t('hero.description')}</HeroSectionDescription>
       </HeroSection>
 
-      <Separator className='mb-page' />
+      <Separator />
     </>
   );
 }

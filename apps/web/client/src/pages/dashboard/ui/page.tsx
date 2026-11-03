@@ -13,12 +13,12 @@ export async function DashboardPage() {
 
   return (
     <>
-      <HeroSection className='mb-6'>
+      <HeroSection>
         <HeroSectionTitle>{t('hero.title')}</HeroSectionTitle>
         <HeroSectionDescription>{t('hero.description')}</HeroSectionDescription>
       </HeroSection>
 
-      <Separator className='my-6' />
+      <Separator />
     </>
   );
 }

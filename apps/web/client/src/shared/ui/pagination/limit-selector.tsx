@@ -41,7 +41,7 @@ export function PaginationLimitSelector({ total }: Props) {
   }
 
   return (
-    <Select value={limit} onValueChange={handleClick} className='mb-4 ml-auto'>
+    <Select value={limit} onValueChange={handleClick} className='ml-auto'>
       <SelectInput name='limit' />
 
       <SelectTrigger />

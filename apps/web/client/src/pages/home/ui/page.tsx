@@ -54,7 +54,7 @@ export async function HomePage() {
 
         <div className='grid grid-cols-1 gap-4 text-start md:grid-cols-3'>
           <Card>
-            <CardBody className='space-y-4'>
+            <CardBody>
               <div className='flex items-center justify-between'>
                 <Building className={ICON_STYLE} />
                 <Badge>{t('hero.features.organization.status')}</Badge>
@@ -67,7 +67,7 @@ export async function HomePage() {
           </Card>
 
           <Card>
-            <CardBody className='space-y-4'>
+            <CardBody>
               <div className='flex items-center justify-between'>
                 <Share2 className={ICON_STYLE} />
                 <Badge variant='secondary'>
@@ -82,7 +82,7 @@ export async function HomePage() {
           </Card>
 
           <Card>
-            <CardBody className='space-y-4'>
+            <CardBody>
               <div className='flex items-center justify-between'>
                 <MessageCircle className={ICON_STYLE} />
                 <Badge variant='secondary'>

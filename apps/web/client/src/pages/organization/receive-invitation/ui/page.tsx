@@ -38,12 +38,12 @@ export async function OrganizationReceiveInvitationPage({
 
   return (
     <>
-      <HeroSection className='mb-page'>
+      <HeroSection>
         <HeroSectionTitle>{t('hero.title')}</HeroSectionTitle>
         <HeroSectionDescription>{t('hero.description')}</HeroSectionDescription>
       </HeroSection>
 
-      <Separator className='mb-page' />
+      <Separator />
 
       <HydrationBoundary state={dehydrate(queryClient)}>
         <ReceivedOrganizationInvitationList />

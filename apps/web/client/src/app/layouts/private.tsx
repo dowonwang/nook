@@ -38,7 +38,7 @@ export async function PrivateLayout({ children }: Props) {
                 }
               />
             </HydrationBoundary>
-            <main className='flex flex-1 flex-col p-4 md:p-6 lg:p-8'>
+            <main className='gap-page flex flex-1 flex-col p-4 md:p-6 lg:p-8'>
               {children}
             </main>
             <Footer />

@@ -37,12 +37,12 @@ export async function OrganizationDetailPage({ slug }: Props) {
 
   return (
     <>
-      <HeroSection className='mb-page'>
+      <HeroSection>
         <HeroSectionTitle>{organization.title}</HeroSectionTitle>
         <HeroSectionDescription>{t('hero.description')}</HeroSectionDescription>
       </HeroSection>
 
-      <Separator className='mb-page' />
+      <Separator />
 
       <Card isArticle>
         <CardHeader>

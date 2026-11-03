@@ -48,7 +48,7 @@ export function CreateOrganizationFlowContent() {
             inviterRole='ADMIN'
             disabled={!isOrganizationCreated}
           />
-          <Separator className='my-6' />
+          <Separator />
           <OrganizationInvitationSentList organizationId={organization?.id} />
         </CardBody>
       </Card>

@@ -35,15 +35,12 @@ export async function OrganizationHomePage({ searchParams }: Props) {
 
   return (
     <>
-      <HeroSection
-        className='mb-page'
-        action={<CreateOrganizationNavigation />}
-      >
+      <HeroSection action={<CreateOrganizationNavigation />}>
         <HeroSectionTitle>{t('hero.title')}</HeroSectionTitle>
         <HeroSectionDescription>{t('hero.description')}</HeroSectionDescription>
       </HeroSection>
 
-      <Separator className='mb-page' />
+      <Separator />
 
       <HydrationBoundary state={dehydrate(queryClient)}>
         <MyOrganizationList />

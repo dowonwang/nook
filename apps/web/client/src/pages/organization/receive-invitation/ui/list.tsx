@@ -40,10 +40,10 @@ export function ReceivedOrganizationInvitationList() {
         total={invitations.meta?.pagination.total || 0}
       />
 
-      <section className='mb-page grid flex-1 grid-cols-1 gap-4 md:grid-cols-2'>
+      <section className='grid flex-1 grid-cols-1 gap-4 md:grid-cols-2'>
         {invitations.data.map((invitation) => (
           <Card key={invitation.id} isArticle className='h-fit'>
-            <CardBody className='space-y-6'>
+            <CardBody>
               <div className='flex items-center justify-between'>
                 <div>
                   <h2 className='text-xl font-semibold'>

@@ -58,7 +58,7 @@ export function CardBody({
   className,
   ...rest
 }: React.HTMLAttributes<HTMLDivElement>) {
-  const style = tw`p-5 group-aria-disabled:opacity-50`;
+  const style = tw`space-y-6 p-5 group-aria-disabled:opacity-50`;
 
   return (
     <div {...rest} className={cn(style, className)}>

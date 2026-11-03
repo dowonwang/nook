@@ -40,7 +40,7 @@ export function MyOrganizationList() {
       />
 
       <div className='flex-1'>
-        <section className='mb-page grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3'>
+        <section className='grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3'>
           <h2 className='sr-only'>{t('list.title')}</h2>
 
           {organizations?.data.map((organization) => (

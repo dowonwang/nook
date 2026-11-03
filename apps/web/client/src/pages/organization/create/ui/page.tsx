@@ -14,7 +14,7 @@ export async function CreateOrganizationPage() {
 
   return (
     <>
-      <HeroSection className='mb-6'>
+      <HeroSection>
         <HeroSectionTitle>{t('hero.title')}</HeroSectionTitle>
         <HeroSectionDescription>{t('hero.description')}</HeroSectionDescription>
       </HeroSection>
