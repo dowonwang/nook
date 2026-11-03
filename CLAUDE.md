@@ -111,3 +111,7 @@ Conventions (from `apps/web/docs/convention.md`):
 - Within a slice use relative imports; across slices/layers use the alias and import only from the slice's `index.ts` / `server.ts`, never deep paths.
 - Slices on the same layer don't import each other. When one must (e.g. entity relations), the referenced slice exposes only what's needed via `@x/<consumer>.ts` and the consumer imports from that path (`$entities/organization-member/@x/organization`).
 - Generic UI goes in `@packages/ui` (imported as `@packages/ui/components/<name>`); domain UI stays in the app's entities/features/widgets.
+- Root `app/` route files only read `params`/`searchParams` and delegate to a `$pages` component (Route Handlers re-export from `$app/<segment>/server.ts`); no UI, copy, or data fetching in them.
+- Query naming: `<DOMAIN>_QUERY_KEY` / `<DOMAIN>_BASE_QUERY_KEY` (prefix used for invalidation), `<domain>QueryOptions` (client) and `server<Domain>QueryOptions` (`*.server.ts`) sharing the same key; prefetch in RSC and pass down via `HydrationBoundary`.
+- i18n namespace constants are named `<LAYER>_<SLICE_PATH>_I18N_NAMESPACE` with plural layer names (`PAGES_ORGANIZATION_HOME_I18N_NAMESPACE`); the value is the slice path.
+- Private layout `<main>` spaces its direct children with `gap-page`; don't add `mb-*`/`my-*` to page-level blocks.

@@ -70,7 +70,7 @@ feature 슬라이스는 **사용자가 하는 행동 하나**(생성, 수정, �
 
 ### 0.6 자동 검사 (ESLint)
 
-`apps/web/client/eslint.config.mjs`가 조립하는 `@packages/eslint-config/fsd`(`packages/eslint-config/fsd.mjs`)의 `no-restricted-imports` 규칙이 아래 import를 오류로 막습니다. 별도 플러그인은 쓰지 않습니다.
+`apps/web/client/eslint.config.mjs`가 조립하는 `@packages/eslint-config/fsd`(`packages/eslint-config/src/fsd.mjs`)의 `no-restricted-imports` 규칙이 아래 import를 오류로 막습니다. 별도 플러그인은 쓰지 않습니다.
 
 | 검사                     | 방식                                                                                                                             |
 | ------------------------ | -------------------------------------------------------------------------------------------------------------------------------- |
@@ -98,6 +98,9 @@ feature 슬라이스는 **사용자가 하는 행동 하나**(생성, 수정, �
 - **같은 레이어 교차 참조**: 같은 레이어의 다른 슬라이스는 원칙적으로 참조하지 않습니다. 엔티티 간 관계처럼 꼭 필요한 경우에만, 참조되는 슬라이스에 `@x/<참조하는 슬라이스>.ts` 교차 참조 진입점을 만들어 필요한 것만 공개하고 그 진입점으로만 참조합니다. ([4.3 교차 참조 예시](#43-같은-레이어-교차-참조-x))
 
 - **서버/클라이언트 분리**: 별도의 `server/` 디렉터리를 두지 않고, 서버 전용 로직 파일명에 `*.server.ts` 접미사를 붙여 구분합니다.
+  - 서버 전용 로직: `next/headers`(`cookies()`, `headers()`), 서버 환경 변수(`SERVER_ENV_CONFIG`), `next-i18next/server`의 설정·리소스 로딩, Server Action(`'use server'`)처럼 브라우저 번들에 들어가면 안 되는 코드입니다.
+  - RSC 페이지·레이아웃 컴포넌트(`ui/page.tsx` 등)는 서버에서 렌더링되더라도 UI 파일이므로 접미사를 붙이지 않습니다. 이런 컴포넌트가 쓰는 서버 전용 함수가 `*.server.ts`에 있어야 합니다.
+  - 서버 전용 파일은 `server.ts`로만 공개합니다. `index.ts`로 공개하면 클라이언트 컴포넌트가 실수로 import할 수 있습니다.
 
 ---
 
@@ -262,3 +265,149 @@ import type { OrganizationMemberRole } from '$entities/organization-member';
 - 교차 참조가 많아지면 두 슬라이스를 하나로 합치는 것을 검토합니다.
 
 ---
+
+---
+
+## 5. Next.js 라우트와 서버 경계
+
+### 5.1 라우트 파일 (`app/`)
+
+라우트는 루트 `app/`에 두고, 화면 구성은 `src/pages`에 둡니다. 라우트 파일은 요청 값(`params`, `searchParams`)을 꺼내 page 컴포넌트에 넘기는 일만 합니다.
+
+| 경로                     | 용도                                        | locale 접두사 |
+| ------------------------ | ------------------------------------------- | ------------- |
+| `app/[locale]/(public)/` | 로그인 없이 보는 페이지(홈, 로그인 등)      | 있음          |
+| `app/(private)/`         | 로그인이 필요한 페이지(대시보드, 조직 등)   | 없음          |
+| `app/api/[...path]/`     | BFF Route Handler                           | 없음          |
+| `app/action/`            | 브라우저에서 호출하는 앱 전용 Route Handler | 없음          |
+
+```tsx
+// app/(private)/org/page.tsx
+import { OrganizationHomePage } from '$pages/organization/home';
+
+export default function Page({ searchParams }: Props) {
+  return <OrganizationHomePage searchParams={searchParams} />;
+}
+```
+
+- 라우트 파일에 UI, 문구, 데이터 조회를 직접 작성하지 않습니다. 임시 페이지라도 `src/pages`에 슬라이스를 만들고 위임합니다.
+- Route Handler(`route.ts`)도 처리 로직은 `$app/<segment>/server.ts`에서 가져와 다시 내보내기만 합니다.
+
+### 5.2 미들웨어 (`proxy.ts`)
+
+루트 `proxy.ts`(Next 16의 middleware)는 `src/app/middleware`에 위임합니다. 경로 범위(public/private) 판단, locale redirect, 세션 갱신과 로그인 redirect를 처리합니다.
+
+- `matcher`는 `api/`, `action/` 하위 경로와 정적 파일을 제외합니다. 이 경로의 Route Handler는 locale redirect와 세션 처리를 받지 않으므로, 필요한 검사를 핸들러 안에서 직접 합니다.
+- 새 private 경로는 `src/app/middleware/config/route-scope.ts`의 `PRIVATE_ROUTE_PREFIXES`에 추가합니다.
+
+### 5.3 BFF와 요청 도구
+
+브라우저는 백엔드를 직접 호출하지 않습니다. 모든 요청은 Next의 `/api/...`(BFF)를 거쳐 백엔드로 전달되고, BFF가 쿠키의 토큰을 붙이고 만료되면 갱신합니다.
+
+| 호출 위치                                    | 도구            | 진입점                   |
+| -------------------------------------------- | --------------- | ------------------------ |
+| 클라이언트 컴포넌트, 클라이언트 쿼리         | `clientFetcher` | `$shared/api/bff`        |
+| RSC, Server Action, 서버 쿼리(`*.server.ts`) | `serverFetcher` | `$shared/api/bff/server` |
+
+- 두 도구 모두 `x-nook-request` 헤더를 붙입니다. BFF와 `app/action/` 핸들러는 `isBffRequest`로 이 헤더를 확인하고, 없거나 주소창으로 연 요청(`sec-fetch-mode: navigate`)이면 404를 반환합니다. 이 헤더 값은 비밀이 아니며, 주소창 접근과 다른 사이트의 요청(CSRF)을 막는 용도입니다.
+- BFF가 백엔드로 보낼 때는 `createForwardedHeaders`가 허용 목록의 헤더와 `x-internal-secret`(서버 환경 변수 `INTERNAL_API_SECRET`)만 전달합니다. 이 값은 브라우저로 나가지 않으며, API 서버는 이 값이 맞는 요청만 처리합니다.
+- `fetch('/api/...')`를 직접 쓰지 않습니다. 헤더가 빠져 404가 됩니다.
+- 새 Route Handler를 `app/action/`에 추가하면 핸들러 첫 줄에서 `isBffRequest`를 검사합니다.
+
+---
+
+## 6. 데이터 요청 패턴
+
+### 6.1 조회: 쿼리 키와 쿼리 옵션
+
+조회는 `api/`(요청 함수), `config/query-key.ts`(쿼리 키), `model/query.ts`·`model/query.server.ts`(쿼리 옵션)로 나눕니다.
+
+| 대상                 | 이름 규칙                                    | 예시                                  |
+| -------------------- | -------------------------------------------- | ------------------------------------- |
+| 쿼리 키              | `<DOMAIN>_QUERY_KEY`                         | `SESSION_QUERY_KEY`                   |
+| 목록 전체 무효화 키  | `<DOMAIN>_BASE_QUERY_KEY`                    | `MY_ORGANIZATION_LIST_BASE_QUERY_KEY` |
+| 클라이언트 쿼리 옵션 | `<domain>QueryOptions`                       | `sessionQueryOptions`                 |
+| 서버 쿼리 옵션       | `server<Domain>QueryOptions` (`*.server.ts`) | `serverSessionQueryOptions`           |
+
+- 클라이언트와 서버 쿼리 옵션은 같은 쿼리 키를 씁니다. 그래야 서버에서 미리 받은 데이터를 클라이언트가 그대로 이어받습니다.
+- 페이지네이션처럼 인자가 있는 키는 base 키를 펼친 뒤 인자를 붙입니다(`[...BASE, page, limit]`).
+- 인자가 있는 쿼리 옵션은 같은 이름의 함수로 만듭니다(`receivedOrganizationInvitationListQueryOptions(pagination)`).
+
+### 6.2 서버 prefetch와 hydration
+
+RSC 페이지에서 서버 쿼리 옵션으로 미리 받고, `HydrationBoundary`로 클라이언트 컴포넌트에 넘깁니다.
+
+```tsx
+// pages/organization/receive-invitation/ui/page.tsx (RSC)
+const queryClient = new QueryClient();
+await queryClient.prefetchQuery(
+  serverReceivedOrganizationListQueryOptions(pagination),
+);
+
+return (
+  <HydrationBoundary state={dehydrate(queryClient)}>
+    <ReceivedOrganizationInvitationList />{' '}
+    {/* 클라이언트 쿼리 옵션으로 useQuery */}
+  </HydrationBoundary>
+);
+```
+
+### 6.3 변경: Server Action과 무효화
+
+- 변경 요청은 해당 feature의 `api/action.server.ts`(`'use server'`)에 둡니다.
+- 폼은 `useActionState`와 `$shared/api/action`의 도구를 씁니다. 상태 모양은 `ActionState<TState, TResponseError>`(`success`, `state`, `error`)입니다.
+  - 입력 검증 실패: `createActionStateError(zodError)`로 필드별 에러를 만들고 `useActionFieldErrors`로 표시합니다.
+  - 서버 응답 에러: 응답의 `error.code`를 그대로 담고 `useActionErrorMessage`가 i18n 키로 번역합니다.
+- 클라이언트가 보낸 이전 상태(`previousState`)는 사용자가 조작할 수 있습니다. redirect 경로처럼 서버 동작에 쓰는 값은 서버에서 다시 검증합니다.
+- 변경 후에는 영향을 받는 목록을 base 키로 무효화합니다. 다른 feature의 쿼리 키가 아니라 `entities`에서 공개한 키를 씁니다([0.4](#04-feature는-사용자-행동-단위)).
+
+---
+
+## 7. i18n
+
+슬라이스마다 `i18n/` 폴더를 두고 그 슬라이스의 문구만 넣습니다.
+
+**새 i18n 폴더는 스니펫으로 만듭니다.**
+
+1. `i18n/` 폴더에 `ko.json`, `en.json`을 만들고 문구를 넣습니다(처음에는 `{}`도 됩니다).
+2. `i18n/index.ts`를 만들어 **먼저 저장한 뒤**, 빈 파일에서 `i18nns`를 입력하고 스니펫을 선택합니다(`.vscode/i18n.code-snippets`).
+3. 스니펫이 파일 경로로 네임스페이스 상수 이름과 값을 채웁니다. 아래 규칙대로 들어갔는지 확인합니다.
+   - `src/pages/organization/home/i18n/index.ts` → `PAGES_ORGANIZATION_HOME_I18N_NAMESPACE = 'pages/organization/home'`
+
+저장하지 않은 파일은 경로가 없어 이름이 채워지지 않으므로, 저장 후에 스니펫을 사용합니다. 스니펫 내용을 바꾸면 이 섹션의 예시도 함께 맞춥니다.
+
+```text
+pages/organization/home/i18n/
+├── ko.json     # 기준 언어. 키 구조의 원본
+├── en.json     # ko.json과 같은 키 구조
+└── index.ts    # 키 타입 검사와 네임스페이스 상수
+```
+
+```typescript
+// pages/organization/home/i18n/index.ts
+import en from './en.json';
+
+import type { DeepStringify } from '$shared/i18n';
+import type ko from './ko.json';
+
+type I18nKey = DeepStringify<typeof ko>;
+
+en satisfies I18nKey; // en.json에 키가 빠지거나 남으면 typecheck 실패
+
+export const PAGES_ORGANIZATION_HOME_I18N_NAMESPACE = 'pages/organization/home';
+```
+
+- 네임스페이스 값은 `src` 아래 슬라이스 경로와 같습니다. 리소스를 `<네임스페이스>/i18n/<locale>.json`에서 불러오기 때문입니다.
+- 상수 이름은 `<레이어>_<슬라이스 경로>_I18N_NAMESPACE`입니다. 레이어는 폴더 이름 그대로 복수형 대문자(`ENTITIES`, `FEATURES`, `PAGES`, `WIDGETS`)를 쓰고, 경로의 `/`와 `-`는 `_`로 바꿉니다.
+  - `features/organization-invitation/change-status` → `FEATURES_ORGANIZATION_INVITATION_CHANGE_STATUS_I18N_NAMESPACE`
+- 서버 컴포넌트는 `getT(네임스페이스)`(`next-i18next/server`), 클라이언트 컴포넌트는 `useT(네임스페이스)`(`next-i18next/client`)를 씁니다.
+- 화면에 보이는 문구는 컴포넌트에 하드코딩하지 않고 `ko.json`과 `en.json`에 함께 추가합니다.
+
+---
+
+## 8. UI 레이아웃 간격
+
+- private 레이아웃의 `<main>`은 `flex-col gap-page`입니다. 페이지의 직접 자식(`HeroSection`, `Separator`, 목록, 페이지네이션) 사이 간격은 이 gap이 담당하므로, 직접 자식에 `mb-*`, `my-*`를 주지 않습니다.
+- flex 컨테이너 안에서는 마진이 상쇄되지 않고 gap에 더해집니다. 페이지 컴포넌트가 Fragment를 반환하거나 `HydrationBoundary`로 감싸도 그 자식은 `<main>`의 직접 자식입니다.
+- `CardBody`는 기본으로 자식 사이에 `space-y-6`을 줍니다. 다른 간격이 필요하면 `className`으로 덮어씁니다(`cn`이 tailwind-merge로 병합).
+- 공통 간격 값은 `--spacing-page` 같은 토큰(`src/app/styles/global.css`)을 씁니다.
