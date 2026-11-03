@@ -1,6 +1,6 @@
 'use client';
 
-import { clsx } from 'clsx';
+import { cn } from '@packages/ui/lib/cn';
 
 import { AppLogo, AppName } from '$shared/ui';
 
@@ -17,7 +17,7 @@ export function MobileSidebar() {
 
   return (
     <aside
-      className={clsx(
+      className={cn(
         'fixed top-0 left-0 z-50 flex h-dvh w-full flex-col pb-8',
         'bg-sidebar/80 border-border border-r backdrop-blur-md',
         'overflow-y-auto',

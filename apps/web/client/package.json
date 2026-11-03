@@ -13,7 +13,6 @@
     "@packages/i18n": "workspace:*",
     "@packages/ui": "workspace:*",
     "@tanstack/react-query": "^5.100.10",
-    "clsx": "^2.1.1",
     "dayjs": "^1.11.20",
     "i18next": "^26.4.2",
     "i18next-resources-to-backend": "^1.2.3",
@@ -26,11 +25,11 @@
     "zod": "catalog:"
   },
   "devDependencies": {
+    "@packages/eslint-config": "workspace:*",
     "@tailwindcss/postcss": "^4.3.3",
     "@types/react": "catalog:next16",
     "@types/react-dom": "catalog:next16",
     "tailwindcss": "^4.3.3",
-    "typescript": "catalog:",
-    "@packages/eslint-config": "workspace:*"
+    "typescript": "catalog:"
   }
 }

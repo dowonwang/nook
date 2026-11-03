@@ -1,6 +1,6 @@
 'use client';
 
-import { clsx } from 'clsx';
+import { cn } from '@packages/ui/lib/cn';
 import Link from 'next/link';
 
 import { AppLogo, AppName } from '$shared/ui';
@@ -11,7 +11,7 @@ import { Menu } from './menu/menu';
 export function DefaultSidebar() {
   return (
     <aside
-      className={clsx(
+      className={cn(
         'w-active-sidebar sticky top-0 left-0 hidden h-dvh flex-col md:flex',
         'bg-sidebar/80 border-border border-r backdrop-blur-md',
         'scrollbar-thumb-primary scrollbar-thin overflow-y-auto',
