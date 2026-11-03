@@ -7,4 +7,4 @@ type I18nKey = DeepStringify<typeof ko>;
 
 en satisfies I18nKey;
 
-export const WIDGET_SIDEBAR_I18N_NAMESPACE = 'widgets/sidebar';
+export const WIDGETS_SIDEBAR_I18N_NAMESPACE = 'widgets/sidebar';

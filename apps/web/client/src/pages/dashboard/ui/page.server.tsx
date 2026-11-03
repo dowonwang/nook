@@ -6,10 +6,10 @@ import {
 import { Separator } from '@packages/ui/components/separator';
 import { getT } from 'next-i18next/server';
 
-import { PAGE_DASHBOARD_I18N_NAMESPACE } from '../i18n';
+import { PAGES_DASHBOARD_I18N_NAMESPACE } from '../i18n';
 
 export async function DashboardPage() {
-  const { t } = await getT(PAGE_DASHBOARD_I18N_NAMESPACE);
+  const { t } = await getT(PAGES_DASHBOARD_I18N_NAMESPACE);
 
   return (
     <>

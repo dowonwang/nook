@@ -13,12 +13,12 @@ import { useT } from 'next-i18next/client';
 import { CreateOrganizationForm } from '$features/organization/create';
 import { CreateOrganizationInvitationForm } from '$features/organization-invitation/create';
 
-import { WIDGET_CREATE_ORGANIZATION_FLOW_I18N_NAMESPACE } from '../i18n';
+import { WIDGETS_CREATE_ORGANIZATION_FLOW_I18N_NAMESPACE } from '../i18n';
 import { OrganizationInvitationSentList } from './sent-list';
 import { useCreateOrganizationFlow } from '../model/provider';
 
 export function CreateOrganizationFlowContent() {
-  const { t } = useT(WIDGET_CREATE_ORGANIZATION_FLOW_I18N_NAMESPACE);
+  const { t } = useT(WIDGETS_CREATE_ORGANIZATION_FLOW_I18N_NAMESPACE);
   const { isOrganizationCreated, setOrganization, organization } =
     useCreateOrganizationFlow();
 

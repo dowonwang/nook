@@ -2,10 +2,10 @@ import { Button } from '@packages/ui/components/button';
 import Link from 'next/link';
 import { useT } from 'next-i18next/client';
 
-import { WIDGETS_PUBLIC_HEADER_NAMESPACE } from '../../i18n';
+import { WIDGETS_PUBLIC_HEADER_I18N_NAMESPACE } from '../../i18n';
 
 export function SignInNavigate() {
-  const { t } = useT(WIDGETS_PUBLIC_HEADER_NAMESPACE);
+  const { t } = useT(WIDGETS_PUBLIC_HEADER_I18N_NAMESPACE);
 
   return (
     <Button variant='primary' asChild>

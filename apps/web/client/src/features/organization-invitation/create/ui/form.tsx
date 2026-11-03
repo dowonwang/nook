@@ -25,7 +25,7 @@ import {
 } from '$shared/api/action';
 
 import { createOrganizationInvitationAction } from '../api/action.server';
-import { FEAT_ORGANIZATION_INVITATION_CREATE_I18N_NAMESPACE } from '../i18n';
+import { FEATURES_ORGANIZATION_INVITATION_CREATE_I18N_NAMESPACE } from '../i18n';
 import { INIT_DATA } from '../model/types';
 
 import type { Organization } from '$entities/organization';
@@ -44,7 +44,7 @@ export function CreateOrganizationInvitationForm({
   inviterRole,
   disabled = false,
 }: Props) {
-  const { t } = useT(FEAT_ORGANIZATION_INVITATION_CREATE_I18N_NAMESPACE);
+  const { t } = useT(FEATURES_ORGANIZATION_INVITATION_CREATE_I18N_NAMESPACE);
   const [actionState, formAction, isPending] = useActionState(
     createOrganizationInvitationAction,
     {

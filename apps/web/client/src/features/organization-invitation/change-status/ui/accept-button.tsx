@@ -9,14 +9,16 @@ import { MY_ORGANIZATION_LIST_BASE_QUERY_KEY } from '$entities/organization';
 import { RECEIVED_ORGANIZATION_INVITATION_LIST_BASE_QUERY_KEY } from '$entities/organization-invitation';
 
 import { changeOrganizationInvitationServerAction } from '../api/action.server';
-import { FEAT_ORGANIZATION_CHANGE_STATUS_I18N_NAMESPACE } from '../i18n';
+import { FEATURES_ORGANIZATION_INVITATION_CHANGE_STATUS_I18N_NAMESPACE } from '../i18n';
 
 interface Props {
   invitationId: string;
 }
 
 export function AcceptOrganizationInvitationButton({ invitationId }: Props) {
-  const { t } = useT(FEAT_ORGANIZATION_CHANGE_STATUS_I18N_NAMESPACE);
+  const { t } = useT(
+    FEATURES_ORGANIZATION_INVITATION_CHANGE_STATUS_I18N_NAMESPACE,
+  );
   const [isPending, startTransition] = useTransition();
   const queryClient = useQueryClient();
 

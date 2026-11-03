@@ -7,5 +7,5 @@ type I18nKey = DeepStringify<typeof ko>;
 
 en satisfies I18nKey;
 
-export const WIDGET_CREATE_ORGANIZATION_FLOW_I18N_NAMESPACE =
+export const WIDGETS_CREATE_ORGANIZATION_FLOW_I18N_NAMESPACE =
   'widgets/create-organization-flow';

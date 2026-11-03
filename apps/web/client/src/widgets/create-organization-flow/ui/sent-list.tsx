@@ -18,14 +18,14 @@ import {
 import { OrganizationMemberRoleBadge } from '$entities/organization-member';
 import { CancelOrganizationInvitationButton } from '$features/organization-invitation/change-status';
 
-import { WIDGET_CREATE_ORGANIZATION_FLOW_I18N_NAMESPACE } from '../i18n';
+import { WIDGETS_CREATE_ORGANIZATION_FLOW_I18N_NAMESPACE } from '../i18n';
 
 interface Props {
   organizationId: string | undefined;
 }
 
 export function OrganizationInvitationSentList({ organizationId }: Props) {
-  const { t } = useT(WIDGET_CREATE_ORGANIZATION_FLOW_I18N_NAMESPACE);
+  const { t } = useT(WIDGETS_CREATE_ORGANIZATION_FLOW_I18N_NAMESPACE);
   const { data: invitations } = useQuery(
     organizationInvitationSentListQueryOptions(organizationId),
   );

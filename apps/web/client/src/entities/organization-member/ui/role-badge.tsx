@@ -4,7 +4,7 @@ import { Badge } from '@packages/ui/components/badge';
 import { cn } from '@packages/ui/lib/cn';
 import { useT } from 'next-i18next/client';
 
-import { ENTITY_ORGANIZATION_MEMBER_I18N_NAMESPACE } from '../i18n';
+import { ENTITIES_ORGANIZATION_MEMBER_I18N_NAMESPACE } from '../i18n';
 
 import type { OrganizationMemberRole } from '../model/types';
 
@@ -34,7 +34,7 @@ const STATUS_CONFIG: Record<
 };
 
 export function OrganizationMemberRoleBadge({ role }: Props) {
-  const { t } = useT(ENTITY_ORGANIZATION_MEMBER_I18N_NAMESPACE);
+  const { t } = useT(ENTITIES_ORGANIZATION_MEMBER_I18N_NAMESPACE);
   const { label, style } = STATUS_CONFIG[role];
 
   return <Badge className={cn('ring-2', style)}>{t(label)}</Badge>;

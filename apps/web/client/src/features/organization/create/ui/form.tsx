@@ -18,7 +18,7 @@ import {
 } from '$shared/api/action';
 
 import { createOrganizationAction } from '../api/action.server';
-import { FEAT_ORGANIZATION_CREATE_I18N_NAMESPACE } from '../i18n';
+import { FEATURES_ORGANIZATION_CREATE_I18N_NAMESPACE } from '../i18n';
 
 import type { Organization } from '$entities/organization';
 import type { ActionStateZodError } from '$shared/api/action';
@@ -28,7 +28,7 @@ interface Props {
 }
 
 export function CreateOrganizationForm({ onSuccess }: Props) {
-  const { t } = useT(FEAT_ORGANIZATION_CREATE_I18N_NAMESPACE);
+  const { t } = useT(FEATURES_ORGANIZATION_CREATE_I18N_NAMESPACE);
   const [actionState, formAction] = useActionState(createOrganizationAction, {
     success: false,
     error: null,
