@@ -1,13 +1,13 @@
 import { getLocaleFromPathname, removeLocaleFromPathname } from '$shared/i18n';
 import { clearAuthCookieToResponse } from '$shared/lib/cookie/server';
 
-import { i18nMiddleware } from './i18n';
-import { createCleanRouteRedirect } from './lib/create-clean-route-redirect';
-import { createLocaleRedirect } from './lib/create-locale-redirect';
-import { createSignInRedirect } from './lib/create-sign-in-redirect';
-import { mergeResponseCookies } from './lib/merge-response-cookies';
+import { i18nMiddleware } from './i18n.server';
+import { createCleanRouteRedirect } from './lib/create-clean-route-redirect.server';
+import { createLocaleRedirect } from './lib/create-locale-redirect.server';
+import { createSignInRedirect } from './lib/create-sign-in-redirect.server';
+import { mergeResponseCookies } from './lib/merge-response-cookies.server';
 import { resolveRouteScope } from './lib/resolve-route-scope';
-import { sessionMiddleware } from './session';
+import { sessionMiddleware } from './session.server';
 
 import type { NextResponse, NextRequest } from 'next/server';
 

@@ -9,7 +9,7 @@ import {
   setAuthCookieToResponse,
 } from '$shared/lib/cookie/server';
 
-import { requestBackend } from './request-backend';
+import { requestBackend } from './request-backend.server';
 
 import type { NextRequest } from 'next/server';
 

@@ -1,1 +1,1 @@
-export { handleFlashToken as POST } from '$app/api';
+export { handleFlashToken as POST } from '$app/api/server';

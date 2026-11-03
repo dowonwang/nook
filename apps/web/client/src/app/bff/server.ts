@@ -1,1 +1,1 @@
-export { handleBffRequest } from './api/handle-proxy-request';
+export { handleBffRequest } from './api/handle-proxy-request.server';

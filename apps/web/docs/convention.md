@@ -102,6 +102,7 @@ feature 슬라이스는 **사용자가 하는 행동 하나**(생성, 수정, �
 - **서버/클라이언트 분리**: 별도의 `server/` 디렉터리를 두지 않고, 서버 전용 로직 파일명에 `*.server.ts` 접미사를 붙여 구분합니다.
   - 서버 전용 로직: `next/headers`(`cookies()`, `headers()`), 서버 환경 변수(`SERVER_ENV_CONFIG`), `next-i18next/server`의 설정·리소스 로딩, Server Action(`'use server'`)처럼 브라우저 번들에 들어가면 안 되는 코드입니다.
   - RSC 페이지·레이아웃 컴포넌트(`ui/page.tsx` 등)는 서버에서 렌더링되더라도 UI 파일이므로 접미사를 붙이지 않습니다. 이런 컴포넌트가 쓰는 서버 전용 함수가 `*.server.ts`에 있어야 합니다.
+  - Route Handler와 미들웨어의 처리 로직(`src/app/bff/api`, `src/app/api`, `src/app/middleware`)도 서버 전용입니다. 서버 함수를 가져다 쓰기만 해도 해당합니다. 단, 경로 문자열 판단처럼 서버 API와 무관한 순수 함수(`resolve-route-scope.ts` 등)는 접미사를 붙이지 않습니다.
   - 서버 전용 파일은 `server.ts`로만 공개합니다. `index.ts`로 공개하면 클라이언트 컴포넌트가 실수로 import할 수 있습니다.
 
 ---
