@@ -334,6 +334,16 @@ export default function Page({ searchParams }: Props) {
 | 클라이언트 쿼리 옵션 | `<domain>QueryOptions`                       | `sessionQueryOptions`                 |
 | 서버 쿼리 옵션       | `server<Domain>QueryOptions` (`*.server.ts`) | `serverSessionQueryOptions`           |
 
+- `<domain>`은 조회 대상을 `수식어 + 엔티티 + List` 순서로 씁니다. 같은 조회의 쿼리 키, base 키, 쿼리 옵션은 이 단어를 그대로 공유합니다.
+
+  | 조회           | 쿼리 키                                           | 클라이언트 / 서버 쿼리 옵션                                                                               |
+  | -------------- | ------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
+  | 내 조직 목록   | `MY_ORGANIZATION_LIST_QUERY_KEY`                  | `myOrganizationListQueryOptions` / `serverMyOrganizationListQueryOptions`                                 |
+  | 받은 초대 목록 | `RECEIVED_ORGANIZATION_INVITATION_LIST_QUERY_KEY` | `receivedOrganizationInvitationListQueryOptions` / `serverReceivedOrganizationInvitationListQueryOptions` |
+  | 보낸 초대 목록 | `SENT_ORGANIZATION_INVITATION_LIST_QUERY_KEY`     | `sentOrganizationInvitationListQueryOptions`                                                              |
+
+- 쿼리 옵션 이름에 `create`, `get` 같은 동사 접두사를 붙이지 않습니다. 서버 쿼리 옵션은 `server` 접두사만 붙입니다.
+- `api/`의 조회 요청 함수도 같은 `<domain>`을 써서 `get<Domain>`(클라이언트) / `get<Domain>Server`(`*.server.ts`)로 짓습니다. 예: `getMyOrganizationList` / `getMyOrganizationListServer`, `getSession` / `getSessionServer`. `getServer...`처럼 `Server`를 앞에 두지 않습니다([3.2](#32-함수-및-컴포넌트-명명-function--component-naming)).
 - 클라이언트와 서버 쿼리 옵션은 같은 쿼리 키를 씁니다. 그래야 서버에서 미리 받은 데이터를 클라이언트가 그대로 이어받습니다.
 - 페이지네이션처럼 인자가 있는 키는 base 키를 펼친 뒤 인자를 붙입니다(`[...BASE, page, limit]`).
 - 인자가 있는 쿼리 옵션은 같은 이름의 함수로 만듭니다(`receivedOrganizationInvitationListQueryOptions(pagination)`).
@@ -346,7 +356,7 @@ RSC 페이지에서 서버 쿼리 옵션으로 미리 받고, `HydrationBoundary
 // pages/organization/receive-invitation/ui/page.server.tsx (RSC)
 const queryClient = new QueryClient();
 await queryClient.prefetchQuery(
-  serverReceivedOrganizationListQueryOptions(pagination),
+  serverReceivedOrganizationInvitationListQueryOptions(pagination),
 );
 
 return (

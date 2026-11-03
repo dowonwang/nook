@@ -5,7 +5,7 @@ import type { OffsetPaginationQuery } from '$shared/types';
 import type { OrganizationInvitationInvitedBy } from '../model/types';
 import type { GetOrganizationInvitations200 } from '@packages/api-client/api';
 
-export async function getReceivedOrganizationInvitations(
+export async function getReceivedOrganizationInvitationList(
   query?: OffsetPaginationQuery,
 ) {
   const searchParams = createSearchParams(query);

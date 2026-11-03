@@ -1,9 +1,9 @@
 import { queryOptions } from '@tanstack/react-query';
 
-import { getReceivedOrganizationInvitations } from '../api/get-received-list';
-import { getOrganizationInvitationSentList } from '../api/get-sent-list';
+import { getReceivedOrganizationInvitationList } from '../api/get-received-list';
+import { getSentOrganizationInvitationList } from '../api/get-sent-list';
 import {
-  ORGANIZATION_INVITATION_SENT_LIST_QUERY_KEY,
+  SENT_ORGANIZATION_INVITATION_LIST_QUERY_KEY,
   RECEIVED_ORGANIZATION_INVITATION_LIST_QUERY_KEY,
 } from '../config/query-key';
 
@@ -14,16 +14,16 @@ export function receivedOrganizationInvitationListQueryOptions(
 ) {
   return queryOptions({
     queryKey: RECEIVED_ORGANIZATION_INVITATION_LIST_QUERY_KEY(pagination),
-    queryFn: () => getReceivedOrganizationInvitations(pagination),
+    queryFn: () => getReceivedOrganizationInvitationList(pagination),
   });
 }
 
-export function organizationInvitationSentListQueryOptions(
+export function sentOrganizationInvitationListQueryOptions(
   organizationId: string | undefined,
 ) {
   return queryOptions({
-    queryKey: ORGANIZATION_INVITATION_SENT_LIST_QUERY_KEY(organizationId),
-    queryFn: () => getOrganizationInvitationSentList(organizationId),
+    queryKey: SENT_ORGANIZATION_INVITATION_LIST_QUERY_KEY(organizationId),
+    queryFn: () => getSentOrganizationInvitationList(organizationId),
     enabled: Boolean(organizationId),
   });
 }

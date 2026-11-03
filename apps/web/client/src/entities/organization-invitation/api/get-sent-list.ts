@@ -6,7 +6,7 @@ import type {
 } from '../model/types';
 import type { GetOrganizationByOrganizationIdInvitations200 } from '@packages/api-client/api';
 
-export async function getOrganizationInvitationSentList(
+export async function getSentOrganizationInvitationList(
   organizationId: string | undefined,
 ): Promise<OrganizationSentInvitation[]> {
   if (!organizationId) return [];

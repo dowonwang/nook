@@ -4,7 +4,7 @@ import { getAuthAccessFromCookie } from '$shared/lib/cookie/server';
 import type { Session } from '../model/types';
 import type { getUserMeResponseSuccess } from '@packages/api-client/api';
 
-export async function getServerSession(): Promise<Session> {
+export async function getSessionServer(): Promise<Session> {
   const accessToken = await getAuthAccessFromCookie();
 
   if (!accessToken) {

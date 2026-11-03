@@ -5,7 +5,7 @@ import { MY_ORGANIZATION_LIST_QUERY_KEY } from '../config/query-key';
 
 import type { OffsetPaginationQuery } from '$shared/types';
 
-export function createServerMyOrganizationListQueryOptions(
+export function serverMyOrganizationListQueryOptions(
   pagination: OffsetPaginationQuery,
 ) {
   return queryOptions({

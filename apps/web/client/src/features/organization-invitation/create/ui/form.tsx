@@ -14,7 +14,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useT } from 'next-i18next/client';
 import { useActionState, useEffect } from 'react';
 
-import { ORGANIZATION_INVITATION_SENT_LIST_QUERY_KEY } from '$entities/organization-invitation';
+import { SENT_ORGANIZATION_INVITATION_LIST_QUERY_KEY } from '$entities/organization-invitation';
 import {
   getGrantableOrganizationMemberRoles,
   OrganizationMemberRoleRadioGroup,
@@ -69,7 +69,7 @@ export function CreateOrganizationInvitationForm({
     }
 
     void queryClient.invalidateQueries({
-      queryKey: ORGANIZATION_INVITATION_SENT_LIST_QUERY_KEY(organization.id),
+      queryKey: SENT_ORGANIZATION_INVITATION_LIST_QUERY_KEY(organization.id),
     });
   }, [actionState.success, organization?.id, isPending, queryClient]);
 

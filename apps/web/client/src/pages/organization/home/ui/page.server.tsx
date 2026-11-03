@@ -11,7 +11,7 @@ import {
 } from '@tanstack/react-query';
 import { getT } from 'next-i18next/server';
 
-import { createServerMyOrganizationListQueryOptions } from '$entities/organization/server';
+import { serverMyOrganizationListQueryOptions } from '$entities/organization/server';
 import { getOffsetPaginationQuery } from '$shared/lib/pagination/server';
 
 import { PAGES_ORGANIZATION_HOME_I18N_NAMESPACE } from '../i18n';
@@ -30,7 +30,7 @@ export async function OrganizationHomePage({ searchParams }: Props) {
   const pagination = await getOffsetPaginationQuery(searchParams);
 
   await queryClient.prefetchQuery(
-    createServerMyOrganizationListQueryOptions(pagination),
+    serverMyOrganizationListQueryOptions(pagination),
   );
 
   return (

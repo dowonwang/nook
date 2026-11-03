@@ -4,7 +4,7 @@ import { createSearchParams } from '$shared/lib/http';
 import type { OffsetPaginationQuery } from '$shared/types';
 import type { GetOrganizationInvitations200 } from '@packages/api-client/api';
 
-export async function getReceivedOrganizationInvitationsServer(
+export async function getReceivedOrganizationInvitationListServer(
   query?: OffsetPaginationQuery,
 ) {
   const searchParams = createSearchParams(query);

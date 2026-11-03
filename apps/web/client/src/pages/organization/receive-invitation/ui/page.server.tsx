@@ -11,7 +11,7 @@ import {
 } from '@tanstack/react-query';
 import { getT } from 'next-i18next/server';
 
-import { serverReceivedOrganizationListQueryOptions } from '$entities/organization-invitation/server';
+import { serverReceivedOrganizationInvitationListQueryOptions } from '$entities/organization-invitation/server';
 import { getOffsetPaginationQuery } from '$shared/lib/pagination/server';
 
 import { ReceivedOrganizationInvitationList } from './list';
@@ -33,7 +33,7 @@ export async function OrganizationReceiveInvitationPage({
   );
 
   await queryClient.prefetchQuery(
-    serverReceivedOrganizationListQueryOptions(pagination),
+    serverReceivedOrganizationInvitationListQueryOptions(pagination),
   );
 
   return (

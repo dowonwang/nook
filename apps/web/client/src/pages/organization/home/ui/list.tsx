@@ -13,7 +13,7 @@ import { Users2 } from 'lucide-react';
 import Link from 'next/link';
 import { useT } from 'next-i18next/client';
 
-import { createMyOrganizationListQueryOptions } from '$entities/organization';
+import { myOrganizationListQueryOptions } from '$entities/organization';
 import { OrganizationMemberRoleBadge } from '$entities/organization-member';
 import { useOffsetQuery } from '$shared/lib/pagination';
 import {
@@ -30,7 +30,7 @@ export function MyOrganizationList() {
   const pagination = useOffsetQuery();
   const { t } = useT(PAGES_ORGANIZATION_HOME_I18N_NAMESPACE);
   const { data: organizations } = useQuery(
-    createMyOrganizationListQueryOptions(pagination),
+    myOrganizationListQueryOptions(pagination),
   );
 
   return (

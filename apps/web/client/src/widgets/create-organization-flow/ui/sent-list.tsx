@@ -12,7 +12,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useT } from 'next-i18next/client';
 
 import {
-  organizationInvitationSentListQueryOptions,
+  sentOrganizationInvitationListQueryOptions,
   OrganizationInvitationStatusBadge,
 } from '$entities/organization-invitation';
 import { OrganizationMemberRoleBadge } from '$entities/organization-member';
@@ -27,7 +27,7 @@ interface Props {
 export function OrganizationInvitationSentList({ organizationId }: Props) {
   const { t } = useT(WIDGETS_CREATE_ORGANIZATION_FLOW_I18N_NAMESPACE);
   const { data: invitations } = useQuery(
-    organizationInvitationSentListQueryOptions(organizationId),
+    sentOrganizationInvitationListQueryOptions(organizationId),
   );
 
   if (!invitations || invitations.length === 0) {
