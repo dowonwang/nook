@@ -99,10 +99,11 @@ feature 슬라이스는 **사용자가 하는 행동 하나**(생성, 수정, �
 - **타 슬라이스 및 외부 참조**: 사전 정의된 Alias 경로(`$features/...`)로만 접근해야 하며, 반드시 해당 슬라이스의 진입점(`index.ts` 또는 `server.ts`)을 통해서만 참조합니다.
 - **같은 레이어 교차 참조**: 같은 레이어의 다른 슬라이스는 원칙적으로 참조하지 않습니다. 엔티티 간 관계처럼 꼭 필요한 경우에만, 참조되는 슬라이스에 `@x/<참조하는 슬라이스>.ts` 교차 참조 진입점을 만들어 필요한 것만 공개하고 그 진입점으로만 참조합니다. ([4.3 교차 참조 예시](#43-같은-레이어-교차-참조-x))
 
-- **서버/클라이언트 분리**: 별도의 `server/` 디렉터리를 두지 않고, 서버 전용 로직 파일명에 `*.server.ts` 접미사를 붙여 구분합니다.
+- **서버/클라이언트 분리**: 별도의 `server/` 디렉터리를 두지 않고, 서버 전용 파일명에 `*.server.ts`(컴포넌트는 `*.server.tsx`) 접미사를 붙여 구분합니다.
   - 서버 전용 로직: `next/headers`(`cookies()`, `headers()`), 서버 환경 변수(`SERVER_ENV_CONFIG`), `next-i18next/server`의 설정·리소스 로딩, Server Action(`'use server'`)처럼 브라우저 번들에 들어가면 안 되는 코드입니다.
-  - RSC 페이지·레이아웃 컴포넌트(`ui/page.tsx` 등)는 서버에서 렌더링되더라도 UI 파일이므로 접미사를 붙이지 않습니다. 이런 컴포넌트가 쓰는 서버 전용 함수가 `*.server.ts`에 있어야 합니다.
   - Route Handler와 미들웨어의 처리 로직(`src/app/bff/api`, `src/app/api`, `src/app/middleware`)도 서버 전용입니다. 서버 함수를 가져다 쓰기만 해도 해당합니다. 단, 경로 문자열 판단처럼 서버 API와 무관한 순수 함수(`resolve-route-scope.ts` 등)는 접미사를 붙이지 않습니다.
+  - 서버에서만 동작하는 서버 컴포넌트(RSC)도 `*.server.tsx`를 붙입니다. `async` 컴포넌트이거나 `getT`(`next-i18next/server`), 서버 쿼리 옵션, 쿠키 같은 서버 전용 코드를 쓰는 컴포넌트입니다. 예: `pages/<page>/ui/page.server.tsx`, `app/layouts/private.server.tsx`.
+  - `'use client'`가 없더라도 서버 전용 코드를 쓰지 않아 서버와 클라이언트 양쪽에서 쓸 수 있는 컴포넌트(배지, 아이콘 등)는 접미사를 붙이지 않습니다.
   - 서버 전용 파일은 `server.ts`로만 공개합니다. `index.ts`로 공개하면 클라이언트 컴포넌트가 실수로 import할 수 있습니다.
 
 ---
@@ -144,6 +145,7 @@ FSD 특성상 폴더 깊이가 깊어지므로 **파일명은 `kebab-case`로 �
 | **Custom Hook**           | `kebab-case.ts`  | `use-form.ts`, `use-create-org.ts` | 파일명에 `use-` 접두사 필수         |
 | **타입 정의**             | `types.ts`       | `types.ts`                         | 해당 슬라이스 전용 타입 선언        |
 | **서버 전용 로직**        | `*.server.ts`    | `create-org.server.ts`             | `.server.ts` 접미사 필수            |
+| **서버 컴포넌트**         | `*.server.tsx`   | `page.server.tsx`                  | `server.ts`로만 공개                |
 | **General Barrel Export** | `index.ts`       | `index.ts`                         | 클라이언트 및 공통 모듈 외부 노출용 |
 | **Server Barrel Export**  | `server.ts`      | `server.ts`                        | 서버 전용 모듈 외부 노출용          |
 
@@ -286,7 +288,7 @@ import type { OrganizationMemberRole } from '$entities/organization-member';
 
 ```tsx
 // app/(private)/org/page.tsx
-import { OrganizationHomePage } from '$pages/organization/home';
+import { OrganizationHomePage } from '$pages/organization/home/server';
 
 export default function Page({ searchParams }: Props) {
   return <OrganizationHomePage searchParams={searchParams} />;
@@ -341,7 +343,7 @@ export default function Page({ searchParams }: Props) {
 RSC 페이지에서 서버 쿼리 옵션으로 미리 받고, `HydrationBoundary`로 클라이언트 컴포넌트에 넘깁니다.
 
 ```tsx
-// pages/organization/receive-invitation/ui/page.tsx (RSC)
+// pages/organization/receive-invitation/ui/page.server.tsx (RSC)
 const queryClient = new QueryClient();
 await queryClient.prefetchQuery(
   serverReceivedOrganizationListQueryOptions(pagination),

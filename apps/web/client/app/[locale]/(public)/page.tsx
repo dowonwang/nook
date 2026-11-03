@@ -1,4 +1,4 @@
-import { HomePage } from '$pages/home';
+import { HomePage } from '$pages/home/server';
 
 export default function Page() {
   return <HomePage />;

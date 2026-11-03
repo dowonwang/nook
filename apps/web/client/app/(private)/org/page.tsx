@@ -1,4 +1,4 @@
-import { OrganizationHomePage } from '$pages/organization/home';
+import { OrganizationHomePage } from '$pages/organization/home/server';
 
 import type { SearchParams } from '$shared/types';
 

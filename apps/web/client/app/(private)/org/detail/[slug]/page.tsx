@@ -1,4 +1,4 @@
-import { OrganizationDetailPage } from '$pages/organization/detail';
+import { OrganizationDetailPage } from '$pages/organization/detail/server';
 
 interface Props {
   params: Promise<{ slug: string }>;

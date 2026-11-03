@@ -1,6 +1,6 @@
-import { AppLayout } from '$app/layouts';
+import { AppLayout } from '$app/layouts/server';
 
-export { metadata } from '$app/layouts';
+export { metadata } from '$app/layouts/server';
 
 export default function RootLayout({
   children,

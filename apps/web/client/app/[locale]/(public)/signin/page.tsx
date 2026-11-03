@@ -1,4 +1,4 @@
-import { SignInPage } from '$pages/sign-in';
+import { SignInPage } from '$pages/sign-in/server';
 import { APP_CONSTANT } from '$shared/config';
 
 export default async function Page({

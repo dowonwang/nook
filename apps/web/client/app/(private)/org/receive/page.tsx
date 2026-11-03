@@ -1,4 +1,4 @@
-import { OrganizationReceiveInvitationPage } from '$pages/organization/receive-invitation';
+import { OrganizationReceiveInvitationPage } from '$pages/organization/receive-invitation/server';
 
 import type { SearchParams } from '$shared/types';
 

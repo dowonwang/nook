@@ -1,4 +1,4 @@
-import { PublicLayout } from '$app/layouts';
+import { PublicLayout } from '$app/layouts/server';
 
 export default async function Layout({
   children,
