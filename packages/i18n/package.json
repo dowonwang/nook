@@ -13,10 +13,10 @@
     "generate:validation": "tsx --tsconfig ./tsconfig.json ./src/script/generate-validation-i18n.ts"
   },
   "devDependencies": {
-    "@types/node": "^25.3.5",
-    "tsx": "^4.21.0",
-    "typescript": "catalog:",
-    "@packages/eslint-config": "workspace:*"
+    "@packages/eslint-config": "workspace:*",
+    "@types/node": "catalog:node26",
+    "tsx": "catalog:typescript5",
+    "typescript": "catalog:typescript5"
   },
   "keywords": [],
   "author": "",

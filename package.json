@@ -32,11 +32,11 @@
     "@commitlint/cz-commitlint": "^20.4.1",
     "@packages/eslint-config": "workspace:*",
     "commitizen": "^4.3.1",
-    "eslint": "catalog:eslint",
     "husky": "^9.1.7",
     "lint-staged": "^16.3.2",
     "prettier": "^3.8.1",
     "prettier-plugin-tailwindcss": "^0.8.0",
-    "typescript": "catalog:"
+    "eslint": "catalog:eslint",
+    "typescript": "catalog:typescript5"
   }
 }

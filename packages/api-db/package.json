@@ -15,17 +15,17 @@
   "license": "ISC",
   "packageManager": "pnpm@10.30.3",
   "devDependencies": {
-    "@types/node": "^25.3.5",
-    "@types/pg": "^8.18.0",
-    "prisma": "catalog:",
-    "tsx": "^4.21.0",
-    "typescript": "catalog:",
-    "@packages/eslint-config": "workspace:*"
+    "@packages/eslint-config": "workspace:*",
+    "@types/node": "catalog:node26",
+    "@types/pg": "catalog:postgres8",
+    "prisma": "catalog:prisma7",
+    "tsx": "catalog:typescript5",
+    "typescript": "catalog:typescript5"
   },
   "dependencies": {
-    "@prisma/adapter-pg": "^7.4.2",
-    "@prisma/client": "^7.4.2",
-    "dotenv": "^17.3.1",
-    "pg": "^8.20.0"
+    "dotenv": "catalog:backend1",
+    "pg": "catalog:postgres8",
+    "@prisma/adapter-pg": "catalog:prisma7",
+    "@prisma/client": "catalog:prisma7"
   }
 }

@@ -26,9 +26,9 @@
   },
   "devDependencies": {
     "@packages/eslint-config": "workspace:*",
-    "typescript": "catalog:",
     "@types/react": "catalog:next16",
     "@types/react-dom": "catalog:next16",
+    "typescript": "catalog:typescript5",
     "@tailwindcss/postcss": "catalog:ui",
     "tailwindcss": "catalog:ui"
   }

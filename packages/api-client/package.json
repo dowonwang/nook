@@ -16,10 +16,10 @@
     "zod": "catalog:"
   },
   "devDependencies": {
-    "@types/node": "^25.3.5",
+    "@packages/eslint-config": "workspace:*",
     "orval": "^8.16.0",
-    "typescript": "catalog:",
-    "@packages/eslint-config": "workspace:*"
+    "@types/node": "catalog:node26",
+    "typescript": "catalog:typescript5"
   },
   "packageManager": "pnpm@10.30.3"
 }

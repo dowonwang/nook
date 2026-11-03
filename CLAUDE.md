@@ -16,7 +16,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 | `@packages/ui`            | `packages/ui`            | Domain-agnostic UI primitives (cva + tailwind-merge)        |
 | `@packages/eslint-config` | `packages/eslint-config` | Shared ESLint flat configs (base, next, react, fsd, server) |
 
-Shared dependency versions live in `pnpm-workspace.yaml` catalogs (`catalog:` / `catalog:next16`).
+Shared dependency versions live in `pnpm-workspace.yaml` catalogs, pinned to exact versions and grouped by stack (`catalog:` for zod, plus `catalog:<group>` such as `next16`, `ui`, `i18n`, `eslint`, `typescript5`, `node26`, `backend1`, `prisma7`, `postgres8`). An `overrides` entry keeps `@types/node` on a single version across the monorepo. In each `package.json`, dependencies are ordered by value: plain/`workspace:` versions first, then `catalog:`, then named catalogs by group name, alphabetical within each group.
 
 ## Commands
 
