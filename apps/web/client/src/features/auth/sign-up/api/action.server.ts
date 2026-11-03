@@ -6,7 +6,7 @@ import { actionStateBuilder, createActionStateError } from '$shared/api/action';
 import { serverFetcher } from '$shared/api/bff/server';
 import { setFlashCookie } from '$shared/lib/cookie/server';
 
-import { SIGN_UP_SUCCESS_SIGNIN_REQUIRED } from '../config/i18n.key';
+import { SIGN_UP_SUCCESS_SIGNIN_REQUIRED } from '../config/i18n-key';
 import { signUpSchema } from '../model/types';
 
 import type {

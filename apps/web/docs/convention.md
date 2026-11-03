@@ -137,17 +137,18 @@ src/
 
 ### 3.1 파일 명명 (File Naming)
 
-FSD 특성상 폴더 깊이가 깊어지므로 **파일명은 `kebab-case`로 최대한 명확하고 간단하게** 작성합니다.
+FSD 특성상 폴더 깊이가 깊어지므로 **파일명은 `kebab-case`로 최대한 명확하고 간단하게** 작성합니다. 파일명 안의 점(`.`)은 `.server` 접미사에만 씁니다(`i18n.key.ts`가 아니라 `i18n-key.ts`).
 
-| 분류                      | 파일명 규칙      | 예시                               | 비고                                |
-| ------------------------- | ---------------- | ---------------------------------- | ----------------------------------- |
-| **UI 컴포넌트**           | `kebab-case.tsx` | `form.tsx`, `button.tsx`           | 상위 디렉터리 맥락으로 역할 구분    |
-| **Custom Hook**           | `kebab-case.ts`  | `use-form.ts`, `use-create-org.ts` | 파일명에 `use-` 접두사 필수         |
-| **타입 정의**             | `types.ts`       | `types.ts`                         | 해당 슬라이스 전용 타입 선언        |
-| **서버 전용 로직**        | `*.server.ts`    | `create-org.server.ts`             | `.server.ts` 접미사 필수            |
-| **서버 컴포넌트**         | `*.server.tsx`   | `page.server.tsx`                  | `server.ts`로만 공개                |
-| **General Barrel Export** | `index.ts`       | `index.ts`                         | 클라이언트 및 공통 모듈 외부 노출용 |
-| **Server Barrel Export**  | `server.ts`      | `server.ts`                        | 서버 전용 모듈 외부 노출용          |
+| 분류                      | 파일명 규칙            | 예시                                        | 비고                                                                 |
+| ------------------------- | ---------------------- | ------------------------------------------- | -------------------------------------------------------------------- |
+| **UI 컴포넌트**           | `kebab-case.tsx`       | `form.tsx`, `button.tsx`                    | 상위 디렉터리 맥락으로 역할 구분                                     |
+| **Custom Hook**           | `kebab-case.ts`        | `use-form.ts`, `use-create-org.ts`          | 파일명에 `use-` 접두사 필수                                          |
+| **타입 정의**             | `types.ts`             | `types.ts`                                  | 해당 슬라이스 전용 타입 선언                                         |
+| **설정·상수**             | `config/kebab-case.ts` | `query-key.ts`, `i18n-key.ts`, `refresh.ts` | 내용을 나타내는 이름. `config/config.ts`처럼 세그먼트 이름 반복 금지 |
+| **서버 전용 로직**        | `*.server.ts`          | `create-org.server.ts`                      | `.server.ts` 접미사 필수                                             |
+| **서버 컴포넌트**         | `*.server.tsx`         | `page.server.tsx`                           | `server.ts`로만 공개                                                 |
+| **General Barrel Export** | `index.ts`             | `index.ts`                                  | 클라이언트 및 공통 모듈 외부 노출용                                  |
+| **Server Barrel Export**  | `server.ts`            | `server.ts`                                 | 서버 전용 모듈 외부 노출용                                           |
 
 ---
 

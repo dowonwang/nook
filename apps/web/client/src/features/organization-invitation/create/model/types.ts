@@ -1,7 +1,7 @@
 import { PostOrganizationByOrganizationIdInvitationsBody } from '@packages/api-client/schema/organization';
 import { z } from 'zod';
 
-import { CREATE_INVITATION_REQUIRED_ORGANIZATION_ID_ERROR } from '../config/i18n.key';
+import { CREATE_INVITATION_REQUIRED_ORGANIZATION_ID_ERROR } from '../config/i18n-key';
 
 import type { ActionState } from '$shared/api/action';
 import type {
