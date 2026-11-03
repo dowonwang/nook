@@ -3,7 +3,7 @@
   "ignorePaths": [],
   "dictionaryDefinitions": [],
   "dictionaries": [],
-  "words": ["noto", "rgba", "unrs"],
+  "words": ["clsx", "lucide", "noto", "rgba", "tanstack", "unrs"],
   "ignoreWords": [
     "Dowon",
     "Lngs",

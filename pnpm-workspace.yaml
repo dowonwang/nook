@@ -17,6 +17,7 @@ catalogs:
     next: 16.3.5
     react: 19.3.0
     react-dom: 19.3.0
+    '@tanstack/react-query': '5.100.10'
   eslint:
     '@eslint/js': ^10.0.1
     '@next/eslint-plugin-next': ^16.2.4
@@ -25,6 +26,17 @@ catalogs:
     eslint-plugin-import-x: ^4.16.2
     eslint-plugin-react-hooks: ^7.1.1
     typescript-eslint: ^8.58.0
+  ui:
+    lucide-react: 1.14.0
+    clsx: 2.1.1
+    tailwind-merge: 3.5.0
+    tailwindcss: 4.3.3
+    '@tailwindcss/postcss': 4.3.3
+  i18n:
+    i18next: 26.4.2
+    i18next-resources-to-backend: 1.2.3
+    next-i18next: 16.3.1
+    react-i18next: 17.0.14
 
 ignoredBuiltDependencies:
   - sharp
