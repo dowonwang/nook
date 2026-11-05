@@ -305,6 +305,7 @@ export default function Page({ searchParams }: Props) {
 
 - `matcher`는 `api/`, `action/` 하위 경로와 정적 파일을 제외합니다. 이 경로의 Route Handler는 locale redirect와 세션 처리를 받지 않으므로, 필요한 검사를 핸들러 안에서 직접 합니다.
 - 새 private 경로는 `src/app/middleware/config/route-scope.ts`의 `PRIVATE_ROUTE_PREFIXES`에 추가합니다.
+- 세션 갱신이 거절되면(리프레시 토큰 없음, API가 갱신 거절, `SessionRefreshRejectedError`) 인증 쿠키를 지우고 private 경로는 로그인 페이지로 보냅니다. API 장애 등 그 외 이유로 갱신하지 못하면 세션 만료로 보지 않고 쿠키를 유지한 채 요청을 진행합니다(`unavailable`).
 
 ### 5.3 BFF와 요청 도구
 
@@ -319,6 +320,11 @@ export default function Page({ searchParams }: Props) {
 - BFF가 백엔드로 보낼 때는 `createForwardedHeaders`가 허용 목록의 헤더와 `x-internal-secret`(서버 환경 변수 `INTERNAL_API_SECRET`)만 전달합니다. 이 값은 브라우저로 나가지 않으며, API 서버는 이 값이 맞는 요청만 처리합니다.
 - `fetch('/api/...')`를 직접 쓰지 않습니다. 헤더가 빠져 404가 됩니다.
 - 새 Route Handler를 `app/action/`에 추가하면 핸들러 첫 줄에서 `isBffRequest`를 검사합니다.
+- BFF의 실패 응답 규칙
+  - 백엔드에 연결하지 못하면 502(`common_error_InternalServerError`)를 반환합니다. 백엔드의 에러 응답은 그대로 전달하며, `error.code`는 JSON 응답일 때만 읽습니다.
+  - 액세스 토큰 만료로 세션을 갱신할 때, 갱신이 거절되면 401(`auth_error_refresh_token_expired`), 그 외 실패는 502를 반환합니다.
+  - 백엔드 주소는 `REST_API_BASE_URL`과 같은 origin일 때만 요청하고, 다른 origin으로 해석되면 404를 반환합니다.
+- `@packages/api-client/api`의 request function은 서버 환경 변수 `REST_API_BASE_URL`로 주소를 만들므로 서버 코드(`*.server.ts`)에서만 호출합니다. 브라우저 요청은 `clientFetcher`를 씁니다.
 
 ---
 
@@ -374,7 +380,7 @@ return (
 - 폼은 `useActionState`와 `$shared/api/action`의 도구를 씁니다. 상태 모양은 `ActionState<TState, TResponseError>`(`success`, `state`, `error`)입니다.
   - 입력 검증 실패: `createActionStateError(zodError)`로 필드별 에러를 만들고 `useActionFieldErrors`로 표시합니다.
   - 서버 응답 에러: 응답의 `error.code`를 그대로 담고 `useActionErrorMessage`가 i18n 키로 번역합니다.
-- 클라이언트가 보낸 이전 상태(`previousState`)는 사용자가 조작할 수 있습니다. redirect 경로처럼 서버 동작에 쓰는 값은 서버에서 다시 검증합니다.
+- 클라이언트가 보낸 이전 상태(`previousState`)는 사용자가 조작할 수 있습니다. redirect 경로처럼 서버 동작에 쓰는 값은 서버에서 다시 검증합니다. 이동 경로는 `getSafeRedirectPath`(`$shared/lib/http/server`)로 앱 내부 경로만 허용합니다.
 - 변경 후에는 영향을 받는 목록을 base 키로 무효화합니다. 다른 feature의 쿼리 키가 아니라 `entities`에서 공개한 키를 씁니다([0.4](#04-feature는-사용자-행동-단위)).
 
 ---

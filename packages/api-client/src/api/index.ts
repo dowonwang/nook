@@ -5,6 +5,7 @@
  * Development documentation
  * OpenAPI spec version: 0.0.0
  */
+import { customFetch } from '../lib/custom-fetch';
 export type PostAuthSignInBody = {
   /** @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$ */
   email: string;
@@ -1074,7 +1075,7 @@ export type postAuthSignInResponse =
   | postAuthSignInResponseError;
 
 export const getPostAuthSignInUrl = () => {
-  return `http://localhost:4000/auth/sign-in`;
+  return `/auth/sign-in`;
 };
 
 /**
@@ -1084,21 +1085,12 @@ export const postAuthSignIn = async (
   postAuthSignInBody: PostAuthSignInBody,
   options?: RequestInit,
 ): Promise<postAuthSignInResponse> => {
-  const res = await fetch(getPostAuthSignInUrl(), {
+  return customFetch<postAuthSignInResponse>(getPostAuthSignInUrl(), {
     ...options,
     method: 'POST',
     headers: { 'Content-Type': 'application/json', ...options?.headers },
     body: JSON.stringify(postAuthSignInBody),
   });
-
-  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
-
-  const data: postAuthSignInResponse['data'] = body ? JSON.parse(body) : {};
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as postAuthSignInResponse;
 };
 
 export type postAuthSignUpResponse201 = {
@@ -1131,7 +1123,7 @@ export type postAuthSignUpResponse =
   | postAuthSignUpResponseError;
 
 export const getPostAuthSignUpUrl = () => {
-  return `http://localhost:4000/auth/sign-up`;
+  return `/auth/sign-up`;
 };
 
 /**
@@ -1141,21 +1133,12 @@ export const postAuthSignUp = async (
   postAuthSignUpBody: PostAuthSignUpBody,
   options?: RequestInit,
 ): Promise<postAuthSignUpResponse> => {
-  const res = await fetch(getPostAuthSignUpUrl(), {
+  return customFetch<postAuthSignUpResponse>(getPostAuthSignUpUrl(), {
     ...options,
     method: 'POST',
     headers: { 'Content-Type': 'application/json', ...options?.headers },
     body: JSON.stringify(postAuthSignUpBody),
   });
-
-  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
-
-  const data: postAuthSignUpResponse['data'] = body ? JSON.parse(body) : {};
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as postAuthSignUpResponse;
 };
 
 export type postAuthSignOutResponse200 = {
@@ -1180,7 +1163,7 @@ export type postAuthSignOutResponse =
   | postAuthSignOutResponseError;
 
 export const getPostAuthSignOutUrl = () => {
-  return `http://localhost:4000/auth/sign-out`;
+  return `/auth/sign-out`;
 };
 
 /**
@@ -1190,21 +1173,12 @@ export const postAuthSignOut = async (
   postAuthSignOutBody: PostAuthSignOutBody,
   options?: RequestInit,
 ): Promise<postAuthSignOutResponse> => {
-  const res = await fetch(getPostAuthSignOutUrl(), {
+  return customFetch<postAuthSignOutResponse>(getPostAuthSignOutUrl(), {
     ...options,
     method: 'POST',
     headers: { 'Content-Type': 'application/json', ...options?.headers },
     body: JSON.stringify(postAuthSignOutBody),
   });
-
-  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
-
-  const data: postAuthSignOutResponse['data'] = body ? JSON.parse(body) : {};
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as postAuthSignOutResponse;
 };
 
 export type postAuthRefreshResponse200 = {
@@ -1237,7 +1211,7 @@ export type postAuthRefreshResponse =
   | postAuthRefreshResponseError;
 
 export const getPostAuthRefreshUrl = () => {
-  return `http://localhost:4000/auth/refresh`;
+  return `/auth/refresh`;
 };
 
 /**
@@ -1247,21 +1221,12 @@ export const postAuthRefresh = async (
   postAuthRefreshBody: PostAuthRefreshBody,
   options?: RequestInit,
 ): Promise<postAuthRefreshResponse> => {
-  const res = await fetch(getPostAuthRefreshUrl(), {
+  return customFetch<postAuthRefreshResponse>(getPostAuthRefreshUrl(), {
     ...options,
     method: 'POST',
     headers: { 'Content-Type': 'application/json', ...options?.headers },
     body: JSON.stringify(postAuthRefreshBody),
   });
-
-  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
-
-  const data: postAuthRefreshResponse['data'] = body ? JSON.parse(body) : {};
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as postAuthRefreshResponse;
 };
 
 export type postOrganizationResponse201 = {
@@ -1300,7 +1265,7 @@ export type postOrganizationResponse =
   | postOrganizationResponseError;
 
 export const getPostOrganizationUrl = () => {
-  return `http://localhost:4000/organization/`;
+  return `/organization/`;
 };
 
 /**
@@ -1310,21 +1275,12 @@ export const postOrganization = async (
   postOrganizationBody: PostOrganizationBody,
   options?: RequestInit,
 ): Promise<postOrganizationResponse> => {
-  const res = await fetch(getPostOrganizationUrl(), {
+  return customFetch<postOrganizationResponse>(getPostOrganizationUrl(), {
     ...options,
     method: 'POST',
     headers: { 'Content-Type': 'application/json', ...options?.headers },
     body: JSON.stringify(postOrganizationBody),
   });
-
-  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
-
-  const data: postOrganizationResponse['data'] = body ? JSON.parse(body) : {};
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as postOrganizationResponse;
 };
 
 export type getOrganizationResponse200 = {
@@ -1360,8 +1316,8 @@ export const getGetOrganizationUrl = (params?: GetOrganizationParams) => {
   const stringifiedParams = normalizedParams.toString();
 
   return stringifiedParams.length > 0
-    ? `http://localhost:4000/organization/?${stringifiedParams}`
-    : `http://localhost:4000/organization/`;
+    ? `/organization/?${stringifiedParams}`
+    : `/organization/`;
 };
 
 /**
@@ -1371,19 +1327,10 @@ export const getOrganization = async (
   params?: GetOrganizationParams,
   options?: RequestInit,
 ): Promise<getOrganizationResponse> => {
-  const res = await fetch(getGetOrganizationUrl(params), {
+  return customFetch<getOrganizationResponse>(getGetOrganizationUrl(params), {
     ...options,
     method: 'GET',
   });
-
-  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
-
-  const data: getOrganizationResponse['data'] = body ? JSON.parse(body) : {};
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as getOrganizationResponse;
 };
 
 export type postOrganizationByOrganizationIdInvitationsResponse201 = {
@@ -1431,7 +1378,7 @@ export type postOrganizationByOrganizationIdInvitationsResponse =
 export const getPostOrganizationByOrganizationIdInvitationsUrl = (
   organizationId: string,
 ) => {
-  return `http://localhost:4000/organization/${organizationId}/invitations`;
+  return `/organization/${organizationId}/invitations`;
 };
 
 /**
@@ -1442,7 +1389,7 @@ export const postOrganizationByOrganizationIdInvitations = async (
   postOrganizationByOrganizationIdInvitationsBody: PostOrganizationByOrganizationIdInvitationsBody,
   options?: RequestInit,
 ): Promise<postOrganizationByOrganizationIdInvitationsResponse> => {
-  const res = await fetch(
+  return customFetch<postOrganizationByOrganizationIdInvitationsResponse>(
     getPostOrganizationByOrganizationIdInvitationsUrl(organizationId),
     {
       ...options,
@@ -1451,17 +1398,6 @@ export const postOrganizationByOrganizationIdInvitations = async (
       body: JSON.stringify(postOrganizationByOrganizationIdInvitationsBody),
     },
   );
-
-  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
-
-  const data: postOrganizationByOrganizationIdInvitationsResponse['data'] = body
-    ? JSON.parse(body)
-    : {};
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as postOrganizationByOrganizationIdInvitationsResponse;
 };
 
 export type getOrganizationByOrganizationIdInvitationsResponse200 = {
@@ -1502,8 +1438,8 @@ export const getGetOrganizationByOrganizationIdInvitationsUrl = (
   const stringifiedParams = normalizedParams.toString();
 
   return stringifiedParams.length > 0
-    ? `http://localhost:4000/organization/${organizationId}/invitations?${stringifiedParams}`
-    : `http://localhost:4000/organization/${organizationId}/invitations`;
+    ? `/organization/${organizationId}/invitations?${stringifiedParams}`
+    : `/organization/${organizationId}/invitations`;
 };
 
 /**
@@ -1514,24 +1450,13 @@ export const getOrganizationByOrganizationIdInvitations = async (
   params?: GetOrganizationByOrganizationIdInvitationsParams,
   options?: RequestInit,
 ): Promise<getOrganizationByOrganizationIdInvitationsResponse> => {
-  const res = await fetch(
+  return customFetch<getOrganizationByOrganizationIdInvitationsResponse>(
     getGetOrganizationByOrganizationIdInvitationsUrl(organizationId, params),
     {
       ...options,
       method: 'GET',
     },
   );
-
-  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
-
-  const data: getOrganizationByOrganizationIdInvitationsResponse['data'] = body
-    ? JSON.parse(body)
-    : {};
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as getOrganizationByOrganizationIdInvitationsResponse;
 };
 
 export type patchOrganizationInvitationResponse200 = {
@@ -1577,7 +1502,7 @@ export type patchOrganizationInvitationResponse =
   | patchOrganizationInvitationResponseError;
 
 export const getPatchOrganizationInvitationUrl = () => {
-  return `http://localhost:4000/organization/invitation`;
+  return `/organization/invitation`;
 };
 
 /**
@@ -1587,23 +1512,15 @@ export const patchOrganizationInvitation = async (
   patchOrganizationInvitationBody: PatchOrganizationInvitationBody,
   options?: RequestInit,
 ): Promise<patchOrganizationInvitationResponse> => {
-  const res = await fetch(getPatchOrganizationInvitationUrl(), {
-    ...options,
-    method: 'PATCH',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(patchOrganizationInvitationBody),
-  });
-
-  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
-
-  const data: patchOrganizationInvitationResponse['data'] = body
-    ? JSON.parse(body)
-    : {};
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as patchOrganizationInvitationResponse;
+  return customFetch<patchOrganizationInvitationResponse>(
+    getPatchOrganizationInvitationUrl(),
+    {
+      ...options,
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json', ...options?.headers },
+      body: JSON.stringify(patchOrganizationInvitationBody),
+    },
+  );
 };
 
 export type getOrganizationInvitationsResponse200 = {
@@ -1643,8 +1560,8 @@ export const getGetOrganizationInvitationsUrl = (
   const stringifiedParams = normalizedParams.toString();
 
   return stringifiedParams.length > 0
-    ? `http://localhost:4000/organization/invitations?${stringifiedParams}`
-    : `http://localhost:4000/organization/invitations`;
+    ? `/organization/invitations?${stringifiedParams}`
+    : `/organization/invitations`;
 };
 
 /**
@@ -1654,21 +1571,13 @@ export const getOrganizationInvitations = async (
   params?: GetOrganizationInvitationsParams,
   options?: RequestInit,
 ): Promise<getOrganizationInvitationsResponse> => {
-  const res = await fetch(getGetOrganizationInvitationsUrl(params), {
-    ...options,
-    method: 'GET',
-  });
-
-  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
-
-  const data: getOrganizationInvitationsResponse['data'] = body
-    ? JSON.parse(body)
-    : {};
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as getOrganizationInvitationsResponse;
+  return customFetch<getOrganizationInvitationsResponse>(
+    getGetOrganizationInvitationsUrl(params),
+    {
+      ...options,
+      method: 'GET',
+    },
+  );
 };
 
 export type getOrganizationSlugBySlugResponse200 = {
@@ -1702,7 +1611,7 @@ export type getOrganizationSlugBySlugResponse =
   | getOrganizationSlugBySlugResponseError;
 
 export const getGetOrganizationSlugBySlugUrl = (slug: string) => {
-  return `http://localhost:4000/organization/slug/${slug}`;
+  return `/organization/slug/${slug}`;
 };
 
 /**
@@ -1712,21 +1621,13 @@ export const getOrganizationSlugBySlug = async (
   slug: string,
   options?: RequestInit,
 ): Promise<getOrganizationSlugBySlugResponse> => {
-  const res = await fetch(getGetOrganizationSlugBySlugUrl(slug), {
-    ...options,
-    method: 'GET',
-  });
-
-  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
-
-  const data: getOrganizationSlugBySlugResponse['data'] = body
-    ? JSON.parse(body)
-    : {};
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as getOrganizationSlugBySlugResponse;
+  return customFetch<getOrganizationSlugBySlugResponse>(
+    getGetOrganizationSlugBySlugUrl(slug),
+    {
+      ...options,
+      method: 'GET',
+    },
+  );
 };
 
 export type getUserMeResponse200 = {
@@ -1759,7 +1660,7 @@ export type getUserMeResponse =
   | getUserMeResponseError;
 
 export const getGetUserMeUrl = () => {
-  return `http://localhost:4000/user/me`;
+  return `/user/me`;
 };
 
 /**
@@ -1769,19 +1670,10 @@ export const getGetUserMeUrl = () => {
 export const getUserMe = async (
   options?: RequestInit,
 ): Promise<getUserMeResponse> => {
-  const res = await fetch(getGetUserMeUrl(), {
+  return customFetch<getUserMeResponse>(getGetUserMeUrl(), {
     ...options,
     method: 'GET',
   });
-
-  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
-
-  const data: getUserMeResponse['data'] = body ? JSON.parse(body) : {};
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as getUserMeResponse;
 };
 
 export type getUserResponse200 = {
@@ -1829,8 +1721,8 @@ export const getGetUserUrl = (params: GetUserParams) => {
   const stringifiedParams = normalizedParams.toString();
 
   return stringifiedParams.length > 0
-    ? `http://localhost:4000/user/?${stringifiedParams}`
-    : `http://localhost:4000/user/`;
+    ? `/user/?${stringifiedParams}`
+    : `/user/`;
 };
 
 /**
@@ -1841,13 +1733,8 @@ export const getUser = async (
   params: GetUserParams,
   options?: RequestInit,
 ): Promise<getUserResponse> => {
-  const res = await fetch(getGetUserUrl(params), {
+  return customFetch<getUserResponse>(getGetUserUrl(params), {
     ...options,
     method: 'GET',
   });
-
-  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
-
-  const data: getUserResponse['data'] = body ? JSON.parse(body) : {};
-  return { data, status: res.status, headers: res.headers } as getUserResponse;
 };
