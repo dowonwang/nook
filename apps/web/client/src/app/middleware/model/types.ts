@@ -13,4 +13,9 @@ export type HandleSessionResult =
     }
   | {
       status: 'invalid';
+    }
+  | {
+      // API 장애 등으로 세션을 확인하지 못함. 쿠키는 그대로 둠
+      status: 'unavailable';
+      response: NextResponse;
     };
