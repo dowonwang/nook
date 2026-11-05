@@ -13,6 +13,10 @@ export async function requestBackend(
 ): Promise<NextResponse> {
   const destination = createBackendUrl(request);
 
+  if (!destination) {
+    return new NextResponse(null, { status: 404 });
+  }
+
   const headers = createForwardedHeaders(request, authorization);
   const hasBody = !['GET', 'HEAD'].includes(request.method);
 
