@@ -107,6 +107,14 @@ cp packages/api-db/.env.example packages/api-db/.env
 cp apps/server/api/.env.example apps/server/api/.env
 ```
 
+### Web Client
+
+```bash
+cp apps/web/client/.env.example apps/web/client/.env
+```
+
+`INTERNAL_API_SECRET`은 API Server와 같은 값을 사용합니다.
+
 환경별 값은 각 workspace의 README를 참고해주세요.
 
 ## Development

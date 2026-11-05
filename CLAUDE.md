@@ -42,7 +42,7 @@ pnpm -C packages/api-db db:generate
 pnpm -C packages/api-db db:studio
 ```
 
-Env setup: copy `packages/api-db/.env.example` and `apps/server/api/.env.example` to `.env`.
+Env setup: copy `packages/api-db/.env.example`, `apps/server/api/.env.example`, and `apps/web/client/.env.example` to `.env`. `INTERNAL_API_SECRET` must match between the API server and the web client.
 
 There is no test runner configured. Bruno request collections live in `apps/server/api/bruno`.
 
@@ -99,8 +99,8 @@ Shared infra (`src/shared`): `database` (Prisma transaction manager using AsyncL
 
 - **Routes** live in the root `app/` directory (not `src/app`). Public routes are under `app/[locale]/(public)/` (localized); authenticated routes are under `app/(private)/` (not locale-prefixed). The root `pages/` dir exists only so Next ignores `src/pages`.
 - **`src/` follows Feature-Sliced Design**: `app → pages → widgets → features → entities → shared`; lower layers must not import higher ones. Aliases: `$app`, `$pages`, `$widgets`, `$features`, `$entities`, `$shared`.
-- **BFF**: the browser never calls the backend directly. `app/api/[...path]/route.ts` → `src/app/bff` forwards to the backend with the access token from cookies, and on an access-token-expired error code refreshes the session, retries, and resets the auth cookies. Client code uses `clientFetcher` from `$shared/api/bff` and server code (server components, server actions) uses `serverFetcher` from `$shared/api/bff/server`. Response types are imported from `@packages/api-client/api`.
-- **Middleware**: root `proxy.ts` (Next 16's middleware) delegates to `src/app/middleware` (route scope resolution, locale redirect, session/sign-in redirect).
+- **BFF**: the browser never calls the backend directly. `app/api/[...path]/route.ts` → `src/app/bff` forwards to the backend with the access token from cookies, and on an access-token-expired error code refreshes the session, retries, and resets the auth cookies. Backend connection failures return 502, a rejected refresh (`SessionRefreshRejectedError`) returns 401, and a backend URL that resolves to another origin returns 404. Client code uses `clientFetcher` from `$shared/api/bff` and server code (server components, server actions) uses `serverFetcher` from `$shared/api/bff/server`. Response types are imported from `@packages/api-client/api`.
+- **Middleware**: root `proxy.ts` (Next 16's middleware) delegates to `src/app/middleware` (route scope resolution, locale redirect, session/sign-in redirect). Auth cookies are cleared only when the refresh is rejected; if the API is unreachable the session is `unavailable` and cookies are kept.
 - **i18n**: i18next / react-i18next (the README mentions next-intl, but the code uses i18next). Each slice can own an `i18n/` folder with `ko.json` + `en.json` and an `index.ts` that types keys from `ko.json` (`en satisfies I18nKey`) and exports a namespace constant like `'entities/session'`.
 
 Conventions (from `apps/web/docs/convention.md`):
