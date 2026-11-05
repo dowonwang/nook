@@ -68,7 +68,7 @@ feat(organization): 받은 초대 목록 페이지네이션 적용
 The backend is the source of truth for types shared with the web client:
 
 1. Server routes declare Zod schemas → Elysia exposes OpenAPI at `http://localhost:4000/openapi/json` (`zodToOpenApiSchema` in `$shared/responses`).
-2. `pnpm -C packages/api-client generate` (Orval, `orval.config.ts`) writes `src/api/index.ts` (fetch client + response types) and `src/schema/**` (Zod, per tag). Zod params go through `src/lib/zod-params.ts`, which embeds validation-key metadata.
+2. `pnpm -C packages/api-client generate` (Orval, `orval.config.ts`) writes `src/api/index.ts` (fetch client + response types) and `src/schema/**` (Zod, per tag). Zod params go through `src/lib/zod-params.ts`, which embeds validation-key metadata. Generated request functions carry no base URL: they call `src/lib/custom-fetch.ts` (Orval mutator), which reads `REST_API_BASE_URL` from env at request time, so call them only from server code.
 3. `pnpm -C packages/i18n generate:validation` scans the generated schemas for `zodParams({...})` calls and writes validation message keys into `packages/i18n/src/validation`.
 
 Never hand-edit `packages/api-client/src/api` or `src/schema`; change the server and regenerate. Schema change flow: edit Prisma schema → migrate → generate client → typecheck API → regenerate packages.

@@ -5,10 +5,12 @@ import { Elysia } from 'elysia';
 import { ForbiddenError } from '$shared/error';
 import { LOG_EVENT, LOG_MESSAGE } from '$shared/logger';
 
+import { OPEN_API_PATH } from '../constants/openapi-path';
+
 const SCOPE = 'internalRequestPlugin' as const;
 const INTERNAL_SECRET_HEADER = 'x-internal-secret' as const;
-// orval(pnpm generate:packages)이 헤더 없이 스펙을 가져가므로 제외
-const EXCLUDED_PATH_PREFIXES = ['/openapi'] as const;
+// orval(pnpm generate:packages)이 헤더 없이 스펙을 가져가므로 OpenAPI 문서 경로는 제외
+const EXCLUDED_PATH_PREFIXES = [OPEN_API_PATH.ui, OPEN_API_PATH.spec];
 
 const internalApiSecret = process.env.INTERNAL_API_SECRET;
 
