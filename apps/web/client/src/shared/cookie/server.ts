@@ -25,3 +25,4 @@ export {
   getI18nCookie,
 } from './i18n/get-cookie.server';
 export { setI18nCookieToResponse } from './i18n/set-cookie.server';
+export { getThemeCookie } from './theme/get-cookie.server';

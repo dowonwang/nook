@@ -10,3 +10,4 @@ export {
   I18N_COOKIE_MAX_AGE,
   I18N_COOKIE_OPTIONS,
 } from './i18n/constant';
+export { setThemeCookie } from './theme/set-cookie';
