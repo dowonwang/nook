@@ -132,6 +132,7 @@ feature 슬라이스는 **사용자가 하는 행동 하나**(생성, 수정, �
   - `'use client'`가 없더라도 서버 전용 코드를 쓰지 않아 서버와 클라이언트 양쪽에서 쓸 수 있는 컴포넌트(배지, 아이콘 등)는 접미사를 붙이지 않습니다.
   - 서버 전용 파일은 `server.ts`로만 공개합니다. `index.ts`로 공개하면 클라이언트 컴포넌트가 실수로 import할 수 있습니다.
   - 예외: Server Action 파일(`api/action.server.ts`)은 같은 슬라이스의 클라이언트 컴포넌트가 상대 경로로 import합니다. `'use server'` 파일은 함수 본문이 브라우저로 나가지 않고, 클라이언트에는 서버를 호출하는 참조만 전달됩니다. 슬라이스 밖으로는 공개하지 않습니다(`index.ts`, `server.ts` 모두 해당).
+  - `server.ts`는 `.server` 파일만 공개합니다. `NextRequest`, `NextResponse`처럼 Next의 서버 전용 API를 쓰는 함수는 타입만 쓰더라도 서버 전용으로 보고 `.server` 접미사를 붙입니다. 타입 선언만 있는 `types.ts`는 제외합니다. 예: `is-bff-request.server.ts`.
 
 ---
 
