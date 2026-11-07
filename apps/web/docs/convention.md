@@ -101,7 +101,7 @@ feature 슬라이스는 **사용자가 하는 행동 하나**(생성, 수정, �
 
 - **서버/클라이언트 분리**: 별도의 `server/` 디렉터리를 두지 않고, 서버 전용 파일명에 `*.server.ts`(컴포넌트는 `*.server.tsx`) 접미사를 붙여 구분합니다.
   - 서버 전용 로직: `next/headers`(`cookies()`, `headers()`), 서버 환경 변수(`SERVER_ENV_CONFIG`), `next-i18next/server`의 설정·리소스 로딩, Server Action(`'use server'`)처럼 브라우저 번들에 들어가면 안 되는 코드입니다.
-  - Route Handler와 미들웨어의 처리 로직(`src/app/bff/api`, `src/app/api`, `src/app/middleware`)도 서버 전용입니다. 서버 함수를 가져다 쓰기만 해도 해당합니다. 단, 경로 문자열 판단처럼 서버 API와 무관한 순수 함수(`resolve-route-scope.ts` 등)는 접미사를 붙이지 않습니다.
+  - Route Handler와 미들웨어의 처리 로직(`src/app/bff/api`, `src/app/action`, `src/app/middleware`)도 서버 전용입니다. 서버 함수를 가져다 쓰기만 해도 해당합니다. 단, 경로 문자열 판단처럼 서버 API와 무관한 순수 함수(`resolve-route-scope.ts` 등)는 접미사를 붙이지 않습니다.
   - 서버에서만 동작하는 서버 컴포넌트(RSC)도 `*.server.tsx`를 붙입니다. `async` 컴포넌트이거나 `getT`(`next-i18next/server`), 서버 쿼리 옵션, 쿠키 같은 서버 전용 코드를 쓰는 컴포넌트입니다. 예: `pages/<page>/ui/page.server.tsx`, `app/layouts/private.server.tsx`.
   - `'use client'`가 없더라도 서버 전용 코드를 쓰지 않아 서버와 클라이언트 양쪽에서 쓸 수 있는 컴포넌트(배지, 아이콘 등)는 접미사를 붙이지 않습니다.
   - 서버 전용 파일은 `server.ts`로만 공개합니다. `index.ts`로 공개하면 클라이언트 컴포넌트가 실수로 import할 수 있습니다.
