@@ -1,7 +1,7 @@
 import { queryOptions } from '@tanstack/react-query';
 
-import { getMyOrganizationList } from '../api/get-my-list';
-import { MY_ORGANIZATION_LIST_QUERY_KEY } from '../config/query-key';
+import { getMyOrganizationList } from './get-my-list';
+import { MY_ORGANIZATION_LIST_QUERY_KEY } from './query-key';
 
 import type { OffsetPaginationQuery } from '$shared/types';
 

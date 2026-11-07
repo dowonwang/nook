@@ -1,1 +1,1 @@
-export { serverMyOrganizationListQueryOptions } from './model/query.server';
+export { serverMyOrganizationListQueryOptions } from './api/query.server';
