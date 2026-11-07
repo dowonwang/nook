@@ -12,7 +12,7 @@ export function createForwardedHeaders(
   }
 
   const clientIp =
-    request.headers.get('x-origin-client-ip') || getClientIp(request);
+    request.headers.get('x-origin-client-ip') || getClientIp(request.headers);
   const userAgent =
     request.headers.get('x-origin-client-user-agent') ||
     request.headers.get('user-agent');

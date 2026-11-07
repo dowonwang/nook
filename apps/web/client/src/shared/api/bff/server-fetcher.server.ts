@@ -1,15 +1,9 @@
 import { headers } from 'next/headers';
 
 import { SERVER_ENV_CONFIG } from '$shared/config/server';
+import { getClientIp } from '$shared/lib/http';
 
 import { BFF_REQUEST_HEADER } from './config/header';
-
-function getClientIp(headers: Headers): string | null {
-  const forwardedFor = headers.get('x-forwarded-for');
-  const realIp = headers.get('x-real-ip');
-
-  return forwardedFor?.split(',')[0]?.trim() || realIp || null;
-}
 
 export async function serverFetcher(
   url: string,
