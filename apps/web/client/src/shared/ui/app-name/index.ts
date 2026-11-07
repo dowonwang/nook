@@ -1,0 +1,1 @@
+export { AppName } from './name';

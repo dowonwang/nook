@@ -8,7 +8,7 @@ import {
 import { getT } from 'next-i18next/server';
 
 import { SignUpForm } from '$features/auth/sign-up';
-import { AppLogo } from '$shared/ui';
+import { AppLogo } from '$shared/ui/app-logo';
 
 import { PAGES_SIGN_UP_I18N_NAMESPACE } from '../i18n';
 
