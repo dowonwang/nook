@@ -147,12 +147,18 @@ src/
 │           ├── ui/
 │           │   └── form.tsx         # 파일명은 단순하게 유지
 │           ├── api/
-│           │   ├── fetch-org.server.ts # 서버 전용 로직 (.server.ts)
-│           │   └── use-create-org.ts   # 클라이언트 전용 Hook
+│           │   └── action.server.ts # Server Action ('use server')
 │           ├── model/
 │           │   └── types.ts         # 타입 전용 정의 파일
-│           ├── index.ts             # General Barrel File (클라이언트/공통)
-│           └── server.ts            # Server Barrel File (서버 전용)
+│           ├── i18n/
+│           └── index.ts             # General Barrel File (클라이언트/공통)
+├── entities/
+│   └── session/                     # Entity 단위 (kebab-case)
+│       ├── api/
+│       │   ├── get-session.ts        # 클라이언트 요청 함수
+│       │   └── get-session.server.ts # 서버 전용 요청 함수 (.server.ts)
+│       ├── index.ts                 # General Barrel File (클라이언트/공통)
+│       └── server.ts                # Server Barrel File (서버 전용)
 └── shared/
 
 ```
@@ -168,10 +174,10 @@ FSD 특성상 폴더 깊이가 깊어지므로 **파일명은 `kebab-case`로 �
 | 분류                      | 파일명 규칙            | 예시                                        | 비고                                                                 |
 | ------------------------- | ---------------------- | ------------------------------------------- | -------------------------------------------------------------------- |
 | **UI 컴포넌트**           | `kebab-case.tsx`       | `form.tsx`, `button.tsx`                    | 상위 디렉터리 맥락으로 역할 구분                                     |
-| **Custom Hook**           | `kebab-case.ts`        | `use-form.ts`, `use-create-org.ts`          | 파일명에 `use-` 접두사 필수                                          |
+| **Custom Hook**           | `kebab-case.ts`        | `use-locale.ts`, `use-offset-query.ts`      | 파일명에 `use-` 접두사 필수. JSX 문법을 쓸 때만 `.tsx`               |
 | **타입 정의**             | `types.ts`             | `types.ts`                                  | 해당 슬라이스 전용 타입 선언                                         |
 | **설정·상수**             | `config/kebab-case.ts` | `query-key.ts`, `i18n-key.ts`, `refresh.ts` | 내용을 나타내는 이름. `config/config.ts`처럼 세그먼트 이름 반복 금지 |
-| **서버 전용 로직**        | `*.server.ts`          | `create-org.server.ts`                      | `.server.ts` 접미사 필수                                             |
+| **서버 전용 로직**        | `*.server.ts`          | `action.server.ts`, `get-session.server.ts` | `.server.ts` 접미사 필수                                             |
 | **서버 컴포넌트**         | `*.server.tsx`         | `page.server.tsx`                           | `server.ts`로만 공개                                                 |
 | **General Barrel Export** | `index.ts`             | `index.ts`                                  | 클라이언트 및 공통 모듈 외부 노출용                                  |
 | **Server Barrel Export**  | `server.ts`            | `server.ts`                                 | 서버 전용 모듈 외부 노출용                                           |
@@ -189,19 +195,22 @@ FSD 특성상 폴더 깊이가 깊어지므로 **파일명은 `kebab-case`로 �
 ```typescript
 // features/organization/create/ui/form.tsx
 // 컴포넌트: PascalCase (맥락을 포함한 완전한 이름)
-export function OrganizationCreateForm() {
+export function CreateOrganizationForm({ onSuccess }: Props) {
   // ...
 }
 
-// features/organization/create/api/use-create-org.ts
+// shared/lib/pagination/use-offset-query.ts
 // Hook: camelCase (use 접두사)
-export function useOrganizationCreate() {
+export function useOffsetQuery(): OffsetPaginationQuery {
   // ...
 }
 
-// features/organization/create/api/create-org.server.ts
+// features/organization/create/api/action.server.ts
 // 서버 전용 함수: camelCase (동사 + 명사)
-export async function createOrganizationServer(data: CreateOrgDto) {
+export async function createOrganizationServerAction(
+  _previousState: CreateOrganizationActionState,
+  formData: FormData,
+): Promise<CreateOrganizationActionState> {
   // ...
 }
 ```
@@ -215,12 +224,10 @@ export async function createOrganizationServer(data: CreateOrgDto) {
 ```typescript
 // features/organization/create/model/types.ts
 
-export interface OrganizationCreateRequest {
-  name: string;
-  code: string;
-}
-
-export type OrganizationCreateStatus = 'idle' | 'loading' | 'success' | 'error';
+export type CreateOrganizationState = Organization;
+export type CreateOrganizationResponseError =
+  postOrganizationResponseError['data'];
+export type CreateOrganizationResponseSuccess = PostOrganization201;
 ```
 
 ---
@@ -231,14 +238,12 @@ export type OrganizationCreateStatus = 'idle' | 'loading' | 'success' | 'error';
 
 ```typescript
 // features/organization/create/index.ts (클라이언트 / 공통 노출)
-export { OrganizationCreateForm } from './ui/form';
-export { useOrganizationCreate } from './api/use-create-org';
-export type * from './model/types';
+export { CreateOrganizationForm } from './ui/form';
 ```
 
 ```typescript
-// features/organization/create/server.ts (서버 전용 노출)
-export { createOrganizationServer } from './api/create-org.server';
+// entities/session/server.ts (서버 전용 노출)
+export { getSessionServer } from './api/get-session.server';
 ```
 
 ---
@@ -248,12 +253,12 @@ export { createOrganizationServer } from './api/create-org.server';
 ```typescript
 // Good: 동일 슬라이스 내부 참조 (상대 경로 허용)
 // features/organization/create/ui/form.tsx
-import { OrganizationCreateRequest } from '../model/types';
-import { useOrganizationCreate } from '../api/use-create-org';
+import { createOrganizationServerAction } from '../api/action.server';
+import { FEATURES_ORGANIZATION_CREATE_I18N_NAMESPACE } from '../i18n';
 
 // Good: 상위 레이어에서 하위 레이어 참조 - 클라이언트/공통 (index.ts 바운더리 참조)
 // widgets/create-organization-flow/ui/content.tsx
-import { OrganizationCreateForm } from '$features/organization/create';
+import { CreateOrganizationForm } from '$features/organization/create';
 
 // Good: 타 슬라이스 참조 - 서버 전용 (server.ts 바운더리 참조)
 // src/app/layouts/private.server.tsx
@@ -264,7 +269,7 @@ import { serverSessionQueryOptions } from '$entities/session/server';
 export { handleFlashToken as POST } from '$app/action/server';
 
 // Bad: 타 슬라이스를 상대 경로로 참조 금지
-import { OrganizationCreateForm } from '../../../organization/create/ui/form';
+import { CreateOrganizationForm } from '../../../organization/create/ui/form';
 
 // Bad: Barrel File을 거치지 않고 내부 파일 직접 참조 금지
 import { refreshSession } from '$entities/session/api/refresh-session.server';

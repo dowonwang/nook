@@ -105,7 +105,7 @@ Shared infra (`src/shared`): `database` (Prisma transaction manager using AsyncL
 
 Conventions (from `apps/web/docs/convention.md`):
 
-- Directories and file names are `kebab-case`; component/function names carry full context (`OrganizationCreateForm` in `ui/form.tsx`, `useOrganizationCreate` in `api/use-create-org.ts`).
+- Directories and file names are `kebab-case`; component/function names carry full context (`CreateOrganizationForm` in `ui/form.tsx`, `createOrganizationServerAction` in `api/action.server.ts`).
 - Slice segments: `ui/`, `api/`, `model/` (types in `types.ts`), `config/`, `lib/`, `i18n/`.
 - Server-only files use the `*.server.ts` suffix, and server-only components (async RSC, or ones using `getT`/server query options/cookies) use `*.server.tsx` — e.g. `pages/<page>/ui/page.server.tsx`, `app/layouts/*.server.tsx`; no `server/` dir. Each slice exposes client/shared code via `index.ts` and server-only code via `server.ts`.
 - Within a slice use relative imports; across slices/layers use the alias and import only from the slice's `index.ts` / `server.ts`, never deep paths.
