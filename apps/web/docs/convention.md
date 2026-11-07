@@ -131,6 +131,7 @@ feature 슬라이스는 **사용자가 하는 행동 하나**(생성, 수정, �
   - 서버에서만 동작하는 서버 컴포넌트(RSC)도 `*.server.tsx`를 붙입니다. `async` 컴포넌트이거나 `getT`(`next-i18next/server`), 서버 쿼리 옵션, 쿠키 같은 서버 전용 코드를 쓰는 컴포넌트입니다. 예: `pages/<page>/ui/page.server.tsx`, `app/layouts/private.server.tsx`.
   - `'use client'`가 없더라도 서버 전용 코드를 쓰지 않아 서버와 클라이언트 양쪽에서 쓸 수 있는 컴포넌트(배지, 아이콘 등)는 접미사를 붙이지 않습니다.
   - 서버 전용 파일은 `server.ts`로만 공개합니다. `index.ts`로 공개하면 클라이언트 컴포넌트가 실수로 import할 수 있습니다.
+  - 예외: Server Action 파일(`api/action.server.ts`)은 같은 슬라이스의 클라이언트 컴포넌트가 상대 경로로 import합니다. `'use server'` 파일은 함수 본문이 브라우저로 나가지 않고, 클라이언트에는 서버를 호출하는 참조만 전달됩니다. 슬라이스 밖으로는 공개하지 않습니다(`index.ts`, `server.ts` 모두 해당).
 
 ---
 
@@ -410,6 +411,7 @@ return (
 ### 6.3 변경: Server Action과 무효화
 
 - 변경 요청은 해당 feature의 `api/action.server.ts`(`'use server'`)에 둡니다.
+- Server Action 이름은 `<동사><도메인>ServerAction`으로 짓습니다. 예: `signInServerAction`, `createOrganizationServerAction`, `changeOrganizationInvitationStatusServerAction`. `useActionState`에 넘기는 함수가 브라우저에서 실행되는 일반 함수일 수도 있으므로, 서버에서 실행되는 함수임을 이름으로 드러냅니다.
 - 폼은 `useActionState`와 `$shared/api/action`의 도구를 씁니다. 상태 모양은 `ActionState<TState, TResponseError>`(`success`, `state`, `error`)입니다.
   - 입력 검증 실패: `createActionStateError(zodError)`로 필드별 에러를 만들고 `useActionFieldErrors`로 표시합니다.
   - 서버 응답 에러: 응답의 `error.code`를 그대로 담고 `useActionErrorMessage`가 i18n 키로 번역합니다.
