@@ -4,7 +4,7 @@ import { useSearchParams } from 'next/navigation';
 
 import { parseNumber } from './parse-number';
 
-import type { CursorPaginationQuery } from '$shared/types';
+import type { CursorPaginationQuery } from './types';
 
 export function useCursorQuery(): CursorPaginationQuery {
   const searchParams = useSearchParams();

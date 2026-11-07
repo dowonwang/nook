@@ -1,7 +1,7 @@
 import { clientFetcher } from '$shared/api/bff';
 import { createSearchParams } from '$shared/lib/http';
 
-import type { OffsetPaginationQuery } from '$shared/types';
+import type { OffsetPaginationQuery } from '$shared/lib/pagination';
 import type { GetOrganization200 } from '@packages/api-client/api';
 
 export async function getMyOrganizationList(query?: OffsetPaginationQuery) {
