@@ -4,7 +4,7 @@ import { isBffRequest } from '$shared/api/bff/server';
 import {
   clearFlashCookieToResponse,
   getFlashCookie,
-} from '$shared/lib/cookie/server';
+} from '$shared/cookie/server';
 
 import type { NextRequest } from 'next/server';
 

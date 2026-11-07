@@ -7,7 +7,7 @@ import { findErrorCode } from '$shared/api/error';
 import {
   getAuthAccessFromCookie,
   setAuthCookieToResponse,
-} from '$shared/lib/cookie/server';
+} from '$shared/cookie/server';
 
 import { requestBackend } from './request-backend.server';
 

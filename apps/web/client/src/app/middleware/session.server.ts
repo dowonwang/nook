@@ -6,7 +6,7 @@ import {
   getAuthAccessFromCookie,
   getAuthRefreshFromCookie,
   setAuthCookieToResponse,
-} from '$shared/lib/cookie/server';
+} from '$shared/cookie/server';
 
 import type { HandleSessionResult } from './model/types';
 

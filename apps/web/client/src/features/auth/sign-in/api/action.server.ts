@@ -4,7 +4,7 @@ import { redirect } from 'next/navigation';
 
 import { actionStateBuilder, createActionStateError } from '$shared/api/action';
 import { serverFetcher } from '$shared/api/bff/server';
-import { setAuthCookie } from '$shared/lib/cookie/server';
+import { setAuthCookie } from '$shared/cookie/server';
 
 import { signInSchema } from '../model/types';
 

@@ -7,8 +7,8 @@ import { initServerI18next } from 'next-i18next/server';
 
 import { FlashCookieConsumer, QueryClientProvider } from '$app/providers';
 import { CLIENT_ENV_CONFIG } from '$shared/config';
+import { getFlashCookie, getI18nCookie } from '$shared/cookie/server';
 import { i18nConfig } from '$shared/i18n/server';
-import { getFlashCookie, getI18nCookie } from '$shared/lib/cookie/server';
 import { initializeTheme, ThemeProvider } from '$shared/lib/theme';
 import { getTheme } from '$shared/lib/theme/server';
 

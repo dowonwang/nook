@@ -5,7 +5,7 @@ import { APP_CONSTANT } from '$shared/config';
 import {
   clearAuthCookieToResponse,
   setFlashCookieToResponse,
-} from '$shared/lib/cookie/server';
+} from '$shared/cookie/server';
 
 export function createSignInRedirect(request: NextRequest) {
   const signInUrl = new URL('/signin', request.url);

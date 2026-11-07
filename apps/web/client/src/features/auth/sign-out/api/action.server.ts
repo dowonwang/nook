@@ -6,7 +6,7 @@ import { serverFetcher } from '$shared/api/bff/server';
 import {
   clearAuthCookie,
   getAuthRefreshFromCookie,
-} from '$shared/lib/cookie/server';
+} from '$shared/cookie/server';
 
 export async function signOutServerAction() {
   const refreshToken = await getAuthRefreshFromCookie();
