@@ -117,13 +117,12 @@ feature 슬라이스는 **사용자가 하는 행동 하나**(생성, 수정, �
 
 - **디렉토리 명명**: 모든 디렉토리명은 소문자 `kebab-case`를 사용합니다.
 - **진입점 (Barrel Export)**:
-- **일반 / 클라이언트 모듈**: `index.ts`를 통해 외부로 내보냅니다.
-- **서버 전용 모듈**: `server.ts`를 통해 외부로 내보냅니다.
-
+  - **일반 / 클라이언트 모듈**: `index.ts`를 통해 외부로 내보냅니다.
+  - **서버 전용 모듈**: `server.ts`를 통해 외부로 내보냅니다.
 - **Import / Export 바운더리 규칙**:
-- **동일 슬라이스(Slice) 내부**: 상대 경로 (`./`, `../`)로 참조합니다. 자기 슬라이스를 Alias(`$widgets/sidebar/...`)나 자기 진입점으로 참조하지 않습니다(순환 참조 위험).
-- **타 슬라이스 및 외부 참조**: 사전 정의된 Alias 경로(`$features/...`)로만 접근해야 하며, 반드시 해당 슬라이스의 진입점(`index.ts` 또는 `server.ts`)을 통해서만 참조합니다.
-- **같은 레이어 교차 참조**: 같은 레이어의 다른 슬라이스는 원칙적으로 참조하지 않습니다. 엔티티 간 관계처럼 꼭 필요한 경우에만, 참조되는 슬라이스에 `@x/<참조하는 슬라이스>.ts` 교차 참조 진입점을 만들어 필요한 것만 공개하고 그 진입점으로만 참조합니다. ([4.3 교차 참조 예시](#43-같은-레이어-교차-참조-x))
+  - **동일 슬라이스(Slice) 내부**: 상대 경로 (`./`, `../`)로 참조합니다. 자기 슬라이스를 Alias(`$widgets/sidebar/...`)나 자기 진입점으로 참조하지 않습니다(순환 참조 위험).
+  - **타 슬라이스 및 외부 참조**: 사전 정의된 Alias 경로(`$features/...`)로만 접근해야 하며, 반드시 해당 슬라이스의 진입점(`index.ts` 또는 `server.ts`)을 통해서만 참조합니다.
+  - **같은 레이어 교차 참조**: 같은 레이어의 다른 슬라이스는 원칙적으로 참조하지 않습니다. 엔티티 간 관계처럼 꼭 필요한 경우에만, 참조되는 슬라이스에 `@x/<참조하는 슬라이스>.ts` 교차 참조 진입점을 만들어 필요한 것만 공개하고 그 진입점으로만 참조합니다. ([4.3 교차 참조 예시](#43-같은-레이어-교차-참조-x))
 
 - **서버/클라이언트 분리**: 별도의 `server/` 디렉터리를 두지 않고, 서버 전용 파일명에 `*.server.ts`(컴포넌트는 `*.server.tsx`) 접미사를 붙여 구분합니다.
   - 서버 전용 로직: `next/headers`(`cookies()`, `headers()`), 서버 환경 변수(`SERVER_ENV_CONFIG`), `next-i18next/server`의 설정·리소스 로딩, Server Action(`'use server'`)처럼 브라우저 번들에 들어가면 안 되는 코드입니다.
@@ -323,8 +322,6 @@ import type { OrganizationMemberRole } from '$entities/organization-member';
 
 ---
 
----
-
 ## 5. Next.js 라우트와 서버 경계
 
 ### 5.1 라우트 파일 (`app/`)
@@ -413,8 +410,8 @@ await queryClient.prefetchQuery(
 
 return (
   <HydrationBoundary state={dehydrate(queryClient)}>
-    <ReceivedOrganizationInvitationList />{' '}
     {/* 클라이언트 쿼리 옵션으로 useQuery */}
+    <ReceivedOrganizationInvitationList />
   </HydrationBoundary>
 );
 ```
