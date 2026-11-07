@@ -1,2 +1,2 @@
-export { CLIENT_ENV_CONFIG } from './client';
+export { CLIENT_ENV_CONFIG } from './env';
 export { APP_CONSTANT } from './constant';
