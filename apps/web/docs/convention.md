@@ -256,14 +256,22 @@ import { useOrganizationCreate } from '../api/use-create-org';
 import { OrganizationCreateForm } from '$features/organization/create';
 
 // Good: 타 슬라이스 참조 - 서버 전용 (server.ts 바운더리 참조)
-// app/api/org/route.ts
-import { createOrganizationServer } from '$features/organization/create/server';
+// src/app/layouts/private.server.tsx
+import { serverSessionQueryOptions } from '$entities/session/server';
+
+// Good: 라우트 파일은 $app의 처리 로직을 다시 내보내기만 함
+// app/action/flash-token/route.ts
+export { handleFlashToken as POST } from '$app/action/server';
 
 // Bad: 타 슬라이스를 상대 경로로 참조 금지
 import { OrganizationCreateForm } from '../../../organization/create/ui/form';
 
 // Bad: Barrel File을 거치지 않고 내부 파일 직접 참조 금지
-import { createOrganizationServer } from '$features/organization/create/api/create-org.server';
+import { refreshSession } from '$entities/session/api/refresh-session.server';
+
+// Bad: 라우트 파일에서 $widgets, $features, $entities 참조 금지
+// app/action/flash-token/route.ts
+import { refreshSession } from '$entities/session/server';
 ```
 
 ### 4.3 같은 레이어 교차 참조 (`@x`)
