@@ -8,7 +8,7 @@ import {
   getAuthRefreshFromCookie,
 } from '$shared/lib/cookie/server';
 
-export async function signOutAction() {
+export async function signOutServerAction() {
   const refreshToken = await getAuthRefreshFromCookie();
 
   if (refreshToken) {

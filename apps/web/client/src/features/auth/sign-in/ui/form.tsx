@@ -19,7 +19,7 @@ import {
   useActionFieldErrors,
 } from '$shared/api/action';
 
-import { signInAction } from '../api/action.server';
+import { signInServerAction } from '../api/action.server';
 import { FEATURES_AUTH_SIGN_IN_I18N_NAMESPACE } from '../i18n';
 
 import type { ActionStateZodError } from '$shared/api/action';
@@ -33,7 +33,7 @@ export function SignInForm({ redirectTo }: Props) {
 
   const redirectPath = typeof redirectTo === 'string' ? redirectTo : '/';
 
-  const [actionState, formAction] = useActionState(signInAction, {
+  const [actionState, formAction] = useActionState(signInServerAction, {
     success: false,
     error: null,
     state: { email: '', 'redirect-to': redirectPath },

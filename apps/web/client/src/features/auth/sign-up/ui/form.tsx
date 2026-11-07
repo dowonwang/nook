@@ -18,14 +18,14 @@ import {
   useActionFieldErrors,
 } from '$shared/api/action';
 
-import { signUpAction } from '../api/action.server';
+import { signUpServerAction } from '../api/action.server';
 import { FEATURES_AUTH_SIGN_UP_I18N_NAMESPACE } from '../i18n';
 
 import type { ActionStateZodError } from '$shared/api/action';
 
 export function SignUpForm() {
   const { t } = useT([FEATURES_AUTH_SIGN_UP_I18N_NAMESPACE]);
-  const [actionState, formAction] = useActionState(signUpAction, {
+  const [actionState, formAction] = useActionState(signUpServerAction, {
     success: false,
     error: null,
     state: { name: '', email: '' },

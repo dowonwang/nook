@@ -24,7 +24,7 @@ import {
   useActionFieldErrors,
 } from '$shared/api/action';
 
-import { createOrganizationInvitationAction } from '../api/action.server';
+import { createOrganizationInvitationServerAction } from '../api/action.server';
 import { FEATURES_ORGANIZATION_INVITATION_CREATE_I18N_NAMESPACE } from '../i18n';
 import { INIT_DATA } from '../model/types';
 
@@ -46,7 +46,7 @@ export function CreateOrganizationInvitationForm({
 }: Props) {
   const { t } = useT(FEATURES_ORGANIZATION_INVITATION_CREATE_I18N_NAMESPACE);
   const [actionState, formAction, isPending] = useActionState(
-    createOrganizationInvitationAction,
+    createOrganizationInvitationServerAction,
     {
       success: false,
       error: null,

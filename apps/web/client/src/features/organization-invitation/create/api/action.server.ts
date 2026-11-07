@@ -11,7 +11,7 @@ import type {
   CreateOrganizationInvitationState,
 } from '../model/types';
 
-export async function createOrganizationInvitationAction(
+export async function createOrganizationInvitationServerAction(
   _previousState: CreateOrganizationInvitationActionState,
   formData: FormData,
 ) {

@@ -16,7 +16,7 @@ import type {
 } from '../model/types';
 import type { postAuthSignUpResponseError } from '@packages/api-client/api';
 
-export async function signUpAction(
+export async function signUpServerAction(
   _previousState: SignUpActionState,
   formData: FormData,
 ): Promise<SignUpActionState> {

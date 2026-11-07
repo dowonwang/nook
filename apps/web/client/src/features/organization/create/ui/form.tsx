@@ -17,7 +17,7 @@ import {
   useActionFieldErrors,
 } from '$shared/api/action';
 
-import { createOrganizationAction } from '../api/action.server';
+import { createOrganizationServerAction } from '../api/action.server';
 import { FEATURES_ORGANIZATION_CREATE_I18N_NAMESPACE } from '../i18n';
 
 import type { Organization } from '$entities/organization';
@@ -29,11 +29,14 @@ interface Props {
 
 export function CreateOrganizationForm({ onSuccess }: Props) {
   const { t } = useT(FEATURES_ORGANIZATION_CREATE_I18N_NAMESPACE);
-  const [actionState, formAction] = useActionState(createOrganizationAction, {
-    success: false,
-    error: null,
-    state: { id: '', title: '', slug: '' },
-  });
+  const [actionState, formAction] = useActionState(
+    createOrganizationServerAction,
+    {
+      success: false,
+      error: null,
+      state: { id: '', title: '', slug: '' },
+    },
+  );
 
   const { register, getFieldError } = useActionFieldErrors(
     actionState.error as ActionStateZodError,

@@ -8,7 +8,7 @@ import { useTransition } from 'react';
 import { MY_ORGANIZATION_LIST_BASE_QUERY_KEY } from '$entities/organization';
 import { RECEIVED_ORGANIZATION_INVITATION_LIST_BASE_QUERY_KEY } from '$entities/organization-invitation';
 
-import { changeOrganizationInvitationServerAction } from '../api/action.server';
+import { changeOrganizationInvitationStatusServerAction } from '../api/action.server';
 import { FEATURES_ORGANIZATION_INVITATION_CHANGE_STATUS_I18N_NAMESPACE } from '../i18n';
 
 interface Props {
@@ -24,7 +24,7 @@ export function AcceptOrganizationInvitationButton({ invitationId }: Props) {
 
   const onClick = (invitationId: string) => {
     startTransition(async () => {
-      await changeOrganizationInvitationServerAction({
+      await changeOrganizationInvitationStatusServerAction({
         invitationId,
         status: 'ACCEPTED',
       });

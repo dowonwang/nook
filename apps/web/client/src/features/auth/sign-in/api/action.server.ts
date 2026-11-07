@@ -16,7 +16,7 @@ import type {
 } from '../model/types';
 import type { postAuthSignInResponseError } from '@packages/api-client/api';
 
-export async function signInAction(
+export async function signInServerAction(
   previousState: SignInActionState,
   formData: FormData,
 ): Promise<SignInActionState> {
