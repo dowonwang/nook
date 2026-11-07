@@ -331,12 +331,12 @@ import type { OrganizationMemberRole } from '$entities/organization-member';
 
 라우트는 루트 `app/`에 두고, 화면 구성은 `src/pages`에 둡니다. 라우트 파일은 요청 값(`params`, `searchParams`)을 꺼내 page 컴포넌트에 넘기는 일만 합니다.
 
-| 경로                     | 용도                                        | locale 접두사 |
-| ------------------------ | ------------------------------------------- | ------------- |
-| `app/[locale]/(public)/` | 로그인 없이 보는 페이지(홈, 로그인 등)      | 있음          |
-| `app/(private)/`         | 로그인이 필요한 페이지(대시보드, 조직 등)   | 없음          |
-| `app/api/[...path]/`     | BFF Route Handler                           | 없음          |
-| `app/action/`            | 브라우저에서 호출하는 앱 전용 Route Handler | 없음          |
+| 경로                     | 용도                                        | 처리 코드        | locale 접두사 |
+| ------------------------ | ------------------------------------------- | ---------------- | ------------- |
+| `app/[locale]/(public)/` | 로그인 없이 보는 페이지(홈, 로그인 등)      | `src/pages`      | 있음          |
+| `app/(private)/`         | 로그인이 필요한 페이지(대시보드, 조직 등)   | `src/pages`      | 없음          |
+| `app/api/[...path]/`     | BFF Route Handler                           | `src/app/bff`    | 없음          |
+| `app/action/`            | 브라우저에서 호출하는 앱 전용 Route Handler | `src/app/action` | 없음          |
 
 ```tsx
 // app/(private)/org/page.tsx
