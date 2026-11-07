@@ -1,1 +1,1 @@
-export * from './get-cookie.server';
+export { getTheme } from './get-cookie.server';

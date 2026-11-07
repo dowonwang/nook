@@ -1,2 +1,5 @@
-export type * from './pagination';
-export type * from './request';
+export type {
+  OffsetPaginationQuery,
+  CursorPaginationQuery,
+} from './pagination';
+export type { SearchParams } from './request';

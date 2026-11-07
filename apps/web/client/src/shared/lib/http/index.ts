@@ -1,2 +1,2 @@
-export * from './get-client-ip';
-export * from './create-search-params';
+export { getClientIp } from './get-client-ip';
+export { createSearchParams } from './create-search-params';

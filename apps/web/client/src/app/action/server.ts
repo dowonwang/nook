@@ -1,1 +1,1 @@
-export * from './handle-flash-token.server';
+export { handleFlashToken } from './handle-flash-token.server';
