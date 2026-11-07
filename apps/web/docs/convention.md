@@ -111,9 +111,10 @@ feature 슬라이스는 **사용자가 하는 행동 하나**(생성, 수정, �
 | 6    | `lib`    | 위에 해당하지 않고 한 주제로 설명할 수 있는가? | 라이브러리(`lib/date`, `lib/http`) |
 
 - 쿠키는 주제와 상관없이 `cookie`에 모으고 `cookie/<주제>`로 나눕니다.
-- `shared/lib`의 라이브러리는 한 주제만 다루며, `README.md`에 다루는 영역과 넣지 않을 것을 적습니다. 이름은 주제 명사로 짓고 `utils`, `helpers`, `common`은 쓰지 않습니다.
+- `shared/lib`의 라이브러리는 한 주제만 다룹니다. 이름은 주제 명사로 짓고 `utils`, `helpers`, `common`은 쓰지 않습니다.
 - 쓰는 곳이 하나뿐인 코드는 그곳에 둡니다. 단, 독립된 주제로 설명할 수 있으면 `shared/lib`에 둘 수 있습니다. 예: `lib/jwt`, `lib/date`, `lib/crypto`.
 - 타입은 값이 아니라 해당 모듈의 일부로 보고, 그 타입을 쓰는 모듈에 둡니다. 예: `Theme`은 `lib/theme`, `OffsetPaginationQuery`는 `lib/pagination`.
+- `config`, `ui`를 제외한 `shared`의 모듈은 `index.ts`와 같은 위치에 `README.md`를 둡니다. 제목은 폴더 이름으로 하고, 설명, `Rules`, `Exports` 순서로 씁니다. `Rules`는 상세 규칙이 있을 때만 쓰고, 코드만 봐서는 알 수 없는 제약이나 유지 이유는 설명이나 `Rules`에 적습니다. `Exports`는 `Classes`, `Providers`, `Components`, `Hooks`, `Functions`, `Constants`, `Types` 순서로 묶고 항목마다 설명과 예시를 씁니다. 서버에서만 쓰는 항목은 제목 끝에 `(server only)`를 붙이고 묶음 안에서 먼저 씁니다.
 - 세그먼트 안에 모듈별 하위 폴더를 둘 수 있습니다. 이 폴더는 세그먼트가 아니라 모듈의 내부 구조입니다. 파일이 많아져서 나눌 이유가 있을 때만 만듭니다. 예: `shared/api/bff/lib/`는 `bff` 모듈 안에서만 쓰며 `shared/lib`의 일부가 아닙니다.
 - 같은 모듈 안에서는 상대 경로로 참조합니다. 모듈 밖에서는 다른 세그먼트라도 alias로 그 모듈의 진입점만 참조합니다.
 - 세그먼트끼리는 서로 참조할 수 있지만, 파일 단위의 순환 import는 만들지 않습니다.
@@ -371,10 +372,7 @@ export default function Page({ searchParams }: Props) {
 | 클라이언트 컴포넌트, 클라이언트 쿼리         | `clientFetcher` | `$shared/api/bff`        |
 | RSC, Server Action, 서버 쿼리(`*.server.ts`) | `serverFetcher` | `$shared/api/bff/server` |
 
-- 두 도구 모두 `x-nook-request` 헤더를 붙입니다. BFF와 `app/action/` 핸들러는 `isBffRequest`로 이 헤더를 확인하고, 없거나 주소창으로 연 요청(`sec-fetch-mode: navigate`)이면 404를 반환합니다. 이 헤더 값은 비밀이 아니며, 주소창 접근과 다른 사이트의 요청(CSRF)을 막는 용도입니다.
-- BFF가 백엔드로 보낼 때는 `createForwardedHeaders`가 허용 목록의 헤더와 `x-internal-secret`(서버 환경 변수 `INTERNAL_API_SECRET`)만 전달합니다. 이 값은 브라우저로 나가지 않으며, API 서버는 이 값이 맞는 요청만 처리합니다.
-- `fetch('/api/...')`를 직접 쓰지 않습니다. 헤더가 빠져 404가 됩니다.
-- 새 Route Handler를 `app/action/`에 추가하면 핸들러 첫 줄에서 `isBffRequest`를 검사합니다.
+요청 헤더, 내부 비밀값, 새 Route Handler 규칙은 [bff README](../client/src/shared/api/bff/README.md#rules)를 따릅니다.
 
 ---
 
@@ -428,9 +426,7 @@ return (
 
 - 변경 요청은 해당 feature의 `api/action.server.ts`(`'use server'`)에 둡니다.
 - Server Action 이름은 `<동사><도메인>ServerAction`으로 짓습니다. 예: `signInServerAction`, `createOrganizationServerAction`, `changeOrganizationInvitationStatusServerAction`. `useActionState`에 넘기는 함수가 브라우저에서 실행되는 일반 함수일 수도 있으므로, 서버에서 실행되는 함수임을 이름으로 드러냅니다.
-- 폼은 `useActionState`와 `$shared/api/action`의 도구를 씁니다. 상태 모양은 `ActionState<TState, TResponseError>`(`success`, `state`, `error`)입니다.
-  - 입력 검증 실패: `createActionStateError(zodError)`로 필드별 에러를 만들고 `useActionFieldErrors`로 표시합니다.
-  - 서버 응답 에러: 응답의 `error.code`를 그대로 담고 `useActionErrorMessage`가 i18n 키로 번역합니다.
+- 폼 상태와 에러 표시는 [action README](../client/src/shared/api/action/README.md#rules)를 따릅니다.
 - 클라이언트가 보낸 이전 상태(`previousState`)는 사용자가 조작할 수 있습니다. redirect 경로처럼 서버 동작에 쓰는 값은 서버에서 다시 검증합니다.
 - 변경 후에는 영향을 받는 목록을 base 키로 무효화합니다. 다른 feature의 쿼리 키가 아니라 `entities`에서 공개한 키를 씁니다([0.4](#04-feature는-사용자-행동-단위)).
 
@@ -438,43 +434,7 @@ return (
 
 ## 7. i18n
 
-슬라이스마다 `i18n/` 폴더를 두고 그 슬라이스의 문구만 넣습니다.
-
-**새 i18n 폴더는 스니펫으로 만듭니다.**
-
-1. `i18n/` 폴더에 `ko.json`, `en.json`을 만들고 문구를 넣습니다(처음에는 `{}`도 됩니다).
-2. `i18n/index.ts`를 만들어 **먼저 저장한 뒤**, 빈 파일에서 `i18nns`를 입력하고 스니펫을 선택합니다(`.vscode/i18n.code-snippets`).
-3. 스니펫이 파일 경로로 네임스페이스 상수 이름과 값을 채웁니다. 아래 규칙대로 들어갔는지 확인합니다.
-   - `src/pages/organization/home/i18n/index.ts` → `PAGES_ORGANIZATION_HOME_I18N_NAMESPACE = 'pages/organization/home'`
-
-저장하지 않은 파일은 경로가 없어 이름이 채워지지 않으므로, 저장 후에 스니펫을 사용합니다. 스니펫 내용을 바꾸면 이 섹션의 예시도 함께 맞춥니다.
-
-```text
-pages/organization/home/i18n/
-├── ko.json     # 기준 언어. 키 구조의 원본
-├── en.json     # ko.json과 같은 키 구조
-└── index.ts    # 키 타입 검사와 네임스페이스 상수
-```
-
-```typescript
-// pages/organization/home/i18n/index.ts
-import en from './en.json';
-
-import type { DeepStringify } from '$shared/i18n';
-import type ko from './ko.json';
-
-type I18nKey = DeepStringify<typeof ko>;
-
-en satisfies I18nKey; // en.json에 키가 빠지거나 남으면 typecheck 실패
-
-export const PAGES_ORGANIZATION_HOME_I18N_NAMESPACE = 'pages/organization/home';
-```
-
-- 네임스페이스 값은 `src` 아래 슬라이스 경로와 같습니다. 리소스를 `<네임스페이스>/i18n/<locale>.json`에서 불러오기 때문입니다.
-- 상수 이름은 `<레이어>_<슬라이스 경로>_I18N_NAMESPACE`입니다. 레이어는 폴더 이름 그대로 복수형 대문자(`ENTITIES`, `FEATURES`, `PAGES`, `WIDGETS`)를 쓰고, 경로의 `/`와 `-`는 `_`로 바꿉니다.
-  - `features/organization-invitation/change-status` → `FEATURES_ORGANIZATION_INVITATION_CHANGE_STATUS_I18N_NAMESPACE`
-- 서버 컴포넌트는 `getT(네임스페이스)`(`next-i18next/server`), 클라이언트 컴포넌트는 `useT(네임스페이스)`(`next-i18next/client`)를 씁니다.
-- 화면에 보이는 문구는 컴포넌트에 하드코딩하지 않고 `ko.json`과 `en.json`에 함께 추가합니다.
+슬라이스마다 `i18n/` 폴더를 두고 그 슬라이스의 문구만 넣습니다. 폴더 구성, 스니펫, 네임스페이스 이름, 문구 사용 규칙은 [i18n README](../client/src/shared/i18n/README.md#rules)를 따릅니다.
 
 ---
 
