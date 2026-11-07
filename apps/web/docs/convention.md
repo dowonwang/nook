@@ -193,6 +193,16 @@ FSD 특성상 폴더 깊이가 깊어지므로 **파일명은 `kebab-case`로 �
 - **Custom Hook**: `camelCase` 사용 (`use` 접두사 필수)
 - **일반 함수 / 서버 함수**: `camelCase` 사용 (`동사 + 명사` 형태)
 
+서버 전용 파일(`*.server.ts`)의 함수에 `server`를 붙이는 경우는 아래로 정해져 있습니다. 파일 접미사로 구분되므로 그 외 함수에는 붙이지 않습니다.
+
+| 대상                  | 표기                  | 예시                                                   |
+| --------------------- | --------------------- | ------------------------------------------------------ |
+| 조회 요청 함수(`api`) | `Server` 접미사       | `getSessionServer`, `getOrganizationBySlugServer`      |
+| 쿼리 옵션             | `server` 접두사       | `serverSessionQueryOptions`                            |
+| 요청 도구             | `server` 접두사       | `serverFetcher` (`clientFetcher`와 짝)                 |
+| Server Action         | `ServerAction` 접미사 | `signInServerAction`                                   |
+| 그 외 서버 전용 함수  | 붙이지 않음           | `refreshSession`, `getFlashCookie`, `handleFlashToken` |
+
 ```typescript
 // features/organization/create/ui/form.tsx
 // 컴포넌트: PascalCase (맥락을 포함한 완전한 이름)
