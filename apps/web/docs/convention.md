@@ -107,12 +107,13 @@ feature 슬라이스는 **사용자가 하는 행동 하나**(생성, 수정, �
 | 2    | `i18n`   | 언어와 번역에 관한 코드인가?                   | 세그먼트(`$shared/i18n`)           |
 | 3    | `api`    | 백엔드나 BFF의 요청과 응답을 다루는가?         | 모듈(`api/bff`, `api/action`)      |
 | 4    | `ui`     | 화면을 그리는 컴포넌트인가?                    | 컴포넌트(`ui/pagination`)          |
-| 5    | `config` | 함수 없이 값만 있는가?(환경 변수, 타입 포함)   | 세그먼트(`$shared/config`)         |
+| 5    | `config` | 함수 없이 값만 있는가?(환경 변수 포함)         | 세그먼트(`$shared/config`)         |
 | 6    | `lib`    | 위에 해당하지 않고 한 주제로 설명할 수 있는가? | 라이브러리(`lib/date`, `lib/http`) |
 
-- 쿠키는 주제와 상관없이 `cookie`에 모으고 `cookie/<주제>`로 나눕니다. 예외: `initializeTheme`은 `toString()`으로 인라인 스크립트에 들어가 다른 파일을 import할 수 없으므로, 쿠키 문자열을 함수 안에 직접 적습니다.
+- 쿠키는 주제와 상관없이 `cookie`에 모으고 `cookie/<주제>`로 나눕니다.
 - `shared/lib`의 라이브러리는 한 주제만 다루며, `README.md`에 다루는 영역과 넣지 않을 것을 적습니다. 이름은 주제 명사로 짓고 `utils`, `helpers`, `common`은 쓰지 않습니다.
 - 쓰는 곳이 하나뿐인 코드는 그곳에 둡니다. 단, 독립된 주제로 설명할 수 있으면 `shared/lib`에 둘 수 있습니다. 예: `lib/jwt`, `lib/date`, `lib/crypto`.
+- 타입은 값이 아니라 해당 모듈의 일부로 보고, 그 타입을 쓰는 모듈에 둡니다. 예: `Theme`은 `lib/theme`, `OffsetPaginationQuery`는 `lib/pagination`.
 - 세그먼트 안에 모듈별 하위 폴더를 둘 수 있습니다. 이 폴더는 세그먼트가 아니라 모듈의 내부 구조입니다. 파일이 많아져서 나눌 이유가 있을 때만 만듭니다. 예: `shared/api/bff/lib/`는 `bff` 모듈 안에서만 쓰며 `shared/lib`의 일부가 아닙니다.
 - 같은 모듈 안에서는 상대 경로로 참조합니다. 모듈 밖에서는 다른 세그먼트라도 alias로 그 모듈의 진입점만 참조합니다.
 - 세그먼트끼리는 서로 참조할 수 있지만, 파일 단위의 순환 import는 만들지 않습니다.
@@ -483,3 +484,5 @@ export const PAGES_ORGANIZATION_HOME_I18N_NAMESPACE = 'pages/organization/home';
 - flex 컨테이너 안에서는 마진이 상쇄되지 않고 gap에 더해집니다. 페이지 컴포넌트가 Fragment를 반환하거나 `HydrationBoundary`로 감싸도 그 자식은 `<main>`의 직접 자식입니다.
 - `CardBody`는 기본으로 자식 사이에 `space-y-6`을 줍니다. 다른 간격이 필요하면 `className`으로 덮어씁니다(`cn`이 tailwind-merge로 병합).
 - 공통 간격 값은 `--spacing-page` 같은 토큰(`src/app/styles/global.css`)을 씁니다.
+- 색상 토큰은 라이트와 다크 값을 `light-dark()`로 한 곳에 적습니다. `dark:` 유틸리티는 사용자가 고른 다크와 시스템 다크에 모두 적용되므로, 색상 토큰으로 처리하지 못하는 표시 전환에만 씁니다.
+- `<html>`에 `dark`, `light` 클래스가 없으면 시스템 설정을 따릅니다. 테마 쿠키는 사용자가 전환 버튼을 눌렀을 때만 만들고, 인라인 스크립트로 테마를 초기화하지 않습니다.

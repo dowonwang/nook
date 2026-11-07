@@ -2,22 +2,22 @@
 
 import { createContext, useContext, useState } from 'react';
 
-import type { Theme } from '$shared/config';
+import type { Theme } from './types';
 
 interface Context {
-  theme: Theme;
+  theme: Theme | null;
   setTheme: (value: Theme) => void;
 }
 
 interface Props {
-  initTheme: Theme;
+  initTheme: Theme | null;
   children: React.ReactNode;
 }
 
 const ThemeContext = createContext<Context | null>(null);
 
 export function ThemeProvider({ children, initTheme }: Props) {
-  const [theme, setTheme] = useState<Theme>(initTheme);
+  const [theme, setTheme] = useState<Theme | null>(initTheme);
 
   return (
     <ThemeContext

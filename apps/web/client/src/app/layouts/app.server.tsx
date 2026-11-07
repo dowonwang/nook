@@ -9,7 +9,7 @@ import { FlashCookieConsumer, QueryClientProvider } from '$app/providers';
 import { CLIENT_ENV_CONFIG } from '$shared/config';
 import { getFlashCookie, getI18nCookie } from '$shared/cookie/server';
 import { i18nConfig } from '$shared/i18n/server';
-import { initializeTheme, ThemeProvider } from '$shared/lib/theme';
+import { ThemeProvider } from '$shared/lib/theme';
 import { getTheme } from '$shared/lib/theme/server';
 
 import type { Metadata } from 'next';
@@ -39,16 +39,8 @@ export async function AppLayout({ children }: Props) {
   return (
     <html
       lang={locale}
-      className={`${notoKr.variable} ${noto.variable} ${theme === 'dark' ? 'dark' : ''}`}
+      className={`${notoKr.variable} ${noto.variable} ${theme ?? ''}`}
     >
-      <head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(${initializeTheme.toString()})()`,
-          }}
-        />
-      </head>
-
       <body className='bg-background'>
         <FlashCookieConsumer shouldConsume={!!flashToken} />
 

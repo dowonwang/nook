@@ -1,4 +1,5 @@
 export { applyTheme } from './apply';
-export { initializeTheme } from './initialize';
 export { useBreakPoint } from './use-break-point';
 export { ThemeProvider, useThemeContext } from './context';
+export { getSystemTheme } from './get-system-theme';
+export type { Theme } from './types';
