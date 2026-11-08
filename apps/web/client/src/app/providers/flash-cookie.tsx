@@ -1,6 +1,6 @@
 'use client';
 
-import { useConsumeFlashCookie } from '$shared/lib/cookie';
+import { useConsumeFlashCookie } from '$shared/cookie';
 
 interface Props {
   shouldConsume: boolean;

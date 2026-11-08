@@ -1,3 +1,3 @@
-export * from './decode-payload';
-export * from './is-token-expired';
-export type * from './types';
+export { decodeJwtPayload } from './decode-payload';
+export { isTokenExpired } from './is-token-expired';
+export type { JwtPayload, IsTokenExpiredOptions } from './types';

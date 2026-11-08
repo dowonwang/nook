@@ -12,8 +12,8 @@ import {
   SESSION_REQUIRED_SIGN_IN,
 } from '$entities/session';
 import { SignInForm } from '$features/auth/sign-in';
-import { getFlashCookie } from '$shared/lib/cookie/server';
-import { AppLogo } from '$shared/ui';
+import { getFlashCookie } from '$shared/cookie/server';
+import { AppLogo } from '$shared/ui/app-logo';
 
 import { PAGES_SIGN_IN_I18N_NAMESPACE } from '../i18n';
 

@@ -4,7 +4,7 @@ import { redirect } from 'next/navigation';
 
 import { actionStateBuilder, createActionStateError } from '$shared/api/action';
 import { serverFetcher } from '$shared/api/bff/server';
-import { setAuthCookie } from '$shared/lib/cookie/server';
+import { setAuthCookie } from '$shared/cookie/server';
 import { getSafeRedirectPath } from '$shared/lib/http/server';
 
 import { signInSchema } from '../model/types';
@@ -17,7 +17,7 @@ import type {
 } from '../model/types';
 import type { postAuthSignInResponseError } from '@packages/api-client/api';
 
-export async function signInAction(
+export async function signInServerAction(
   previousState: SignInActionState,
   formData: FormData,
 ): Promise<SignInActionState> {

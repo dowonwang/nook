@@ -1,5 +1,5 @@
 import { serverFetcher } from '$shared/api/bff/server';
-import { getAuthAccessFromCookie } from '$shared/lib/cookie/server';
+import { getAuthAccessFromCookie } from '$shared/cookie/server';
 
 import type { Session } from '../model/types';
 import type { getUserMeResponseSuccess } from '@packages/api-client/api';

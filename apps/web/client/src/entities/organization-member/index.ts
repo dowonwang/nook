@@ -1,5 +1,8 @@
-export * from './ui/role-radio-group';
-export * from './ui/role-badge';
-export * from './lib/grantable-roles';
+export { OrganizationMemberRoleRadioGroup } from './ui/role-radio-group';
+export { OrganizationMemberRoleBadge } from './ui/role-badge';
+export { getGrantableOrganizationMemberRoles } from './lib/grantable-roles';
 
-export type * from './model/types';
+export type {
+  ORGANIZATION_MEMBER_ROLE,
+  OrganizationMemberRole,
+} from './model/types';

@@ -8,7 +8,7 @@ import { getT } from 'next-i18next/server';
 
 import { PAGES_ORGANIZATION_SENT_INVITATION_I18N_NAMESPACE } from '../i18n';
 
-import type { SearchParams } from '$shared/types';
+import type { SearchParams } from '$shared/lib/http';
 
 interface Props {
   searchParams: Promise<SearchParams>;

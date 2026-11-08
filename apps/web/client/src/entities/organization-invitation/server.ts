@@ -1,1 +1,1 @@
-export { serverReceivedOrganizationInvitationListQueryOptions } from './model/query.server';
+export { serverReceivedOrganizationInvitationListQueryOptions } from './api/query.server';

@@ -9,9 +9,12 @@ const FSD_PUBLIC_API_PATTERNS = [
     message:
       '슬라이스 내부 파일 대신 진입점(index.ts 또는 server.ts)으로 import하세요.',
   },
+  // shared는 슬라이스가 없으므로 진입점 단위(세그먼트, 모듈, 라이브러리, 컴포넌트)별로 허용
   {
-    regex: '^\\$shared/.*\\.server$',
-    message: '*.server 파일 대신 해당 세그먼트의 server.ts로 import하세요.',
+    regex:
+      '^\\$shared/(?!(config|cookie|i18n)(/server)?$|(api|lib)/[^/]+(/server)?$|ui/[^/]+$)',
+    message:
+      'shared 내부 파일 대신 진입점(index.ts 또는 server.ts)으로 import하세요.',
   },
 ];
 

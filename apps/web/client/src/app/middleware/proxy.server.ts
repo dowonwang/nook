@@ -1,5 +1,5 @@
+import { clearAuthCookieToResponse } from '$shared/cookie/server';
 import { getLocaleFromPathname, removeLocaleFromPathname } from '$shared/i18n';
-import { clearAuthCookieToResponse } from '$shared/lib/cookie/server';
 
 import { i18nMiddleware } from './i18n.server';
 import { createCleanRouteRedirect } from './lib/create-clean-route-redirect.server';

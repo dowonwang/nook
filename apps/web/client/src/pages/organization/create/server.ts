@@ -1,1 +1,1 @@
-export * from './ui/page.server';
+export { CreateOrganizationPage } from './ui/page.server';

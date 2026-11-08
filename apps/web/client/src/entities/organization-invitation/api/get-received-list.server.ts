@@ -1,7 +1,7 @@
 import { serverFetcher } from '$shared/api/bff/server';
 import { createSearchParams } from '$shared/lib/http';
 
-import type { OffsetPaginationQuery } from '$shared/types';
+import type { OffsetPaginationQuery } from '$shared/lib/pagination';
 import type { GetOrganizationInvitations200 } from '@packages/api-client/api';
 
 export async function getReceivedOrganizationInvitationListServer(

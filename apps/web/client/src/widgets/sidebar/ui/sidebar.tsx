@@ -1,6 +1,6 @@
 'use client';
 
-import { useBreakPoint } from '$shared/lib/theme';
+import { useBreakPoint } from '$shared/lib/break-point';
 
 import { DefaultSidebar } from './default-sidebar';
 import { MobileSidebar } from './mobile-sidebar';

@@ -12,7 +12,7 @@ import type {
   CreateOrganizationResponseSuccess,
 } from '../model/types';
 
-export async function createOrganizationAction(
+export async function createOrganizationServerAction(
   _previousState: CreateOrganizationActionState,
   formData: FormData,
 ): Promise<CreateOrganizationActionState> {

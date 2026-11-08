@@ -1,6 +1,6 @@
 import { SignOutButton } from '$features/auth/sign-out';
-import { I18nToggleLink } from '$features/i18n';
-import { ThemeToggleButton } from '$features/theme';
+import { I18nToggleLink } from '$features/i18n/change-locale';
+import { ThemeToggleButton } from '$features/theme/toggle';
 
 import { DashboardNavigate } from '../navigation/dashboard';
 

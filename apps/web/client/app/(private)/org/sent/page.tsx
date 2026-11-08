@@ -1,6 +1,6 @@
 import { OrganizationSentInvitationPage } from '$pages/organization/sent-invitation/server';
 
-import type { SearchParams } from '$shared/types';
+import type { SearchParams } from '$shared/lib/http';
 
 interface Props {
   searchParams: Promise<SearchParams>;

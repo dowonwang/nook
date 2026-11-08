@@ -17,7 +17,7 @@ import {
 import { getT } from 'next-i18next/server';
 import { Trans } from 'react-i18next/TransWithoutContext';
 
-import { AppName } from '$shared/ui';
+import { AppName } from '$shared/ui/app-name';
 
 import { PAGES_HOME_I18N_NAMESPACE } from '../i18n';
 

@@ -18,7 +18,7 @@ import { PAGES_ORGANIZATION_HOME_I18N_NAMESPACE } from '../i18n';
 import { MyOrganizationList } from './list';
 import { CreateOrganizationNavigation } from './navigation/create.server';
 
-import type { SearchParams } from '$shared/types';
+import type { SearchParams } from '$shared/lib/http';
 
 interface Props {
   searchParams: Promise<SearchParams>;

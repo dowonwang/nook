@@ -1,7 +1,18 @@
 @import 'tailwindcss';
 @source '../../../node_modules/@packages/ui/src';
 
-@custom-variant dark (&:where(.dark, .dark *));
+/* 사용자가 고른 다크와, 클래스가 없을 때의 시스템 다크를 함께 처리 */
+@custom-variant dark {
+  &:where(.dark, .dark *) {
+    @slot;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    &:where(:root:not(.light), :root:not(.light) *) {
+      @slot;
+    }
+  }
+}
 
 :root {
   /*   
@@ -12,6 +23,22 @@
   --ui-primary-foreground: #fff;
   --ui-primary-hover: #4caf50; 
   */
+
+  /* 클래스가 없으면 시스템 설정을 따름 */
+  color-scheme: light dark;
+
+  /* ui package 색상값 */
+  --ui-secondary: light-dark(#f3f2ee, #3f3f46);
+  --ui-secondary-foreground: light-dark(#4b5563, #d1d5db);
+  --ui-secondary-hover: light-dark(#e5e3dc, #52525b);
+}
+
+.light {
+  color-scheme: light;
+}
+
+.dark {
+  color-scheme: dark;
 }
 
 @theme {
@@ -24,17 +51,17 @@
   --spacing-page: 1.5rem;
 
   /* 레이아웃 색상 */
-  --color-header: #fff;
-  --color-sidebar: #fff;
-  --color-footer: #fff;
+  --color-header: light-dark(#fff, #1e1e1e);
+  --color-sidebar: light-dark(#fff, #1e1e1e);
+  --color-footer: light-dark(#fff, #1e1e1e);
 
-  --color-card: #fff;
-  --color-base-text: #1f2937;
+  --color-card: light-dark(#fff, #252525);
+  --color-base-text: light-dark(#1f2937, #f3f4f6);
 
   /* 색상 변수 */
-  --color-background: #fafbf9;
-  --color-border: #e8e6e0;
-  --color-focus: #388e3c;
+  --color-background: light-dark(#fafbf9, #121212);
+  --color-border: light-dark(#e8e6e0, #2d2d2d);
+  --color-focus: light-dark(#388e3c, #4caf50);
 
   /* shadow */
   --shadow-soft: 0 2px 12px rgba(0, 0, 0, 0.05);
@@ -71,26 +98,6 @@
       opacity: 0;
     }
   }
-}
-
-.dark {
-  /* 레이아웃 색상 */
-  --color-header: #1e1e1e;
-  --color-sidebar: #1e1e1e;
-  --color-footer: #1e1e1e;
-
-  --color-card: #252525;
-  --color-base-text: #f3f4f6;
-
-  /* 색상 변수 */
-  --color-background: #121212;
-  --color-border: #2d2d2d;
-  --color-focus: #4caf50;
-
-  /* ui package 색상값 */
-  --ui-secondary: #3f3f46;
-  --ui-secondary-foreground: #d1d5db;
-  --ui-secondary-hover: #52525b;
 }
 
 @layer base {

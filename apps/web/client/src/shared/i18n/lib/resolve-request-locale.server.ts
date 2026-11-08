@@ -1,4 +1,4 @@
-import { getI18nCookieFromRequest } from '$shared/lib/cookie/server';
+import { getI18nCookieFromRequest } from '$shared/cookie/server';
 
 import { I18N_FALLBACK_LOCALE, I18N_LOCALE } from '../config/constant';
 

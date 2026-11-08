@@ -9,7 +9,7 @@ import { isBffRequest } from '$shared/api/bff/server';
 import {
   getAuthAccessFromCookie,
   setAuthCookieToResponse,
-} from '$shared/lib/cookie/server';
+} from '$shared/cookie/server';
 
 import { requestBackend } from './request-backend.server';
 import { createBadGatewayResponse } from '../lib/create-bad-gateway-response.server';

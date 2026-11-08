@@ -74,16 +74,55 @@ feature 슬라이스는 **사용자가 하는 행동 하나**(생성, 수정, �
 
 `apps/web/client/eslint.config.mjs`가 조립하는 `@packages/eslint-config/fsd`(`packages/eslint-config/src/fsd.mjs`)의 `no-restricted-imports` 규칙이 아래 import를 오류로 막습니다. 별도 플러그인은 쓰지 않습니다.
 
-| 검사                     | 방식                                                                                                                             |
-| ------------------------ | -------------------------------------------------------------------------------------------------------------------------------- |
-| 진입점 우회              | alias 경로에 세그먼트 이름(`ui`, `api`, `model`, `lib`, `config`, `i18n`)이 들어가면 차단, `$shared`의 `*.server` 직접 참조 차단 |
-| 레이어 방향              | 레이어 폴더별로 상위 레이어 alias 차단                                                                                           |
-| 같은 레이어 교차 참조    | 레이어 폴더별로 같은 레이어 alias 차단. `entities`만 `@x` 경로 허용                                                              |
-| 자기 슬라이스 alias 참조 | 같은 레이어 alias 차단에 함께 걸림                                                                                               |
-| Next 라우트 파일         | 루트 `app/`, `proxy.ts`는 `$app`, `$pages`, `$shared`만 참조                                                                     |
+| 검사                     | 방식                                                                                                                                                 |
+| ------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 진입점 우회              | alias 경로에 세그먼트 이름(`ui`, `api`, `model`, `lib`, `config`, `i18n`)이 들어가면 차단, `$shared`는 [0.7](#07-세그먼트-기준)의 진입점 단위만 허용 |
+| 레이어 방향              | 레이어 폴더별로 상위 레이어 alias 차단                                                                                                               |
+| 같은 레이어 교차 참조    | 레이어 폴더별로 같은 레이어 alias 차단. `entities`만 `@x` 경로 허용                                                                                  |
+| 자기 슬라이스 alias 참조 | 같은 레이어 alias 차단에 함께 걸림                                                                                                                   |
+| Next 라우트 파일         | 루트 `app/`, `proxy.ts`는 `$app`, `$pages`, `$shared`만 참조                                                                                         |
 
 - 이 검사는 "슬라이스 안에서는 상대 경로만 쓴다"는 규칙을 전제로 합니다. 같은 레이어 alias는 곧 다른 슬라이스 참조이기 때문입니다.
 - 검사하지 못하는 것: 상대 경로로 슬라이스 밖에 나가는 import(`../../other-slice`), `@x/<이름>`이 실제 참조하는 슬라이스와 맞는지 여부. 리뷰에서 확인합니다.
+
+### 0.7 세그먼트 기준
+
+세그먼트는 [FSD 공식 문서](https://fsd.how/docs/reference/slices-segments/)의 기준을 따릅니다.
+
+**모든 레이어 공통**
+
+- 세그먼트 이름은 내용의 종류가 아니라 목적을 나타냅니다. `types`, `hooks`, `components` 같은 이름은 쓰지 않습니다.
+- 진입점(`index.ts`, `server.ts`)은 `export *` 없이 내보낼 이름을 직접 적습니다.
+- 조회의 쿼리 키와 쿼리 옵션은 요청 함수와 함께 `api` 세그먼트에 둡니다([React Query 가이드](https://fsd.how/docs/guides/tech/with-react-query/)).
+
+**`shared` 레이어**
+
+`shared`에는 비즈니스 로직을 두지 않습니다. 로고처럼 서비스 색이 있는 UI는 둘 수 있습니다.
+
+새 코드는 아래 표를 위에서부터 확인해, 처음 해당하는 세그먼트에 둡니다.
+
+| 순서 | 세그먼트 | 판단 질문                                      | 진입점 단위                        |
+| ---- | -------- | ---------------------------------------------- | ---------------------------------- |
+| 1    | `cookie` | 쿠키를 읽거나 쓰는가?                          | 세그먼트(`$shared/cookie`)         |
+| 2    | `i18n`   | 언어와 번역에 관한 코드인가?                   | 세그먼트(`$shared/i18n`)           |
+| 3    | `api`    | 백엔드나 BFF의 요청과 응답을 다루는가?         | 모듈(`api/bff`, `api/action`)      |
+| 4    | `ui`     | 화면을 그리는 컴포넌트인가?                    | 컴포넌트(`ui/pagination`)          |
+| 5    | `config` | 함수 없이 값만 있는가?(환경 변수 포함)         | 세그먼트(`$shared/config`)         |
+| 6    | `lib`    | 위에 해당하지 않고 한 주제로 설명할 수 있는가? | 라이브러리(`lib/date`, `lib/http`) |
+
+- 쿠키는 주제와 상관없이 `cookie`에 모으고 `cookie/<주제>`로 나눕니다.
+- `shared/lib`의 라이브러리는 한 주제만 다룹니다. 이름은 주제 명사로 짓고 `utils`, `helpers`, `common`은 쓰지 않습니다.
+- 쓰는 곳이 하나뿐인 코드는 그곳에 둡니다. 단, 독립된 주제로 설명할 수 있으면 `shared/lib`에 둘 수 있습니다. 예: `lib/jwt`, `lib/date`, `lib/crypto`.
+- 타입은 값이 아니라 해당 모듈의 일부로 보고, 그 타입을 쓰는 모듈에 둡니다. 예: `Theme`은 `lib/theme`, `OffsetPaginationQuery`는 `lib/pagination`.
+- `config`, `ui`를 제외한 `shared`의 모듈은 `index.ts`와 같은 위치에 `README.md`를 둡니다. 형식은 아래와 같습니다.
+  - 제목은 폴더 이름입니다. 그 아래에 설명을 쓰고, 상세 규칙이 있으면 `## Rules`에 적습니다. 코드만 봐서는 알 수 없는 제약이나 유지 이유는 설명이나 `Rules`에 적습니다.
+  - 내보내는 것은 `## Classes`, `## Providers`, `## Components`, `## Hooks`, `## Functions`, `## Constants`, `## Types` 순서로 묶고, 항목은 `###`로 씁니다. 같은 묶음의 항목 사이에는 `---`를 넣습니다.
+  - 함수, hook, Provider는 `#### Parameters`(표, 없으면 `없음`), `#### Returns`(`` `타입`: 설명 ``, 반환값이 없으면 `` `void` ``), `#### Examples`를 씁니다. 타입은 `#### Properties`(표)와 `#### Examples`를 씁니다.
+  - 서버에서만 쓰는 항목은 제목 끝에 `(server only)`를 붙이고 묶음 안에서 먼저 씁니다.
+- 세그먼트 안에 모듈별 하위 폴더를 둘 수 있습니다. 이 폴더는 세그먼트가 아니라 모듈의 내부 구조입니다. 파일이 많아져서 나눌 이유가 있을 때만 만듭니다. 예: `shared/api/bff/lib/`는 `bff` 모듈 안에서만 쓰며 `shared/lib`의 일부가 아닙니다.
+- 같은 모듈 안에서는 상대 경로로 참조합니다. 모듈 밖에서는 다른 세그먼트라도 alias로 그 모듈의 진입점만 참조합니다.
+- 세그먼트끼리는 서로 참조할 수 있지만, 파일 단위의 순환 import는 만들지 않습니다.
+- 인증 쿠키와 토큰을 읽고 쓰는 코드는 `shared/cookie`, `shared/lib/jwt`에 둡니다. 언제 갱신할지처럼 세션을 판단하는 규칙은 `entities/session`에 둡니다.
 
 ---
 
@@ -91,20 +130,21 @@ feature 슬라이스는 **사용자가 하는 행동 하나**(생성, 수정, �
 
 - **디렉토리 명명**: 모든 디렉토리명은 소문자 `kebab-case`를 사용합니다.
 - **진입점 (Barrel Export)**:
-- **일반 / 클라이언트 모듈**: `index.ts`를 통해 외부로 내보냅니다.
-- **서버 전용 모듈**: `server.ts`를 통해 외부로 내보냅니다.
-
+  - **일반 / 클라이언트 모듈**: `index.ts`를 통해 외부로 내보냅니다.
+  - **서버 전용 모듈**: `server.ts`를 통해 외부로 내보냅니다.
 - **Import / Export 바운더리 규칙**:
-- **동일 슬라이스(Slice) 내부**: 상대 경로 (`./`, `../`)로 참조합니다. 자기 슬라이스를 Alias(`$widgets/sidebar/...`)나 자기 진입점으로 참조하지 않습니다(순환 참조 위험).
-- **타 슬라이스 및 외부 참조**: 사전 정의된 Alias 경로(`$features/...`)로만 접근해야 하며, 반드시 해당 슬라이스의 진입점(`index.ts` 또는 `server.ts`)을 통해서만 참조합니다.
-- **같은 레이어 교차 참조**: 같은 레이어의 다른 슬라이스는 원칙적으로 참조하지 않습니다. 엔티티 간 관계처럼 꼭 필요한 경우에만, 참조되는 슬라이스에 `@x/<참조하는 슬라이스>.ts` 교차 참조 진입점을 만들어 필요한 것만 공개하고 그 진입점으로만 참조합니다. ([4.3 교차 참조 예시](#43-같은-레이어-교차-참조-x))
+  - **동일 슬라이스(Slice) 내부**: 상대 경로 (`./`, `../`)로 참조합니다. 자기 슬라이스를 Alias(`$widgets/sidebar/...`)나 자기 진입점으로 참조하지 않습니다(순환 참조 위험).
+  - **타 슬라이스 및 외부 참조**: 사전 정의된 Alias 경로(`$features/...`)로만 접근해야 하며, 반드시 해당 슬라이스의 진입점(`index.ts` 또는 `server.ts`)을 통해서만 참조합니다.
+  - **같은 레이어 교차 참조**: 같은 레이어의 다른 슬라이스는 원칙적으로 참조하지 않습니다. 엔티티 간 관계처럼 꼭 필요한 경우에만, 참조되는 슬라이스에 `@x/<참조하는 슬라이스>.ts` 교차 참조 진입점을 만들어 필요한 것만 공개하고 그 진입점으로만 참조합니다. ([4.3 교차 참조 예시](#43-같은-레이어-교차-참조-x))
 
 - **서버/클라이언트 분리**: 별도의 `server/` 디렉터리를 두지 않고, 서버 전용 파일명에 `*.server.ts`(컴포넌트는 `*.server.tsx`) 접미사를 붙여 구분합니다.
   - 서버 전용 로직: `next/headers`(`cookies()`, `headers()`), 서버 환경 변수(`SERVER_ENV_CONFIG`), `next-i18next/server`의 설정·리소스 로딩, Server Action(`'use server'`)처럼 브라우저 번들에 들어가면 안 되는 코드입니다.
-  - Route Handler와 미들웨어의 처리 로직(`src/app/bff/api`, `src/app/api`, `src/app/middleware`)도 서버 전용입니다. 서버 함수를 가져다 쓰기만 해도 해당합니다. 단, 경로 문자열 판단처럼 서버 API와 무관한 순수 함수(`resolve-route-scope.ts` 등)는 접미사를 붙이지 않습니다.
+  - Route Handler와 미들웨어의 처리 로직(`src/app/bff/api`, `src/app/action`, `src/app/middleware`)도 서버 전용입니다. 서버 함수를 가져다 쓰기만 해도 해당합니다. 단, 경로 문자열 판단처럼 서버 API와 무관한 순수 함수(`resolve-route-scope.ts` 등)는 접미사를 붙이지 않습니다.
   - 서버에서만 동작하는 서버 컴포넌트(RSC)도 `*.server.tsx`를 붙입니다. `async` 컴포넌트이거나 `getT`(`next-i18next/server`), 서버 쿼리 옵션, 쿠키 같은 서버 전용 코드를 쓰는 컴포넌트입니다. 예: `pages/<page>/ui/page.server.tsx`, `app/layouts/private.server.tsx`.
   - `'use client'`가 없더라도 서버 전용 코드를 쓰지 않아 서버와 클라이언트 양쪽에서 쓸 수 있는 컴포넌트(배지, 아이콘 등)는 접미사를 붙이지 않습니다.
   - 서버 전용 파일은 `server.ts`로만 공개합니다. `index.ts`로 공개하면 클라이언트 컴포넌트가 실수로 import할 수 있습니다.
+  - 예외: Server Action 파일(`api/action.server.ts`)은 같은 슬라이스의 클라이언트 컴포넌트가 상대 경로로 import합니다. `'use server'` 파일은 함수 본문이 브라우저로 나가지 않고, 클라이언트에는 서버를 호출하는 참조만 전달됩니다. 슬라이스 밖으로는 공개하지 않습니다(`index.ts`, `server.ts` 모두 해당).
+  - `server.ts`는 `.server` 파일만 공개합니다. `NextRequest`, `NextResponse`처럼 Next의 서버 전용 API를 쓰는 함수는 타입만 쓰더라도 서버 전용으로 보고 `.server` 접미사를 붙입니다. 타입 선언만 있는 `types.ts`는 제외합니다. 예: `is-bff-request.server.ts`.
 
 ---
 
@@ -121,12 +161,18 @@ src/
 │           ├── ui/
 │           │   └── form.tsx         # 파일명은 단순하게 유지
 │           ├── api/
-│           │   ├── fetch-org.server.ts # 서버 전용 로직 (.server.ts)
-│           │   └── use-create-org.ts   # 클라이언트 전용 Hook
+│           │   └── action.server.ts # Server Action ('use server')
 │           ├── model/
 │           │   └── types.ts         # 타입 전용 정의 파일
-│           ├── index.ts             # General Barrel File (클라이언트/공통)
-│           └── server.ts            # Server Barrel File (서버 전용)
+│           ├── i18n/
+│           └── index.ts             # General Barrel File (클라이언트/공통)
+├── entities/
+│   └── session/                     # Entity 단위 (kebab-case)
+│       ├── api/
+│       │   ├── get-session.ts        # 클라이언트 요청 함수
+│       │   └── get-session.server.ts # 서버 전용 요청 함수 (.server.ts)
+│       ├── index.ts                 # General Barrel File (클라이언트/공통)
+│       └── server.ts                # Server Barrel File (서버 전용)
 └── shared/
 
 ```
@@ -139,16 +185,16 @@ src/
 
 FSD 특성상 폴더 깊이가 깊어지므로 **파일명은 `kebab-case`로 최대한 명확하고 간단하게** 작성합니다. 파일명 안의 점(`.`)은 `.server` 접미사에만 씁니다(`i18n.key.ts`가 아니라 `i18n-key.ts`).
 
-| 분류                      | 파일명 규칙            | 예시                                        | 비고                                                                 |
-| ------------------------- | ---------------------- | ------------------------------------------- | -------------------------------------------------------------------- |
-| **UI 컴포넌트**           | `kebab-case.tsx`       | `form.tsx`, `button.tsx`                    | 상위 디렉터리 맥락으로 역할 구분                                     |
-| **Custom Hook**           | `kebab-case.ts`        | `use-form.ts`, `use-create-org.ts`          | 파일명에 `use-` 접두사 필수                                          |
-| **타입 정의**             | `types.ts`             | `types.ts`                                  | 해당 슬라이스 전용 타입 선언                                         |
-| **설정·상수**             | `config/kebab-case.ts` | `query-key.ts`, `i18n-key.ts`, `refresh.ts` | 내용을 나타내는 이름. `config/config.ts`처럼 세그먼트 이름 반복 금지 |
-| **서버 전용 로직**        | `*.server.ts`          | `create-org.server.ts`                      | `.server.ts` 접미사 필수                                             |
-| **서버 컴포넌트**         | `*.server.tsx`         | `page.server.tsx`                           | `server.ts`로만 공개                                                 |
-| **General Barrel Export** | `index.ts`             | `index.ts`                                  | 클라이언트 및 공통 모듈 외부 노출용                                  |
-| **Server Barrel Export**  | `server.ts`            | `server.ts`                                 | 서버 전용 모듈 외부 노출용                                           |
+| 분류                      | 파일명 규칙            | 예시                                         | 비고                                                                 |
+| ------------------------- | ---------------------- | -------------------------------------------- | -------------------------------------------------------------------- |
+| **UI 컴포넌트**           | `kebab-case.tsx`       | `form.tsx`, `button.tsx`                     | 상위 디렉터리 맥락으로 역할 구분                                     |
+| **Custom Hook**           | `kebab-case.ts`        | `use-locale.ts`, `use-offset-query.ts`       | 파일명에 `use-` 접두사 필수. JSX 문법을 쓸 때만 `.tsx`               |
+| **타입 정의**             | `types.ts`             | `types.ts`                                   | 해당 슬라이스 전용 타입 선언                                         |
+| **설정·상수**             | `config/kebab-case.ts` | `error-code.ts`, `i18n-key.ts`, `refresh.ts` | 내용을 나타내는 이름. `config/config.ts`처럼 세그먼트 이름 반복 금지 |
+| **서버 전용 로직**        | `*.server.ts`          | `action.server.ts`, `get-session.server.ts`  | `.server.ts` 접미사 필수                                             |
+| **서버 컴포넌트**         | `*.server.tsx`         | `page.server.tsx`                            | `server.ts`로만 공개                                                 |
+| **General Barrel Export** | `index.ts`             | `index.ts`                                   | 클라이언트 및 공통 모듈 외부 노출용                                  |
+| **Server Barrel Export**  | `server.ts`            | `server.ts`                                  | 서버 전용 모듈 외부 노출용                                           |
 
 ---
 
@@ -160,22 +206,35 @@ FSD 특성상 폴더 깊이가 깊어지므로 **파일명은 `kebab-case`로 �
 - **Custom Hook**: `camelCase` 사용 (`use` 접두사 필수)
 - **일반 함수 / 서버 함수**: `camelCase` 사용 (`동사 + 명사` 형태)
 
+서버 전용 파일(`*.server.ts`)의 함수에 `server`를 붙이는 경우는 아래로 정해져 있습니다. 파일 접미사로 구분되므로 그 외 함수에는 붙이지 않습니다.
+
+| 대상                  | 표기                  | 예시                                                   |
+| --------------------- | --------------------- | ------------------------------------------------------ |
+| 조회 요청 함수(`api`) | `Server` 접미사       | `getSessionServer`, `getOrganizationBySlugServer`      |
+| 쿼리 옵션             | `server` 접두사       | `serverSessionQueryOptions`                            |
+| 요청 도구             | `server` 접두사       | `serverFetcher` (`clientFetcher`와 짝)                 |
+| Server Action         | `ServerAction` 접미사 | `signInServerAction`                                   |
+| 그 외 서버 전용 함수  | 붙이지 않음           | `refreshSession`, `getFlashCookie`, `handleFlashToken` |
+
 ```typescript
 // features/organization/create/ui/form.tsx
 // 컴포넌트: PascalCase (맥락을 포함한 완전한 이름)
-export function OrganizationCreateForm() {
+export function CreateOrganizationForm({ onSuccess }: Props) {
   // ...
 }
 
-// features/organization/create/api/use-create-org.ts
+// shared/lib/pagination/use-offset-query.ts
 // Hook: camelCase (use 접두사)
-export function useOrganizationCreate() {
+export function useOffsetQuery(): OffsetPaginationQuery {
   // ...
 }
 
-// features/organization/create/api/create-org.server.ts
+// features/organization/create/api/action.server.ts
 // 서버 전용 함수: camelCase (동사 + 명사)
-export async function createOrganizationServer(data: CreateOrgDto) {
+export async function createOrganizationServerAction(
+  _previousState: CreateOrganizationActionState,
+  formData: FormData,
+): Promise<CreateOrganizationActionState> {
   // ...
 }
 ```
@@ -189,12 +248,10 @@ export async function createOrganizationServer(data: CreateOrgDto) {
 ```typescript
 // features/organization/create/model/types.ts
 
-export interface OrganizationCreateRequest {
-  name: string;
-  code: string;
-}
-
-export type OrganizationCreateStatus = 'idle' | 'loading' | 'success' | 'error';
+export type CreateOrganizationState = Organization;
+export type CreateOrganizationResponseError =
+  postOrganizationResponseError['data'];
+export type CreateOrganizationResponseSuccess = PostOrganization201;
 ```
 
 ---
@@ -205,14 +262,12 @@ export type OrganizationCreateStatus = 'idle' | 'loading' | 'success' | 'error';
 
 ```typescript
 // features/organization/create/index.ts (클라이언트 / 공통 노출)
-export { OrganizationCreateForm } from './ui/form';
-export { useOrganizationCreate } from './api/use-create-org';
-export type * from './model/types';
+export { CreateOrganizationForm } from './ui/form';
 ```
 
 ```typescript
-// features/organization/create/server.ts (서버 전용 노출)
-export { createOrganizationServer } from './api/create-org.server';
+// entities/session/server.ts (서버 전용 노출)
+export { getSessionServer } from './api/get-session.server';
 ```
 
 ---
@@ -222,22 +277,30 @@ export { createOrganizationServer } from './api/create-org.server';
 ```typescript
 // Good: 동일 슬라이스 내부 참조 (상대 경로 허용)
 // features/organization/create/ui/form.tsx
-import { OrganizationCreateRequest } from '../model/types';
-import { useOrganizationCreate } from '../api/use-create-org';
+import { createOrganizationServerAction } from '../api/action.server';
+import { FEATURES_ORGANIZATION_CREATE_I18N_NAMESPACE } from '../i18n';
 
 // Good: 상위 레이어에서 하위 레이어 참조 - 클라이언트/공통 (index.ts 바운더리 참조)
 // widgets/create-organization-flow/ui/content.tsx
-import { OrganizationCreateForm } from '$features/organization/create';
+import { CreateOrganizationForm } from '$features/organization/create';
 
 // Good: 타 슬라이스 참조 - 서버 전용 (server.ts 바운더리 참조)
-// app/api/org/route.ts
-import { createOrganizationServer } from '$features/organization/create/server';
+// src/app/layouts/private.server.tsx
+import { serverSessionQueryOptions } from '$entities/session/server';
+
+// Good: 라우트 파일은 $app의 처리 로직을 다시 내보내기만 함
+// app/action/flash-token/route.ts
+export { handleFlashToken as POST } from '$app/action/server';
 
 // Bad: 타 슬라이스를 상대 경로로 참조 금지
-import { OrganizationCreateForm } from '../../../organization/create/ui/form';
+import { CreateOrganizationForm } from '../../../organization/create/ui/form';
 
 // Bad: Barrel File을 거치지 않고 내부 파일 직접 참조 금지
-import { createOrganizationServer } from '$features/organization/create/api/create-org.server';
+import { refreshSession } from '$entities/session/api/refresh-session.server';
+
+// Bad: 라우트 파일에서 $widgets, $features, $entities 참조 금지
+// app/action/flash-token/route.ts
+import { refreshSession } from '$entities/session/server';
 ```
 
 ### 4.3 같은 레이어 교차 참조 (`@x`)
@@ -272,20 +335,18 @@ import type { OrganizationMemberRole } from '$entities/organization-member';
 
 ---
 
----
-
 ## 5. Next.js 라우트와 서버 경계
 
 ### 5.1 라우트 파일 (`app/`)
 
 라우트는 루트 `app/`에 두고, 화면 구성은 `src/pages`에 둡니다. 라우트 파일은 요청 값(`params`, `searchParams`)을 꺼내 page 컴포넌트에 넘기는 일만 합니다.
 
-| 경로                     | 용도                                        | locale 접두사 |
-| ------------------------ | ------------------------------------------- | ------------- |
-| `app/[locale]/(public)/` | 로그인 없이 보는 페이지(홈, 로그인 등)      | 있음          |
-| `app/(private)/`         | 로그인이 필요한 페이지(대시보드, 조직 등)   | 없음          |
-| `app/api/[...path]/`     | BFF Route Handler                           | 없음          |
-| `app/action/`            | 브라우저에서 호출하는 앱 전용 Route Handler | 없음          |
+| 경로                     | 용도                                        | 처리 코드        | locale 접두사 |
+| ------------------------ | ------------------------------------------- | ---------------- | ------------- |
+| `app/[locale]/(public)/` | 로그인 없이 보는 페이지(홈, 로그인 등)      | `src/pages`      | 있음          |
+| `app/(private)/`         | 로그인이 필요한 페이지(대시보드, 조직 등)   | `src/pages`      | 없음          |
+| `app/api/[...path]/`     | BFF Route Handler                           | `src/app/bff`    | 없음          |
+| `app/action/`            | 브라우저에서 호출하는 앱 전용 Route Handler | `src/app/action` | 없음          |
 
 ```tsx
 // app/(private)/org/page.tsx
@@ -316,15 +377,7 @@ export default function Page({ searchParams }: Props) {
 | 클라이언트 컴포넌트, 클라이언트 쿼리         | `clientFetcher` | `$shared/api/bff`        |
 | RSC, Server Action, 서버 쿼리(`*.server.ts`) | `serverFetcher` | `$shared/api/bff/server` |
 
-- 두 도구 모두 `x-nook-request` 헤더를 붙입니다. BFF와 `app/action/` 핸들러는 `isBffRequest`로 이 헤더를 확인하고, 없거나 주소창으로 연 요청(`sec-fetch-mode: navigate`)이면 404를 반환합니다. 이 헤더 값은 비밀이 아니며, 주소창 접근과 다른 사이트의 요청(CSRF)을 막는 용도입니다.
-- BFF가 백엔드로 보낼 때는 `createForwardedHeaders`가 허용 목록의 헤더와 `x-internal-secret`(서버 환경 변수 `INTERNAL_API_SECRET`)만 전달합니다. 이 값은 브라우저로 나가지 않으며, API 서버는 이 값이 맞는 요청만 처리합니다.
-- `fetch('/api/...')`를 직접 쓰지 않습니다. 헤더가 빠져 404가 됩니다.
-- 새 Route Handler를 `app/action/`에 추가하면 핸들러 첫 줄에서 `isBffRequest`를 검사합니다.
-- BFF의 실패 응답 규칙
-  - 백엔드에 연결하지 못하면 502(`common_error_InternalServerError`)를 반환합니다. 백엔드의 에러 응답은 그대로 전달하며, `error.code`는 JSON 응답일 때만 읽습니다.
-  - 액세스 토큰 만료로 세션을 갱신할 때, 갱신이 거절되면 401(`auth_error_refresh_token_expired`), 그 외 실패는 502를 반환합니다.
-  - 백엔드 주소는 `REST_API_BASE_URL`과 같은 origin일 때만 요청하고, 다른 origin으로 해석되면 404를 반환합니다.
-- `@packages/api-client/api`의 request function은 서버 환경 변수 `REST_API_BASE_URL`로 주소를 만들므로 서버 코드(`*.server.ts`)에서만 호출합니다. 브라우저 요청은 `clientFetcher`를 씁니다.
+요청 헤더, 내부 비밀값, 새 Route Handler 규칙은 [bff README](../client/src/shared/api/bff/README.md#rules)를 따릅니다.
 
 ---
 
@@ -332,7 +385,7 @@ export default function Page({ searchParams }: Props) {
 
 ### 6.1 조회: 쿼리 키와 쿼리 옵션
 
-조회는 `api/`(요청 함수), `config/query-key.ts`(쿼리 키), `model/query.ts`·`model/query.server.ts`(쿼리 옵션)로 나눕니다.
+조회는 `api/` 세그먼트에 요청 함수(`get-*.ts`), 쿼리 키(`query-key.ts`), 쿼리 옵션(`query.ts`, `query.server.ts`)을 함께 둡니다. 쿼리 키는 클라이언트와 서버 쿼리 옵션이 함께 쓰므로 별도 파일로 둡니다.
 
 | 대상                 | 이름 규칙                                    | 예시                                  |
 | -------------------- | -------------------------------------------- | ------------------------------------- |
@@ -368,8 +421,8 @@ await queryClient.prefetchQuery(
 
 return (
   <HydrationBoundary state={dehydrate(queryClient)}>
-    <ReceivedOrganizationInvitationList />{' '}
     {/* 클라이언트 쿼리 옵션으로 useQuery */}
+    <ReceivedOrganizationInvitationList />
   </HydrationBoundary>
 );
 ```
@@ -377,9 +430,8 @@ return (
 ### 6.3 변경: Server Action과 무효화
 
 - 변경 요청은 해당 feature의 `api/action.server.ts`(`'use server'`)에 둡니다.
-- 폼은 `useActionState`와 `$shared/api/action`의 도구를 씁니다. 상태 모양은 `ActionState<TState, TResponseError>`(`success`, `state`, `error`)입니다.
-  - 입력 검증 실패: `createActionStateError(zodError)`로 필드별 에러를 만들고 `useActionFieldErrors`로 표시합니다.
-  - 서버 응답 에러: 응답의 `error.code`를 그대로 담고 `useActionErrorMessage`가 i18n 키로 번역합니다.
+- Server Action 이름은 `<동사><도메인>ServerAction`으로 짓습니다. 예: `signInServerAction`, `createOrganizationServerAction`, `changeOrganizationInvitationStatusServerAction`. `useActionState`에 넘기는 함수가 브라우저에서 실행되는 일반 함수일 수도 있으므로, 서버에서 실행되는 함수임을 이름으로 드러냅니다.
+- 폼 상태와 에러 표시는 [action README](../client/src/shared/api/action/README.md#rules)를 따릅니다.
 - 클라이언트가 보낸 이전 상태(`previousState`)는 사용자가 조작할 수 있습니다. redirect 경로처럼 서버 동작에 쓰는 값은 서버에서 다시 검증합니다. 이동 경로는 `getSafeRedirectPath`(`$shared/lib/http/server`)로 앱 내부 경로만 허용합니다.
 - 변경 후에는 영향을 받는 목록을 base 키로 무효화합니다. 다른 feature의 쿼리 키가 아니라 `entities`에서 공개한 키를 씁니다([0.4](#04-feature는-사용자-행동-단위)).
 
@@ -387,43 +439,7 @@ return (
 
 ## 7. i18n
 
-슬라이스마다 `i18n/` 폴더를 두고 그 슬라이스의 문구만 넣습니다.
-
-**새 i18n 폴더는 스니펫으로 만듭니다.**
-
-1. `i18n/` 폴더에 `ko.json`, `en.json`을 만들고 문구를 넣습니다(처음에는 `{}`도 됩니다).
-2. `i18n/index.ts`를 만들어 **먼저 저장한 뒤**, 빈 파일에서 `i18nns`를 입력하고 스니펫을 선택합니다(`.vscode/i18n.code-snippets`).
-3. 스니펫이 파일 경로로 네임스페이스 상수 이름과 값을 채웁니다. 아래 규칙대로 들어갔는지 확인합니다.
-   - `src/pages/organization/home/i18n/index.ts` → `PAGES_ORGANIZATION_HOME_I18N_NAMESPACE = 'pages/organization/home'`
-
-저장하지 않은 파일은 경로가 없어 이름이 채워지지 않으므로, 저장 후에 스니펫을 사용합니다. 스니펫 내용을 바꾸면 이 섹션의 예시도 함께 맞춥니다.
-
-```text
-pages/organization/home/i18n/
-├── ko.json     # 기준 언어. 키 구조의 원본
-├── en.json     # ko.json과 같은 키 구조
-└── index.ts    # 키 타입 검사와 네임스페이스 상수
-```
-
-```typescript
-// pages/organization/home/i18n/index.ts
-import en from './en.json';
-
-import type { DeepStringify } from '$shared/i18n';
-import type ko from './ko.json';
-
-type I18nKey = DeepStringify<typeof ko>;
-
-en satisfies I18nKey; // en.json에 키가 빠지거나 남으면 typecheck 실패
-
-export const PAGES_ORGANIZATION_HOME_I18N_NAMESPACE = 'pages/organization/home';
-```
-
-- 네임스페이스 값은 `src` 아래 슬라이스 경로와 같습니다. 리소스를 `<네임스페이스>/i18n/<locale>.json`에서 불러오기 때문입니다.
-- 상수 이름은 `<레이어>_<슬라이스 경로>_I18N_NAMESPACE`입니다. 레이어는 폴더 이름 그대로 복수형 대문자(`ENTITIES`, `FEATURES`, `PAGES`, `WIDGETS`)를 쓰고, 경로의 `/`와 `-`는 `_`로 바꿉니다.
-  - `features/organization-invitation/change-status` → `FEATURES_ORGANIZATION_INVITATION_CHANGE_STATUS_I18N_NAMESPACE`
-- 서버 컴포넌트는 `getT(네임스페이스)`(`next-i18next/server`), 클라이언트 컴포넌트는 `useT(네임스페이스)`(`next-i18next/client`)를 씁니다.
-- 화면에 보이는 문구는 컴포넌트에 하드코딩하지 않고 `ko.json`과 `en.json`에 함께 추가합니다.
+슬라이스마다 `i18n/` 폴더를 두고 그 슬라이스의 문구만 넣습니다. 폴더 구성, 스니펫, 네임스페이스 이름, 문구 사용 규칙은 [i18n README](../client/src/shared/i18n/README.md#rules)를 따릅니다.
 
 ---
 
@@ -433,3 +449,5 @@ export const PAGES_ORGANIZATION_HOME_I18N_NAMESPACE = 'pages/organization/home';
 - flex 컨테이너 안에서는 마진이 상쇄되지 않고 gap에 더해집니다. 페이지 컴포넌트가 Fragment를 반환하거나 `HydrationBoundary`로 감싸도 그 자식은 `<main>`의 직접 자식입니다.
 - `CardBody`는 기본으로 자식 사이에 `space-y-6`을 줍니다. 다른 간격이 필요하면 `className`으로 덮어씁니다(`cn`이 tailwind-merge로 병합).
 - 공통 간격 값은 `--spacing-page` 같은 토큰(`src/app/styles/global.css`)을 씁니다.
+- 색상 토큰은 라이트와 다크 값을 `light-dark()`로 한 곳에 적습니다. `dark:` 유틸리티는 사용자가 고른 다크와 시스템 다크에 모두 적용되므로, 색상 토큰으로 처리하지 못하는 표시 전환에만 씁니다.
+- `<html>`에 `dark`, `light` 클래스가 없으면 시스템 설정을 따릅니다. 테마 쿠키는 사용자가 전환 버튼을 눌렀을 때만 만들고, 인라인 스크립트로 테마를 초기화하지 않습니다.

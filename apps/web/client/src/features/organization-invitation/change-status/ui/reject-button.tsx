@@ -4,7 +4,7 @@ import { Button } from '@packages/ui/components/button';
 import { useT } from 'next-i18next/client';
 import { useTransition } from 'react';
 
-import { changeOrganizationInvitationServerAction } from '../api/action.server';
+import { changeOrganizationInvitationStatusServerAction } from '../api/action.server';
 import { FEATURES_ORGANIZATION_INVITATION_CHANGE_STATUS_I18N_NAMESPACE } from '../i18n';
 
 interface Props {
@@ -19,7 +19,7 @@ export function RejectOrganizationInvitationButton({ invitationId }: Props) {
 
   const onClick = (invitationId: string) => {
     startTransition(async () => {
-      await changeOrganizationInvitationServerAction({
+      await changeOrganizationInvitationStatusServerAction({
         invitationId,
         status: 'REJECTED',
       });

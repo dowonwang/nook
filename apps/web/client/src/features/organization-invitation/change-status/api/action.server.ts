@@ -10,7 +10,7 @@ import type {
   ChangeOrganizationInvitationStatusState,
 } from '../model/types';
 
-export async function changeOrganizationInvitationServerAction({
+export async function changeOrganizationInvitationStatusServerAction({
   invitationId,
   status,
 }: ChangeOrganizationInvitationStatusState) {

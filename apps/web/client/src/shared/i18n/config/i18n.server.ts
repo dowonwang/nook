@@ -1,4 +1,4 @@
-import { I18N_COOKIE_NAME } from '$shared/lib/cookie';
+import { I18N_COOKIE_NAME } from '$shared/cookie';
 
 import { I18N_FALLBACK_LOCALE, I18N_LOCALE } from './constant';
 import {

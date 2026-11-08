@@ -2,7 +2,8 @@
 
 import { cn } from '@packages/ui/lib/cn';
 
-import { AppLogo, AppName } from '$shared/ui';
+import { AppLogo } from '$shared/ui/app-logo';
+import { AppName } from '$shared/ui/app-name';
 
 import { MENU_DATA } from '../config/menu-data';
 import { Menu } from './menu/menu';

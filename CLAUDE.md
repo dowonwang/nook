@@ -105,9 +105,9 @@ Shared infra (`src/shared`): `database` (Prisma transaction manager using AsyncL
 
 Conventions (from `apps/web/docs/convention.md`):
 
-- Directories and file names are `kebab-case`; component/function names carry full context (`OrganizationCreateForm` in `ui/form.tsx`, `useOrganizationCreate` in `api/use-create-org.ts`).
+- Directories and file names are `kebab-case`; component/function names carry full context (`CreateOrganizationForm` in `ui/form.tsx`, `createOrganizationServerAction` in `api/action.server.ts`).
 - Slice segments: `ui/`, `api/`, `model/` (types in `types.ts`), `config/`, `lib/`, `i18n/`.
-- Server-only files use the `*.server.ts` suffix, and server-only components (async RSC, or ones using `getT`/server query options/cookies) use `*.server.tsx` — e.g. `pages/<page>/ui/page.server.tsx`, `app/layouts/*.server.tsx`; no `server/` dir. Each slice exposes client/shared code via `index.ts` and server-only code via `server.ts`.
+- Server-only files use the `*.server.ts` suffix, and server-only components (async RSC, or ones using `getT`/server query options/cookies) use `*.server.tsx` — e.g. `pages/<page>/ui/page.server.tsx`, `app/layouts/*.server.tsx`; no `server/` dir. Each slice exposes client/shared code via `index.ts` and server-only code via `server.ts`. Exception: Server Actions live in the feature's `api/action.server.ts`, are named `<verb><Domain>ServerAction`, are imported by that slice's client components via a relative path, and are not exposed outside the slice.
 - Within a slice use relative imports; across slices/layers use the alias and import only from the slice's `index.ts` / `server.ts`, never deep paths.
 - Slices on the same layer don't import each other. When one must (e.g. entity relations), the referenced slice exposes only what's needed via `@x/<consumer>.ts` and the consumer imports from that path (`$entities/organization-member/@x/organization`).
 - Generic UI goes in `@packages/ui` (imported as `@packages/ui/components/<name>`); domain UI stays in the app's entities/features/widgets.
