@@ -49,13 +49,21 @@ export const PAGES_ORGANIZATION_HOME_I18N_NAMESPACE = 'pages/organization/home';
 - 서버 컴포넌트는 `getT(네임스페이스)`(`next-i18next/server`), 클라이언트 컴포넌트는 `useT(네임스페이스)`(`next-i18next/client`)를 씁니다.
 - 화면에 보이는 문구는 컴포넌트에 하드코딩하지 않고 `ko.json`과 `en.json`에 함께 추가합니다.
 
-## Exports
+## Hooks
 
-### Hooks
+### `useLocale`
 
-#### `useLocale`
+현재 언어를 가져옵니다.
 
-현재 언어를 돌려줍니다.
+#### Parameters
+
+없음
+
+#### Returns
+
+`I18nLocale`: i18next가 사용 중인 언어입니다. 정해지지 않았으면 기본 언어입니다.
+
+#### Examples
 
 ```tsx
 import { useLocale } from '$shared/i18n';
@@ -63,11 +71,23 @@ import { useLocale } from '$shared/i18n';
 const locale = useLocale();
 ```
 
-### Functions
+## Functions
 
-#### `resolveRequestLocale` (server only)
+### `resolveRequestLocale` (server only)
 
-요청의 쿠키, `accept-language` 순서로 언어를 정합니다. 둘 다 없으면 기본 언어를 돌려줍니다.
+요청의 쿠키, `accept-language` 순서로 언어를 정합니다.
+
+#### Parameters
+
+| 이름      | 타입          | 설명                        |
+| --------- | ------------- | --------------------------- |
+| `request` | `NextRequest` | 미들웨어가 받은 요청입니다. |
+
+#### Returns
+
+`I18nLocale`: 정한 언어입니다. 둘 다 없거나 지원하지 않는 언어면 기본 언어입니다.
+
+#### Examples
 
 ```ts
 import { resolveRequestLocale } from '$shared/i18n/server';
@@ -75,9 +95,23 @@ import { resolveRequestLocale } from '$shared/i18n/server';
 const locale = resolveRequestLocale(request);
 ```
 
-#### `getLocaleFromPathname`
+---
 
-경로의 첫 부분에서 언어를 읽습니다. 지원하지 않는 언어면 `null`을 돌려줍니다.
+### `getLocaleFromPathname`
+
+경로의 첫 부분에서 언어를 읽습니다.
+
+#### Parameters
+
+| 이름       | 타입     | 설명                          |
+| ---------- | -------- | ----------------------------- |
+| `pathname` | `string` | `/ko/signin` 같은 경로입니다. |
+
+#### Returns
+
+`I18nLocale | null`: 경로의 언어입니다. 지원하지 않는 언어면 `null`입니다.
+
+#### Examples
 
 ```ts
 import { getLocaleFromPathname } from '$shared/i18n';
@@ -85,9 +119,23 @@ import { getLocaleFromPathname } from '$shared/i18n';
 getLocaleFromPathname('/ko/signin'); // 'ko'
 ```
 
-#### `removeLocaleFromPathname`
+---
+
+### `removeLocaleFromPathname`
 
 경로에서 언어 부분을 뺍니다.
+
+#### Parameters
+
+| 이름       | 타입     | 설명                          |
+| ---------- | -------- | ----------------------------- |
+| `pathname` | `string` | `/ko/signin` 같은 경로입니다. |
+
+#### Returns
+
+`string`: 언어를 뺀 경로입니다. 언어가 없으면 그대로, 남는 경로가 없으면 `/`입니다.
+
+#### Examples
 
 ```ts
 import { removeLocaleFromPathname } from '$shared/i18n';
@@ -95,9 +143,24 @@ import { removeLocaleFromPathname } from '$shared/i18n';
 removeLocaleFromPathname('/ko/signin'); // '/signin'
 ```
 
-#### `createLocalizedPathname`
+---
+
+### `createLocalizedPathname`
 
 경로 앞에 언어를 붙입니다.
+
+#### Parameters
+
+| 이름       | 타입         | 설명                    |
+| ---------- | ------------ | ----------------------- |
+| `pathname` | `string`     | 언어가 없는 경로입니다. |
+| `locale`   | `I18nLocale` | 붙일 언어입니다.        |
+
+#### Returns
+
+`string`: 언어를 붙인 경로입니다. `/`는 `/<언어>`가 됩니다.
+
+#### Examples
 
 ```ts
 import { createLocalizedPathname } from '$shared/i18n';
@@ -105,11 +168,13 @@ import { createLocalizedPathname } from '$shared/i18n';
 createLocalizedPathname('/signin', 'ko'); // '/ko/signin'
 ```
 
-### Constants
+## Constants
 
-#### `i18nConfig` (server only)
+### `i18nConfig` (server only)
 
-next-i18next 서버 설정입니다. 앱 레이아웃과 미들웨어에서 씁니다.
+next-i18next 서버 설정입니다. 앱 레이아웃과 미들웨어에서 씁니다. 타입은 `I18nConfig`입니다.
+
+#### Examples
 
 ```ts
 import { i18nConfig } from '$shared/i18n/server';
@@ -117,36 +182,78 @@ import { i18nConfig } from '$shared/i18n/server';
 initServerI18next(i18nConfig);
 ```
 
-#### `resourceBackendServer`, `resourceBackendServerDev` (server only)
+---
 
-서버에서 번역 파일을 불러오는 i18next 플러그인입니다. `i18nConfig`에서만 씁니다.
+### `resourceBackendServer`, `resourceBackendServerDev` (server only)
+
+서버에서 번역 파일을 불러오는 i18next 플러그인입니다. `i18nConfig`에서만 씁니다. `resourceBackendServerDev`는 개발 환경용입니다.
+
+#### Examples
 
 ```ts
 import { resourceBackendServer } from '$shared/i18n/server';
 ```
 
-#### `resourceBackend`
+---
+
+### `resourceBackend`
 
 브라우저에서 번역 파일을 불러오는 i18next 플러그인입니다. 앱 설정에서만 씁니다.
+
+#### Examples
 
 ```ts
 import { resourceBackend } from '$shared/i18n';
 ```
 
-#### `I18N_LOCALE`, `I18N_NAMESPACE`, `I18N_FALLBACK_LOCALE`
+---
 
-지원 언어, 불러올 수 있는 네임스페이스 접두사, 기본 언어입니다.
+### `I18N_LOCALE`, `I18N_NAMESPACE`, `I18N_FALLBACK_LOCALE`
+
+지원 언어(`['ko', 'en']`), 불러올 수 있는 네임스페이스 접두사, 기본 언어(`'ko'`)입니다.
+
+#### Examples
 
 ```ts
 import { I18N_FALLBACK_LOCALE } from '$shared/i18n';
 ```
 
-### Types
+## Types
 
-#### `I18nLocale`, `I18nNamespace`, `DeepStringify`
+### `I18nLocale`
 
-언어와 네임스페이스 값의 타입, 번역 키 구조를 검사하는 타입입니다.
+지원 언어의 타입입니다. `'ko' | 'en'`입니다.
+
+#### Examples
 
 ```ts
 import type { I18nLocale } from '$shared/i18n';
+```
+
+---
+
+### `I18nNamespace`
+
+네임스페이스 접두사의 타입입니다. `I18N_NAMESPACE`의 값 중 하나입니다.
+
+#### Examples
+
+```ts
+import type { I18nNamespace } from '$shared/i18n';
+```
+
+---
+
+### `DeepStringify`
+
+번역 JSON의 키 구조를 그대로 두고 값만 `string`으로 바꾼 타입입니다. `en.json`이 `ko.json`과 같은 키를 갖는지 검사할 때 씁니다.
+
+#### Examples
+
+```ts
+import type { DeepStringify } from '$shared/i18n';
+
+type I18nKey = DeepStringify<typeof ko>;
+
+en satisfies I18nKey;
 ```

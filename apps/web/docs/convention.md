@@ -114,7 +114,11 @@ feature 슬라이스는 **사용자가 하는 행동 하나**(생성, 수정, �
 - `shared/lib`의 라이브러리는 한 주제만 다룹니다. 이름은 주제 명사로 짓고 `utils`, `helpers`, `common`은 쓰지 않습니다.
 - 쓰는 곳이 하나뿐인 코드는 그곳에 둡니다. 단, 독립된 주제로 설명할 수 있으면 `shared/lib`에 둘 수 있습니다. 예: `lib/jwt`, `lib/date`, `lib/crypto`.
 - 타입은 값이 아니라 해당 모듈의 일부로 보고, 그 타입을 쓰는 모듈에 둡니다. 예: `Theme`은 `lib/theme`, `OffsetPaginationQuery`는 `lib/pagination`.
-- `config`, `ui`를 제외한 `shared`의 모듈은 `index.ts`와 같은 위치에 `README.md`를 둡니다. 제목은 폴더 이름으로 하고, 설명, `Rules`, `Exports` 순서로 씁니다. `Rules`는 상세 규칙이 있을 때만 쓰고, 코드만 봐서는 알 수 없는 제약이나 유지 이유는 설명이나 `Rules`에 적습니다. `Exports`는 `Classes`, `Providers`, `Components`, `Hooks`, `Functions`, `Constants`, `Types` 순서로 묶고 항목마다 설명과 예시를 씁니다. 서버에서만 쓰는 항목은 제목 끝에 `(server only)`를 붙이고 묶음 안에서 먼저 씁니다.
+- `config`, `ui`를 제외한 `shared`의 모듈은 `index.ts`와 같은 위치에 `README.md`를 둡니다. 형식은 아래와 같습니다.
+  - 제목은 폴더 이름입니다. 그 아래에 설명을 쓰고, 상세 규칙이 있으면 `## Rules`에 적습니다. 코드만 봐서는 알 수 없는 제약이나 유지 이유는 설명이나 `Rules`에 적습니다.
+  - 내보내는 것은 `## Classes`, `## Providers`, `## Components`, `## Hooks`, `## Functions`, `## Constants`, `## Types` 순서로 묶고, 항목은 `###`로 씁니다. 같은 묶음의 항목 사이에는 `---`를 넣습니다.
+  - 함수, hook, Provider는 `#### Parameters`(표, 없으면 `없음`), `#### Returns`(`` `타입`: 설명 ``, 반환값이 없으면 `` `void` ``), `#### Examples`를 씁니다. 타입은 `#### Properties`(표)와 `#### Examples`를 씁니다.
+  - 서버에서만 쓰는 항목은 제목 끝에 `(server only)`를 붙이고 묶음 안에서 먼저 씁니다.
 - 세그먼트 안에 모듈별 하위 폴더를 둘 수 있습니다. 이 폴더는 세그먼트가 아니라 모듈의 내부 구조입니다. 파일이 많아져서 나눌 이유가 있을 때만 만듭니다. 예: `shared/api/bff/lib/`는 `bff` 모듈 안에서만 쓰며 `shared/lib`의 일부가 아닙니다.
 - 같은 모듈 안에서는 상대 경로로 참조합니다. 모듈 밖에서는 다른 세그먼트라도 alias로 그 모듈의 진입점만 참조합니다.
 - 세그먼트끼리는 서로 참조할 수 있지만, 파일 단위의 순환 import는 만들지 않습니다.

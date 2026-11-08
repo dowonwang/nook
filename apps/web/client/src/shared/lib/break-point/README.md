@@ -4,13 +4,21 @@
 
 첫 렌더링에서는 `null`이고, 마운트된 뒤에 실제 값이 들어옵니다.
 
-## Exports
+## Hooks
 
-### Hooks
+### `useBreakPoint`
 
-#### `useBreakPoint`
+현재 브레이크포인트를 돌려줍니다. 스타일만 바꿀 때는 이 hook 대신 Tailwind 반응형 유틸리티를 씁니다.
 
-현재 브레이크포인트(`sm`, `md`, `lg`, `xl`, `2xl`)를 돌려줍니다. 스타일만 바꿀 때는 이 hook 대신 Tailwind 반응형 유틸리티를 씁니다.
+#### Parameters
+
+없음
+
+#### Returns
+
+`{ breakPoint: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | null }`: 현재 브레이크포인트입니다. 마운트되기 전에는 `null`입니다.
+
+#### Examples
 
 ```tsx
 import { useBreakPoint } from '$shared/lib/break-point';
