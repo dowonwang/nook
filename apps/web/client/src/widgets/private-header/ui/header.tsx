@@ -5,13 +5,17 @@ import { useQuery } from '@tanstack/react-query';
 import { sessionQueryOptions } from '$entities/session';
 import { UserAvatar } from '$entities/user';
 import { SignOutButton } from '$features/auth/sign-out';
-import { I18nToggleButton } from '$features/i18n';
-import { ThemeToggleButton } from '$features/theme';
+import { I18nToggleButton } from '$features/i18n/change-locale';
+import { ThemeToggleButton } from '$features/theme/toggle';
 import { useLocale } from '$shared/i18n';
 import { createDate } from '$shared/lib/date';
-import { SidebarToggleButton } from '$widgets/sidebar/ui/toggle-button';
 
-export function PrivateHeader() {
+interface Props {
+  // 모바일에서 사이드바를 여는 버튼. 사이드바 위젯과 직접 의존하지 않도록 상위 레이어에서 주입
+  sidebarToggle?: React.ReactNode;
+}
+
+export function PrivateHeader({ sidebarToggle }: Props) {
   const locale = useLocale();
   const today = createDate(new Date(), locale).format('LL');
   const { data } = useQuery(sessionQueryOptions);
@@ -26,7 +30,7 @@ export function PrivateHeader() {
         <span className='text-secondary-foreground'>{today}</span>
       </div>
 
-      <SidebarToggleButton className='md:hidden' type='OPEN' />
+      {sidebarToggle}
 
       <div className='ml-auto flex items-center gap-2'>
         <I18nToggleButton />

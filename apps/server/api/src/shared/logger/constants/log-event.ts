@@ -13,6 +13,7 @@ export const LOG_EVENT = {
 
   HTTP_INVALID_REQUEST_IP: 'http_invalid_request_ip',
   HTTP_INVALID_REQUEST_USER_AGENT: 'http_invalid_request_user_agent',
+  HTTP_INVALID_INTERNAL_SECRET: 'http_invalid_internal_secret',
 
   APP_START: 'app_start',
   APP_ERROR_OCCURRED: 'app_error_occurred',

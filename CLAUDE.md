@@ -4,18 +4,19 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Overview
 
-"Nook" — a pnpm workspace monorepo (pnpm `10.30.3`) with a Bun/Elysia API server, a Next.js 16 / React 19 web client, and shared packages. Docs, commit messages, and comments are written in Korean.
+"Nook" — a pnpm workspace monorepo (pnpm `10.30.3`) with a Bun/Elysia API server, a Next.js 16 / React 19 web client, and shared packages. Docs, commit messages, and comments are written in Korean. Docs, scripts, and editor config (e.g. `.vscode` snippets) assume a macOS development environment; Windows is not supported as-is (path separators, shell commands).
 
-| Workspace              | Path                  | Role                                                    |
-| ---------------------- | --------------------- | ------------------------------------------------------- |
-| `@server/api`          | `apps/server/api`     | Elysia API (Bun runtime), port 4000                     |
-| `@web/client`          | `apps/web/client`     | Next.js App Router client (FSD structure)               |
-| `@packages/api-db`     | `packages/api-db`     | Prisma schema/client + Postgres docker-compose          |
-| `@packages/api-client` | `packages/api-client` | Orval-generated fetch client + Zod schemas from OpenAPI |
-| `@packages/i18n`       | `packages/i18n`       | Shared response/validation messages (server + web)      |
-| `@packages/ui`         | `packages/ui`         | Domain-agnostic UI primitives (cva + tailwind-merge)    |
+| Workspace                 | Path                     | Role                                                        |
+| ------------------------- | ------------------------ | ----------------------------------------------------------- |
+| `@server/api`             | `apps/server/api`        | Elysia API (Bun runtime), port 4000                         |
+| `@web/client`             | `apps/web/client`        | Next.js App Router client (FSD structure)                   |
+| `@packages/api-db`        | `packages/api-db`        | Prisma schema/client + Postgres docker-compose              |
+| `@packages/api-client`    | `packages/api-client`    | Orval-generated fetch client + Zod schemas from OpenAPI     |
+| `@packages/i18n`          | `packages/i18n`          | Shared response/validation messages (server + web)          |
+| `@packages/ui`            | `packages/ui`            | Domain-agnostic UI primitives (cva + tailwind-merge)        |
+| `@packages/eslint-config` | `packages/eslint-config` | Shared ESLint flat configs (base, next, react, fsd, server) |
 
-Shared dependency versions live in `pnpm-workspace.yaml` catalogs (`catalog:` / `catalog:next16`).
+Shared dependency versions live in `pnpm-workspace.yaml` catalogs, pinned to exact versions and grouped by stack (`catalog:` for zod, plus `catalog:<group>` such as `next16`, `ui`, `i18n`, `eslint`, `typescript5`, `node26`, `backend1`, `prisma7`, `postgres8`). An `overrides` entry keeps `@types/node` on a single version across the monorepo. In each `package.json`, dependencies are ordered by value: plain/`workspace:` versions first, then `catalog:`, then named catalogs by group name, alphabetical within each group.
 
 ## Commands
 
@@ -44,6 +45,8 @@ pnpm -C packages/api-db db:studio
 Env setup: copy `packages/api-db/.env.example` and `apps/server/api/.env.example` to `.env`.
 
 There is no test runner configured. Bruno request collections live in `apps/server/api/bruno`.
+
+ESLint: each workspace has its own `eslint.config.mjs` assembled from `@packages/eslint-config` (`base` for every workspace, `react` for the web client and `packages/ui`, `next` + `fsd` for the web client, `server` for the Bun API). ESLint resolves the config nearest to each file, so `pnpm lint:fix` and lint-staged still run from the root.
 
 Git hooks (Husky): `pre-commit` runs `pnpm -r typecheck` + lint-staged (prettier + eslint); `commit-msg` runs commitlint. Never bypass hooks (`--no-verify`, `HUSKY=0`).
 
@@ -96,15 +99,19 @@ Shared infra (`src/shared`): `database` (Prisma transaction manager using AsyncL
 
 - **Routes** live in the root `app/` directory (not `src/app`). Public routes are under `app/[locale]/(public)/` (localized); authenticated routes are under `app/(private)/` (not locale-prefixed). The root `pages/` dir exists only so Next ignores `src/pages`.
 - **`src/` follows Feature-Sliced Design**: `app → pages → widgets → features → entities → shared`; lower layers must not import higher ones. Aliases: `$app`, `$pages`, `$widgets`, `$features`, `$entities`, `$shared`.
-- **BFF**: the browser never calls the backend directly. `app/api/[...path]/route.ts` → `src/app/bff` forwards to the backend with the access token from cookies, and on an access-token-expired error code refreshes the session, retries, and resets the auth cookies. Client code fetches `/api/...`; server actions use `bffFetcher` from `$shared/api/bff`. Response types are imported from `@packages/api-client/api`.
+- **BFF**: the browser never calls the backend directly. `app/api/[...path]/route.ts` → `src/app/bff` forwards to the backend with the access token from cookies, and on an access-token-expired error code refreshes the session, retries, and resets the auth cookies. Client code uses `clientFetcher` from `$shared/api/bff` and server code (server components, server actions) uses `serverFetcher` from `$shared/api/bff/server`. Response types are imported from `@packages/api-client/api`.
 - **Middleware**: root `proxy.ts` (Next 16's middleware) delegates to `src/app/middleware` (route scope resolution, locale redirect, session/sign-in redirect).
 - **i18n**: i18next / react-i18next (the README mentions next-intl, but the code uses i18next). Each slice can own an `i18n/` folder with `ko.json` + `en.json` and an `index.ts` that types keys from `ko.json` (`en satisfies I18nKey`) and exports a namespace constant like `'entities/session'`.
 
 Conventions (from `apps/web/docs/convention.md`):
 
-- Directories and file names are `kebab-case`; component/function names carry full context (`OrganizationCreateForm` in `ui/form.tsx`, `useOrganizationCreate` in `api/use-create-org.ts`).
+- Directories and file names are `kebab-case`; component/function names carry full context (`CreateOrganizationForm` in `ui/form.tsx`, `createOrganizationServerAction` in `api/action.server.ts`).
 - Slice segments: `ui/`, `api/`, `model/` (types in `types.ts`), `config/`, `lib/`, `i18n/`.
-- Server-only files use the `*.server.ts` suffix (no `server/` dir). Each slice exposes client/shared code via `index.ts` and server-only code via `server.ts`.
+- Server-only files use the `*.server.ts` suffix, and server-only components (async RSC, or ones using `getT`/server query options/cookies) use `*.server.tsx` — e.g. `pages/<page>/ui/page.server.tsx`, `app/layouts/*.server.tsx`; no `server/` dir. Each slice exposes client/shared code via `index.ts` and server-only code via `server.ts`. Exception: Server Actions live in the feature's `api/action.server.ts`, are named `<verb><Domain>ServerAction`, are imported by that slice's client components via a relative path, and are not exposed outside the slice.
 - Within a slice use relative imports; across slices/layers use the alias and import only from the slice's `index.ts` / `server.ts`, never deep paths.
 - Slices on the same layer don't import each other. When one must (e.g. entity relations), the referenced slice exposes only what's needed via `@x/<consumer>.ts` and the consumer imports from that path (`$entities/organization-member/@x/organization`).
 - Generic UI goes in `@packages/ui` (imported as `@packages/ui/components/<name>`); domain UI stays in the app's entities/features/widgets.
+- Root `app/` route files only read `params`/`searchParams` and delegate to a `$pages/<page>/server` component (page slices expose their RSC via `server.ts`; Route Handlers re-export from `$app/<segment>/server.ts`); no UI, copy, or data fetching in them.
+- Query naming: `<DOMAIN>_QUERY_KEY` / `<DOMAIN>_BASE_QUERY_KEY` (prefix used for invalidation), `<domain>QueryOptions` (client) and `server<Domain>QueryOptions` (`*.server.ts`) sharing the same key; prefetch in RSC and pass down via `HydrationBoundary`.
+- i18n namespace constants are named `<LAYER>_<SLICE_PATH>_I18N_NAMESPACE` with plural layer names (`PAGES_ORGANIZATION_HOME_I18N_NAMESPACE`); the value is the slice path.
+- Private layout `<main>` spaces its direct children with `gap-page`; don't add `mb-*`/`my-*` to page-level blocks.

@@ -1,7 +1,7 @@
 'use server';
 
 import { actionStateBuilder, createActionStateError } from '$shared/api/action';
-import { bffFetcher } from '$shared/api/bff/bff-fetcher';
+import { serverFetcher } from '$shared/api/bff/server';
 
 import { createOrganizationSchema } from '../model/types';
 
@@ -12,7 +12,7 @@ import type {
   CreateOrganizationResponseSuccess,
 } from '../model/types';
 
-export async function createOrganizationAction(
+export async function createOrganizationServerAction(
   _previousState: CreateOrganizationActionState,
   formData: FormData,
 ): Promise<CreateOrganizationActionState> {
@@ -38,7 +38,7 @@ export async function createOrganizationAction(
     );
   }
 
-  const response = await bffFetcher('/api/organization', {
+  const response = await serverFetcher('/api/organization', {
     method: 'POST',
     headers: {
       'content-type': 'application/json',

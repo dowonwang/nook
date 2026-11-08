@@ -2,6 +2,8 @@
 
 본 문서는 `apps/server/*` 아래의 모든 서버 애플리케이션(`@server/api` 등)에 공통으로 적용되는 아키텍처(DDD · 헥사고날 · CQRS), 명명 규칙, 모듈 간 의존 규칙을 정의합니다.
 
+> 이 저장소의 문서, 스크립트, 개발 도구 설정(`.vscode` 스니펫 등)은 **macOS 개발 환경**을 기준으로 작성했습니다. Windows에서는 경로 구분자(`\`), 셸 명령, 일부 설정이 그대로 동작하지 않을 수 있습니다.
+
 - 웹 클라이언트 컨벤션([Web FSD Architecture & Naming Convention](../../web/docs/convention.md))과 공통으로 적용할 수 있는 규칙은 그대로 따릅니다.
 - 프레임워크·DB 등 특정 기술에 묶인 규칙은 각 앱의 문서에서 정의합니다.
   - `@server/api`: [API Server Convention](../api/docs/convention.md)

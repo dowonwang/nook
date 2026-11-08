@@ -1,10 +1,7 @@
 import { parseNumber } from './parse-number';
 
-import type {
-  CursorPaginationQuery,
-  OffsetPaginationQuery,
-  SearchParams,
-} from '$shared/types';
+import type { SearchParams } from '$shared/lib/http';
+import type { CursorPaginationQuery, OffsetPaginationQuery } from './types';
 
 export async function getOffsetPaginationQuery(
   searchParams: Promise<SearchParams>,

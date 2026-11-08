@@ -19,8 +19,8 @@ import {
   useActionFieldErrors,
 } from '$shared/api/action';
 
-import { signInAction } from '../api/action.server';
-import { FEAT_AUTH_SIGN_IN_I18N_NAMESPACE } from '../i18n';
+import { signInServerAction } from '../api/action.server';
+import { FEATURES_AUTH_SIGN_IN_I18N_NAMESPACE } from '../i18n';
 
 import type { ActionStateZodError } from '$shared/api/action';
 
@@ -29,11 +29,11 @@ interface Props {
 }
 
 export function SignInForm({ redirectTo }: Props) {
-  const { t } = useT([FEAT_AUTH_SIGN_IN_I18N_NAMESPACE]);
+  const { t } = useT([FEATURES_AUTH_SIGN_IN_I18N_NAMESPACE]);
 
   const redirectPath = typeof redirectTo === 'string' ? redirectTo : '/';
 
-  const [actionState, formAction] = useActionState(signInAction, {
+  const [actionState, formAction] = useActionState(signInServerAction, {
     success: false,
     error: null,
     state: { email: '', 'redirect-to': redirectPath },
@@ -52,7 +52,7 @@ export function SignInForm({ redirectTo }: Props) {
       <FieldGroup>
         <Field>
           <FieldLabel htmlFor='email'>
-            {t(`${FEAT_AUTH_SIGN_IN_I18N_NAMESPACE}:email.label`)}
+            {t(`${FEATURES_AUTH_SIGN_IN_I18N_NAMESPACE}:email.label`)}
           </FieldLabel>
           <Input
             ref={register('email')}
@@ -73,7 +73,7 @@ export function SignInForm({ redirectTo }: Props) {
 
         <Field>
           <FieldLabel htmlFor='password'>
-            {t(`${FEAT_AUTH_SIGN_IN_I18N_NAMESPACE}:password.label`)}
+            {t(`${FEATURES_AUTH_SIGN_IN_I18N_NAMESPACE}:password.label`)}
           </FieldLabel>
           <Input
             ref={register('password')}
@@ -93,16 +93,18 @@ export function SignInForm({ redirectTo }: Props) {
         {actionError && <WarningMessage>{actionError}</WarningMessage>}
 
         <Button type='submit' className='w-full'>
-          {t(`${FEAT_AUTH_SIGN_IN_I18N_NAMESPACE}:button.sign_in`)}
+          {t(`${FEATURES_AUTH_SIGN_IN_I18N_NAMESPACE}:button.sign_in`)}
         </Button>
 
         <Separator
-          content={t(`${FEAT_AUTH_SIGN_IN_I18N_NAMESPACE}:message.no_account`)}
+          content={t(
+            `${FEATURES_AUTH_SIGN_IN_I18N_NAMESPACE}:message.no_account`,
+          )}
         />
 
         <Button variant='secondary' className='w-full' asChild>
           <Link href={'/signup'}>
-            {t(`${FEAT_AUTH_SIGN_IN_I18N_NAMESPACE}:button.sign_up`)}
+            {t(`${FEATURES_AUTH_SIGN_IN_I18N_NAMESPACE}:button.sign_up`)}
           </Link>
         </Button>
       </FieldGroup>

@@ -1,0 +1,56 @@
+import '@packages/ui/styles.css';
+
+import '$app/styles/global.css';
+
+import { Noto_Sans, Noto_Sans_KR } from 'next/font/google';
+import { initServerI18next } from 'next-i18next/server';
+
+import { FlashCookieConsumer, QueryClientProvider } from '$app/providers';
+import { CLIENT_ENV_CONFIG } from '$shared/config';
+import {
+  getFlashCookie,
+  getI18nCookie,
+  getThemeCookie,
+} from '$shared/cookie/server';
+import { i18nConfig } from '$shared/i18n/server';
+import { ThemeProvider } from '$shared/lib/theme';
+
+import type { Metadata } from 'next';
+
+interface Props {
+  children: React.ReactNode;
+}
+const notoKr = Noto_Sans_KR({
+  variable: '--font-noto-sans-kr',
+});
+
+const noto = Noto_Sans({
+  variable: '--font-noto-sans',
+});
+
+initServerI18next(i18nConfig);
+
+export const metadata: Metadata = {
+  title: CLIENT_ENV_CONFIG.APP_NAME,
+};
+
+export async function AppLayout({ children }: Props) {
+  const flashToken = await getFlashCookie();
+  const theme = await getThemeCookie();
+  const locale = await getI18nCookie();
+
+  return (
+    <html
+      lang={locale}
+      className={`${notoKr.variable} ${noto.variable} ${theme ?? ''}`}
+    >
+      <body className='bg-background'>
+        <FlashCookieConsumer shouldConsume={!!flashToken} />
+
+        <QueryClientProvider>
+          <ThemeProvider initTheme={theme}>{children}</ThemeProvider>
+        </QueryClientProvider>
+      </body>
+    </html>
+  );
+}

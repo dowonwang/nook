@@ -5,7 +5,7 @@ import { useMemo } from 'react';
 
 import { parseNumber } from './parse-number';
 
-import type { OffsetPaginationQuery } from '$shared/types';
+import type { OffsetPaginationQuery } from './types';
 
 export function useOffsetQuery(): OffsetPaginationQuery {
   const searchParams = useSearchParams();

@@ -12,24 +12,24 @@
     "@packages/api-client": "workspace:*",
     "@packages/i18n": "workspace:*",
     "@packages/ui": "workspace:*",
-    "@tanstack/react-query": "^5.100.10",
-    "clsx": "^2.1.1",
     "dayjs": "^1.11.20",
-    "i18next": "^26.4.2",
-    "i18next-resources-to-backend": "^1.2.3",
-    "lucide-react": "^1.14.0",
+    "zod": "catalog:",
+    "i18next": "catalog:i18n",
+    "i18next-resources-to-backend": "catalog:i18n",
+    "next-i18next": "catalog:i18n",
+    "react-i18next": "catalog:i18n",
+    "@tanstack/react-query": "catalog:next16",
     "next": "catalog:next16",
-    "next-i18next": "^16.3.1",
     "react": "catalog:next16",
     "react-dom": "catalog:next16",
-    "react-i18next": "^17.0.14",
-    "zod": "catalog:"
+    "lucide-react": "catalog:ui"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4.3.3",
+    "@packages/eslint-config": "workspace:*",
     "@types/react": "catalog:next16",
     "@types/react-dom": "catalog:next16",
-    "tailwindcss": "^4.3.3",
-    "typescript": "catalog:"
+    "typescript": "catalog:typescript5",
+    "@tailwindcss/postcss": "catalog:ui",
+    "tailwindcss": "catalog:ui"
   }
 }

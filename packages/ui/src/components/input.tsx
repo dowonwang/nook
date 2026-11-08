@@ -1,5 +1,3 @@
-import { React } from 'next/dist/server/route-modules/app-page/vendored/rsc/entrypoints';
-
 import { cn } from '../lib/cn';
 
 const tw = String.raw;

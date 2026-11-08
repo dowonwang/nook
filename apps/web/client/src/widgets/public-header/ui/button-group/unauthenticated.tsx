@@ -1,5 +1,5 @@
-import { I18nToggleLink } from '$features/i18n';
-import { ThemeToggleButton } from '$features/theme';
+import { I18nToggleLink } from '$features/i18n/change-locale';
+import { ThemeToggleButton } from '$features/theme/toggle';
 
 import { SignInNavigate } from '../navigation/sign-in';
 

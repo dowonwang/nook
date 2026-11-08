@@ -3,7 +3,8 @@
 import { useQuery } from '@tanstack/react-query';
 
 import { sessionQueryOptions } from '$entities/session';
-import { AppLogo, AppName } from '$shared/ui';
+import { AppLogo } from '$shared/ui/app-logo';
+import { AppName } from '$shared/ui/app-name';
 
 import { AuthenticatedButtonGroup } from './button-group/authenticated';
 import { UnauthenticatedButtonGroup } from './button-group/unauthenticated';

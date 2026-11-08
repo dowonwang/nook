@@ -18,14 +18,14 @@ import {
   useActionFieldErrors,
 } from '$shared/api/action';
 
-import { signUpAction } from '../api/action.server';
-import { FEAT_AUTH_SIGN_UP_I18N_NAMESPACE } from '../i18n';
+import { signUpServerAction } from '../api/action.server';
+import { FEATURES_AUTH_SIGN_UP_I18N_NAMESPACE } from '../i18n';
 
 import type { ActionStateZodError } from '$shared/api/action';
 
 export function SignUpForm() {
-  const { t } = useT([FEAT_AUTH_SIGN_UP_I18N_NAMESPACE]);
-  const [actionState, formAction] = useActionState(signUpAction, {
+  const { t } = useT([FEATURES_AUTH_SIGN_UP_I18N_NAMESPACE]);
+  const [actionState, formAction] = useActionState(signUpServerAction, {
     success: false,
     error: null,
     state: { name: '', email: '' },
@@ -47,7 +47,7 @@ export function SignUpForm() {
       <FieldGroup>
         <Field>
           <FieldLabel htmlFor='name'>
-            {t(`${FEAT_AUTH_SIGN_UP_I18N_NAMESPACE}:name.label`)}
+            {t(`${FEATURES_AUTH_SIGN_UP_I18N_NAMESPACE}:name.label`)}
           </FieldLabel>
           <Input
             ref={register('name')}
@@ -66,7 +66,7 @@ export function SignUpForm() {
 
         <Field>
           <FieldLabel htmlFor='email'>
-            {t(`${FEAT_AUTH_SIGN_UP_I18N_NAMESPACE}:email.label`)}
+            {t(`${FEATURES_AUTH_SIGN_UP_I18N_NAMESPACE}:email.label`)}
           </FieldLabel>
           <Input
             ref={register('email')}
@@ -87,7 +87,7 @@ export function SignUpForm() {
 
         <Field>
           <FieldLabel htmlFor='password'>
-            {t(`${FEAT_AUTH_SIGN_UP_I18N_NAMESPACE}:password.label`)}
+            {t(`${FEATURES_AUTH_SIGN_UP_I18N_NAMESPACE}:password.label`)}
           </FieldLabel>
           <Input
             ref={register('password')}
@@ -108,7 +108,9 @@ export function SignUpForm() {
 
         <Field>
           <FieldLabel htmlFor='confirmPassword'>
-            {t(`${FEAT_AUTH_SIGN_UP_I18N_NAMESPACE}:password_confirm.label`)}
+            {t(
+              `${FEATURES_AUTH_SIGN_UP_I18N_NAMESPACE}:password_confirm.label`,
+            )}
           </FieldLabel>
           <Input
             ref={register('confirmPassword')}
@@ -134,7 +136,7 @@ export function SignUpForm() {
         <Separator />
 
         <Button className='w-full' type='submit'>
-          {t(`${FEAT_AUTH_SIGN_UP_I18N_NAMESPACE}:button.sign_up`)}
+          {t(`${FEATURES_AUTH_SIGN_UP_I18N_NAMESPACE}:button.sign_up`)}
         </Button>
       </FieldGroup>
     </form>

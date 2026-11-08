@@ -17,8 +17,8 @@ import {
   useActionFieldErrors,
 } from '$shared/api/action';
 
-import { createOrganizationAction } from '../api/action.server';
-import { FEAT_ORGANIZATION_CREATE_I18N_NAMESPACE } from '../i18n';
+import { createOrganizationServerAction } from '../api/action.server';
+import { FEATURES_ORGANIZATION_CREATE_I18N_NAMESPACE } from '../i18n';
 
 import type { Organization } from '$entities/organization';
 import type { ActionStateZodError } from '$shared/api/action';
@@ -28,12 +28,15 @@ interface Props {
 }
 
 export function CreateOrganizationForm({ onSuccess }: Props) {
-  const { t } = useT(FEAT_ORGANIZATION_CREATE_I18N_NAMESPACE);
-  const [actionState, formAction] = useActionState(createOrganizationAction, {
-    success: false,
-    error: null,
-    state: { id: '', title: '', slug: '' },
-  });
+  const { t } = useT(FEATURES_ORGANIZATION_CREATE_I18N_NAMESPACE);
+  const [actionState, formAction] = useActionState(
+    createOrganizationServerAction,
+    {
+      success: false,
+      error: null,
+      state: { id: '', title: '', slug: '' },
+    },
+  );
 
   const { register, getFieldError } = useActionFieldErrors(
     actionState.error as ActionStateZodError,
@@ -54,7 +57,7 @@ export function CreateOrganizationForm({ onSuccess }: Props) {
     } else {
       onSuccess(null);
     }
-  }, [actionState.success]);
+  }, [actionState.success, actionState.state, onSuccess]);
 
   return (
     <form action={formAction} noValidate>

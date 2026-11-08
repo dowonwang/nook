@@ -1,0 +1,25 @@
+{
+  "name": "@packages/eslint-config",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./base": "./src/base.mjs",
+    "./next": "./src/next.mjs",
+    "./react": "./src/react.mjs",
+    "./fsd": "./src/fsd.mjs",
+    "./server": "./src/server.mjs"
+  },
+  "dependencies": {
+    "@eslint/js": "catalog:eslint",
+    "@next/eslint-plugin-next": "catalog:eslint",
+    "eslint-import-resolver-typescript": "catalog:eslint",
+    "eslint-plugin-import-x": "catalog:eslint",
+    "eslint-plugin-react-hooks": "catalog:eslint",
+    "typescript-eslint": "catalog:eslint"
+  },
+  "peerDependencies": {
+    "eslint": "catalog:eslint",
+    "typescript": "catalog:typescript5"
+  }
+}

@@ -2,17 +2,17 @@
 
 import { redirect } from 'next/navigation';
 
-import { bffFetcher } from '$shared/api/bff/server';
+import { serverFetcher } from '$shared/api/bff/server';
 import {
   clearAuthCookie,
   getAuthRefreshFromCookie,
-} from '$shared/lib/cookie/server';
+} from '$shared/cookie/server';
 
-export async function signOutAction() {
+export async function signOutServerAction() {
   const refreshToken = await getAuthRefreshFromCookie();
 
   if (refreshToken) {
-    await bffFetcher('/api/auth/sign-out', {
+    await serverFetcher('/api/auth/sign-out', {
       method: 'POST',
       body: JSON.stringify({}),
       headers: {

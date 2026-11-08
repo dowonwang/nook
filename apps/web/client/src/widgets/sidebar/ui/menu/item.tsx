@@ -6,19 +6,19 @@ import { usePathname } from 'next/navigation';
 import { useT } from 'next-i18next/client';
 import { useEffect } from 'react';
 
-import { WIDGET_SIDEBAR_I18N_NAMESPACE } from '$widgets/sidebar/i18n';
-import { useSidebarContext } from '$widgets/sidebar/model/context';
+import { WIDGETS_SIDEBAR_I18N_NAMESPACE } from '../../i18n';
+import { useSidebarContext } from '../../model/context';
 
 import type { MenuData } from '../../model/types';
 
 export function MenuItem({ href, title }: MenuData) {
   const pathname = usePathname();
   const { setIsOpen } = useSidebarContext();
-  const { t } = useT(WIDGET_SIDEBAR_I18N_NAMESPACE);
+  const { t } = useT(WIDGETS_SIDEBAR_I18N_NAMESPACE);
 
   useEffect(() => {
     setIsOpen(false);
-  }, [pathname]);
+  }, [pathname, setIsOpen]);
 
   return (
     <Link

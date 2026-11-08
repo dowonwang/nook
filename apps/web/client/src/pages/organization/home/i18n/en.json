@@ -5,5 +5,15 @@
     "button": {
       "create": "Create"
     }
+  },
+  "list": {
+    "title": "Organizations",
+    "card": {
+      "role": "My Role",
+      "member_count": "Members"
+    },
+    "button": {
+      "detail": "View"
+    }
   }
 }

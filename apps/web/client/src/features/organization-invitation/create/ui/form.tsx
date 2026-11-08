@@ -14,18 +14,18 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useT } from 'next-i18next/client';
 import { useActionState, useEffect } from 'react';
 
+import { SENT_ORGANIZATION_INVITATION_LIST_QUERY_KEY } from '$entities/organization-invitation';
 import {
   getGrantableOrganizationMemberRoles,
   OrganizationMemberRoleRadioGroup,
 } from '$entities/organization-member';
-import { ORGANIZATION_INVITATION_SENT_LIST_QUERY_KEY } from '$features/organization-invitation/sent-list/config/query-key';
 import {
   useActionErrorMessage,
   useActionFieldErrors,
 } from '$shared/api/action';
 
-import { createOrganizationInvitationAction } from '../api/action.server';
-import { FEAT_ORGANIZATION_INVITATION_CREATE_I18N_NAMESPACE } from '../i18n';
+import { createOrganizationInvitationServerAction } from '../api/action.server';
+import { FEATURES_ORGANIZATION_INVITATION_CREATE_I18N_NAMESPACE } from '../i18n';
 import { INIT_DATA } from '../model/types';
 
 import type { Organization } from '$entities/organization';
@@ -44,9 +44,9 @@ export function CreateOrganizationInvitationForm({
   inviterRole,
   disabled = false,
 }: Props) {
-  const { t } = useT(FEAT_ORGANIZATION_INVITATION_CREATE_I18N_NAMESPACE);
+  const { t } = useT(FEATURES_ORGANIZATION_INVITATION_CREATE_I18N_NAMESPACE);
   const [actionState, formAction, isPending] = useActionState(
-    createOrganizationInvitationAction,
+    createOrganizationInvitationServerAction,
     {
       success: false,
       error: null,
@@ -69,9 +69,9 @@ export function CreateOrganizationInvitationForm({
     }
 
     void queryClient.invalidateQueries({
-      queryKey: ORGANIZATION_INVITATION_SENT_LIST_QUERY_KEY(organization.id),
+      queryKey: SENT_ORGANIZATION_INVITATION_LIST_QUERY_KEY(organization.id),
     });
-  }, [actionState.success, organization?.id, isPending]);
+  }, [actionState.success, organization?.id, isPending, queryClient]);
 
   return (
     <form action={formAction} noValidate>

@@ -7,4 +7,4 @@ type I18nKey = DeepStringify<typeof ko>;
 
 en satisfies I18nKey;
 
-export const FEAT_AUTH_SIGN_IN_I18N_NAMESPACE = 'features/auth/sign-in';
+export const FEATURES_AUTH_SIGN_IN_I18N_NAMESPACE = 'features/auth/sign-in';

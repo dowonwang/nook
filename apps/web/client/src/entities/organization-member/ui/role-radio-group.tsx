@@ -1,7 +1,7 @@
 import { RadioButton } from '@packages/ui/components/radio';
 import { useT } from 'next-i18next/client';
 
-import { ENTITY_ORGANIZATION_MEMBER_I18N_NAMESPACE } from '../i18n';
+import { ENTITIES_ORGANIZATION_MEMBER_I18N_NAMESPACE } from '../i18n';
 
 import type { OrganizationMemberRole } from '../model/types';
 
@@ -28,7 +28,7 @@ export function OrganizationMemberRoleRadioGroup({
   defaultChecked,
   roles,
 }: Props) {
-  const { t } = useT(ENTITY_ORGANIZATION_MEMBER_I18N_NAMESPACE);
+  const { t } = useT(ENTITIES_ORGANIZATION_MEMBER_I18N_NAMESPACE);
   const isDefaultChecked = (value: OrganizationMemberRole): boolean => {
     return value === defaultChecked;
   };

@@ -1,10 +1,16 @@
-export type * from './model/types';
-export * from './config/query-key';
-export * from './config/error-code';
+export type {
+  SessionTokens,
+  SessionUser,
+  AuthenticatedSession,
+  UnauthenticatedSession,
+  Session,
+} from './model/types';
+export { SESSION_QUERY_KEY } from './api/query-key';
+export { SESSION_ERROR_CODE } from './config/error-code';
 export {
   SESSION_REQUIRED_SIGN_IN,
-  ENTITY_SESSION_I18N_NAMESPACE,
+  ENTITIES_SESSION_I18N_NAMESPACE,
 } from './i18n/index';
 
 export { getSession } from './api/get-session';
-export { sessionQueryOptions } from './model/query';
+export { sessionQueryOptions } from './api/query';

@@ -1,9 +1,0 @@
-{
-  "title": "Received Invitations",
-  "card": {
-    "body": {
-      "email_fallback": "User information not found.",
-      "role": "Invited Role"
-    }
-  }
-}

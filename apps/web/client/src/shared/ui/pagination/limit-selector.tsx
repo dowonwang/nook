@@ -10,7 +10,11 @@ import {
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useCallback } from 'react';
 
-export function PaginationLimitSelector() {
+interface Props {
+  total: number;
+}
+
+export function PaginationLimitSelector({ total }: Props) {
   const searchParams = useSearchParams();
   const limit = searchParams?.get('limit') || '10';
   const router = useRouter();
@@ -32,8 +36,12 @@ export function PaginationLimitSelector() {
     }
   };
 
+  if (total < 10) {
+    return null;
+  }
+
   return (
-    <Select value={limit} onValueChange={handleClick} className='mb-4 ml-auto'>
+    <Select value={limit} onValueChange={handleClick} className='ml-auto'>
       <SelectInput name='limit' />
 
       <SelectTrigger />

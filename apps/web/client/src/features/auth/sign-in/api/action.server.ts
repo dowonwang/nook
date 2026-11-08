@@ -3,8 +3,8 @@
 import { redirect } from 'next/navigation';
 
 import { actionStateBuilder, createActionStateError } from '$shared/api/action';
-import { bffFetcher } from '$shared/api/bff/server';
-import { setAuthCookie } from '$shared/lib/cookie/server';
+import { serverFetcher } from '$shared/api/bff/server';
+import { setAuthCookie } from '$shared/cookie/server';
 
 import { signInSchema } from '../model/types';
 
@@ -16,7 +16,7 @@ import type {
 } from '../model/types';
 import type { postAuthSignInResponseError } from '@packages/api-client/api';
 
-export async function signInAction(
+export async function signInServerAction(
   previousState: SignInActionState,
   formData: FormData,
 ): Promise<SignInActionState> {
@@ -39,7 +39,7 @@ export async function signInAction(
     );
   }
 
-  const response = await bffFetcher('/api/auth/sign-in', {
+  const response = await serverFetcher('/api/auth/sign-in', {
     method: 'POST',
     headers: {
       'content-type': 'application/json',

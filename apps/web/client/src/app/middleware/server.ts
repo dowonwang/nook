@@ -1,1 +1,1 @@
-export { proxyMiddleware } from './proxy';
+export { proxyMiddleware } from './proxy.server';

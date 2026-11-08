@@ -1,6 +1,6 @@
 'use client';
 
-import { clsx } from 'clsx';
+import { cn } from '@packages/ui/lib/cn';
 import { ChevronLeft, ChevronRight, Ellipsis } from 'lucide-react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useCallback } from 'react';
@@ -52,7 +52,7 @@ export function OffsetPagination({ page, totalPages, hasNextPage }: Props) {
       className='flex items-center justify-center gap-3'
     >
       <button
-        className={clsx(
+        className={cn(
           'bg-card text-secondary-foreground rounded-xl p-1 shadow',
           {
             'cursor-not-allowed': !hasPrevPage,
@@ -73,7 +73,7 @@ export function OffsetPagination({ page, totalPages, hasNextPage }: Props) {
         ) : (
           <button
             key={item}
-            className={clsx('min-h-10 min-w-10 rounded-xl p-1 shadow', {
+            className={cn('min-h-10 min-w-10 rounded-xl p-1 shadow', {
               'bg-primary text-primary-foreground text-base font-black':
                 item === page,
 
@@ -89,7 +89,7 @@ export function OffsetPagination({ page, totalPages, hasNextPage }: Props) {
       )}
 
       <button
-        className={clsx(
+        className={cn(
           'bg-card text-secondary-foreground rounded-xl p-1 shadow',
           {
             'cursor-not-allowed': !hasNextPage,
@@ -98,7 +98,7 @@ export function OffsetPagination({ page, totalPages, hasNextPage }: Props) {
         onClick={handleNextPage}
         disabled={!hasNextPage}
       >
-        <ChevronRight className={clsx('h-8 w-8')} />
+        <ChevronRight className={cn('h-8 w-8')} />
       </button>
     </nav>
   );

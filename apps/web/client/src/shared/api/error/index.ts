@@ -1,1 +1,1 @@
-export * from './find-error-code';
+export { findErrorCode } from './find-error-code';

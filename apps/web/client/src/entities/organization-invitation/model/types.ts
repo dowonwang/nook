@@ -1,5 +1,5 @@
-import type { Organization } from '$entities/organization/model/types';
-import type { OrganizationMemberRole } from '$entities/organization-member';
+import type { Organization } from '$entities/organization/@x/organization-invitation';
+import type { OrganizationMemberRole } from '$entities/organization-member/@x/organization-invitation';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const status = [

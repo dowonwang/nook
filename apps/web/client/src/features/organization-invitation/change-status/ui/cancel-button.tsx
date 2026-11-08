@@ -5,10 +5,10 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useT } from 'next-i18next/client';
 import { useTransition } from 'react';
 
-import { ORGANIZATION_INVITATION_SENT_LIST_QUERY_KEY } from '$features/organization-invitation/sent-list/config/query-key';
+import { SENT_ORGANIZATION_INVITATION_LIST_QUERY_KEY } from '$entities/organization-invitation';
 
-import { changeOrganizationInvitationServerAction } from '../api/action.server';
-import { FEAT_ORGANIZATION_CHANGE_STATUS_I18N_NAMESPACE } from '../i18n';
+import { changeOrganizationInvitationStatusServerAction } from '../api/action.server';
+import { FEATURES_ORGANIZATION_INVITATION_CHANGE_STATUS_I18N_NAMESPACE } from '../i18n';
 
 interface Props {
   organizationId: string;
@@ -19,21 +19,23 @@ export function CancelOrganizationInvitationButton({
   invitationId,
   organizationId,
 }: Props) {
-  const { t } = useT(FEAT_ORGANIZATION_CHANGE_STATUS_I18N_NAMESPACE);
+  const { t } = useT(
+    FEATURES_ORGANIZATION_INVITATION_CHANGE_STATUS_I18N_NAMESPACE,
+  );
 
   const [isPending, startTransition] = useTransition();
   const queryClient = useQueryClient();
 
   const onClick = (invitationId: string) => {
     startTransition(async () => {
-      await changeOrganizationInvitationServerAction({
+      await changeOrganizationInvitationStatusServerAction({
         invitationId,
         status: 'CANCELED',
       });
 
       await Promise.all([
         queryClient.invalidateQueries({
-          queryKey: ORGANIZATION_INVITATION_SENT_LIST_QUERY_KEY(organizationId),
+          queryKey: SENT_ORGANIZATION_INVITATION_LIST_QUERY_KEY(organizationId),
         }),
       ]);
     });

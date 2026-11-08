@@ -1,1 +1,1 @@
-export * from './date';
+export { createDate } from './create-date';

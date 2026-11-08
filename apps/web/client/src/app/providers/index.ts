@@ -1,4 +1,3 @@
-export * from './flash-cookie';
-export * from './query-client';
-export * from './theme';
-export * from './i18n';
+export { FlashCookieConsumer } from './flash-cookie';
+export { QueryClientProvider } from './query-client';
+export { I18nProvider } from './i18n';

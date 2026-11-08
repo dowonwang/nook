@@ -8,4 +8,4 @@ export type I18nKey = DeepStringify<typeof ko>;
 en satisfies I18nKey;
 
 export const SESSION_REQUIRED_SIGN_IN: keyof I18nKey = 'required_sign_in';
-export const ENTITY_SESSION_I18N_NAMESPACE = 'entities/session';
+export const ENTITIES_SESSION_I18N_NAMESPACE = 'entities/session';

@@ -1,2 +1,2 @@
 export { PublicHeader } from './ui/header';
-export * from './i18n';
+export { WIDGETS_PUBLIC_HEADER_I18N_NAMESPACE } from './i18n';

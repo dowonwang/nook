@@ -3,10 +3,10 @@
 import { redirect } from 'next/navigation';
 
 import { actionStateBuilder, createActionStateError } from '$shared/api/action';
-import { bffFetcher } from '$shared/api/bff/server';
-import { setFlashCookie } from '$shared/lib/cookie/server';
+import { serverFetcher } from '$shared/api/bff/server';
+import { setFlashCookie } from '$shared/cookie/server';
 
-import { SIGN_UP_SUCCESS_SIGNIN_REQUIRED } from '../config/i18n.key';
+import { SIGN_UP_SUCCESS_SIGNIN_REQUIRED } from '../config/i18n-key';
 import { signUpSchema } from '../model/types';
 
 import type {
@@ -16,7 +16,7 @@ import type {
 } from '../model/types';
 import type { postAuthSignUpResponseError } from '@packages/api-client/api';
 
-export async function signUpAction(
+export async function signUpServerAction(
   _previousState: SignUpActionState,
   formData: FormData,
 ): Promise<SignUpActionState> {
@@ -49,7 +49,7 @@ export async function signUpAction(
     );
   }
 
-  const response = await bffFetcher('/api/auth/sign-up', {
+  const response = await serverFetcher('/api/auth/sign-up', {
     method: 'POST',
     headers: {
       'content-type': 'application/json',

@@ -5,37 +5,37 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useT } from 'next-i18next/client';
 import { useTransition } from 'react';
 
-import { MY_ORGANIZATION_LIST_QUERY_KEY } from '$features/organization/my-list/config/query-key';
-import { RECEIVED_ORGANIZATION_INVITATION_LIST_QUERY_KEY } from '$features/organization-invitation/received-list/config/query-key';
-import { useOffsetQuery } from '$shared/lib/pagination';
+import { MY_ORGANIZATION_LIST_BASE_QUERY_KEY } from '$entities/organization';
+import { RECEIVED_ORGANIZATION_INVITATION_LIST_BASE_QUERY_KEY } from '$entities/organization-invitation';
 
-import { changeOrganizationInvitationServerAction } from '../api/action.server';
-import { FEAT_ORGANIZATION_CHANGE_STATUS_I18N_NAMESPACE } from '../i18n';
+import { changeOrganizationInvitationStatusServerAction } from '../api/action.server';
+import { FEATURES_ORGANIZATION_INVITATION_CHANGE_STATUS_I18N_NAMESPACE } from '../i18n';
 
 interface Props {
   invitationId: string;
 }
 
 export function AcceptOrganizationInvitationButton({ invitationId }: Props) {
-  const { t } = useT(FEAT_ORGANIZATION_CHANGE_STATUS_I18N_NAMESPACE);
-  const pagination = useOffsetQuery();
-
+  const { t } = useT(
+    FEATURES_ORGANIZATION_INVITATION_CHANGE_STATUS_I18N_NAMESPACE,
+  );
   const [isPending, startTransition] = useTransition();
   const queryClient = useQueryClient();
 
   const onClick = (invitationId: string) => {
     startTransition(async () => {
-      await changeOrganizationInvitationServerAction({
+      await changeOrganizationInvitationStatusServerAction({
         invitationId,
         status: 'ACCEPTED',
       });
 
+      // 수락하면 받은 초대와 내 조직 목록이 모든 페이지에서 바뀌므로 접두사 키로 무효화
       await Promise.all([
         queryClient.invalidateQueries({
-          queryKey: RECEIVED_ORGANIZATION_INVITATION_LIST_QUERY_KEY(pagination),
+          queryKey: RECEIVED_ORGANIZATION_INVITATION_LIST_BASE_QUERY_KEY,
         }),
         queryClient.invalidateQueries({
-          queryKey: MY_ORGANIZATION_LIST_QUERY_KEY(pagination),
+          queryKey: MY_ORGANIZATION_LIST_BASE_QUERY_KEY,
         }),
       ]);
     });
