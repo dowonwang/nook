@@ -10,6 +10,11 @@ Next 서버의 BFF(`/api/...`, `/action/...`)를 거쳐 백엔드를 호출하�
 - `x-nook-request` 값은 비밀이 아닙니다. 주소창 접근과 다른 사이트의 요청(CSRF)을 막는 용도입니다.
 - 백엔드로는 허용 목록의 헤더와 `x-internal-secret`(서버 환경 변수 `INTERNAL_API_SECRET`)만 전달합니다. 이 값은 브라우저로 나가지 않으며, API 서버는 이 값이 맞는 요청만 처리합니다.
 - `app/action/`에 Route Handler를 추가하면 핸들러 첫 줄에서 `isBffRequest`를 검사합니다.
+- BFF의 실패 응답 규칙
+  - 백엔드에 연결하지 못하면 502(`common_error_InternalServerError`)를 반환합니다. 백엔드의 에러 응답은 그대로 전달하며, `error.code`는 JSON 응답일 때만 읽습니다.
+  - 액세스 토큰 만료로 세션을 갱신할 때, 갱신이 거절되면 401(`auth_error_refresh_token_expired`), 그 외 실패는 502를 반환합니다.
+  - 백엔드 주소는 `REST_API_BASE_URL`과 같은 origin일 때만 요청하고, 다른 origin으로 해석되면 404를 반환합니다.
+- `@packages/api-client/api`의 request function은 서버 환경 변수 `REST_API_BASE_URL`로 주소를 만들므로 서버 코드(`*.server.ts`)에서만 호출합니다. 브라우저 요청은 `clientFetcher`를 씁니다.
 
 ## Functions
 

@@ -5,15 +5,19 @@ import { Elysia } from 'elysia';
 import authModule from '$modules/auth';
 import organizationModule from '$modules/organization';
 import userModule from '$modules/user';
-import { errorPlugin, internalRequestPlugin } from '$shared/http';
+import {
+  errorPlugin,
+  internalRequestPlugin,
+  OPEN_API_PATH,
+} from '$shared/http';
 import { LOG_EVENT, LOG_MESSAGE, logger } from '$shared/logger';
 import { zodToOpenApiSchema } from '$shared/responses';
 
 const app = new Elysia()
   .use(
     openapi({
-      path: '/openapi',
-      specPath: '/openapi/json',
+      path: OPEN_API_PATH.ui,
+      specPath: OPEN_API_PATH.spec,
       mapJsonSchema: {
         zod: zodToOpenApiSchema,
       },

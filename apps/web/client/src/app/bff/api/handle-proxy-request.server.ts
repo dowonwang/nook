@@ -1,15 +1,19 @@
 import { NextResponse } from 'next/server';
 
 import { SESSION_ERROR_CODE } from '$entities/session';
-import { refreshSession } from '$entities/session/server';
+import {
+  refreshSession,
+  SessionRefreshRejectedError,
+} from '$entities/session/server';
 import { isBffRequest } from '$shared/api/bff/server';
-import { findErrorCode } from '$shared/api/error';
 import {
   getAuthAccessFromCookie,
   setAuthCookieToResponse,
 } from '$shared/cookie/server';
 
 import { requestBackend } from './request-backend.server';
+import { createBadGatewayResponse } from '../lib/create-bad-gateway-response.server';
+import { readErrorCode } from '../lib/read-error-code.server';
 
 import type { NextRequest } from 'next/server';
 
@@ -28,26 +32,23 @@ export async function handleBffRequest(
     return response;
   }
 
-  const data = (await response.clone().json()) as unknown;
-  const errorCode = findErrorCode(data);
+  const errorCode = await readErrorCode(response);
 
   if (errorCode !== SESSION_ERROR_CODE.accessTokenExpired) {
     return response;
   }
 
+  let newTokens: Awaited<ReturnType<typeof refreshSession>>;
+
   try {
-    const newTokens = await refreshSession(request);
-    const response = await requestBackend(request, newTokens.accessToken);
+    newTokens = await refreshSession(request);
+  } catch (error) {
+    // 갱신 요청 자체가 실패한 경우(네트워크 오류 등)는 세션 만료로 보지 않음
+    if (!(error instanceof SessionRefreshRejectedError)) {
+      return createBadGatewayResponse();
+    }
 
-    setAuthCookieToResponse(
-      response,
-      newTokens.accessToken,
-      newTokens.refreshToken,
-    );
-
-    return response;
-  } catch {
-    const response = NextResponse.json(
+    return NextResponse.json(
       {
         error: {
           code: SESSION_ERROR_CODE.refreshTokenExpired,
@@ -57,7 +58,15 @@ export async function handleBffRequest(
         status: 401,
       },
     );
-
-    return response;
   }
+
+  const retriedResponse = await requestBackend(request, newTokens.accessToken);
+
+  setAuthCookieToResponse(
+    retriedResponse,
+    newTokens.accessToken,
+    newTokens.refreshToken,
+  );
+
+  return retriedResponse;
 }

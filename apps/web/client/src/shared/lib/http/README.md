@@ -1,8 +1,33 @@
 # http
 
-HTTP 요청 헤더와 URL 쿼리를 다룹니다.
+HTTP 요청 헤더, URL 쿼리, 이동 경로를 다룹니다.
 
 ## Functions
+
+### `getSafeRedirectPath` (server only)
+
+사용자 입력으로 받은 이동 경로를 앱 내부 경로로 제한합니다(오픈 리다이렉트 방지). `APP_BASE_URL`과 다른 origin으로 해석되거나 제어 문자, 역슬래시가 있으면 `fallback`을 돌려줍니다.
+
+#### Parameters
+
+| 이름       | 타입      | 설명                                                       |
+| ---------- | --------- | ---------------------------------------------------------- |
+| `value`    | `unknown` | 검사할 이동 경로입니다. `/`로 시작하는 문자열만 씁니다.    |
+| `fallback` | `string?` | 경로가 안전하지 않을 때 쓸 경로입니다. 기본값은 `/`입니다. |
+
+#### Returns
+
+`string`: 앱 내부 경로(경로, 쿼리, 해시)입니다. 안전하지 않으면 `fallback`입니다.
+
+#### Examples
+
+```ts
+import { getSafeRedirectPath } from '$shared/lib/http/server';
+
+redirect(getSafeRedirectPath(previousState.state['redirect-to']));
+```
+
+---
 
 ### `createSearchParams`
 

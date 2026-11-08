@@ -6,13 +6,21 @@ import { getAuthRefreshFromCookie } from '$shared/cookie/server';
 import type { SessionTokens } from '../model/types';
 import type { NextRequest } from 'next/server';
 
+// 리프레시 토큰이 없거나 API가 갱신을 거절한 경우. 네트워크 오류 등 그 외 실패와 구분하는 데 사용
+export class SessionRefreshRejectedError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = 'SessionRefreshRejectedError';
+  }
+}
+
 export async function refreshSession(
   request: NextRequest,
 ): Promise<SessionTokens> {
   const refreshToken = await getAuthRefreshFromCookie();
 
   if (!refreshToken) {
-    throw new Error('Refresh Token is required.');
+    throw new SessionRefreshRejectedError('Refresh Token is required.');
   }
 
   const headers = createForwardedHeaders(request, refreshToken);
@@ -25,7 +33,7 @@ export async function refreshSession(
   );
 
   if (!data.success) {
-    throw new Error('Token refresh failed.');
+    throw new SessionRefreshRejectedError('Token refresh failed.');
   }
 
   const { data: response } = data;

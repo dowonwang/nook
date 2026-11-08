@@ -366,6 +366,7 @@ export default function Page({ searchParams }: Props) {
 
 - `matcher`는 `api/`, `action/` 하위 경로와 정적 파일을 제외합니다. 이 경로의 Route Handler는 locale redirect와 세션 처리를 받지 않으므로, 필요한 검사를 핸들러 안에서 직접 합니다.
 - 새 private 경로는 `src/app/middleware/config/route-scope.ts`의 `PRIVATE_ROUTE_PREFIXES`에 추가합니다.
+- 세션 갱신이 거절되면(리프레시 토큰 없음, API가 갱신 거절, `SessionRefreshRejectedError`) 인증 쿠키를 지우고 private 경로는 로그인 페이지로 보냅니다. API 장애 등 그 외 이유로 갱신하지 못하면 세션 만료로 보지 않고 쿠키를 유지한 채 요청을 진행합니다(`unavailable`).
 
 ### 5.3 BFF와 요청 도구
 
@@ -431,7 +432,7 @@ return (
 - 변경 요청은 해당 feature의 `api/action.server.ts`(`'use server'`)에 둡니다.
 - Server Action 이름은 `<동사><도메인>ServerAction`으로 짓습니다. 예: `signInServerAction`, `createOrganizationServerAction`, `changeOrganizationInvitationStatusServerAction`. `useActionState`에 넘기는 함수가 브라우저에서 실행되는 일반 함수일 수도 있으므로, 서버에서 실행되는 함수임을 이름으로 드러냅니다.
 - 폼 상태와 에러 표시는 [action README](../client/src/shared/api/action/README.md#rules)를 따릅니다.
-- 클라이언트가 보낸 이전 상태(`previousState`)는 사용자가 조작할 수 있습니다. redirect 경로처럼 서버 동작에 쓰는 값은 서버에서 다시 검증합니다.
+- 클라이언트가 보낸 이전 상태(`previousState`)는 사용자가 조작할 수 있습니다. redirect 경로처럼 서버 동작에 쓰는 값은 서버에서 다시 검증합니다. 이동 경로는 `getSafeRedirectPath`(`$shared/lib/http/server`)로 앱 내부 경로만 허용합니다.
 - 변경 후에는 영향을 받는 목록을 base 키로 무효화합니다. 다른 feature의 쿼리 키가 아니라 `entities`에서 공개한 키를 씁니다([0.4](#04-feature는-사용자-행동-단위)).
 
 ---
