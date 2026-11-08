@@ -1,1 +1,1 @@
-export * from './get-safe-redirect-path.server';
+export { getSafeRedirectPath } from './get-safe-redirect-path.server';
