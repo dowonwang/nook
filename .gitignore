@@ -24,3 +24,6 @@ Thumbs.db
 
 # Keys
 *.pem
+
+# Claude Code 로컬 설정 (Notion 연결 정보 등)
+.claude/**/*.local.json
