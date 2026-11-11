@@ -88,7 +88,7 @@ pnpm workspace를 기반으로 애플리케이션과 공용 패키지 간 의존
 
 ```bash
 git clone <repository-url>
-cd classroom
+cd nook
 
 pnpm install
 ```

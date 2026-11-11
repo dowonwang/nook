@@ -38,12 +38,12 @@ cp .env.example .env
 ```env
 POSTGRES_PORT=5432
 
-POSTGRES_USER=classroom
+POSTGRES_USER=nook
 POSTGRES_PASSWORD=your_password
-POSTGRES_DB=classroom
+POSTGRES_DB=nook
 TZ=Asia/Seoul
 
-DATABASE_URL="postgresql://classroom:your_password@localhost:5432/classroom?schema=public"
+DATABASE_URL="postgresql://nook:your_password@localhost:5432/nook?schema=public"
 ```
 
 ## PostgreSQL

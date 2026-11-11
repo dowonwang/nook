@@ -1,7 +1,7 @@
 opencollection: 1.0.0
 
 info:
-  name: classroom-api
+  name: nook-api
 bundled: false
 
 # API 서버는 x-internal-secret이 맞는 요청만 처리 (서버 .env의 INTERNAL_API_SECRET과 같은 값)
