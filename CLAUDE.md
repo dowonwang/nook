@@ -63,6 +63,10 @@ feat(organization): 받은 초대 목록 페이지네이션 적용
 
 `.opencode/commands/commit.md` holds a detailed commit workflow: by default commit only unstaged + untracked changes (preserve the existing staged state, never `git add -A`/`.`), `--staged` commits only what is staged; read every changed file before drafting; show the message and get explicit approval before committing.
 
+Task tracking lives in a Notion kanban database, managed through the `/kanban` skill (`.claude/skills/kanban/SKILL.md`: init / add / check). Each user keeps their Notion connection in `.claude/skills/kanban/config.local.json` (gitignored; copy `config.example.json`).
+
+Card to-dos are committed one item per commit. When asking for commit approval on a branch that has a kanban card (config present, card's `브랜치` matches), also show which to-do item(s) the commit will check, following the "커밋 승인과 함께 체크" section of the kanban `SKILL.md`. A PostToolUse hook (`.claude/hooks/kanban-commit.sh`) reminds Claude after each successful `git commit`; apply the approved check then without asking again.
+
 ## API contract pipeline
 
 The backend is the source of truth for types shared with the web client:
