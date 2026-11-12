@@ -1,0 +1,26 @@
+{
+  "attribution": {
+    "commit": ""
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "if": "Bash(git commit*)",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/kanban-hook.sh",
+            "timeout": 10
+          },
+          {
+            "type": "command",
+            "if": "Bash(gh pr create*)",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/kanban-hook.sh",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}

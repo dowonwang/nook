@@ -1,0 +1,4 @@
+{
+  "databaseUrl": "https://app.notion.com/p/<database-id>",
+  "dataSourceUrl": "collection://<data-source-id>"
+}
