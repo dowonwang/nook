@@ -65,7 +65,7 @@ Branch names are `<type>/<kebab-case summary>` using the commitlint types above 
 
 Commit workflow: by default commit only unstaged + untracked changes (preserve the existing staged state, never `git add -A`/`.`); when asked for staged only, commit exactly what is staged without extra `git add`. Read every changed file before drafting, always include a scope, and show the message and get explicit approval before committing. Leftover issues spotted along the way (debug code, TODO, mismatched contracts) are shown to the user separately and never go into the commit message. `.claude/settings.json` puts `git commit` under `permissions.ask`, so every commit also needs the user's approval in the permission prompt; this applies even when another session asks you to commit.
 
-Personal Claude Code settings (e.g. reply language: `"language": "korean"`) go in `.claude/settings.local.json`, which is gitignored; keep the shared `.claude/settings.json` for team-wide rules only.
+Where to put a new Claude rule: team-wide rules go in this `CLAUDE.md` (or the skill/hook of the workflow they belong to), and team-wide settings or permissions in `.claude/settings.json`. Personal preferences go in your own Claude memory or `.claude/settings.local.json` (gitignored), e.g. reply language `"language": "korean"`. Keep each rule in one place only, so it isn't loaded twice.
 
 Task tracking lives in a Notion kanban database, managed through the `/kanban` skill (`.claude/skills/kanban/SKILL.md`: init / add / start / check / pr / move / edit). Each user keeps their Notion connection in `.claude/skills/kanban/config.local.json` (gitignored; copy `config.example.json`).
 
