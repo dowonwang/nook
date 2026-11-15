@@ -5,7 +5,7 @@ import {
   OrganizationMembersAddedEvent,
 } from '$modules/organization/domain';
 import { DuplicateOrganizationSlugError } from '$modules/organization/error';
-import { PrismaRepository } from '$shared/database';
+import { PRISMA_ERROR_CODES, PrismaRepository } from '$shared/database';
 import { createLogger } from '$shared/logger';
 
 import { OrganizationPrismaMapper } from '../mappers/organization';
@@ -66,7 +66,7 @@ export class PrismaOrganizationCommandRepository
       // organization의 unique는 id(UUIDv7, 충돌 없음)와 slug뿐이므로 P2002는 slug 충돌
       if (
         error instanceof Prisma.PrismaClientKnownRequestError &&
-        error.code === 'P2002'
+        error.code === PRISMA_ERROR_CODES.UNIQUE_CONSTRAINT
       ) {
         throw new DuplicateOrganizationSlugError(
           PrismaOrganizationCommandRepository.name,
