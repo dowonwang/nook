@@ -1,9 +1,11 @@
 import { Prisma } from '@packages/api-db';
 
+import { PRISMA_ERROR_CODES } from '$shared/database';
 import {
   BadRequestError,
   ConflictError,
   InternalServerError,
+  NotFoundError,
 } from '$shared/error';
 import { LOG_EVENT, LOG_MESSAGE } from '$shared/logger';
 
@@ -13,7 +15,15 @@ const SCOPE = 'PRISMA' as const;
 
 export function mapPrismaError(error: unknown): AppError | null {
   if (error instanceof Prisma.PrismaClientKnownRequestError) {
-    console.error(error.code);
+    if (error.code === PRISMA_ERROR_CODES.RECORD_NOT_FOUND) {
+      return new NotFoundError({
+        scope: SCOPE,
+        event: LOG_EVENT.PRISMA_RECORD_NOT_FOUND,
+        message: LOG_MESSAGE.PRISMA_RECORD_NOT_FOUND,
+        detail: error.code,
+        cause: error.message,
+      });
+    }
 
     return new ConflictError({
       scope: SCOPE,

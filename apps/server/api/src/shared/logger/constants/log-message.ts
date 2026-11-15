@@ -23,6 +23,7 @@ export const LOG_MESSAGE: LogEventMessage = {
 
   PRISMA_CLIENT_INITIALIZATION: 'Prisma Client Initialization Error',
   PRISMA_CLIENT_KNOWN_REQUEST: 'Prisma Client Known Request Error',
+  PRISMA_RECORD_NOT_FOUND: 'Prisma Record Not Found Error',
   PRISMA_CLIENT_UNKNOWN_REQUEST: 'Prisma Client Unknown Request Error',
   PRISMA_CLIENT_VALIDATION: 'Prisma Client Validation Error',
   PRISMA_CLIENT_RUST_PANIC: 'Prisma Client Rust Panic Error',

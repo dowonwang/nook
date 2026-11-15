@@ -20,6 +20,7 @@ export const LOG_EVENT = {
   APP_UNHANDLED_EXCEPTION: 'app_unhandled_exception',
 
   PRISMA_CLIENT_KNOWN_REQUEST: 'prisma_client_known_request',
+  PRISMA_RECORD_NOT_FOUND: 'prisma_record_not_found',
   PRISMA_CLIENT_UNKNOWN_REQUEST: 'prisma_client_unknown_request',
   PRISMA_CLIENT_RUST_PANIC: 'prisma_client_rust_panic',
   PRISMA_CLIENT_INITIALIZATION: 'prisma_client_initialization',
