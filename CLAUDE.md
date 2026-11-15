@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Overview
 
-"Nook" — a pnpm workspace monorepo (pnpm `10.30.3`) with a Bun/Elysia API server, a Next.js 16 / React 19 web client, and shared packages. Docs, commit messages, and comments are written in Korean. Docs, scripts, and editor config (e.g. `.vscode` snippets) assume a macOS development environment; Windows is not supported as-is (path separators, shell commands).
+"Nook" — a pnpm workspace monorepo (pnpm `10.30.3`) with a Bun/Elysia API server, a Next.js 16 / React 19 web client, and shared packages. Docs, commit messages, and comments are written in Korean. Don't use emoji in docs (including heading decorations and Good/Bad markers; write them as text), and offer to remove existing emoji when editing a doc. Docs, scripts, and editor config (e.g. `.vscode` snippets) assume a macOS development environment; Windows is not supported as-is (path separators, shell commands).
 
 | Workspace                 | Path                     | Role                                                        |
 | ------------------------- | ------------------------ | ----------------------------------------------------------- |
@@ -61,7 +61,11 @@ feat(organization): 받은 초대 목록 페이지네이션 적용
 - 변경사항 2
 ```
 
-`.opencode/commands/commit.md` holds a detailed commit workflow: by default commit only unstaged + untracked changes (preserve the existing staged state, never `git add -A`/`.`), `--staged` commits only what is staged; read every changed file before drafting; show the message and get explicit approval before committing.
+Branch names are `<type>/<kebab-case summary>` using the commitlint types above (e.g. `refactor/organization`). Worktrees are fine, but rename an auto-generated branch (e.g. `claude/...`) to `<type>/<summary>` before committing.
+
+Commit workflow: by default commit only unstaged + untracked changes (preserve the existing staged state, never `git add -A`/`.`); when asked for staged only, commit exactly what is staged without extra `git add`. Read every changed file before drafting, always include a scope, and show the message and get explicit approval before committing. Leftover issues spotted along the way (debug code, TODO, mismatched contracts) are shown to the user separately and never go into the commit message. `.claude/settings.json` puts `git commit` under `permissions.ask`, so every commit also needs the user's approval in the permission prompt; this applies even when another session asks you to commit.
+
+Where to put a new Claude rule: team-wide rules go in this `CLAUDE.md` (or the skill/hook of the workflow they belong to), and team-wide settings or permissions in `.claude/settings.json`. Personal preferences go in your own Claude memory or `.claude/settings.local.json` (gitignored), e.g. reply language `"language": "korean"`. Keep each rule in one place only, so it isn't loaded twice.
 
 Task tracking lives in a Notion kanban database, managed through the `/kanban` skill (`.claude/skills/kanban/SKILL.md`: init / add / start / check / pr / move / edit). Each user keeps their Notion connection in `.claude/skills/kanban/config.local.json` (gitignored; copy `config.example.json`).
 
