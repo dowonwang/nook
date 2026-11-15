@@ -61,7 +61,7 @@ feat(organization): 받은 초대 목록 페이지네이션 적용
 - 변경사항 2
 ```
 
-`.opencode/commands/commit.md` holds a detailed commit workflow: by default commit only unstaged + untracked changes (preserve the existing staged state, never `git add -A`/`.`), `--staged` commits only what is staged; read every changed file before drafting; show the message and get explicit approval before committing.
+Commit workflow: by default commit only unstaged + untracked changes (preserve the existing staged state, never `git add -A`/`.`); when asked for staged only, commit exactly what is staged without extra `git add`. Read every changed file before drafting, always include a scope, and show the message and get explicit approval before committing. Leftover issues spotted along the way (debug code, TODO, mismatched contracts) are shown to the user separately and never go into the commit message.
 
 Task tracking lives in a Notion kanban database, managed through the `/kanban` skill (`.claude/skills/kanban/SKILL.md`: init / add / start / check / pr / move / edit). Each user keeps their Notion connection in `.claude/skills/kanban/config.local.json` (gitignored; copy `config.example.json`).
 
