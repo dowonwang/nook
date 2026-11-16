@@ -1,9 +1,6 @@
 import type { I18N_VALIDATION_KEY } from '../../validation';
 
 export const i18ValidationKo = {
-  GetUserQueryParams_email_regex: '올바른 이메일 주소를 입력해주세요.',
-  GetUserQueryParams_email_string: '올바른 이메일 주소를 입력해주세요.',
-
   PostAuthSignInBody_email_regex: '올바른 이메일 주소를 입력해주세요.',
   PostAuthSignInBody_email_string: '이메일을 입력해주세요.',
   PostAuthSignInBody_password_string: '비밀번호를 입력해주세요.',

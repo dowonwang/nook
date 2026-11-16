@@ -1,10 +1,6 @@
 import type { I18N_VALIDATION_KEY } from '../../validation';
 
 export const i18ValidationEn = {
-  GetUserQueryParams_email_regex: 'Please enter a valid email address.',
-
-  GetUserQueryParams_email_string: 'Please enter a valid email address.',
-
   PostAuthSignInBody_email_regex: 'Please enter a valid email address.',
 
   PostAuthSignInBody_email_string: 'Please enter your email address.',
