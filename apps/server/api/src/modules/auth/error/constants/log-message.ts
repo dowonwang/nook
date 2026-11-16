@@ -19,5 +19,6 @@ export const AUTH_LOG_MESSAGE: AuthLogEventMessage = {
   AUTH_MISSING_TOKEN_HASH_SECRET:
     'Missing required environment variable: HASH_TOKEN_SECRET',
   AUTH_INVALID_CREDENTIALS: 'Invalid user credentials',
+  AUTH_INVALID_PASSWORD_FORMAT: 'Password does not meet the format rules',
   AUTH_EMAIL_ALREADY_EXIST: 'User with this email already exists',
 } as const;

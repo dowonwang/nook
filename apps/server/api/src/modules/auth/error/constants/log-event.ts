@@ -10,6 +10,7 @@ export const AUTH_LOG_EVENT = {
   AUTH_REFRESH_TOKEN_REQUIRED: 'auth_refresh_token_required',
   AUTH_MISSING_TOKEN_HASH_SECRET: 'auth_missing_token_hash_secret',
   AUTH_INVALID_CREDENTIALS: 'auth_invalid_credentials',
+  AUTH_INVALID_PASSWORD_FORMAT: 'auth_invalid_password_format',
   AUTH_EMAIL_ALREADY_EXIST: 'auth_email_already_exist',
 } as const;
 

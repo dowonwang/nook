@@ -21,6 +21,15 @@ export const i18ValidationEn = {
 
   PostAuthSignUpBody_name_string: 'Please enter your name.',
 
+  PostAuthSignUpBody_password_max:
+    'Password must be between 8 and 32 characters.',
+
+  PostAuthSignUpBody_password_min:
+    'Password must be between 8 and 32 characters.',
+
+  PostAuthSignUpBody_password_regex:
+    'Password may contain only letters, numbers, and symbols.',
+
   PostAuthSignUpBody_password_string: 'Please enter your password.',
 
   PostAuthSignUpBody_confirmPassword_mismatch: 'Passwords do not match.',

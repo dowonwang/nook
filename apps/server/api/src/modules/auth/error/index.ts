@@ -2,6 +2,7 @@ export * from './session-not-found';
 export * from './email-already-exists';
 export * from './invalid-access-token-claims';
 export * from './invalid-credentials';
+export * from './invalid-password-format';
 export * from './invalid-refresh-token-claims';
 export * from './jwt-token-expired';
 export * from './missing-jwt-expires';

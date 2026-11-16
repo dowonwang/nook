@@ -17,6 +17,8 @@ export const i18nResponseKo = {
   auth_error_InvalidCredentials: '로그인 정보가 올바르지 않습니다.',
   auth_error_EmailAlreadyExists:
     '이미 가입된 계정이거나 사용할 수 없는 이메일입니다.',
+  auth_error_InvalidPasswordFormat:
+    '비밀번호는 영문, 숫자, 특수문자 8자 이상 32자 이하로 입력해주세요.',
 
   // user
   user_error_UserNotFound: '존재하지 않는 사용자입니다.',
