@@ -1,5 +1,7 @@
 import { timingSafeEqual } from 'node:crypto';
 
+import { AuthMissingTokenHashSecretError } from '$modules/auth/error';
+
 import type { TokenHasherPort } from '$modules/auth/application';
 
 export class JwtTokenHasherAdapter implements TokenHasherPort {
@@ -7,7 +9,7 @@ export class JwtTokenHasherAdapter implements TokenHasherPort {
 
   constructor(secret: string | undefined | null) {
     if (!secret) {
-      throw new Error();
+      throw new AuthMissingTokenHashSecretError(JwtTokenHasherAdapter.name);
     }
 
     this.#secret = secret;

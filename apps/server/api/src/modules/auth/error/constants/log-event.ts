@@ -8,7 +8,7 @@ export const AUTH_LOG_EVENT = {
   AUTH_REFRESH_TOKEN_REVOKED: 'auth_refresh_token_revoked',
   AUTH_REFRESH_TOKEN_EXPIRED: 'auth_refresh_token_expired',
   AUTH_REFRESH_TOKEN_REQUIRED: 'auth_refresh_token_required',
-  AUTH_TOKEN_HASH_SECRET: 'auth_token_hash_secret',
+  AUTH_MISSING_TOKEN_HASH_SECRET: 'auth_missing_token_hash_secret',
   AUTH_INVALID_CREDENTIALS: 'auth_invalid_credentials',
   AUTH_EMAIL_ALREADY_EXIST: 'auth_email_already_exist',
 } as const;
