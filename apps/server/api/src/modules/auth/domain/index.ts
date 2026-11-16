@@ -1,4 +1,5 @@
 export * from './entities/session';
+export * from './policies/password';
 export * from './policies/refresh-session';
 export type * from './repositories/session-command';
 export * from './value-objects/access-token-claims';

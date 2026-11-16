@@ -55,7 +55,8 @@ export class PrismaAuthSessionCommandRepository
   }
 
   async revoke(sessionId: string): Promise<void> {
-    await this.client.authSession.update({
+    // 이미 폐기된 세션이어도 실패하지 않도록 updateMany를 사용한다
+    await this.client.authSession.updateMany({
       where: {
         id: sessionId,
         revokedAt: null,

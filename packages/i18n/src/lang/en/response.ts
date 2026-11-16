@@ -32,6 +32,9 @@ export const i18nResponseEn = {
   auth_error_EmailAlreadyExists:
     'An account with this email already exists, or this email cannot be used.',
 
+  auth_error_InvalidPasswordFormat:
+    'Password must be 8 to 32 characters of letters, numbers, and symbols.',
+
   // user
 
   user_error_UserNotFound: 'User not found.',

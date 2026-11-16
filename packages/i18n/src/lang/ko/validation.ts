@@ -1,9 +1,6 @@
 import type { I18N_VALIDATION_KEY } from '../../validation';
 
 export const i18ValidationKo = {
-  GetUserQueryParams_email_regex: '올바른 이메일 주소를 입력해주세요.',
-  GetUserQueryParams_email_string: '올바른 이메일 주소를 입력해주세요.',
-
   PostAuthSignInBody_email_regex: '올바른 이메일 주소를 입력해주세요.',
   PostAuthSignInBody_email_string: '이메일을 입력해주세요.',
   PostAuthSignInBody_password_string: '비밀번호를 입력해주세요.',
@@ -13,6 +10,12 @@ export const i18ValidationKo = {
   PostAuthSignUpBody_name_max: '이름은 2자 이상 20자 이하로 입력해주세요.',
   PostAuthSignUpBody_name_min: '이름은 2자 이상 20자 이하로 입력해주세요.',
   PostAuthSignUpBody_name_string: '이름을 입력해주세요.',
+  PostAuthSignUpBody_password_max:
+    '비밀번호는 8자 이상 32자 이하로 입력해주세요.',
+  PostAuthSignUpBody_password_min:
+    '비밀번호는 8자 이상 32자 이하로 입력해주세요.',
+  PostAuthSignUpBody_password_regex:
+    '비밀번호는 영문, 숫자, 특수문자만 사용할 수 있습니다.',
   PostAuthSignUpBody_password_string: '비밀번호를 입력해주세요.',
   PostAuthSignUpBody_confirmPassword_mismatch: '비밀번호가 일치하지 않습니다.',
 

@@ -8,6 +8,9 @@ export const I18N_AUTH_VALIDATION = [
   'PostAuthSignUpBody_name_max',
   'PostAuthSignUpBody_name_min',
   'PostAuthSignUpBody_name_string',
+  'PostAuthSignUpBody_password_max',
+  'PostAuthSignUpBody_password_min',
+  'PostAuthSignUpBody_password_regex',
   'PostAuthSignUpBody_password_string',
 ] as const;
 

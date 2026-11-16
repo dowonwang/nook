@@ -158,7 +158,10 @@ async function main() {
 
     console.log(`[${tagName}] generated ${String(keys.length)} keys`);
 
-    tagNames.push(tagName);
+    // 키가 없는 태그의 타입은 never라 통합 타입에 넣으면 lint 에러가 나므로 제외한다
+    if (keys.length > 0) {
+      tagNames.push(tagName);
+    }
 
     await writeFile(
       resolve(OUTPUT_DIR, `${tagName}.ts`),

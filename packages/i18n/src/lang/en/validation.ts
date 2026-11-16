@@ -1,10 +1,6 @@
 import type { I18N_VALIDATION_KEY } from '../../validation';
 
 export const i18ValidationEn = {
-  GetUserQueryParams_email_regex: 'Please enter a valid email address.',
-
-  GetUserQueryParams_email_string: 'Please enter a valid email address.',
-
   PostAuthSignInBody_email_regex: 'Please enter a valid email address.',
 
   PostAuthSignInBody_email_string: 'Please enter your email address.',
@@ -20,6 +16,15 @@ export const i18ValidationEn = {
   PostAuthSignUpBody_name_min: 'Name must be between 2 and 20 characters.',
 
   PostAuthSignUpBody_name_string: 'Please enter your name.',
+
+  PostAuthSignUpBody_password_max:
+    'Password must be between 8 and 32 characters.',
+
+  PostAuthSignUpBody_password_min:
+    'Password must be between 8 and 32 characters.',
+
+  PostAuthSignUpBody_password_regex:
+    'Password may contain only letters, numbers, and symbols.',
 
   PostAuthSignUpBody_password_string: 'Please enter your password.',
 
