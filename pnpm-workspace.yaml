@@ -3,6 +3,13 @@ packages:
   - apps/web/*
   - packages/*
 
+allowBuilds:
+  prisma: true
+  '@prisma/engines': true
+  bcrypt: false
+  esbuild: false
+  unrs-resolver: false
+
 catalog:
   zod: 4.3.6
 
@@ -52,7 +59,3 @@ catalogs:
 
 overrides:
   '@types/node': 'catalog:node26'
-
-ignoredBuiltDependencies:
-  - sharp
-  - unrs-resolver
