@@ -1,3 +1,5 @@
+reporter: append-only
+
 packages:
   - apps/server/*
   - apps/web/*
