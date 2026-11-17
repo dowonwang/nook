@@ -78,7 +78,7 @@ pnpm workspace를 기반으로 애플리케이션과 공용 패키지 간 의존
 
 - macOS
 - Node.js
-- pnpm `10.30.3`
+- pnpm `12.21.0`
 - Bun
 - Docker / Docker Compose
 
