@@ -61,6 +61,8 @@ feat(organization): 받은 초대 목록 페이지네이션 적용
 - 변경사항 2
 ```
 
+Never start the subject with an uppercase Latin letter. `@commitlint/config-conventional`'s `subject-case` rule rejects it even when the rest is Korean (`Prisma 클라이언트 교체`, `API 응답 타입 수정`, `CLAUDE.md 규칙 추가` all fail). Reorder so a Korean word or a lowercase identifier comes first: `클라이언트를 Prisma로 교체`, `slug 충돌 판별 수정`. Don't change `commitlint.config.mjs` to work around it.
+
 Branch names are `<type>/<kebab-case summary>` using the commitlint types above (e.g. `refactor/organization`). Worktrees are fine, but rename an auto-generated branch (e.g. `claude/...`) to `<type>/<summary>` before committing.
 
 Commit workflow: by default commit only unstaged + untracked changes (preserve the existing staged state, never `git add -A`/`.`); when asked for staged only, commit exactly what is staged without extra `git add`. Read every changed file before drafting, always include a scope, and show the message and get explicit approval before committing. Leftover issues spotted along the way (debug code, TODO, mismatched contracts) are shown to the user separately and never go into the commit message. `.claude/settings.json` puts `git commit` under `permissions.ask`, so every commit also needs the user's approval in the permission prompt; this applies even when another session asks you to commit.
