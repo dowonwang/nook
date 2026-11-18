@@ -1,13 +1,14 @@
 import { Prisma } from '@packages/api-db';
 
 import { PRISMA_ERROR_CODES } from '$shared/database';
+import { LOG_EVENT, LOG_MESSAGE } from '$shared/logger';
+
 import {
   BadRequestError,
   ConflictError,
   InternalServerError,
   NotFoundError,
 } from '$shared/error';
-import { LOG_EVENT, LOG_MESSAGE } from '$shared/logger';
 
 import type { AppError } from '$shared/error';
 

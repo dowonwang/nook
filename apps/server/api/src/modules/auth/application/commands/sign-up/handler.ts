@@ -1,4 +1,3 @@
-import { AuthEmailAlreadyExistsError } from '$modules/auth/error';
 import {
   UserEntity,
   UserNameVo,
@@ -6,7 +5,10 @@ import {
   UserUuidVo,
   type UserCommandRepository,
 } from '$modules/user/domain';
+
 import { createLogger } from '$shared/logger';
+
+import { AuthEmailAlreadyExistsError } from '$modules/auth/error';
 
 import { SignUpCommand } from './command';
 

@@ -1,6 +1,7 @@
 import { Elysia } from 'elysia';
 
 import { type AuthGuard } from '$modules/auth';
+
 import { offsetPaginationPlugin } from '$shared/pagination';
 import {
   ApiResponseBuilder,

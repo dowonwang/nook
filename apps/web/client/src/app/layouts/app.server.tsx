@@ -1,5 +1,4 @@
 import '@packages/ui/styles.css';
-
 import '$app/styles/global.css';
 
 import { Noto_Sans, Noto_Sans_KR } from 'next/font/google';

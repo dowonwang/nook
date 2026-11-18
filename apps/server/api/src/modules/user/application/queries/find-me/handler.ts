@@ -1,6 +1,8 @@
 import { type UserCommandRepository } from '$modules/user/domain';
-import { UserNotFoundError } from '$modules/user/error';
+
 import { createLogger } from '$shared/logger';
+
+import { UserNotFoundError } from '$modules/user/error';
 
 import { FindMeQuery } from './query';
 import { UserDtoMapper } from '../../mappers/user';

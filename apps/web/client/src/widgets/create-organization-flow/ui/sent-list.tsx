@@ -1,5 +1,8 @@
 'use client';
 
+import { useQuery } from '@tanstack/react-query';
+import { useT } from 'next-i18next/client';
+
 import {
   Table,
   TableBody,
@@ -8,15 +11,13 @@ import {
   TableHeaderCell,
   TableRow,
 } from '@packages/ui/components/table';
-import { useQuery } from '@tanstack/react-query';
-import { useT } from 'next-i18next/client';
 
+import { CancelOrganizationInvitationButton } from '$features/organization-invitation/change-status';
 import {
   sentOrganizationInvitationListQueryOptions,
   OrganizationInvitationStatusBadge,
 } from '$entities/organization-invitation';
 import { OrganizationMemberRoleBadge } from '$entities/organization-member';
-import { CancelOrganizationInvitationButton } from '$features/organization-invitation/change-status';
 
 import { WIDGETS_CREATE_ORGANIZATION_FLOW_I18N_NAMESPACE } from '../i18n';
 

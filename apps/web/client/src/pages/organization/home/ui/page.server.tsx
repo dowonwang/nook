@@ -1,22 +1,23 @@
 import {
-  HeroSection,
-  HeroSectionDescription,
-  HeroSectionTitle,
-} from '@packages/ui/components/hero-section';
-import { Separator } from '@packages/ui/components/separator';
-import {
   dehydrate,
   HydrationBoundary,
   QueryClient,
 } from '@tanstack/react-query';
 import { getT } from 'next-i18next/server';
 
+import {
+  HeroSection,
+  HeroSectionDescription,
+  HeroSectionTitle,
+} from '@packages/ui/components/hero-section';
+import { Separator } from '@packages/ui/components/separator';
+
 import { serverMyOrganizationListQueryOptions } from '$entities/organization/server';
 import { getOffsetPaginationQuery } from '$shared/lib/pagination/server';
 
-import { PAGES_ORGANIZATION_HOME_I18N_NAMESPACE } from '../i18n';
 import { MyOrganizationList } from './list';
 import { CreateOrganizationNavigation } from './navigation/create.server';
+import { PAGES_ORGANIZATION_HOME_I18N_NAMESPACE } from '../i18n';
 
 import type { SearchParams } from '$shared/lib/http';
 

@@ -1,5 +1,6 @@
-import { InvalidOrganizationSlugError } from '$modules/organization/error';
 import { PrimitiveValueObject } from '$shared/ddd';
+
+import { InvalidOrganizationSlugError } from '$modules/organization/error';
 
 // 시스템이 생성하는 짧은 주소: 영어 소문자·숫자 10자
 const ALPHABET = '0123456789abcdefghijklmnopqrstuvwxyz';

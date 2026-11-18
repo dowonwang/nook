@@ -1,5 +1,5 @@
-import type { TokenClaimsVo } from '$modules/auth/domain';
 import type { JWTPayload } from 'jose';
+import type { TokenClaimsVo } from '$modules/auth/domain';
 
 export interface TokenIssuerPort {
   issueToken(claims: TokenClaimsVo): Promise<{

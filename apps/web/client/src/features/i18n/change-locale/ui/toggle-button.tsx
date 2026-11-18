@@ -1,7 +1,8 @@
 'use client';
 
-import { Button } from '@packages/ui/components/button';
 import { useChangeLanguage } from 'next-i18next/client';
+
+import { Button } from '@packages/ui/components/button';
 
 import { I18N_COOKIE_NAME } from '$shared/cookie';
 import { useLocale } from '$shared/i18n';

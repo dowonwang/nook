@@ -1,11 +1,11 @@
 import { PostOrganizationBody } from '@packages/api-client/schema/organization';
 
-import type { Organization } from '$entities/organization';
-import type { ActionState } from '$shared/api/action';
 import type {
   PostOrganization201,
   postOrganizationResponseError,
 } from '@packages/api-client/api';
+import type { Organization } from '$entities/organization';
+import type { ActionState } from '$shared/api/action';
 
 export const createOrganizationSchema = PostOrganizationBody;
 

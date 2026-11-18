@@ -1,11 +1,11 @@
 import { PatchOrganizationInvitationBody } from '@packages/api-client/schema/organization';
 
-import type { ActionState } from '$shared/api/action';
+import type { z } from 'zod';
 import type {
   PatchOrganizationInvitation200,
   patchOrganizationInvitationResponseError,
 } from '@packages/api-client/api';
-import type { z } from 'zod';
+import type { ActionState } from '$shared/api/action';
 
 type Payload = z.infer<typeof changeOrganizationInvitationStatusSchema>;
 

@@ -1,7 +1,7 @@
 import { serverFetcher } from '$shared/api/bff/server';
 
-import type { UserOrganization } from '$entities/organization';
 import type { GetOrganizationSlugBySlug200 } from '@packages/api-client/api';
+import type { UserOrganization } from '$entities/organization';
 
 // 조직이 없거나 소속되지 않은 경우 서버가 404를 주므로 null 반환
 export async function getOrganizationBySlugServer(

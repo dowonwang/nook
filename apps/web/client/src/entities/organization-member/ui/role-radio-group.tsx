@@ -1,5 +1,6 @@
-import { RadioButton } from '@packages/ui/components/radio';
 import { useT } from 'next-i18next/client';
+
+import { RadioButton } from '@packages/ui/components/radio';
 
 import { ENTITIES_ORGANIZATION_MEMBER_I18N_NAMESPACE } from '../i18n';
 

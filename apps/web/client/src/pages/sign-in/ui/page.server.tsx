@@ -1,3 +1,5 @@
+import { getT } from 'next-i18next/server';
+
 import {
   Card,
   CardBody,
@@ -5,13 +7,12 @@ import {
   CardHeader,
   CardTitle,
 } from '@packages/ui/components/card';
-import { getT } from 'next-i18next/server';
 
+import { SignInForm } from '$features/auth/sign-in';
 import {
   ENTITIES_SESSION_I18N_NAMESPACE,
   SESSION_REQUIRED_SIGN_IN,
 } from '$entities/session';
-import { SignInForm } from '$features/auth/sign-in';
 import { getFlashCookie } from '$shared/cookie/server';
 import { AppLogo } from '$shared/ui/app-logo';
 

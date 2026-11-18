@@ -1,7 +1,8 @@
 import { z } from 'zod';
 
-import { InvalidOrganizationMemberRoleError } from '$modules/organization/error';
 import { PrimitiveValueObject } from '$shared/ddd';
+
+import { InvalidOrganizationMemberRoleError } from '$modules/organization/error';
 
 const schema = z.enum(['ADMIN', 'MAINTAINER', 'MEMBER']);
 

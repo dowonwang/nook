@@ -5,9 +5,9 @@ import {
   AuthMissingJwtSecretError,
 } from '$modules/auth/error';
 
+import type { JWTPayload } from 'jose';
 import type { TokenIssuerPort } from '$modules/auth/application';
 import type { TokenClaimsVo } from '$modules/auth/domain';
-import type { JWTPayload } from 'jose';
 
 export class JwtTokenIssuerAdapter implements TokenIssuerPort {
   public readonly issueToken: (claims: TokenClaimsVo) => Promise<{

@@ -8,6 +8,7 @@
     "./next": "./src/next.mjs",
     "./react": "./src/react.mjs",
     "./fsd": "./src/fsd.mjs",
+    "./ddd": "./src/ddd.mjs",
     "./server": "./src/server.mjs"
   },
   "dependencies": {

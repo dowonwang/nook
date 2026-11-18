@@ -4,8 +4,8 @@ import { I18N_FALLBACK_LOCALE } from '$shared/i18n';
 
 import { I18N_COOKIE_NAME } from './constant';
 
-import type { I18nLocale } from '$shared/i18n';
 import type { NextRequest } from 'next/server';
+import type { I18nLocale } from '$shared/i18n';
 
 export function getI18nCookieFromRequest(
   request: NextRequest,

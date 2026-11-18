@@ -1,9 +1,10 @@
+import { AggregateRoot } from '$shared/ddd';
+
 import {
   InvalidOrganizationInvitationStatusError,
   OrganizationInvitationAccessDeniedError,
   OrganizationInvitationExpiredError,
 } from '$modules/organization/error';
-import { AggregateRoot } from '$shared/ddd';
 
 import { OrganizationInvitationStatusVo } from '../value-objects/invitation-status';
 

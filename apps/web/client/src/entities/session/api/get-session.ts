@@ -1,7 +1,7 @@
 import { clientFetcher } from '$shared/api/bff';
 
-import type { Session } from '../model/types';
 import type { GetUserMe200 } from '@packages/api-client/api';
+import type { Session } from '../model/types';
 
 export async function getSession(): Promise<Session> {
   const response = await clientFetcher('/api/user/me', {

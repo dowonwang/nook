@@ -7,10 +7,10 @@ import { redirect } from 'next/navigation';
 import { generateI18nStaticParams } from 'next-i18next/server';
 
 import { I18nProvider } from '$app/providers';
-import { serverSessionQueryOptions } from '$entities/session/server';
-import { I18N_LOCALE } from '$shared/i18n';
 import { Footer } from '$widgets/footer';
 import { PublicHeader } from '$widgets/public-header';
+import { serverSessionQueryOptions } from '$entities/session/server';
+import { I18N_LOCALE } from '$shared/i18n';
 
 import type { I18nLocale } from '$shared/i18n';
 

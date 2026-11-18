@@ -5,8 +5,6 @@ import {
 } from '@tanstack/react-query';
 
 import { I18nProvider } from '$app/providers';
-import { serverSessionQueryOptions } from '$entities/session/server';
-import { getI18nCookie } from '$shared/cookie/server';
 import { Footer } from '$widgets/footer';
 import { PrivateHeader } from '$widgets/private-header';
 import {
@@ -14,6 +12,8 @@ import {
   SidebarProvider,
   SidebarToggleButton,
 } from '$widgets/sidebar';
+import { serverSessionQueryOptions } from '$entities/session/server';
+import { getI18nCookie } from '$shared/cookie/server';
 
 interface Props {
   children: React.ReactNode;

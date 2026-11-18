@@ -9,13 +9,13 @@ import { getSafeRedirectPath } from '$shared/lib/http/server';
 
 import { signInSchema } from '../model/types';
 
+import type { postAuthSignInResponseError } from '@packages/api-client/api';
 import type {
   SignInActionState,
   SignInResponseError,
   SignInResponseSuccess,
   SignInState,
 } from '../model/types';
-import type { postAuthSignInResponseError } from '@packages/api-client/api';
 
 export async function signInServerAction(
   previousState: SignInActionState,

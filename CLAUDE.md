@@ -6,15 +6,15 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 "Nook" — a pnpm workspace monorepo (pnpm `12.21.0`) with a Bun/Elysia API server, a Next.js 16 / React 19 web client, and shared packages. Docs, commit messages, and comments are written in Korean. Don't use emoji in docs (including heading decorations and Good/Bad markers; write them as text), and offer to remove existing emoji when editing a doc. Docs, scripts, and editor config (e.g. `.vscode` snippets) assume a macOS development environment; Windows is not supported as-is (path separators, shell commands).
 
-| Workspace                 | Path                     | Role                                                        |
-| ------------------------- | ------------------------ | ----------------------------------------------------------- |
-| `@server/api`             | `apps/server/api`        | Elysia API (Bun runtime), port 4000                         |
-| `@web/client`             | `apps/web/client`        | Next.js App Router client (FSD structure)                   |
-| `@packages/api-db`        | `packages/api-db`        | Prisma schema/client + Postgres docker-compose              |
-| `@packages/api-client`    | `packages/api-client`    | Orval-generated fetch client + Zod schemas from OpenAPI     |
-| `@packages/i18n`          | `packages/i18n`          | Shared response/validation messages (server + web)          |
-| `@packages/ui`            | `packages/ui`            | Domain-agnostic UI primitives (cva + tailwind-merge)        |
-| `@packages/eslint-config` | `packages/eslint-config` | Shared ESLint flat configs (base, next, react, fsd, server) |
+| Workspace                 | Path                     | Role                                                             |
+| ------------------------- | ------------------------ | ---------------------------------------------------------------- |
+| `@server/api`             | `apps/server/api`        | Elysia API (Bun runtime), port 4000                              |
+| `@web/client`             | `apps/web/client`        | Next.js App Router client (FSD structure)                        |
+| `@packages/api-db`        | `packages/api-db`        | Prisma schema/client + Postgres docker-compose                   |
+| `@packages/api-client`    | `packages/api-client`    | Orval-generated fetch client + Zod schemas from OpenAPI          |
+| `@packages/i18n`          | `packages/i18n`          | Shared response/validation messages (server + web)               |
+| `@packages/ui`            | `packages/ui`            | Domain-agnostic UI primitives (cva + tailwind-merge)             |
+| `@packages/eslint-config` | `packages/eslint-config` | Shared ESLint flat configs (base, next, react, fsd, ddd, server) |
 
 Shared dependency versions live in `pnpm-workspace.yaml` catalogs, pinned to exact versions and grouped by stack (`catalog:` for zod, plus `catalog:<group>` such as `next16`, `ui`, `i18n`, `eslint`, `typescript5`, `node26`, `backend1`, `prisma7`, `postgres8`). An `overrides` entry keeps `@types/node` on a single version across the monorepo. In each `package.json`, dependencies are ordered by value: plain/`workspace:` versions first, then `catalog:`, then named catalogs by group name, alphabetical within each group.
 
@@ -46,9 +46,9 @@ Env setup: copy `packages/api-db/.env.example`, `apps/server/api/.env.example`, 
 
 There is no test runner configured. Bruno request collections live in `apps/server/api/bruno`.
 
-ESLint: each workspace has its own `eslint.config.mjs` assembled from `@packages/eslint-config` (`base` for every workspace, `react` for the web client and `packages/ui`, `next` + `fsd` for the web client, `server` for the Bun API). ESLint resolves the config nearest to each file, so `pnpm lint:fix` and lint-staged still run from the root.
+ESLint: each workspace has its own `eslint.config.mjs` assembled from `@packages/eslint-config` (`base` for every workspace, `react` for the web client and `packages/ui`, `next` + `fsd` for the web client, `server` + `ddd` for the Bun API). `import-x/order` enforces the block order external → `@packages/*` → layer aliases → relative (`./` → `../`) → type imports; `fsd` and `ddd` supply the layer order through `src/import-order.mjs`. ESLint resolves the config nearest to each file, so `pnpm lint:fix` and lint-staged still run from the root.
 
-Git hooks (Husky): `pre-commit` runs `pnpm -r typecheck` + lint-staged (prettier + eslint); `commit-msg` runs commitlint. Never bypass hooks (`--no-verify`, `HUSKY=0`).
+Git hooks (Husky): `pre-commit` runs `pnpm -r typecheck` + lint-staged (eslint, then prettier); `commit-msg` runs commitlint. Never bypass hooks (`--no-verify`, `HUSKY=0`).
 
 ## Commit convention
 

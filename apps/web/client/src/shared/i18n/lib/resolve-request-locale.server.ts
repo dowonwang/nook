@@ -2,8 +2,8 @@ import { getI18nCookieFromRequest } from '$shared/cookie/server';
 
 import { I18N_FALLBACK_LOCALE, I18N_LOCALE } from '../config/constant';
 
-import type { I18nLocale } from '../config/constant';
 import type { NextRequest } from 'next/server';
+import type { I18nLocale } from '../config/constant';
 
 export function resolveRequestLocale(request: NextRequest): I18nLocale {
   const cookieLocale = getI18nCookieFromRequest(request, false);

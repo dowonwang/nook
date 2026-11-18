@@ -1,9 +1,10 @@
 'use client';
 
-import { Button } from '@packages/ui/components/button';
 import { useQueryClient } from '@tanstack/react-query';
 import { useT } from 'next-i18next/client';
 import { useTransition } from 'react';
+
+import { Button } from '@packages/ui/components/button';
 
 import { SENT_ORGANIZATION_INVITATION_LIST_QUERY_KEY } from '$entities/organization-invitation';
 

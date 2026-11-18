@@ -9,12 +9,12 @@ import { setFlashCookie } from '$shared/cookie/server';
 import { SIGN_UP_SUCCESS_SIGNIN_REQUIRED } from '../config/i18n-key';
 import { signUpSchema } from '../model/types';
 
+import type { postAuthSignUpResponseError } from '@packages/api-client/api';
 import type {
   SignUpResponseError,
   SignUpState,
   SignUpActionState,
 } from '../model/types';
-import type { postAuthSignUpResponseError } from '@packages/api-client/api';
 
 export async function signUpServerAction(
   _previousState: SignUpActionState,

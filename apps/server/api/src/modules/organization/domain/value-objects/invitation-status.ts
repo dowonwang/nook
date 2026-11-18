@@ -1,7 +1,8 @@
 import { z } from 'zod';
 
-import { InvalidOrganizationInvitationStatusError } from '$modules/organization/error';
 import { PrimitiveValueObject } from '$shared/ddd';
+
+import { InvalidOrganizationInvitationStatusError } from '$modules/organization/error';
 
 const schema = z.enum([
   'PENDING', // 초대 발송(대기중)

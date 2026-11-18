@@ -1,6 +1,7 @@
-import { Button } from '@packages/ui/components/button';
 import Link from 'next/link';
 import { useT } from 'next-i18next/client';
+
+import { Button } from '@packages/ui/components/button';
 
 import { WIDGETS_PUBLIC_HEADER_I18N_NAMESPACE } from '../../i18n';
 

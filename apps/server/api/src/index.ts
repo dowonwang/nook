@@ -5,6 +5,7 @@ import { Elysia } from 'elysia';
 import authModule from '$modules/auth';
 import organizationModule from '$modules/organization';
 import userModule from '$modules/user';
+
 import {
   errorPlugin,
   internalRequestPlugin,

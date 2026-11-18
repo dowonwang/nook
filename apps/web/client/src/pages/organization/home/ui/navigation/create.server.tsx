@@ -1,6 +1,7 @@
-import { Button } from '@packages/ui/components/button';
 import Link from 'next/link';
 import { getT } from 'next-i18next/server';
+
+import { Button } from '@packages/ui/components/button';
 
 import { PAGES_ORGANIZATION_HOME_I18N_NAMESPACE } from '../../i18n';
 

@@ -4,6 +4,7 @@ import {
   AuthSessionUuidVo,
   RefreshTokenClaimsVo,
 } from '$modules/auth/domain';
+
 import { AuthRefreshTokenMalformedError } from '$modules/auth/error';
 
 import type { UserEntity } from '$modules/user/domain';

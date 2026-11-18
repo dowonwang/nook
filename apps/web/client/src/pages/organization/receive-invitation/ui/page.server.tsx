@@ -1,15 +1,16 @@
 import {
-  HeroSection,
-  HeroSectionDescription,
-  HeroSectionTitle,
-} from '@packages/ui/components/hero-section';
-import { Separator } from '@packages/ui/components/separator';
-import {
   dehydrate,
   HydrationBoundary,
   QueryClient,
 } from '@tanstack/react-query';
 import { getT } from 'next-i18next/server';
+
+import {
+  HeroSection,
+  HeroSectionDescription,
+  HeroSectionTitle,
+} from '@packages/ui/components/hero-section';
+import { Separator } from '@packages/ui/components/separator';
 
 import { serverReceivedOrganizationInvitationListQueryOptions } from '$entities/organization-invitation/server';
 import { getOffsetPaginationQuery } from '$shared/lib/pagination/server';

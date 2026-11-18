@@ -1,3 +1,5 @@
+import { getT } from 'next-i18next/server';
+
 import {
   Card,
   CardBody,
@@ -5,7 +7,6 @@ import {
   CardHeader,
   CardTitle,
 } from '@packages/ui/components/card';
-import { getT } from 'next-i18next/server';
 
 import { SignUpForm } from '$features/auth/sign-up';
 import { AppLogo } from '$shared/ui/app-logo';

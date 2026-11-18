@@ -1,7 +1,8 @@
 import { Elysia } from 'elysia';
 
-import { ForbiddenError } from '$shared/error';
 import { createLogger, LOG_EVENT, LOG_MESSAGE } from '$shared/logger';
+
+import { ForbiddenError } from '$shared/error';
 
 export interface RequestMetadata {
   ipAddress: string;

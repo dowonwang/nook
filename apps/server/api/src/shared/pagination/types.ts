@@ -1,8 +1,8 @@
+import type { z } from 'zod';
 import type {
   cursorPaginationResultSchema,
   offsetPaginationResultSchema,
 } from './schema';
-import type { z } from 'zod';
 
 export type PaginationType = 'offset' | 'cursor';
 

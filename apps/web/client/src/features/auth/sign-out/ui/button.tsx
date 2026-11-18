@@ -1,8 +1,9 @@
 'use client';
 
-import { Button } from '@packages/ui/components/button';
 import { LogOut } from 'lucide-react';
 import { useTransition } from 'react';
+
+import { Button } from '@packages/ui/components/button';
 
 import { signOutServerAction } from '../api/action.server';
 
