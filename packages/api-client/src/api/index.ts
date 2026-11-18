@@ -982,15 +982,13 @@ export type postAuthSignInResponseSuccess = postAuthSignInResponse200 & {
   headers: Headers;
 };
 export type postAuthSignInResponseError = (
-  | postAuthSignInResponse400
-  | postAuthSignInResponse401
+  postAuthSignInResponse400 | postAuthSignInResponse401
 ) & {
   headers: Headers;
 };
 
 export type postAuthSignInResponse =
-  | postAuthSignInResponseSuccess
-  | postAuthSignInResponseError;
+  postAuthSignInResponseSuccess | postAuthSignInResponseError;
 
 export const getPostAuthSignInUrl = () => {
   return `/auth/sign-in`;
@@ -1030,15 +1028,13 @@ export type postAuthSignUpResponseSuccess = postAuthSignUpResponse201 & {
   headers: Headers;
 };
 export type postAuthSignUpResponseError = (
-  | postAuthSignUpResponse400
-  | postAuthSignUpResponse409
+  postAuthSignUpResponse400 | postAuthSignUpResponse409
 ) & {
   headers: Headers;
 };
 
 export type postAuthSignUpResponse =
-  | postAuthSignUpResponseSuccess
-  | postAuthSignUpResponseError;
+  postAuthSignUpResponseSuccess | postAuthSignUpResponseError;
 
 export const getPostAuthSignUpUrl = () => {
   return `/auth/sign-up`;
@@ -1077,8 +1073,7 @@ export type postAuthSignOutResponseError = postAuthSignOutResponse401 & {
 };
 
 export type postAuthSignOutResponse =
-  | postAuthSignOutResponseSuccess
-  | postAuthSignOutResponseError;
+  postAuthSignOutResponseSuccess | postAuthSignOutResponseError;
 
 export const getPostAuthSignOutUrl = () => {
   return `/auth/sign-out`;
@@ -1118,15 +1113,13 @@ export type postAuthRefreshResponseSuccess = postAuthRefreshResponse200 & {
   headers: Headers;
 };
 export type postAuthRefreshResponseError = (
-  | postAuthRefreshResponse401
-  | postAuthRefreshResponse404
+  postAuthRefreshResponse401 | postAuthRefreshResponse404
 ) & {
   headers: Headers;
 };
 
 export type postAuthRefreshResponse =
-  | postAuthRefreshResponseSuccess
-  | postAuthRefreshResponseError;
+  postAuthRefreshResponseSuccess | postAuthRefreshResponseError;
 
 export const getPostAuthRefreshUrl = () => {
   return `/auth/refresh`;
@@ -1179,8 +1172,7 @@ export type postOrganizationResponseError = (
 };
 
 export type postOrganizationResponse =
-  | postOrganizationResponseSuccess
-  | postOrganizationResponseError;
+  postOrganizationResponseSuccess | postOrganizationResponseError;
 
 export const getPostOrganizationUrl = () => {
   return `/organization/`;
@@ -1219,8 +1211,7 @@ export type getOrganizationResponseError = getOrganizationResponse401 & {
 };
 
 export type getOrganizationResponse =
-  | getOrganizationResponseSuccess
-  | getOrganizationResponseError;
+  getOrganizationResponseSuccess | getOrganizationResponseError;
 
 export const getGetOrganizationUrl = (params?: GetOrganizationParams) => {
   const normalizedParams = new URLSearchParams();
@@ -1518,8 +1509,7 @@ export type getOrganizationSlugBySlugResponseSuccess =
     headers: Headers;
   };
 export type getOrganizationSlugBySlugResponseError = (
-  | getOrganizationSlugBySlugResponse401
-  | getOrganizationSlugBySlugResponse404
+  getOrganizationSlugBySlugResponse401 | getOrganizationSlugBySlugResponse404
 ) & {
   headers: Headers;
 };
@@ -1567,15 +1557,13 @@ export type getUserMeResponseSuccess = getUserMeResponse200 & {
   headers: Headers;
 };
 export type getUserMeResponseError = (
-  | getUserMeResponse401
-  | getUserMeResponse404
+  getUserMeResponse401 | getUserMeResponse404
 ) & {
   headers: Headers;
 };
 
 export type getUserMeResponse =
-  | getUserMeResponseSuccess
-  | getUserMeResponseError;
+  getUserMeResponseSuccess | getUserMeResponseError;
 
 export const getGetUserMeUrl = () => {
   return `/user/me`;
