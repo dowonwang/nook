@@ -5,8 +5,7 @@
   "type": "module",
   "exports": {
     "./schema/*": "./src/schema/*.ts",
-    "./api": "./src/api/index.ts",
-    "./i18n": "./src/i18n/index.ts"
+    "./api": "./src/api/index.ts"
   },
   "scripts": {
     "typecheck": "tsc --noEmit",
@@ -17,8 +16,8 @@
   },
   "devDependencies": {
     "@packages/eslint-config": "workspace:*",
-    "orval": "^8.16.0",
     "@types/node": "catalog:node26",
+    "orval": "^8.48.0",
     "typescript": "catalog:typescript5"
   }
 }
