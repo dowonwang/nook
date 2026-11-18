@@ -85,7 +85,7 @@ Never hand-edit `packages/api-client/src/api` or `src/schema`; change the server
 
 ## Server architecture (`apps/server/api`)
 
-Path aliases: `$modules/*`, `$shared/*`, `$/*`. Server docs are split by scope — follow them for new code and when renaming:
+Path aliases: `$modules/*`, `$shared/*`. Server docs are split by scope — follow them for new code and when renaming:
 
 - `apps/server/docs/convention.md` — shared by every server app (`apps/server/*`): DDD/CQRS layering, file/symbol naming, import boundaries, and cross-module rules (no DB FK between modules — reference other modules by ID only; command side never joins other modules' tables, query side may join only when filtering/sorting by another module's data and must return DTOs).
 - `apps/server/api/docs/convention.md` — api-only: directory tree, Elysia presentation, Prisma infrastructure, DI, transactions, and current deviations from the shared rules.

@@ -7,8 +7,7 @@
     "moduleResolution": "bundler",
     "paths": {
       "$modules/*": ["src/modules/*"],
-      "$shared/*": ["src/shared/*"],
-      "$/*": ["src/*"]
+      "$shared/*": ["src/shared/*"]
     }
   }
 }
