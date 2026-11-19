@@ -2,6 +2,8 @@ import { access, mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
 import { basename, dirname, extname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+import { format, resolveConfig } from 'prettier';
+
 const CURRENT_DIR = dirname(fileURLToPath(import.meta.url));
 const ROOT_DIR = resolve(CURRENT_DIR, '../../../../');
 const SCHEMA_DIR = resolve(ROOT_DIR, 'packages/api-client/src/schema');
@@ -118,24 +120,34 @@ function collectValidationKeys(schemaSource: string) {
 }
 
 function createIndexFile(tagNames: string[]) {
-  return `
-  import type { I18N_CUSTOM_VALIDATION_KEY } from './custom.ts';
+  // import-x/order(알파벳순)를 맞추려고 custom을 포함해 파일 이름순으로 import함
+  const importLines = ['custom', ...tagNames]
+    .sort()
+    .map((tagName) => {
+      return `import type { ${createTypeName(tagName)} } from './${tagName}.ts';`;
+    })
+    .join('\n');
+
+  return `${importLines}
+
+export type I18N_VALIDATION_KEY =
+  | I18N_CUSTOM_VALIDATION_KEY
   ${tagNames
     .map((tagName) => {
-      return `import type {${createTypeName(tagName)}} from './${tagName}.ts'`;
+      return `| ${createTypeName(tagName)}`;
     })
-    .join('\n')}
+    .join('\n')};
 
-  export type I18N_VALIDATION_KEY = 
-    I18N_CUSTOM_VALIDATION_KEY |
-    ${tagNames
-      .map((tagName) => {
-        return createTypeName(tagName);
-      })
-      .join('|')}
-
-  export type { I18N_CUSTOM_VALIDATION_KEY } from './custom.ts';
+export type { I18N_CUSTOM_VALIDATION_KEY } from './custom.ts';
 `;
+}
+
+// 저장소의 prettier 설정으로 포맷해서, 생성 후 따로 pnpm format을 돌리지 않아도 되게 함
+async function writeFormattedFile(filePath: string, source: string) {
+  const options = await resolveConfig(filePath);
+  const formatted = await format(source, { ...options, filepath: filePath });
+
+  await writeFile(filePath, formatted, 'utf8');
 }
 
 async function main() {
@@ -163,17 +175,16 @@ async function main() {
       tagNames.push(tagName);
     }
 
-    await writeFile(
+    await writeFormattedFile(
       resolve(OUTPUT_DIR, `${tagName}.ts`),
       createGeneratedFile({
         tagName,
         keys,
       }),
-      'utf8',
     );
   }
 
-  await writeFile(INDEX_FILE, createIndexFile(tagNames), 'utf8');
+  await writeFormattedFile(INDEX_FILE, createIndexFile(tagNames));
 
   console.log('[validation] generated successfully');
 }
