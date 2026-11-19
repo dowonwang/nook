@@ -15,9 +15,9 @@
     "zod": "catalog:"
   },
   "devDependencies": {
+    "orval": "^8.48.0",
     "@packages/eslint-config": "workspace:*",
     "@types/node": "catalog:node26",
-    "orval": "^8.48.0",
     "typescript": "catalog:typescript5"
   }
 }
