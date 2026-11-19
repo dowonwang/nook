@@ -1,6 +1,7 @@
 import {
   dehydrate,
   HydrationBoundary,
+  noop,
   QueryClient,
 } from '@tanstack/react-query';
 import { redirect } from 'next/navigation';
@@ -29,7 +30,7 @@ export async function PublicLayout({ children, locale }: Props) {
   }
 
   const queryClient = new QueryClient();
-  await queryClient.prefetchQuery(serverSessionQueryOptions);
+  await queryClient.query(serverSessionQueryOptions).catch(noop);
 
   return (
     <I18nProvider locale={locale} resources={{}}>

@@ -1,6 +1,7 @@
 import {
   dehydrate,
   HydrationBoundary,
+  noop,
   QueryClient,
 } from '@tanstack/react-query';
 
@@ -23,7 +24,7 @@ export async function PrivateLayout({ children }: Props) {
   const locale = await getI18nCookie();
 
   const queryClient = new QueryClient();
-  await queryClient.prefetchQuery(serverSessionQueryOptions);
+  await queryClient.query(serverSessionQueryOptions).catch(noop);
 
   return (
     <I18nProvider locale={locale} resources={{}}>

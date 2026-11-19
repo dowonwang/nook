@@ -1,6 +1,7 @@
 import {
   dehydrate,
   HydrationBoundary,
+  noop,
   QueryClient,
 } from '@tanstack/react-query';
 import { getT } from 'next-i18next/server';
@@ -30,9 +31,9 @@ export async function OrganizationHomePage({ searchParams }: Props) {
   const queryClient = new QueryClient();
   const pagination = await getOffsetPaginationQuery(searchParams);
 
-  await queryClient.prefetchQuery(
-    serverMyOrganizationListQueryOptions(pagination),
-  );
+  await queryClient
+    .query(serverMyOrganizationListQueryOptions(pagination))
+    .catch(noop);
 
   return (
     <>

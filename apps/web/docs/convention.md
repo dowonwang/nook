@@ -416,9 +416,9 @@ RSC 페이지에서 서버 쿼리 옵션으로 미리 받고, `HydrationBoundary
 ```tsx
 // pages/organization/receive-invitation/ui/page.server.tsx (RSC)
 const queryClient = new QueryClient();
-await queryClient.prefetchQuery(
-  serverReceivedOrganizationInvitationListQueryOptions(pagination),
-);
+await queryClient
+  .query(serverReceivedOrganizationInvitationListQueryOptions(pagination))
+  .catch(noop);
 
 return (
   <HydrationBoundary state={dehydrate(queryClient)}>
