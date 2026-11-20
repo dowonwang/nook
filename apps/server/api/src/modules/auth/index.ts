@@ -1,5 +1,6 @@
-import { prismaApiClient } from '@packages/api-db';
 import 'dotenv/config';
+
+import { prismaApiClient } from '@packages/api-db';
 
 import { PrismaUserCommandRepository } from '$modules/user/infrastructure';
 

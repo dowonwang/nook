@@ -1,3 +1,5 @@
+import { AggregateRoot } from '$shared/ddd';
+
 import {
   DuplicateOrganizationMemberError,
   OrganizationMinMemberConstraintError,
@@ -5,7 +7,6 @@ import {
   OrganizationTitleEmptyError,
   OrganizationUnaffiliatedMemberError,
 } from '$modules/organization/error';
-import { AggregateRoot } from '$shared/ddd';
 
 import { OrganizationMemberEntity } from '../entities/member';
 import { OrganizationCreatedEvent } from '../events/created';

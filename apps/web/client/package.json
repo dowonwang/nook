@@ -9,10 +9,10 @@
     "start": "next start"
   },
   "dependencies": {
+    "dayjs": "^1.11.23",
     "@packages/api-client": "workspace:*",
     "@packages/i18n": "workspace:*",
     "@packages/ui": "workspace:*",
-    "dayjs": "^1.11.20",
     "zod": "catalog:",
     "i18next": "catalog:i18n",
     "i18next-resources-to-backend": "catalog:i18n",

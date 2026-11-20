@@ -3,10 +3,9 @@ import {
   HydrationBoundary,
   QueryClient,
 } from '@tanstack/react-query';
+import { unstable_rethrow } from 'next/navigation';
 
 import { I18nProvider } from '$app/providers';
-import { serverSessionQueryOptions } from '$entities/session/server';
-import { getI18nCookie } from '$shared/cookie/server';
 import { Footer } from '$widgets/footer';
 import { PrivateHeader } from '$widgets/private-header';
 import {
@@ -14,6 +13,8 @@ import {
   SidebarProvider,
   SidebarToggleButton,
 } from '$widgets/sidebar';
+import { serverSessionQueryOptions } from '$entities/session/server';
+import { getI18nCookie } from '$shared/cookie/server';
 
 interface Props {
   children: React.ReactNode;
@@ -23,7 +24,7 @@ export async function PrivateLayout({ children }: Props) {
   const locale = await getI18nCookie();
 
   const queryClient = new QueryClient();
-  await queryClient.prefetchQuery(serverSessionQueryOptions);
+  await queryClient.query(serverSessionQueryOptions).catch(unstable_rethrow);
 
   return (
     <I18nProvider locale={locale} resources={{}}>

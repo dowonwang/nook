@@ -1,5 +1,7 @@
 'use client';
 
+import { useT } from 'next-i18next/client';
+
 import {
   Card,
   CardBody,
@@ -8,13 +10,12 @@ import {
   CardTitle,
 } from '@packages/ui/components/card';
 import { Separator } from '@packages/ui/components/separator';
-import { useT } from 'next-i18next/client';
 
 import { CreateOrganizationForm } from '$features/organization/create';
 import { CreateOrganizationInvitationForm } from '$features/organization-invitation/create';
 
-import { WIDGETS_CREATE_ORGANIZATION_FLOW_I18N_NAMESPACE } from '../i18n';
 import { OrganizationInvitationSentList } from './sent-list';
+import { WIDGETS_CREATE_ORGANIZATION_FLOW_I18N_NAMESPACE } from '../i18n';
 import { useCreateOrganizationFlow } from '../model/provider';
 
 export function CreateOrganizationFlowContent() {

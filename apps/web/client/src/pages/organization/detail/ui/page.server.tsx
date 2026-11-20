@@ -1,3 +1,7 @@
+import { Users2 } from 'lucide-react';
+import { notFound } from 'next/navigation';
+import { getT } from 'next-i18next/server';
+
 import {
   Card,
   CardBody,
@@ -10,9 +14,6 @@ import {
   HeroSectionTitle,
 } from '@packages/ui/components/hero-section';
 import { Separator } from '@packages/ui/components/separator';
-import { Users2 } from 'lucide-react';
-import { notFound } from 'next/navigation';
-import { getT } from 'next-i18next/server';
 
 import { OrganizationMemberRoleBadge } from '$entities/organization-member';
 

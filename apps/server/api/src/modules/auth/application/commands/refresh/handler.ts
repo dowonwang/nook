@@ -2,12 +2,14 @@ import {
   RefreshSessionPolicy,
   type AuthSessionCommandRepository,
 } from '$modules/auth/domain';
+
+import { createLogger } from '$shared/logger';
+
 import {
   AuthSessionNotFoundError,
   AuthRefreshTokenMalformedError,
   AuthRefreshTokenRevokedError,
 } from '$modules/auth/error';
-import { createLogger } from '$shared/logger';
 
 import { AuthUserDtoMapper } from '../../mappers/user';
 

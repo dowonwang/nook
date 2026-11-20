@@ -1,9 +1,10 @@
 'use client';
 
-import { cn } from '@packages/ui/lib/cn';
 import { ChevronLeft, ChevronRight, Ellipsis } from 'lucide-react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useCallback } from 'react';
+
+import { cn } from '@packages/ui/lib/cn';
 
 interface Props {
   page: number;

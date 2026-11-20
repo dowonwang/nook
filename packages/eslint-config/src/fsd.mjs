@@ -1,6 +1,18 @@
 // FSD import 규칙 (apps/web/docs/convention.md 0장)
 // files 패턴은 이 설정을 사용하는 eslint.config.mjs 위치 기준
 
+import { createImportOrderRule } from './import-order.mjs';
+
+// import 순서의 레이어 블록. 상위 레이어 → 하위 레이어 (0.1 레이어와 참조 방향)
+const FSD_LAYER_IMPORT_ORDER = [
+  '$app/**',
+  '$pages/**',
+  '$widgets/**',
+  '$features/**',
+  '$entities/**',
+  '$shared/**',
+];
+
 // 슬라이스 내부 세그먼트를 직접 참조하지 못하게 막아 index.ts / server.ts 진입점만 허용
 const FSD_PUBLIC_API_PATTERNS = [
   {
@@ -68,6 +80,11 @@ export function createFsdConfig() {
   ];
 
   return [
+    {
+      rules: {
+        'import-x/order': createImportOrderRule([FSD_LAYER_IMPORT_ORDER]),
+      },
+    },
     {
       files: ['**/*.{js,jsx,ts,tsx}'],
       rules: {

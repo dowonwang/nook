@@ -1,7 +1,8 @@
 import { z } from 'zod';
 
-import { InvalidUserEmailError } from '$modules/user/error';
 import { PrimitiveValueObject } from '$shared/ddd';
+
+import { InvalidUserEmailError } from '$modules/user/error';
 
 const schema = z.email();
 

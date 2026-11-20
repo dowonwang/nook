@@ -1,10 +1,11 @@
-import { PostAuthSignUpBody } from '@packages/api-client/schema/auth';
 import { z } from 'zod';
+
+import { PostAuthSignUpBody } from '@packages/api-client/schema/auth';
 
 import { SIGN_UP_CONFIRM_PASSWORD_ERROR } from '../config/i18n-key';
 
-import type { ActionState } from '$shared/api/action';
 import type { postAuthSignUpResponseError } from '@packages/api-client/api';
+import type { ActionState } from '$shared/api/action';
 
 type SignUpPayload = z.infer<typeof signUpSchema>;
 

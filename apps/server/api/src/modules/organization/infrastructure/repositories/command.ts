@@ -4,18 +4,20 @@ import {
   OrganizationCreatedEvent,
   OrganizationMembersAddedEvent,
 } from '$modules/organization/domain';
-import { DuplicateOrganizationSlugError } from '$modules/organization/error';
+
 import { PRISMA_ERROR_CODES, PrismaRepository } from '$shared/database';
 import { createLogger } from '$shared/logger';
 
+import { DuplicateOrganizationSlugError } from '$modules/organization/error';
+
 import { OrganizationPrismaMapper } from '../mappers/organization';
 
+import type { OrganizationMemberCreateManyAndReturnArgs } from '@packages/api-db/generated/prisma/models';
 import type {
   OrganizationAggregate,
   OrganizationCommandRepository,
   OrganizationUuidVo,
 } from '$modules/organization/domain';
-import type { OrganizationMemberCreateManyAndReturnArgs } from '@packages/api-db/generated/prisma/models';
 
 export class PrismaOrganizationCommandRepository
   extends PrismaRepository

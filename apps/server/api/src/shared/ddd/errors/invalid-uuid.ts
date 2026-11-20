@@ -1,5 +1,6 @@
-import { InternalServerError } from '$shared/error';
 import { LOG_EVENT, LOG_MESSAGE } from '$shared/logger';
+
+import { InternalServerError } from '$shared/error';
 
 export class InvalidUuidError extends InternalServerError {
   constructor(scope: string, detail?: unknown) {

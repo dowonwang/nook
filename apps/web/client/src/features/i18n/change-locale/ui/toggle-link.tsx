@@ -1,7 +1,8 @@
 'use client';
 
-import { Button } from '@packages/ui/components/button';
 import { usePathname, useRouter } from 'next/navigation';
+
+import { Button } from '@packages/ui/components/button';
 
 import {
   createLocalizedPathname,

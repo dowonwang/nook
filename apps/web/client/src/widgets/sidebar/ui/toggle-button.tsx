@@ -1,7 +1,8 @@
 'use client';
 
-import { Button } from '@packages/ui/components/button';
 import { Menu, X } from 'lucide-react';
+
+import { Button } from '@packages/ui/components/button';
 
 import { useSidebarContext } from '../model/context';
 

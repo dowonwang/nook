@@ -1,7 +1,8 @@
 import { z } from 'zod';
 
-import { InvalidUserNameError } from '$modules/user/error';
 import { PrimitiveValueObject } from '$shared/ddd';
+
+import { InvalidUserNameError } from '$modules/user/error';
 
 const schema = z.string().min(2).max(20);
 

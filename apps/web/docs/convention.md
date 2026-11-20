@@ -84,6 +84,7 @@ feature 슬라이스는 **사용자가 하는 행동 하나**(생성, 수정, �
 
 - 이 검사는 "슬라이스 안에서는 상대 경로만 쓴다"는 규칙을 전제로 합니다. 같은 레이어 alias는 곧 다른 슬라이스 참조이기 때문입니다.
 - 검사하지 못하는 것: 상대 경로로 슬라이스 밖에 나가는 import(`../../other-slice`), `@x/<이름>`이 실제 참조하는 슬라이스와 맞는지 여부. 리뷰에서 확인합니다.
+- import 순서도 같은 설정의 `import-x/order`가 검사합니다. 블록 순서는 CSS → 외부 라이브러리 → `@packages/*` → 레이어 alias → 상대 경로(`./` → `../` → `../../`) → `import type`이고, 레이어 alias는 0.1의 순서(`$app` → `$pages` → `$widgets` → `$features` → `$entities` → `$shared`)를 따릅니다. `pnpm lint:fix`로 자동 정렬됩니다.
 
 ### 0.7 세그먼트 기준
 
@@ -415,9 +416,9 @@ RSC 페이지에서 서버 쿼리 옵션으로 미리 받고, `HydrationBoundary
 ```tsx
 // pages/organization/receive-invitation/ui/page.server.tsx (RSC)
 const queryClient = new QueryClient();
-await queryClient.prefetchQuery(
-  serverReceivedOrganizationInvitationListQueryOptions(pagination),
-);
+await queryClient
+  .query(serverReceivedOrganizationInvitationListQueryOptions(pagination))
+  .catch(unstable_rethrow);
 
 return (
   <HydrationBoundary state={dehydrate(queryClient)}>
@@ -426,6 +427,8 @@ return (
   </HydrationBoundary>
 );
 ```
+
+- 조회 실패는 무시하고 클라이언트 `useQuery`가 다시 요청하게 둡니다. 다만 `catch`에 `noop`을 넘기면 `redirect()`, `cookies()` 등이 던지는 Next.js 내부 에러까지 사라지므로 `unstable_rethrow`(`next/navigation`)를 넘깁니다. 이 함수는 Next.js 내부 에러만 다시 던지고 나머지는 무시합니다.
 
 ### 6.3 변경: Server Action과 무효화
 

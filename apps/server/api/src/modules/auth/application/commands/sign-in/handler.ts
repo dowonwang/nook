@@ -1,4 +1,5 @@
 import { type AuthSessionCommandRepository } from '$modules/auth/domain';
+
 import { createLogger } from '$shared/logger';
 
 import { SignInCommand } from './command';

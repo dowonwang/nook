@@ -1,10 +1,11 @@
 'use client';
 
-import { cn } from '@packages/ui/lib/cn';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useT } from 'next-i18next/client';
 import { useEffect } from 'react';
+
+import { cn } from '@packages/ui/lib/cn';
 
 import { WIDGETS_SIDEBAR_I18N_NAMESPACE } from '../../i18n';
 import { useSidebarContext } from '../../model/context';

@@ -1,5 +1,6 @@
-import { AuthRefreshTokenMalformedError } from '$modules/auth/error';
 import { createLogger } from '$shared/logger';
+
+import { AuthRefreshTokenMalformedError } from '$modules/auth/error';
 
 import type { AuthSessionCommandRepository } from '$modules/auth/domain';
 import type { TokenVerifierPort } from '../../ports/token-verifier';

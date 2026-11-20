@@ -269,7 +269,7 @@ HTTP_REQUEST_RECEIVED: 'http.request.received',
 
 ## 5. Import 규칙
 
-웹은 "슬라이스"를 경계로 삼지만, 서버는 **모듈**과 **계층**을 경계로 삼습니다. 각 앱은 `$modules/*`, `$shared/*`, `$/*` alias를 사용합니다.
+웹은 "슬라이스"를 경계로 삼지만, 서버는 **모듈**과 **계층**을 경계로 삼습니다. 각 앱은 `$modules/*`, `$shared/*` alias를 사용합니다.
 
 | 참조 범위                 | 규칙                                                      | 예시                                                                   |
 | ------------------------- | --------------------------------------------------------- | ---------------------------------------------------------------------- |
@@ -297,6 +297,12 @@ infrastructure → application, domain
 
 - `domain`은 다른 계층과 프레임워크·ORM에 의존하지 않습니다.
 - 다른 모듈의 `infrastructure`는 모듈 `index.ts`(DI 조립)에서만 참조합니다.
+
+import 순서는 `@packages/eslint-config/ddd`의 `import-x/order`가 검사하고 `pnpm lint:fix`로 자동 정렬됩니다.
+
+- 블록 순서: 외부 라이브러리 → `@packages/*` → `$modules` → `$shared` → error → 상대 경로(`./` → `../` → `../../`) → `import type`. 블록 사이는 빈 줄로 나눕니다.
+- `$modules`는 위 의존 방향의 상위 계층부터 둡니다: 모듈 배럴(`$modules/<module>`) → `presentation` → `infrastructure` → `application` → `domain`
+- error 블록에는 `$modules/<module>/error`와 `$shared/error`를 모읍니다.
 
 ---
 

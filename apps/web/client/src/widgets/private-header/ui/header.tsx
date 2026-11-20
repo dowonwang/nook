@@ -2,11 +2,11 @@
 
 import { useQuery } from '@tanstack/react-query';
 
-import { sessionQueryOptions } from '$entities/session';
-import { UserAvatar } from '$entities/user';
 import { SignOutButton } from '$features/auth/sign-out';
 import { I18nToggleButton } from '$features/i18n/change-locale';
 import { ThemeToggleButton } from '$features/theme/toggle';
+import { sessionQueryOptions } from '$entities/session';
+import { UserAvatar } from '$entities/user';
 import { useLocale } from '$shared/i18n';
 import { createDate } from '$shared/lib/date';
 

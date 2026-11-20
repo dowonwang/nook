@@ -1,10 +1,10 @@
 import { clientFetcher } from '$shared/api/bff';
 
+import type { GetOrganizationByOrganizationIdInvitations200 } from '@packages/api-client/api';
 import type {
   OrganizationInvitationInvitee,
   OrganizationSentInvitation,
 } from '../model/types';
-import type { GetOrganizationByOrganizationIdInvitations200 } from '@packages/api-client/api';
 
 export async function getSentOrganizationInvitationList(
   organizationId: string | undefined,

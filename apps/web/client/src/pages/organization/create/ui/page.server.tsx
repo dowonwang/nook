@@ -1,9 +1,10 @@
+import { getT } from 'next-i18next/server';
+
 import {
   HeroSection,
   HeroSectionDescription,
   HeroSectionTitle,
 } from '@packages/ui/components/hero-section';
-import { getT } from 'next-i18next/server';
 
 import { CreateOrganizationFlow } from '$widgets/create-organization-flow';
 

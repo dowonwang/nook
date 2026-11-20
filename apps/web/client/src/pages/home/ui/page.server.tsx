@@ -1,12 +1,3 @@
-import { Badge } from '@packages/ui/components/badge';
-import {
-  Card,
-  CardBody,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@packages/ui/components/card';
-import { Separator } from '@packages/ui/components/separator';
 import {
   Building,
   HardDrive,
@@ -16,6 +7,16 @@ import {
 } from 'lucide-react';
 import { getT } from 'next-i18next/server';
 import { Trans } from 'react-i18next/TransWithoutContext';
+
+import { Badge } from '@packages/ui/components/badge';
+import {
+  Card,
+  CardBody,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@packages/ui/components/card';
+import { Separator } from '@packages/ui/components/separator';
 
 import { AppName } from '$shared/ui/app-name';
 

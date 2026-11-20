@@ -1,8 +1,9 @@
 'use client';
 
+import { useT } from 'next-i18next/client';
+
 import { Badge } from '@packages/ui/components/badge';
 import { cn } from '@packages/ui/lib/cn';
-import { useT } from 'next-i18next/client';
 
 import { ENTITIES_ORGANIZATION_MEMBER_I18N_NAMESPACE } from '../i18n';
 

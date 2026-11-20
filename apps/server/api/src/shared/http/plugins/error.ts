@@ -1,5 +1,3 @@
-import { Prisma } from '@packages/api-db';
-import { FALLBACK_ERROR_KEY } from '@packages/i18n/response';
 import { randomUUIDv7 } from 'bun';
 import {
   Elysia,
@@ -7,13 +5,17 @@ import {
   ValidationError,
 } from 'elysia';
 
+import { Prisma } from '@packages/api-db';
+import { FALLBACK_ERROR_KEY } from '@packages/i18n/response';
+
+import { LOG_EVENT, LOG_MESSAGE, logger } from '$shared/logger';
+import { ApiResponseBuilder } from '$shared/responses';
+
 import {
   AppError,
   NotFoundError,
   UnprocessableContentError,
 } from '$shared/error';
-import { LOG_EVENT, LOG_MESSAGE, logger } from '$shared/logger';
-import { ApiResponseBuilder } from '$shared/responses';
 
 import { getRouteLogScope } from '../constants/route-log-scope';
 import { mapPrismaError } from '../mappers/prisma-error';

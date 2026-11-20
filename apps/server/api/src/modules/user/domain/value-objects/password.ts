@@ -1,7 +1,8 @@
 import { z } from 'zod';
 
-import { InvalidUserPasswordHashError } from '$modules/user/error';
 import { PrimitiveValueObject } from '$shared/ddd';
+
+import { InvalidUserPasswordHashError } from '$modules/user/error';
 
 const passwordHashSchema = z
   .string()

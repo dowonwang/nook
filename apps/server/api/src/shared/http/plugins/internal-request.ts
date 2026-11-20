@@ -2,8 +2,9 @@ import { timingSafeEqual } from 'node:crypto';
 
 import { Elysia } from 'elysia';
 
-import { ForbiddenError } from '$shared/error';
 import { LOG_EVENT, LOG_MESSAGE } from '$shared/logger';
+
+import { ForbiddenError } from '$shared/error';
 
 import { OPEN_API_PATH } from '../constants/openapi-path';
 

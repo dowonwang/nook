@@ -68,13 +68,15 @@ const { cursor, limit } = useCursorQuery();
 #### Examples
 
 ```tsx
+import { unstable_rethrow } from 'next/navigation';
+
 import { getOffsetPaginationQuery } from '$shared/lib/pagination/server';
 
 const pagination = await getOffsetPaginationQuery(searchParams);
 
-await queryClient.prefetchQuery(
-  serverMyOrganizationListQueryOptions(pagination),
-);
+await queryClient
+  .query(serverMyOrganizationListQueryOptions(pagination))
+  .catch(unstable_rethrow);
 ```
 
 ---

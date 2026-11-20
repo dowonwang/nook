@@ -6,6 +6,7 @@ import {
   OrganizationSlugVo,
   OrganizationUuidVo,
 } from '$modules/organization/domain';
+
 import { DuplicateOrganizationSlugError } from '$modules/organization/error';
 
 import { CreateOrganizationCommand } from './command';

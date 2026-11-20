@@ -5,8 +5,7 @@
   "type": "module",
   "exports": {
     "./schema/*": "./src/schema/*.ts",
-    "./api": "./src/api/index.ts",
-    "./i18n": "./src/i18n/index.ts"
+    "./api": "./src/api/index.ts"
   },
   "scripts": {
     "typecheck": "tsc --noEmit",
@@ -16,8 +15,9 @@
     "zod": "catalog:"
   },
   "devDependencies": {
+    "orval": "^8.48.0",
     "@packages/eslint-config": "workspace:*",
-    "orval": "^8.16.0",
+    "prettier": "catalog:",
     "@types/node": "catalog:node26",
     "typescript": "catalog:typescript5"
   }

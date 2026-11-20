@@ -1,7 +1,8 @@
 import { Elysia } from 'elysia';
 
-import { UnauthorizedError } from '$shared/error';
 import { ApiErrorResponseSchema } from '$shared/responses';
+
+import { UnauthorizedError } from '$shared/error';
 
 import type { TokenVerifierPort } from '$modules/auth/application';
 
