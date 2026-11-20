@@ -11,6 +11,8 @@
     "format:check": "prettier . --check",
     "lint": "eslint",
     "lint:fix": "eslint --fix",
+    "lint:deps": "node scripts/sort-package-deps.mjs --check",
+    "lint:deps:fix": "node scripts/sort-package-deps.mjs",
     "server/api:dev": "pnpm -F @server/api dev",
     "web/client:dev": "pnpm -F @web/client dev",
     "generate:packages": "pnpm -C ./packages/api-client generate && pnpm -C ./packages/i18n generate:validation",

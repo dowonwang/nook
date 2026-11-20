@@ -3,5 +3,7 @@
     "eslint --fix --no-warn-ignored",
     "prettier --write"
   ],
-  "*.{json,md,css,yml,yaml,html}": "prettier --write"
+  "package.json": ["node scripts/sort-package-deps.mjs", "prettier --write"],
+  "!(package).json": "prettier --write",
+  "*.{md,css,yml,yaml,html}": "prettier --write"
 }
