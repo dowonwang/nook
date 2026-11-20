@@ -17,6 +17,7 @@
   "devDependencies": {
     "orval": "^8.48.0",
     "@packages/eslint-config": "workspace:*",
+    "prettier": "catalog:",
     "@types/node": "catalog:node26",
     "typescript": "catalog:typescript5"
   }

@@ -34,9 +34,9 @@
     "commitizen": "^4.3.2",
     "husky": "^9.1.7",
     "lint-staged": "^16.4.0",
-    "prettier": "^3.10.1",
     "prettier-plugin-tailwindcss": "^0.8.1",
     "@packages/eslint-config": "workspace:*",
+    "prettier": "catalog:",
     "eslint": "catalog:eslint",
     "typescript": "catalog:typescript5"
   }
