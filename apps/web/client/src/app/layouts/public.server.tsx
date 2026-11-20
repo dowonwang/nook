@@ -1,10 +1,9 @@
 import {
   dehydrate,
   HydrationBoundary,
-  noop,
   QueryClient,
 } from '@tanstack/react-query';
-import { redirect } from 'next/navigation';
+import { redirect, unstable_rethrow } from 'next/navigation';
 import { generateI18nStaticParams } from 'next-i18next/server';
 
 import { I18nProvider } from '$app/providers';
@@ -30,7 +29,7 @@ export async function PublicLayout({ children, locale }: Props) {
   }
 
   const queryClient = new QueryClient();
-  await queryClient.query(serverSessionQueryOptions).catch(noop);
+  await queryClient.query(serverSessionQueryOptions).catch(unstable_rethrow);
 
   return (
     <I18nProvider locale={locale} resources={{}}>

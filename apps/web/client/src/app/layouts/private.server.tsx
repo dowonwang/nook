@@ -1,9 +1,9 @@
 import {
   dehydrate,
   HydrationBoundary,
-  noop,
   QueryClient,
 } from '@tanstack/react-query';
+import { unstable_rethrow } from 'next/navigation';
 
 import { I18nProvider } from '$app/providers';
 import { Footer } from '$widgets/footer';
@@ -24,7 +24,7 @@ export async function PrivateLayout({ children }: Props) {
   const locale = await getI18nCookie();
 
   const queryClient = new QueryClient();
-  await queryClient.query(serverSessionQueryOptions).catch(noop);
+  await queryClient.query(serverSessionQueryOptions).catch(unstable_rethrow);
 
   return (
     <I18nProvider locale={locale} resources={{}}>

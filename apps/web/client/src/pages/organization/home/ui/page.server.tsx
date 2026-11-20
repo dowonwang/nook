@@ -1,9 +1,9 @@
 import {
   dehydrate,
   HydrationBoundary,
-  noop,
   QueryClient,
 } from '@tanstack/react-query';
+import { unstable_rethrow } from 'next/navigation';
 import { getT } from 'next-i18next/server';
 
 import {
@@ -33,7 +33,7 @@ export async function OrganizationHomePage({ searchParams }: Props) {
 
   await queryClient
     .query(serverMyOrganizationListQueryOptions(pagination))
-    .catch(noop);
+    .catch(unstable_rethrow);
 
   return (
     <>

@@ -418,7 +418,7 @@ RSC 페이지에서 서버 쿼리 옵션으로 미리 받고, `HydrationBoundary
 const queryClient = new QueryClient();
 await queryClient
   .query(serverReceivedOrganizationInvitationListQueryOptions(pagination))
-  .catch(noop);
+  .catch(unstable_rethrow);
 
 return (
   <HydrationBoundary state={dehydrate(queryClient)}>
@@ -427,6 +427,8 @@ return (
   </HydrationBoundary>
 );
 ```
+
+- 조회 실패는 무시하고 클라이언트 `useQuery`가 다시 요청하게 둡니다. 다만 `catch`에 `noop`을 넘기면 `redirect()`, `cookies()` 등이 던지는 Next.js 내부 에러까지 사라지므로 `unstable_rethrow`(`next/navigation`)를 넘깁니다. 이 함수는 Next.js 내부 에러만 다시 던지고 나머지는 무시합니다.
 
 ### 6.3 변경: Server Action과 무효화
 
