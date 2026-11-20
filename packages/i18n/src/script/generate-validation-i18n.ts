@@ -120,10 +120,14 @@ function collectValidationKeys(schemaSource: string) {
 }
 
 function createIndexFile(tagNames: string[]) {
-  // import-x/order(알파벳순)를 맞추려고 custom을 포함해 파일 이름순으로 import함
+  // import-x/order(알파벳순, 대소문자 무시)를 맞추려고 custom을 포함해 확장자까지 붙인 파일 이름순으로 import함
+  // 태그 이름만 비교하면 'organization'과 'organization-invitation'처럼 '.ts' 앞에서 순서가 갈리는 경우가 어긋남
   const importLines = ['custom', ...tagNames]
-    .sort()
-    .map((tagName) => {
+    .map((tagName) => ({ tagName, sortKey: `${tagName}.ts`.toLowerCase() }))
+    .sort((a, b) =>
+      a.sortKey < b.sortKey ? -1 : a.sortKey > b.sortKey ? 1 : 0,
+    )
+    .map(({ tagName }) => {
       return `import type { ${createTypeName(tagName)} } from './${tagName}.ts';`;
     })
     .join('\n');
