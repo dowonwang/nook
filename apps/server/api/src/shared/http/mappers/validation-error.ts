@@ -2,42 +2,15 @@ import { BadRequestError } from '$shared/error';
 
 import type { ValidationError } from 'elysia';
 
-interface ValidationErrorDetailItem {
-  path: string;
-  message: string;
-}
-
-// elysia 1.4.31부터 detail()이 unknown을 반환하므로 필요한 형태인지 직접 확인
-function isValidationErrorDetailItem(
-  value: unknown,
-): value is ValidationErrorDetailItem {
-  return (
-    typeof value === 'object' &&
-    value !== null &&
-    'path' in value &&
-    typeof value.path === 'string' &&
-    'message' in value &&
-    typeof value.message === 'string'
-  );
-}
-
+// detail()은 production에서 errors를 빼고 반환하므로 필드별 path, message는 all에서 직접 읽음
+// all은 입력값(value)도 담고 있어 path, message만 골라 응답에 넣음
 export function mapValidationError(error: ValidationError): BadRequestError {
-  const detail = error.detail('Validation', false);
-
-  if (
-    typeof detail === 'object' &&
-    detail !== null &&
-    'errors' in detail &&
-    Array.isArray(detail.errors)
-  ) {
-    const errors: unknown[] = detail.errors;
-
+  try {
     return new BadRequestError({
-      detail: errors
-        .filter(isValidationErrorDetailItem)
-        .map(({ path, message }) => ({ path, message })),
+      detail: error.all.map(({ path, message }) => ({ path, message })),
     });
+  } catch {
+    // all은 검증기를 다시 실행하므로 실패하면 detail 없이 응답
+    return new BadRequestError();
   }
-
-  return new BadRequestError();
 }
