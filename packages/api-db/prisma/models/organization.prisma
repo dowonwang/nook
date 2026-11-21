@@ -42,6 +42,8 @@ model OrganizationInvitation {
 
     organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
 
+    @@index([inviteeUserId, status])
+    @@index([invitedByUserId, organizationId])
     @@index([organizationId])
     @@map("organization_invitation")
 }
