@@ -55,10 +55,10 @@ catalogs:
     tailwindcss: 4.3.5
     '@tailwindcss/postcss': 4.3.5
   i18n:
-    i18next: 26.7.2
+    i18next: 27.2.2
     i18next-resources-to-backend: 1.2.4
     next-i18next: 16.4.11
-    react-i18next: 17.1.13
+    react-i18next: 18.0.3
 
 overrides:
   '@types/node': 'catalog:node26'
