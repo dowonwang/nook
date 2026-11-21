@@ -18,18 +18,18 @@
     "i18next-resources-to-backend": "catalog:i18n",
     "next-i18next": "catalog:i18n",
     "react-i18next": "catalog:i18n",
-    "@tanstack/react-query": "catalog:next16",
     "next": "catalog:next16",
-    "react": "catalog:next16",
-    "react-dom": "catalog:next16",
+    "react": "catalog:react19",
+    "react-dom": "catalog:react19",
+    "@tanstack/react-query": "catalog:tanstack5",
     "lucide-react": "catalog:ui"
   },
   "devDependencies": {
     "@packages/eslint-config": "workspace:*",
-    "@types/react": "catalog:next16",
-    "@types/react-dom": "catalog:next16",
-    "typescript": "catalog:typescript6",
-    "@tailwindcss/postcss": "catalog:ui",
-    "tailwindcss": "catalog:ui"
+    "@types/react": "catalog:react19",
+    "@types/react-dom": "catalog:react19",
+    "@tailwindcss/postcss": "catalog:tailwind4",
+    "tailwindcss": "catalog:tailwind4",
+    "typescript": "catalog:typescript6"
   }
 }

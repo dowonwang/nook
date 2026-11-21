@@ -15,14 +15,14 @@
   "license": "ISC",
   "devDependencies": {
     "@packages/eslint-config": "workspace:*",
+    "tsx": "catalog:",
     "@types/node": "catalog:node26",
     "@types/pg": "catalog:postgres8",
     "prisma": "catalog:prisma7",
-    "tsx": "catalog:typescript6",
     "typescript": "catalog:typescript6"
   },
   "dependencies": {
-    "dotenv": "catalog:backend1",
+    "dotenv": "catalog:",
     "pg": "catalog:postgres8",
     "@prisma/adapter-pg": "catalog:prisma7",
     "@prisma/client": "catalog:prisma7"

@@ -15,8 +15,8 @@
   "devDependencies": {
     "@packages/eslint-config": "workspace:*",
     "prettier": "catalog:",
+    "tsx": "catalog:",
     "@types/node": "catalog:node26",
-    "tsx": "catalog:typescript6",
     "typescript": "catalog:typescript6"
   },
   "keywords": [],

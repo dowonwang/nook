@@ -17,15 +17,15 @@
     "pino": "^10.4.0",
     "@packages/api-db": "workspace:*",
     "@packages/i18n": "workspace:*",
+    "dotenv": "catalog:",
     "zod": "catalog:",
-    "dotenv": "catalog:backend1",
-    "elysia": "catalog:backend1"
+    "elysia": "catalog:elysia1"
   },
   "devDependencies": {
     "@types/bcrypt": "^6.0.0",
     "pino-pretty": "^13.2.0",
     "@packages/eslint-config": "workspace:*",
-    "bun-types": "catalog:backend1",
+    "bun-types": "catalog:bun1",
     "typescript": "catalog:typescript6"
   },
   "module": "src/index.js"
