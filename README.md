@@ -77,10 +77,12 @@ pnpm workspace를 기반으로 애플리케이션과 공용 패키지 간 의존
 개발 환경에 다음 도구가 필요합니다.
 
 - macOS
-- Node.js
+- Node.js `26` (`.nvmrc`)
 - pnpm `12.21.0`
-- Bun
+- Bun `1.4.4` 이상
 - Docker / Docker Compose
+
+Node.js와 Bun 버전은 루트 `package.json`의 `devEngines.runtime`으로 고정되어 있습니다. 버전이 맞지 않거나 Bun이 설치되어 있지 않으면 `pnpm install`, `pnpm run` 등 pnpm 명령이 `ERR_PNPM_BAD_RUNTIME_VERSION`으로 실패합니다. 웹 클라이언트만 작업하더라도 로컬에서 API 서버를 함께 실행하므로 Bun이 필요합니다. nvm이나 fnm을 쓴다면 저장소 루트에서 `nvm use`(또는 `fnm use`)로 Node.js 버전을 맞출 수 있습니다.
 
 ## Installation
 

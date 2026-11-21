@@ -19,10 +19,12 @@ catalog:
   dotenv: 18.0.10
 
 catalogs:
+  # Node 메이저를 올릴 때 루트 package.json devEngines.runtime(node)과 .nvmrc도 함께 변경
   node26:
     '@types/node': 26.6.6
   typescript6:
     typescript: 6.0.3
+  # bun-types를 올릴 때 루트 package.json devEngines.runtime(bun)의 최소 버전도 함께 변경
   bun1:
     bun-types: 1.4.4
   elysia1:

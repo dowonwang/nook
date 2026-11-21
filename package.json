@@ -28,6 +28,20 @@
       "path": "@commitlint/cz-commitlint"
     }
   },
+  "devEngines": {
+    "runtime": [
+      {
+        "name": "node",
+        "version": "^26",
+        "onFail": "error"
+      },
+      {
+        "name": "bun",
+        "version": "^1.4.4",
+        "onFail": "error"
+      }
+    ]
+  },
   "packageManager": "pnpm@12.21.0",
   "devDependencies": {
     "@packages/eslint-config": "workspace:*",
