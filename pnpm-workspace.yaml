@@ -27,6 +27,7 @@ catalogs:
     bun-types: 1.4.4
   elysia1:
     elysia: 1.4.32
+    '@elysia/openapi': 1.4.17
   prisma7:
     prisma: 7.10.1
     '@prisma/adapter-pg': 7.10.1
@@ -55,14 +56,23 @@ catalogs:
     tailwindcss: 4.3.5
     '@tailwindcss/postcss': 4.3.5
     tailwind-merge: 3.7.0
+    prettier-plugin-tailwindcss: 0.8.1
   ui:
     lucide-react: 1.75.0
     clsx: 2.1.1
+    class-variance-authority: 0.7.1
   i18n:
     i18next: 27.2.2
     i18next-resources-to-backend: 1.2.4
     next-i18next: 16.4.11
     react-i18next: 18.0.3
+  commit:
+    '@commitlint/cli': 21.2.4
+    '@commitlint/config-conventional': 21.2.4
+    '@commitlint/cz-commitlint': 21.2.4
+    commitizen: 4.3.2
+    husky: 9.1.7
+    lint-staged: 17.6.1
 
 overrides:
   '@types/node': 'catalog:node26'

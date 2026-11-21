@@ -21,8 +21,8 @@
     "lucide-react": "catalog:ui"
   },
   "dependencies": {
-    "class-variance-authority": "^0.7.1",
     "tailwind-merge": "catalog:tailwind4",
+    "class-variance-authority": "catalog:ui",
     "clsx": "catalog:ui"
   },
   "devDependencies": {
