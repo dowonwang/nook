@@ -3,7 +3,6 @@
   "extends": "../../../tsconfig.base.json",
   "compilerOptions": {
     "types": ["bun-types"],
-    "moduleResolution": "bundler",
     "paths": {
       "$modules/*": ["./src/modules/*"],
       "$shared/*": ["./src/shared/*"]
