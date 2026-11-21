@@ -11,22 +11,22 @@
     "db:push": "pnpm -C ../../../packages/api-db run db:push"
   },
   "dependencies": {
-    "@elysia/openapi": "^1.4.17",
     "bcrypt": "^6.0.0",
     "jose": "^6.2.17",
     "pino": "^10.4.0",
     "@packages/api-db": "workspace:*",
     "@packages/i18n": "workspace:*",
+    "dotenv": "catalog:",
     "zod": "catalog:",
-    "dotenv": "catalog:backend1",
-    "elysia": "catalog:backend1"
+    "@elysia/openapi": "catalog:elysia1",
+    "elysia": "catalog:elysia1"
   },
   "devDependencies": {
     "@types/bcrypt": "^6.0.0",
     "pino-pretty": "^13.2.0",
     "@packages/eslint-config": "workspace:*",
-    "bun-types": "catalog:backend1",
-    "typescript": "catalog:typescript5"
+    "bun-types": "catalog:bun1",
+    "typescript": "catalog:typescript6"
   },
   "module": "src/index.js"
 }

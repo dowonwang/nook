@@ -15,17 +15,19 @@ allowBuilds:
 catalog:
   zod: 4.6.7
   prettier: 3.10.1
+  tsx: 4.23.15
+  dotenv: 18.0.10
 
 catalogs:
   node26:
     '@types/node': 26.6.6
-  typescript5:
-    typescript: 5.9.3
-    tsx: 4.23.15
-  backend1:
+  typescript6:
+    typescript: 6.0.3
+  bun1:
     bun-types: 1.4.4
+  elysia1:
     elysia: 1.4.32
-    dotenv: 17.4.2
+    '@elysia/openapi': 1.4.17
   prisma7:
     prisma: 7.10.1
     '@prisma/adapter-pg': 7.10.1
@@ -34,31 +36,43 @@ catalogs:
     '@types/pg': 8.23.1
     'pg': 8.23.1
   next16:
-    '@types/react': 19.3.0
-    '@types/react-dom': 19.3.0
     next: 16.4.6
+    '@next/eslint-plugin-next': 16.4.6
+  react19:
     react: 19.3.1
     react-dom: 19.3.1
+    '@types/react': 19.3.0
+    '@types/react-dom': 19.3.0
+  tanstack5:
     '@tanstack/react-query': 5.108.0
   eslint:
     '@eslint/js': 10.0.1
-    '@next/eslint-plugin-next': 16.4.6
     eslint: 10.15.0
     eslint-import-resolver-typescript: 4.4.5
     eslint-plugin-import-x: 4.18.1
     eslint-plugin-react-hooks: 7.1.1
     typescript-eslint: 8.73.0
+  tailwind4:
+    tailwindcss: 4.3.5
+    '@tailwindcss/postcss': 4.3.5
+    tailwind-merge: 3.7.0
+    prettier-plugin-tailwindcss: 0.8.1
   ui:
     lucide-react: 1.75.0
     clsx: 2.1.1
-    tailwind-merge: 3.7.0
-    tailwindcss: 4.3.5
-    '@tailwindcss/postcss': 4.3.5
+    class-variance-authority: 0.7.1
   i18n:
-    i18next: 26.7.2
+    i18next: 27.2.2
     i18next-resources-to-backend: 1.2.4
     next-i18next: 16.4.11
-    react-i18next: 17.1.13
+    react-i18next: 18.0.3
+  commit:
+    '@commitlint/cli': 21.2.4
+    '@commitlint/config-conventional': 21.2.4
+    '@commitlint/cz-commitlint': 21.2.4
+    commitizen: 4.3.2
+    husky: 9.1.7
+    lint-staged: 17.6.1
 
 overrides:
   '@types/node': 'catalog:node26'

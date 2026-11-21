@@ -16,20 +16,20 @@
   },
   "peerDependencies": {
     "next": "catalog:next16",
-    "react": "catalog:next16",
-    "react-dom": "catalog:next16",
+    "react": "catalog:react19",
+    "react-dom": "catalog:react19",
     "lucide-react": "catalog:ui"
   },
   "dependencies": {
-    "class-variance-authority": "^0.7.1",
-    "clsx": "catalog:ui",
-    "tailwind-merge": "catalog:ui"
+    "tailwind-merge": "catalog:tailwind4",
+    "class-variance-authority": "catalog:ui",
+    "clsx": "catalog:ui"
   },
   "devDependencies": {
     "@packages/eslint-config": "workspace:*",
-    "@types/react": "catalog:next16",
-    "@types/react-dom": "catalog:next16",
-    "typescript": "catalog:typescript5"
+    "@types/react": "catalog:react19",
+    "@types/react-dom": "catalog:react19",
+    "typescript": "catalog:typescript6"
   },
   "keywords": [],
   "author": "",

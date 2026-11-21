@@ -30,16 +30,16 @@
   },
   "packageManager": "pnpm@12.21.0",
   "devDependencies": {
-    "@commitlint/cli": "^20.5.3",
-    "@commitlint/config-conventional": "^20.5.3",
-    "@commitlint/cz-commitlint": "^20.5.3",
-    "commitizen": "^4.3.2",
-    "husky": "^9.1.7",
-    "lint-staged": "^16.4.0",
-    "prettier-plugin-tailwindcss": "^0.8.1",
     "@packages/eslint-config": "workspace:*",
     "prettier": "catalog:",
+    "@commitlint/cli": "catalog:commit",
+    "@commitlint/config-conventional": "catalog:commit",
+    "@commitlint/cz-commitlint": "catalog:commit",
+    "commitizen": "catalog:commit",
+    "husky": "catalog:commit",
+    "lint-staged": "catalog:commit",
     "eslint": "catalog:eslint",
-    "typescript": "catalog:typescript5"
+    "prettier-plugin-tailwindcss": "catalog:tailwind4",
+    "typescript": "catalog:typescript6"
   }
 }

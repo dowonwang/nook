@@ -19,6 +19,6 @@
     "@packages/eslint-config": "workspace:*",
     "prettier": "catalog:",
     "@types/node": "catalog:node26",
-    "typescript": "catalog:typescript5"
+    "typescript": "catalog:typescript6"
   }
 }

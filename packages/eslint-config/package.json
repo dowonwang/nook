@@ -13,14 +13,14 @@
   },
   "dependencies": {
     "@eslint/js": "catalog:eslint",
-    "@next/eslint-plugin-next": "catalog:eslint",
     "eslint-import-resolver-typescript": "catalog:eslint",
     "eslint-plugin-import-x": "catalog:eslint",
     "eslint-plugin-react-hooks": "catalog:eslint",
-    "typescript-eslint": "catalog:eslint"
+    "typescript-eslint": "catalog:eslint",
+    "@next/eslint-plugin-next": "catalog:next16"
   },
   "peerDependencies": {
     "eslint": "catalog:eslint",
-    "typescript": "catalog:typescript5"
+    "typescript": "catalog:typescript6"
   }
 }
