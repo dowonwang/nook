@@ -21,6 +21,6 @@
   },
   "peerDependencies": {
     "eslint": "catalog:eslint",
-    "typescript": "catalog:typescript5"
+    "typescript": "catalog:typescript6"
   }
 }

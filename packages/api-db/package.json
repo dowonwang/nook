@@ -18,8 +18,8 @@
     "@types/node": "catalog:node26",
     "@types/pg": "catalog:postgres8",
     "prisma": "catalog:prisma7",
-    "tsx": "catalog:typescript5",
-    "typescript": "catalog:typescript5"
+    "tsx": "catalog:typescript6",
+    "typescript": "catalog:typescript6"
   },
   "dependencies": {
     "dotenv": "catalog:backend1",

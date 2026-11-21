@@ -29,7 +29,7 @@
     "@packages/eslint-config": "workspace:*",
     "@types/react": "catalog:next16",
     "@types/react-dom": "catalog:next16",
-    "typescript": "catalog:typescript5"
+    "typescript": "catalog:typescript6"
   },
   "keywords": [],
   "author": "",

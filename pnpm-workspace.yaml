@@ -19,8 +19,8 @@ catalog:
 catalogs:
   node26:
     '@types/node': 26.6.6
-  typescript5:
-    typescript: 5.9.3
+  typescript6:
+    typescript: 6.0.3
     tsx: 4.23.15
   backend1:
     bun-types: 1.4.4

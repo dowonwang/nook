@@ -40,6 +40,6 @@
     "@packages/eslint-config": "workspace:*",
     "prettier": "catalog:",
     "eslint": "catalog:eslint",
-    "typescript": "catalog:typescript5"
+    "typescript": "catalog:typescript6"
   }
 }
