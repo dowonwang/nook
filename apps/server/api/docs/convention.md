@@ -151,11 +151,3 @@ src/
 | 공용 매퍼 함수 | `shared/<name>/mappers/` | `function map<Name>`  | `prisma-error.ts`       |
 | Elysia Plugin  | `shared/<name>/plugins/` | `const <name>Plugin`  | `error.ts`, `offset.ts` |
 | 빌더           | `shared/<name>/lib/`     | `const <Name>Builder` | `builder.ts`            |
-
----
-
-## 7. 현재 기준과 다른 부분
-
-| 항목                                                        | 기준                            | 정리 방향                                                                                 |
-| ----------------------------------------------------------- | ------------------------------- | ----------------------------------------------------------------------------------------- |
-| `OrganizationMember.user`, `AuthSession.user` (`@relation`) | 공통 문서 7.1 (모듈 간 FK 없음) | `@relation` 제거, 인덱스 유지. `AuthSession`의 사용자 삭제 시 정리는 도메인 이벤트로 대체 |
