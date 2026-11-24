@@ -9,6 +9,7 @@ export const ORGANIZATION_LOG_MESSAGE: OrganizationLogEventMessage = {
   ORG_MEMBER_UNAFFILIATED_ACCESS:
     'Member has no affiliation with the requested organization',
   ORG_MEMBER_DUPLICATE_ENTRY: 'Duplicate member data detected in organization',
+  ORG_MEMBER_USER_NOT_FOUND: 'User to add as organization member not found',
   ORG_ADMIN_REQUIREMENT: 'Admin count requirement failed: at least 1 required',
   ORG_INSUFFICIENT_PERMISSION: 'Access denied: missing extra permissions',
   ORG_INVALID_MEMBER_ROLE: 'Organization member role is invalid',

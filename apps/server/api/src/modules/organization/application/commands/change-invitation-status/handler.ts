@@ -1,6 +1,7 @@
 import {
   InvalidOrganizationInvitationStatusError,
   OrganizationInvitationNotFoundError,
+  OrganizationMemberUserNotFoundError,
   OrganizationNotFoundError,
 } from '$modules/organization/error';
 
@@ -14,11 +15,13 @@ import type {
 import type { UserUuidVo } from '$modules/user/domain';
 import type { TransactionManager } from '$shared/database';
 import type { ChangeInvitationStatusInput } from './command';
+import type { OrganizationUserReaderPort } from '../../ports/user-reader';
 
 export class ChangeInvitationStatusHandler {
   constructor(
     private readonly organizationInvitationCommandRepository: OrganizationInvitationCommandRepository,
     private readonly organizationCommandRepository: OrganizationCommandRepository,
+    private readonly organizationUserReader: OrganizationUserReaderPort,
     private readonly transactionManager: TransactionManager,
   ) {}
 
@@ -50,6 +53,8 @@ export class ChangeInvitationStatusHandler {
     switch (command.status.getValue()) {
       case 'ACCEPTED':
         invitation.accept(command.userId);
+        await this.assertInviteeUserExists(invitation);
+
         organization.addMemberFromInvitation(
           invitation.inviteeUserId,
           invitation.role,
@@ -90,6 +95,21 @@ export class ChangeInvitationStatusHandler {
       !invitation.invitedByUserId.equals(userId)
     ) {
       throw new OrganizationInvitationNotFoundError(
+        ChangeInvitationStatusHandler.name,
+      );
+    }
+  }
+
+  // 초대 이후 사용자가 삭제됐을 수 있으므로 멤버로 추가하기 전에 확인
+  private async assertInviteeUserExists(
+    invitation: OrganizationInvitationAggregate,
+  ): Promise<void> {
+    const userExists = await this.organizationUserReader.existsById(
+      invitation.inviteeUserId,
+    );
+
+    if (!userExists) {
+      throw new OrganizationMemberUserNotFoundError(
         ChangeInvitationStatusHandler.name,
       );
     }

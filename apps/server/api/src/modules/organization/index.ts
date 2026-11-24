@@ -19,6 +19,7 @@ import {
   PrismaOrganizationInvitationCommandRepository,
   PrismaOrganizationInvitationQueryRepository,
   PrismaOrganizationQueryRepository,
+  UserModuleOrganizationUserReaderAdapter,
 } from './infrastructure';
 import { createOrganizationController } from './presentation';
 
@@ -35,12 +36,18 @@ const organizationInvitationQueryRepository =
   new PrismaOrganizationInvitationQueryRepository(prismaApiClient);
 const userQueryRepository = new PrismaUserQueryRepository(prismaApiClient);
 
+// adapter
+const organizationUserReader = new UserModuleOrganizationUserReaderAdapter(
+  userQueryRepository,
+);
+
 // service
 const transactionManager = new PrismaTransactionManager(prismaApiClient);
 
 // handler
 const createOrganizationHandler = new CreateOrganizationHandler(
   organizationCommandRepository,
+  organizationUserReader,
 );
 const createInvitationHandler = new CreateInvitationHandler(
   organizationCommandRepository,
@@ -58,6 +65,7 @@ const findUserOrganizationsHandler = new FindUserOrganizationsHandler(
 const changeInvitationStatusHandler = new ChangeInvitationStatusHandler(
   organizationInvitationCommandRepository,
   organizationCommandRepository,
+  organizationUserReader,
   transactionManager,
 );
 const findReceivedInvitationsHandler = new FindReceivedInvitationsHandler(

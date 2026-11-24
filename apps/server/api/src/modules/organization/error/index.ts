@@ -1,6 +1,7 @@
 export * from './access-denied';
 export * from './duplicate-invitee-user';
 export * from './duplicate-member';
+export * from './member-user-not-found';
 export * from './invalid-invitation-status';
 export * from './invalid-member-role';
 export * from './invitation-access-denied';
