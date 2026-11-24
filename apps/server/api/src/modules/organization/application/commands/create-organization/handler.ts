@@ -7,7 +7,10 @@ import {
   OrganizationUuidVo,
 } from '$modules/organization/domain';
 
-import { DuplicateOrganizationSlugError } from '$modules/organization/error';
+import {
+  DuplicateOrganizationSlugError,
+  OrganizationMemberUserNotFoundError,
+} from '$modules/organization/error';
 
 import { CreateOrganizationCommand } from './command';
 
@@ -16,6 +19,7 @@ import type {
   CreateOrganizationInput,
   CreateOrganizationResult,
 } from './command';
+import type { OrganizationUserReaderPort } from '../../ports/user-reader';
 
 // 생성된 slug가 이미 사용 중일 때 새 slug로 다시 시도하는 최대 횟수
 const MAX_SLUG_ATTEMPTS = 3;
@@ -23,12 +27,24 @@ const MAX_SLUG_ATTEMPTS = 3;
 export class CreateOrganizationHandler {
   constructor(
     private readonly organizationCommandRepository: OrganizationCommandRepository,
+    private readonly organizationUserReader: OrganizationUserReaderPort,
   ) {}
 
   async execute(
     input: CreateOrganizationInput,
   ): Promise<CreateOrganizationResult> {
     const command = new CreateOrganizationCommand(input);
+
+    // access token이 남아 있어도 사용자가 이미 삭제됐을 수 있으므로 ADMIN 멤버로 저장하기 전에 확인
+    const userExists = await this.organizationUserReader.existsById(
+      command.userId,
+    );
+
+    if (!userExists) {
+      throw new OrganizationMemberUserNotFoundError(
+        CreateOrganizationHandler.name,
+      );
+    }
 
     for (let attempt = 1; ; attempt++) {
       const organization = this.createOrganization(command);

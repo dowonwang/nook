@@ -2,6 +2,7 @@ export type * from './dto/invitation';
 export type * from './dto/organization';
 export type * from './ports/invitation-reader';
 export type * from './ports/reader';
+export type * from './ports/user-reader';
 export * from './mappers/invitation';
 export * from './mappers/organization';
 export * from './commands/create-organization/command';

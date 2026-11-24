@@ -88,7 +88,7 @@ Never hand-edit `packages/api-client/src/api` or `src/schema`; change the server
 Path aliases: `$modules/*`, `$shared/*`. Server docs are split by scope — follow them for new code and when renaming:
 
 - `apps/server/docs/convention.md` — shared by every server app (`apps/server/*`): DDD/CQRS layering, file/symbol naming, import boundaries, and cross-module rules (no DB FK between modules — reference other modules by ID only; command side never joins other modules' tables, query side may join only when filtering/sorting by another module's data and must return DTOs).
-- `apps/server/api/docs/convention.md` — api-only: directory tree, Elysia presentation, Prisma infrastructure, DI, transactions, and current deviations from the shared rules.
+- `apps/server/api/docs/convention.md` — api-only: directory tree, Elysia presentation, Prisma infrastructure, DI, and transactions.
 - `apps/server/api/docs/organization.md` — organization domain rules (UUID vs slug identifiers, slug format, role/invitation invariants).
 
 Key naming rule: file names are short and carry no role suffix (the role folder identifies it; words already in the path such as the module name are dropped), while class/function names carry full context plus a role suffix (`Aggregate`, `Entity`, `Vo`, `Port`, `Adapter`, `Service`, `Error`, ...) — e.g. `organization/application/commands/create-organization/handler.ts` exports `CreateOrganizationHandler`, `organization/domain/entities/member.ts` exports `OrganizationMemberEntity`, `organization/error/not-found.ts` exports `OrganizationNotFoundError`. Log event values are `snake_case` with `_` only (`org_invitation_expired`).

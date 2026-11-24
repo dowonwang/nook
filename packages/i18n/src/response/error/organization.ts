@@ -1,6 +1,7 @@
 export const ORGANIZATION_ERROR = [
   'organization_error_OrganizationAccessDenied',
   'organization_error_DuplicateOrganizationMember',
+  'organization_error_MemberUserNotFound',
   'organization_error_InvalidOrganizationSlug',
   'organization_error_DuplicateOrganizationSlug',
   'organization_error_MinMemberConstraint',

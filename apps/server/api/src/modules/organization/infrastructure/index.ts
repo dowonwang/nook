@@ -4,3 +4,4 @@ export * from './repositories/command';
 export * from './repositories/invitation-command';
 export * from './repositories/invitation-query';
 export * from './repositories/query';
+export * from './adapters/user-reader';

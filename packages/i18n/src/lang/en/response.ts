@@ -50,6 +50,8 @@ export const i18nResponseEn = {
 
   organization_error_DuplicateOrganizationMember:
     'This member is already registered in the organization.',
+  organization_error_MemberUserNotFound:
+    'The user to add as an organization member could not be found.',
   organization_error_InvalidOrganizationSlug:
     'The organization address is invalid.',
   organization_error_DuplicateOrganizationSlug:

@@ -20,7 +20,6 @@ model OrganizationMember {
     updatedAt DateTime @updatedAt
 
     organization Organization @relation(fields: [organizationId], references: [id])
-    user         User         @relation(fields: [userId], references: [id])
 
     @@unique([organizationId, userId])
     @@index([userId, role])
@@ -43,6 +42,8 @@ model OrganizationInvitation {
 
     organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
 
+    @@index([inviteeUserId, status])
+    @@index([invitedByUserId, organizationId])
     @@index([organizationId])
     @@map("organization_invitation")
 }
